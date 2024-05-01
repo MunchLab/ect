@@ -1,101 +1,164 @@
-# ECT computation for embedded graphs
-# Sarah McGuire Feb 2024
-
-
-import argparse
 import numpy as np
-import networkx as nx
-
-import os
-from os import listdir
-from os.path import isfile, join
-from pathlib import Path
+from itertools import compress, combinations
+from numba import jit
 
 
+class ECT:
+    """
+    A class to calculate the Euler Characteristic Transform (ECT) from an input `embed_graph.EmbeddedGraph`.
 
-# include functions from ect_utils
-from ect_utils import ECC, collect_all_points
+    ...
+
+    Attributes
+    ----------
+    num_dirs : int
+        The number of directions to consider in the matrix.
+    num_thresh : int
+        The number of thresholds to consider in the matrix.
+    matrix : np.array
+        The matrix to store the ECT.
+
+    Methods
+    -------
+    __init__(num_dirs, num_thresh):
+        Constructs all the necessary attributes for the ECT object.
+    calculate(graph):
+        Calculates the ECT from an input EmbeddedGraph.
+
+    """
+
+    def __init__(self, num_dirs, num_thresh, bound_radius = None):
+        """
+        Constructs all the necessary attributes for the ECT object.
+
+        Parameters:
+            num_dirs (int): The number of directions to consider in the matrix.
+            num_thresh (int): The number of thresholds to consider in the matrix.
+            bound_radius (int): Either None, or a positive radius of the bounding circle.
+        """
+        self.num_dirs = num_dirs
+        self.thetas = np.linspace(0, 2*np.pi, self.num_dirs)
 
 
-# construct the argument parser
-parser = argparse.ArgumentParser()
-parser.add_argument('-s', '--species', type=str, default='all',
-    help='the species directory to compute ect of')
-args = vars(parser.parse_args())
+        self.num_thresh = num_thresh
+        self.set_bounding_radius(bound_radius)
 
-if args['species']=='all':
-    #mypath = '../data/ALLleaves/'
-    #mypath_output = '../data/ALLleaves_ECT/'
-    #print('Using all species folders', mypath)
-    mypath = '../data/MPEG7original'
-    mypath_output = '../data/MPEG7original_ECT/'
-    print('Using MPEG data', mypath)
-else:
-    mypath = os.path.join('../data/ALLleaves/', args['species'])
-    mypath_output = os.path.join('../data/ALLleaves_ECT/', args['species'])
-    print('Using only species ' , args['species'] ,' folder', mypath)
+        self.matrix = np.zeros((num_dirs, num_thresh))
+
+    def set_bounding_radius(self, bound_radius):
+        """
+        Manually sets the radius of the bounding circle centered at the origin for the ECT object.
+
+        Parameters:
+            bound_radius (int): Either None, or a positive radius of the bounding circle.
+        """
+        self.bound_radius = bound_radius
+
+        if self. bound_radius is None:
+            self.threshes = None
+        else:
+            self.threshes = np.linspace(bound_radius, -bound_radius, self.num_thresh)
+
+    def calculateECC(self, G, theta, tightbbox=False):
+        """
+        Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos), 
+        using a specified number of thresholds and bounding box defined by radius r.
+
+        Parameters:
+            G (EmbeddedGraph): The input graph.
+            theta (float): The angle in [0,2*np.pi] for the direction to compute the ECC.
+            tightbbox (bool): Whether to use the tight bounding box computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
+
+        """
+        
+        if tightbbox and self.bound_radius is None:
+            raise ValueError("Bounding box needs to be set manually with the `set_bounding_radius` method when `tightbbox` is True.")
+        elif tightbbox:
+            # thresholds for filtration, r should be defined from global bounding box
+            r = G.get_bounding_radius()
+            r_threshes = np.linspace(self.bound_radius, -self.bound_radius, self.numThresh)
+        else:
+            # this should be using the internal version 
+            r_threshes = self.threshes
 
 
-# Compute bounding box
-r = collect_all_points(mypath = '../data/ALLleaves')
-print('r=',r)
-#r = 2.9092515639765497
-# ADD in list of species already computed ECT for
-#done_species = ['Alstroemeria', 'Apple', 'Ivy', 'Passiflora']
-done_species = []
+        # Direction given as 2d coordinates
+        omega = (np.cos(theta), np.sin(theta))
+        
+        # sort the vertices according to the direction
+        v_list = G.sort_vertices(theta)
+
+                   
+        def count_duplicate_edges(newV):
+            """
+            Function to count the number of duplicate counted edges from lower_edges. These duplicate edges are added to the EC value.
+            """
+
+            @jit
+            def find_combos(newV):
+                #res = list(combinations(newV, 2))
+                res = []
+                n = len(newV)
+                for i in range(n):
+                    for j in range(i+1, n):
+                        res.append((newV[i], newV[j]))
+                return res
 
 
-#mypath = '../data/ALLleaves/Alstroemeria'
-# loop through file system
-classes=[]
-for path, subdirs, files in os.walk(mypath):
-    classes.extend(subdirs)
-    files = [f for f in files if not f[0] == '.']
-    subdirs[:] = [d for d in subdirs if (d[0] != '.' and d not in done_species)]
-    print('Computing ECT of files in ', path, '...')
-    print(len(files))
-    for name in files:
-        input_filedir = os.path.join(path, name)
-        output_filedir = os.path.join(mypath_output+ input_filedir[len(mypath):])
+            res = find_combos(newV)
+            count=0
+            for v,w in res:
+                if G.has_edge(v,w) and g(v)==g(w):
+                    count+=1
+            return count
+        
+
+        
+        # Full ECC vector
+        ecc=[]
+        ecc.append(0)
+
+        ## Todo! Start here, there's something missing with the g(v) function since it should maybe be stored in the v_list object? Or maybe that's coordinates? I haven't chased it down yet -liz
+        
+        for i in range(self.num_thresh):
+
+            #set of new vertices that appear in this threshold band
+            if i==self.num_thresh-1:
+                newV =list(compress(v_list,[r_threshes[i]>g(v) for v in v_list]))
+            else:
+                newV =list(compress(v_list,[r_threshes[i]>g(v)>=r_threshes[i+1] for v in v_list]))
     
-        sample = np.load(input_filedir)
-    
-        # Create graph of sample outline
-        G = nx.Graph()
-        for i in range(np.shape(sample)[0]-1):
-            G.add_edge(i, i+1)
-        G.add_edge(0,np.shape(sample)[0]-1)
+            x = ecc[i]#previous value of ECC (not index i-1 becuase of extra 0 appended to begining)
+            if newV: # if there's new vertices to count
+                v_count=0
+                e_count=0
+                for v in newV:
+                    k = G.lower_edges(v, omega)
+                    v_count+=1 #add 1 to vertex count
+                    e_count+=k #subtract the the number of lower edges
+                #check for duplicate edges counted
+                dupl = count_duplicate_edges(newV)
+                # after counting all new vertices and edges
+                ecc.append(x+v_count-e_count+dupl)
+            else:
+                ecc.append(x)
+        ecc = ecc[1:] #Drop the initial 0 value
+        #print('ECC for direction', omega, '= ', ecc)
+        
+        return ecc
 
-        # Get the vertex positions
-        pos = {}
-        valuesX = sample[:,0]
-        valuesY = sample[:,1]
-        for i in range(np.shape(sample)[0]):
-            pos[i] = (valuesX[i],valuesY[i])
+    def calculateECT(self, graph):
+        """
+        Calculates the ECT from an input EmbeddedGraph.
 
-        # Select directions around the circle
-        numCircleDirs = 32
-        circledirs =  np.linspace(0, 2*np.pi, num=numCircleDirs, endpoint=False)
+        Parameters:
+            graph (EmbeddedGraph): The input graph to calculate the ECT from.
 
-        # Choose number of thresholds for the ECC
-        numThresh = 48
-
-        # Compute the ECT of sample p for numCircleDirs, numThresh
-        ECT_preprocess = {}
-        for i, angle in enumerate(circledirs):
-
-            outECC = ECC(G, pos, theta=angle, r=r, numThresh = numThresh)
-
-            ECT_preprocess[i] = (angle,outECC)
-
-        # Making a matrix M[i,j]: (numThresh x numCircleDirs)
-        M = np.empty([numThresh,numCircleDirs])
-        for j in range(M.shape[1]):
-            M[:,j] = ECT_preprocess[j][1]
-
-
-        # NPY file to save
-        Path(os.path.dirname(output_filedir)).mkdir(parents=True, exist_ok=True)
-        np.save(output_filedir, M) 
-
-    print('----------------\n completed subdirectory ', path ,'\n-------------', )
+        Returns:
+            np.array: The matrix representing the ECT.
+        """
+        
+        for i, theta in enumerate(self.thetas):
+            self.matrix[i] = self.calculateECC(graph, theta)
+        
+        return self.matrix
