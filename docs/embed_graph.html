@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2. Embedded graphs &mdash; ect 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Contributing to the ect Package" href="contributing.html" />
+    <link rel="prev" title="2.1. ECT on Graphs" href="ect_on_graphs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ect_on_graphs.html">2.1. ECT on graphs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.add_edge"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_edge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.add_vertex"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_vertex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.g_omega"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.g_omega()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_bounding_box"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_box()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_bounding_radius"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_mean_centered_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.lower_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.lower_edges()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.plot"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.set_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.set_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_mean_centered_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.sort_vertices"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.sort_vertices()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">3. Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">4. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">5. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html"><span class="section-number">2. </span>Table of Contents</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.2. </span>Embedded graphs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/embed_graph.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embed_graph">
+<span id="embedded-graphs"></span><h1><span class="section-number">2.2. </span>Embedded graphs<a class="headerlink" href="#module-embed_graph" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">EmbeddedGraph</span></span><a class="headerlink" href="#embed_graph.EmbeddedGraph" title="Link to this definition"></a></dt>
+<dd><p>A class to represent a graph with embedded coordinates for each vertex.</p>
+<p>…</p>
+<section id="attributes">
+<h2><span class="section-number">2.2. </span>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>coordinates<span class="classifier">dict</span></dt><dd><p>a dictionary mapping vertices to their (x, y) coordinates</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2><span class="section-number">2.2. </span>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>add_vertex(vertex, x, y):</dt><dd><p>Adds a vertex to the graph and assigns it the given coordinates.</p>
+</dd>
+<dt>add_edge(u, v):</dt><dd><p>Adds an edge between the vertices u and v.</p>
+</dd>
+<dt>get_coordinates(vertex):</dt><dd><p>Returns the coordinates of the given vertex.</p>
+</dd>
+<dt>set_coordinates(vertex, x, y):</dt><dd><p>Sets the coordinates of the given vertex.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_edge" title="Link to this definition"></a></dt>
+<dd><p>Adds an edge between the vertices u and v if they exist.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>u (str): The first vertex of the edge.
+v (str): The second vertex of the edge.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.add_vertex">
+<span class="sig-name descname"><span class="pre">add_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_vertex" title="Link to this definition"></a></dt>
+<dd><p>Adds a vertex to the graph and assigns it the given coordinates.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>vertex (str): The vertex to be added.
+x (float): The x-coordinate of the vertex.
+y (float): The y-coordinate of the vertex.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.g_omega">
+<span class="sig-name descname"><span class="pre">g_omega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.g_omega" title="Link to this definition"></a></dt>
+<dd><p>Function to compute the function g_omega(v) for all vertices v in the graph in the direction of theta in [0,2*np.pi]. This function is defined by $g_omega(v) = &lt; pos(v), omega &gt;$.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>theta (float): The angle in [0,2*np.pi] for the direction to compute the g(v) values.</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p>dict: A dictionary mapping vertices to their g(v) values.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_bounding_box">
+<span class="sig-name descname"><span class="pre">get_bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_box" title="Link to this definition"></a></dt>
+<dd><p>Method to find a bounding box of the vertex coordinates in the graph.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list: A list of tuples representing the minimum and maximum x and y coordinates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_bounding_radius">
+<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_radius" title="Link to this definition"></a></dt>
+<dd><p>Method to find the radius of the bounding circle of the vertex coordinates in the graph.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The radius of the bounding circle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_coordinates">
+<span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Returns the coordinates of the given vertex.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>vertex (str): The vertex whose coordinates are to be returned.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: The coordinates of the vertex.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_mean_centered_coordinates">
+<span class="sig-name descname"><span class="pre">get_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_mean_centered_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to find the mean-centered coordinates of the vertices in the graph.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>dict: A dictionary mapping vertices to their mean-centered coordinates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.lower_edges">
+<span class="sig-name descname"><span class="pre">lower_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.lower_edges" title="Link to this definition"></a></dt>
+<dd><p>Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>v (str): The vertex to compute the number of lower edges for.
+omega (tuple): The direction vector to consider.</p>
+</dd>
+<dt>Returns:</dt><dd><p>int: The number of lower edges of the vertex v.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
+<dd><p>Function to plot the graph with the embedded coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.set_coordinates">
+<span class="sig-name descname"><span class="pre">set_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Sets the coordinates of the given vertex.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>vertex (str): The vertex whose coordinates are to be set.
+x (float): The new x-coordinate of the vertex.
+y (float): The new y-coordinate of the vertex.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If the vertex does not exist in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.set_mean_centered_coordinates">
+<span class="sig-name descname"><span class="pre">set_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_mean_centered_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.sort_vertices">
+<span class="sig-name descname"><span class="pre">sort_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.sort_vertices" title="Link to this definition"></a></dt>
+<dd><p>Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta in [0,2*np.pi].</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>theta (float): The angle in [0,2*np.pi] for the direction to sort the vertices.
+return_g (bool): Whether to return the g(v) values along with the sorted vertices.</p>
+</dd>
+<dt>Returns:</dt><dd><p>list: A list of vertices sorted in increasing order of the g(v) values.
+If return_g is True, returns a tuple of the sorted vertices and the g dictionary with the function values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embed_graph.create_example_graph">
+<span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">create_example_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.create_example_graph" title="Link to this definition"></a></dt>
+<dd><p>Function to create an example EmbeddedGraph object. Helpful for testing.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>EmbeddedGraph: An example EmbeddedGraph object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ect_on_graphs.html" class="btn btn-neutral float-left" title="2.1. ECT on Graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="3. Contributing to the ect Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

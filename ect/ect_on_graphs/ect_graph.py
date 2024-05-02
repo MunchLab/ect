@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input `embed_graph.EmbeddedGraph`.
-    The result is a matrix where entry M[i,j] is $\chi(K_{a_i})$ for the direction $\omega_j$ where $a_i$ is the $i$th entry in self.threshes, and $\omega_j$ is the ith entry in self.thetas.
+    A class to calculate the Euler Characteristic Transform (ECT) from an input ``embed_graph.EmbeddedGraph``.
+    The result is a matrix where entry {math}``a^2 + b^2 = c^2`` {math}``M[i,j]`` is r"$\chi(K_{a_i})$" for the direction $\omega_j$ where $a_i$ is the $i$th entry in self.threshes, and $\omega_j$ is the ith entry in self.thetas.
 
     ...
 
@@ -95,9 +95,6 @@ class ECT:
         
         # sort the vertices according to the direction
         v_list, g = G.sort_vertices(theta, return_g=True)
-
-        
-
                    
         def count_duplicate_edges(newV):
             """
@@ -166,6 +163,7 @@ class ECT:
 
         Returns:
             np.array: The matrix representing the ECT of size (num_dirs,num_thresh).
+            
         """
 
         if tightbbox == False and self.bound_radius is None:

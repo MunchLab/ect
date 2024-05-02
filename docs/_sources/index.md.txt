@@ -1,14 +1,8 @@
-.. ect documentation master file, created by
-   sphinx-quickstart on Thu May  2 10:59:31 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+# ``ect``: Euler Characteristic Transform in Python
 
-`ect`: Euler Characteristic Transform in Python
-==================================================
+## Table of Contents
 
-Table of Contents
-*******************
-
+```{eval-rst}
 .. toctree::
    :maxdepth: 2
    :numbered:
@@ -19,23 +13,14 @@ Table of Contents
    Contributing <contributing.md>
    License <license.md>
    Citing <citing.md>
+```
 
-
-
-
-
-
-Collaborators
-***************
+## Collaborators
 
 The code is a compilation of work done by `Elizabeth Munch <http://www.elizabethmunch.com>`_ along with her students and collaborators.  People who have contributed to `ect` include:
 
 - `Sarah McGuire <https://www.sarah-mcguire.com/>`_
 
+## Contact Information
 
-
-
-
-Contact Information
-********************
 - `Liz Munch <http://www.elizabethmunch.com>`_: `muncheli@msu.edu <mailto:muncheli@msu.edu>`_

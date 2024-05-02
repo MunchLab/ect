@@ -24,6 +24,7 @@ class EmbeddedGraph(nx.Graph):
         Returns the coordinates of the given vertex.
     set_coordinates(vertex, x, y):
         Sets the coordinates of the given vertex.
+
     """
 
     def __init__(self):
@@ -42,6 +43,7 @@ class EmbeddedGraph(nx.Graph):
             vertex (str): The vertex to be added.
             x (float): The x-coordinate of the vertex.
             y (float): The y-coordinate of the vertex.
+
         """
         self.add_node(vertex)
         self.coordinates[vertex] = (x, y)
@@ -53,6 +55,7 @@ class EmbeddedGraph(nx.Graph):
         Parameters:
             u (str): The first vertex of the edge.
             v (str): The second vertex of the edge.
+
         """
         if not self.has_node(u) or not self.has_node(v):
             raise ValueError("One or both vertices do not exist in the graph.")
@@ -68,6 +71,7 @@ class EmbeddedGraph(nx.Graph):
 
         Returns:
             tuple: The coordinates of the vertex.
+
         """
         return self.coordinates.get(vertex)
 
@@ -82,6 +86,7 @@ class EmbeddedGraph(nx.Graph):
 
         Raises:
             ValueError: If the vertex does not exist in the graph.
+
         """
         if vertex in self.coordinates:
             self.coordinates[vertex] = (x, y)
@@ -96,6 +101,7 @@ class EmbeddedGraph(nx.Graph):
 
         Returns:
             list: A list of tuples representing the minimum and maximum x and y coordinates.
+
         """
         if not self.coordinates:
             return None
@@ -109,6 +115,7 @@ class EmbeddedGraph(nx.Graph):
 
         Returns:
             float: The radius of the bounding circle.
+
         """
         if not self.coordinates:
             return 0
@@ -124,6 +131,7 @@ class EmbeddedGraph(nx.Graph):
 
         Returns:
             dict: A dictionary mapping vertices to their mean-centered coordinates.
+
         """
         if not self.coordinates:
             return None
@@ -138,6 +146,7 @@ class EmbeddedGraph(nx.Graph):
     def set_mean_centered_coordinates(self):
         """
         Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates
+
         """
         
         self.coordinates = self.get_mean_centered_coordinates()
@@ -147,13 +156,16 @@ class EmbeddedGraph(nx.Graph):
 
     def g_omega(self, theta):
         """
-        Function to compute the function g_omega(v) for all vertices v in the graph in the direction of theta \in [0,2*np.pi]. This function is defined by $g_\omega(v) = \langle pos(v), \omega \rangle$.
+        Function to compute the function g_omega(v) for all vertices v in the graph in the direction of theta \in [0,2*np.pi]. This function is defined by $g_\omega(v) = < pos(v), \omega >$.
 
         Parameters:
+
             theta (float): The angle in [0,2*np.pi] for the direction to compute the g(v) values.
 
         Returns:
+
             dict: A dictionary mapping vertices to their g(v) values.
+
         """
         
         omega = (np.cos(theta), np.sin(theta))
@@ -174,6 +186,7 @@ class EmbeddedGraph(nx.Graph):
         Returns:
             list: A list of vertices sorted in increasing order of the g(v) values.
             If return_g is True, returns a tuple of the sorted vertices and the g dictionary with the function values. 
+
         """
         g = self.g_omega(theta)
 
@@ -196,6 +209,7 @@ class EmbeddedGraph(nx.Graph):
 
         Returns:
             int: The number of lower edges of the vertex v.
+
         """
         L = [n for n in self.neighbors(v)]
         gv = np.dot(self.coordinates[v],omega)
@@ -205,6 +219,7 @@ class EmbeddedGraph(nx.Graph):
     def plot(self):
         """
         Function to plot the graph with the embedded coordinates.
+
         """
 
         fig, ax = plt.subplots()
@@ -222,6 +237,7 @@ def create_example_graph(mean_centered = True):
 
     Returns:
         EmbeddedGraph: An example EmbeddedGraph object.
+
     """
     graph = EmbeddedGraph()
 
