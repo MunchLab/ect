@@ -1,10 +1,10 @@
-.. ect-on-graphs documentation master file, created by
-   sphinx-quickstart on Wed May  1 14:09:29 2024.
+.. ect documentation master file, created by
+   sphinx-quickstart on Thu May  2 10:59:31 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ect-on-graphs's documentation!
-=========================================
+Welcome to ect's documentation!
+===============================
 
 .. toctree::
    :maxdepth: 2
