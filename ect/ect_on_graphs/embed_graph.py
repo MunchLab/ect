@@ -1,5 +1,7 @@
 import networkx as nx
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 class EmbeddedGraph(nx.Graph):
     """
@@ -200,9 +202,21 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v],omega) for v in L]
         return sum(n >= gv for n in Lg) # includes possible duplicate counts 
 
+    def plot(self):
+        """
+        Function to plot the graph with the embedded coordinates.
+        """
+
+        fig, ax = plt.subplots()
+
+        pos = self.coordinates
+        nx.draw(self, pos, with_labels=True, font_weight='bold')
+        plt.axis('on')
+        ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
+        # plt.show()
 
 
-def create_example_graph():
+def create_example_graph(mean_centered = True):
     """
     Function to create an example EmbeddedGraph object. Helpful for testing.
 
@@ -214,9 +228,19 @@ def create_example_graph():
     graph.add_vertex('A', 1, 2)
     graph.add_vertex('B', 3, 4)
     graph.add_vertex('C', 5, 7)
+    graph.add_vertex('D', 3, 6)
+    graph.add_vertex('E', 4, 3)
+    graph.add_vertex('F', 4, 5)
 
     graph.add_edge('A', 'B')
     graph.add_edge('B', 'C')
+    graph.add_edge('B', 'D')
+    graph.add_edge('B', 'E')
+    graph.add_edge('C', 'D')
+    graph.add_edge('E', 'F')
+
+    if mean_centered:
+        graph.set_mean_centered_coordinates()
 
     return graph
 

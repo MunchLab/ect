@@ -1,11 +1,13 @@
 import numpy as np
 from itertools import compress, combinations
 from numba import jit
+import matplotlib.pyplot as plt
 
 
 class ECT:
     """
     A class to calculate the Euler Characteristic Transform (ECT) from an input `embed_graph.EmbeddedGraph`.
+    The result is a matrix where entry M[i,j] is $\chi(K_{a_i})$ for the direction $\omega_j$ where $a_i$ is the $i$th entry in self.threshes, and $\omega_j$ is the ith entry in self.thetas.
 
     ...
 
@@ -37,7 +39,9 @@ class ECT:
             bound_radius (int): Either None, or a positive radius of the bounding circle.
         """
         self.num_dirs = num_dirs
-        self.thetas = np.linspace(0, 2*np.pi, self.num_dirs)
+
+        # Note: This version doesn't include 2pi since its the same as the 0 direction.
+        self.thetas = np.linspace(0, 2*np.pi, self.num_dirs,endpoint=False)
 
 
         self.num_thresh = num_thresh
@@ -54,7 +58,7 @@ class ECT:
         """
         self.bound_radius = bound_radius
 
-        if self. bound_radius is None:
+        if self.bound_radius is None:
             self.threshes = None
         else:
             self.threshes = np.linspace(bound_radius, -bound_radius, self.num_thresh)
@@ -73,15 +77,17 @@ class ECT:
         
         # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate 
         # the thresholds from that. 
-        if tightbbox and self.bound_radius is None:
-            raise ValueError("Bounding box needs to be set manually with the `set_bounding_radius` method when `tightbbox` is True.")
-        elif tightbbox:
+        if tightbbox:
             # thresholds for filtration, r should be defined from global bounding box
             r = G.get_bounding_radius()
             r_threshes = np.linspace(self.bound_radius, -self.bound_radius, self.numThresh)
         else:
-            # this should be using the internal version 
-            r_threshes = self.threshes
+            # The user wants to use the internally determined bounding radius
+            if self.bound_radius is None:
+                raise ValueError('Bounding radius must be set before calculating ECC when you have tightbbox=False.')
+            else:
+                r = self.bound_radius
+                r_threshes = self.threshes
 
 
         # Direction given as 2d coordinates
@@ -150,18 +156,90 @@ class ECT:
         
         return ecc
 
-    def calculateECT(self, graph):
+    def calculateECT(self, graph, tightbbox=False):
         """
-        Calculates the ECT from an input EmbeddedGraph.
+        Calculates the ECT from an input EmbeddedGraph. The entry M[i,j] is $\chi(K_{a_j})$ for the direction $\omega_i$ where $a_j$ is the $j$th entry in self.threshes, and $\omega_i$ is the ith entry in self.thetas.
 
         Parameters:
             graph (EmbeddedGraph): The input graph to calculate the ECT from.
+            tightbbox (bool): Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
 
         Returns:
-            np.array: The matrix representing the ECT.
+            np.array: The matrix representing the ECT of size (num_dirs,num_thresh).
         """
+
+        if tightbbox == False and self.bound_radius is None:
+            self.set_bounding_radius(graph.get_bounding_radius())
+
+        M = np.zeros((self.num_dirs, self.num_thresh))
         
         for i, theta in enumerate(self.thetas):
-            self.matrix[i] = self.calculateECC(graph, theta)
+            M[i] = self.calculateECC(graph, theta, tightbbox)
         
+        self.matrix = M
+       
         return self.matrix
+
+
+
+    def plotECC(self, graph, theta, tightbbox=False):
+        """
+        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.
+
+        Parameters:
+            graph (EmbeddedGraph): The input graph.
+            theta (float): The angle in [0,2*np.pi] for the direction to plot the ECC.
+        """
+
+        ECC = self.calculateECC(graph, theta, tightbbox)
+        
+        plt.step(self.threshes,ECC)
+        plt.title(r'ECC for $\omega = \frac{3 \pi}{4}$')
+        plt.xlabel('$a$')
+        plt.ylabel(r'$\chi(K_a)$')
+
+
+    def plotECT(self):
+
+        """
+        Function to plot the Euler Characteristic Transform (ECT) matrix.
+
+        The result will have the angle on the x-axis and the threshold on the y-axis.
+        """
+
+        # Make meshgrid.
+        # Add back the 2pi to thetas for the pcolormesh
+        thetas = np.concatenate((self.thetas,[2*np.pi]))
+        X,Y = np.meshgrid(thetas,self.threshes)
+        M = np.zeros_like(X)
+        print('X shape:', X.shape)
+        print('M shape:', M.shape)
+        print('Matrix shape:', self.matrix.shape)
+        M[:,:-1] = self.matrix.T # Transpose to get the correct orientation
+        M[:,-1] = M[:,0] # Add the 2pi direction to the 0 direction
+        
+
+        plt.pcolormesh(X,Y,M, cmap = 'viridis')
+        plt.colorbar()
+
+        ax = plt.gca()
+        ax.set_xticks(np.linspace(0,2*np.pi,9))
+
+        labels = [r'$0$',
+                r'$\frac{\pi}{4}$',
+                r'$\frac{\pi}{2}$',
+                r'$\frac{3\pi}{4}$',
+                r'$\pi$',
+                r'$\frac{5\pi}{4}$',
+                r'$\frac{3\pi}{2}$',
+                r'$\frac{7\pi}{4}$',
+                r'$2\pi$',
+                ]
+
+        ax.set_xticklabels(labels)
+
+
+        plt.xlabel(r'$\omega$')
+        plt.ylabel(r'$a$')
+
+        plt.title(r'ECT of Input Graph')
