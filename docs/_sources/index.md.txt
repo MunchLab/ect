@@ -17,10 +17,10 @@
 
 ## Collaborators
 
-The code is a compilation of work done by `Elizabeth Munch <http://www.elizabethmunch.com>`_ along with her students and collaborators.  People who have contributed to `ect` include:
+The code is a compilation of work done by [Elizabeth Munch](http://www.elizabethmunch.com) along with her students and collaborators.  People who have contributed to `ect` include:
 
-- `Sarah McGuire <https://www.sarah-mcguire.com/>`_
+- [Sarah McGuire](https://www.sarah-mcguire.com/)
 
 ## Contact Information
 
-- `Liz Munch <http://www.elizabethmunch.com>`_: `muncheli@msu.edu <mailto:muncheli@msu.edu>`_
+- Liz Munch: [Website](http://www.elizabethmunch.com), [Email](mailto:muncheli@msu.edu)

@@ -163,7 +163,7 @@ class ECT:
 
         Returns:
             np.array: The matrix representing the ECT of size (num_dirs,num_thresh).
-            
+
         """
 
         if tightbbox == False and self.bound_radius is None:
@@ -210,9 +210,7 @@ class ECT:
         thetas = np.concatenate((self.thetas,[2*np.pi]))
         X,Y = np.meshgrid(thetas,self.threshes)
         M = np.zeros_like(X)
-        print('X shape:', X.shape)
-        print('M shape:', M.shape)
-        print('Matrix shape:', self.matrix.shape)
+        
         M[:,:-1] = self.matrix.T # Transpose to get the correct orientation
         M[:,-1] = M[:,0] # Add the 2pi direction to the 0 direction
         
