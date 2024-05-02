@@ -71,6 +71,8 @@ class ECT:
 
         """
         
+        # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate 
+        # the thresholds from that. 
         if tightbbox and self.bound_radius is None:
             raise ValueError("Bounding box needs to be set manually with the `set_bounding_radius` method when `tightbbox` is True.")
         elif tightbbox:
@@ -86,7 +88,9 @@ class ECT:
         omega = (np.cos(theta), np.sin(theta))
         
         # sort the vertices according to the direction
-        v_list = G.sort_vertices(theta)
+        v_list, g = G.sort_vertices(theta, return_g=True)
+
+        
 
                    
         def count_duplicate_edges(newV):
@@ -94,7 +98,7 @@ class ECT:
             Function to count the number of duplicate counted edges from lower_edges. These duplicate edges are added to the EC value.
             """
 
-            @jit
+            # @jit <----- Liz can't figure out how to make this work in here
             def find_combos(newV):
                 #res = list(combinations(newV, 2))
                 res = []
@@ -108,7 +112,7 @@ class ECT:
             res = find_combos(newV)
             count=0
             for v,w in res:
-                if G.has_edge(v,w) and g(v)==g(w):
+                if G.has_edge(v,w) and g[v]==g[w]:
                     count+=1
             return count
         
@@ -118,15 +122,14 @@ class ECT:
         ecc=[]
         ecc.append(0)
 
-        ## Todo! Start here, there's something missing with the g(v) function since it should maybe be stored in the v_list object? Or maybe that's coordinates? I haven't chased it down yet -liz
         
         for i in range(self.num_thresh):
 
             #set of new vertices that appear in this threshold band
             if i==self.num_thresh-1:
-                newV =list(compress(v_list,[r_threshes[i]>g(v) for v in v_list]))
+                newV =list(compress(v_list,[r_threshes[i]>g[v] for v in v_list]))
             else:
-                newV =list(compress(v_list,[r_threshes[i]>g(v)>=r_threshes[i+1] for v in v_list]))
+                newV =list(compress(v_list,[r_threshes[i]>g[v]>=r_threshes[i+1] for v in v_list]))
     
             x = ecc[i]#previous value of ECC (not index i-1 becuase of extra 0 appended to begining)
             if newV: # if there's new vertices to count

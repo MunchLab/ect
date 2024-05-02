@@ -161,18 +161,28 @@ class EmbeddedGraph(nx.Graph):
             g[v] = np.dot(self.coordinates[v], omega)
         return g
     
-    def sort_vertices(self, theta):
+    def sort_vertices(self, theta,return_g = False):
         """
         Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
 
         Parameters:
             theta (float): The angle in [0,2*np.pi] for the direction to sort the vertices.
+            return_g (bool): Whether to return the g(v) values along with the sorted vertices.
 
         Returns:
-            list: A list of vertices sorted according to the g(v) values.
+            list: A list of vertices sorted in increasing order of the g(v) values.
+            If return_g is True, returns a tuple of the sorted vertices and the g dictionary with the function values. 
         """
         g = self.g_omega(theta)
-        return sorted(self.nodes, key=lambda v: g[v], reverse=True)
+
+        v_list = sorted(self.nodes, key=lambda v: g[v])
+
+        if return_g:
+            # g_sorted = [g[v] for v in v_list]
+            return  v_list, g
+        else:
+            return v_list
+        
     
     def lower_edges(self, v, omega):
         """
@@ -186,8 +196,8 @@ class EmbeddedGraph(nx.Graph):
             int: The number of lower edges of the vertex v.
         """
         L = [n for n in self.neighbors(v)]
-        gv = np.dot(pos_list[v],omega)
-        Lg = [np.dot(pos_list[v],omega) for v in L]
+        gv = np.dot(self.coordinates[v],omega)
+        Lg = [np.dot(self.coordinates[v],omega) for v in L]
         return sum(n >= gv for n in Lg) # includes possible duplicate counts 
 
 
