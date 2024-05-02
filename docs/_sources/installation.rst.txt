@@ -41,21 +41,21 @@ To install `ect`, follow these steps:
 4. Install `ect` using pip:
    *Please note that this is not yet available on PyPi, so you will need to install it from the source code.*
 
+    
     ```bash
     git clone https://github.com/MunchLab/ect
+    ```
+
+    ```bash
     cd ect
+    ```
+
+    ```bash
     pip install .
     ```
 
-5. Verify the installation by running a test command:
 
-    ```bash
-    ect --version
-    ```
-
-    If the installation was successful, you should see the version number of `ect` printed on the console.
-
-6. You're all set! You can now start using `ect` in your projects.
+5. You're all set! You can now start using `ect` in your projects.
 
 Uninstalling `ect`
 ------------------
