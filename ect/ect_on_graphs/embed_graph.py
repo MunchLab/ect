@@ -202,7 +202,7 @@ class EmbeddedGraph(nx.Graph):
 
 
 
-def create_example():
+def create_example_graph():
     """
     Function to create an example EmbeddedGraph object. Helpful for testing.
 
