@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 `ect`: Euler Characteristic Transform in Python
-===============================
+==================================================
 
 Table of Contents
 *******************
@@ -12,21 +12,15 @@ Table of Contents
 .. toctree::
    :maxdepth: 2
    :numbered:
+   :caption: Contents:
 
-   Getting Started <installation.rst>
+   Getting Started <installation.md>
    Modules <modules.rst>
-   Contributing <contributing.rst>
-   License <license.rst>
-   Citing <citing.rst>
+   Contributing <contributing.md>
+   License <license.md>
+   Citing <citing.md>
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 
 
