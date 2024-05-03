@@ -80,7 +80,7 @@ class ECT:
         if tightbbox:
             # thresholds for filtration, r should be defined from global bounding box
             r = G.get_bounding_radius()
-            r_threshes = np.linspace(self.bound_radius, -self.bound_radius, self.numThresh)
+            r_threshes = np.linspace(r, -r, self.num_thresh)
         else:
             # The user wants to use the internally determined bounding radius
             if self.bound_radius is None:
@@ -210,7 +210,7 @@ class ECT:
         thetas = np.concatenate((self.thetas,[2*np.pi]))
         X,Y = np.meshgrid(thetas,self.threshes)
         M = np.zeros_like(X)
-        
+
         M[:,:-1] = self.matrix.T # Transpose to get the correct orientation
         M[:,-1] = M[:,0] # Add the 2pi direction to the 0 direction
         
