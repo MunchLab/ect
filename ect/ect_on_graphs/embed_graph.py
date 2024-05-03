@@ -5,25 +5,21 @@ import matplotlib.pyplot as plt
 
 class EmbeddedGraph(nx.Graph):
     """
-    A class to represent a graph with embedded coordinates for each vertex.
-
-    ...
+    A class to represent a graph with 2D embedded coordinates for each vertex.
 
     Attributes
-    ----------
-    coordinates : dict
-        a dictionary mapping vertices to their (x, y) coordinates
+        coordinates : dict
+            a dictionary mapping vertices to their (x, y) coordinates
 
     Methods
-    -------
-    add_vertex(vertex, x, y):
-        Adds a vertex to the graph and assigns it the given coordinates.
-    add_edge(u, v):
-        Adds an edge between the vertices u and v.
-    get_coordinates(vertex):
-        Returns the coordinates of the given vertex.
-    set_coordinates(vertex, x, y):
-        Sets the coordinates of the given vertex.
+        add_vertex(vertex, x, y):
+            Adds a vertex to the graph and assigns it the given coordinates.
+        add_edge(u, v):
+            Adds an edge between the vertices u and v.
+        get_coordinates(vertex):
+            Returns the coordinates of the given vertex.
+        set_coordinates(vertex, x, y):
+            Sets the coordinates of the given vertex.
 
     """
 
@@ -40,9 +36,12 @@ class EmbeddedGraph(nx.Graph):
         Adds a vertex to the graph and assigns it the given coordinates.
 
         Parameters:
-            vertex (str): The vertex to be added.
-            x (float): The x-coordinate of the vertex.
-            y (float): The y-coordinate of the vertex.
+            vertex: str
+                The vertex to be added.
+            x : float
+                The x-coordinate of the vertex.
+            y : float
+                The y-coordinate of the vertex.
 
         """
         self.add_node(vertex)
@@ -53,8 +52,10 @@ class EmbeddedGraph(nx.Graph):
         Adds an edge between the vertices u and v if they exist.
 
         Parameters:
-            u (str): The first vertex of the edge.
-            v (str): The second vertex of the edge.
+            u : str
+                The first vertex of the edge.
+            v : str
+                The second vertex of the edge.
 
         """
         if not self.has_node(u) or not self.has_node(v):
@@ -67,7 +68,8 @@ class EmbeddedGraph(nx.Graph):
         Returns the coordinates of the given vertex.
 
         Parameters:
-            vertex (str): The vertex whose coordinates are to be returned.
+            vertex : str
+                The vertex whose coordinates are to be returned.
 
         Returns:
             tuple: The coordinates of the vertex.
@@ -80,9 +82,12 @@ class EmbeddedGraph(nx.Graph):
         Sets the coordinates of the given vertex.
 
         Parameters:
-            vertex (str): The vertex whose coordinates are to be set.
-            x (float): The new x-coordinate of the vertex.
-            y (float): The new y-coordinate of the vertex.
+            vertex : str
+                The vertex whose coordinates are to be set.
+            x : float
+                The new x-coordinate of the vertex.
+            y : float 
+                The new y-coordinate of the vertex.
 
         Raises:
             ValueError: If the vertex does not exist in the graph.
@@ -160,7 +165,8 @@ class EmbeddedGraph(nx.Graph):
 
         Parameters:
 
-            theta (float): The angle in [0,2*np.pi] for the direction to compute the g(v) values.
+            theta : float
+                The angle in [0,2*np.pi] for the direction to compute the g(v) values.
 
         Returns:
 
@@ -179,13 +185,19 @@ class EmbeddedGraph(nx.Graph):
         """
         Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
 
+        TODO: eventually, do we want this to return a sorted list of g values as well? Since we're already doing the sorting work, it might be helpful.
+
         Parameters:
-            theta (float): The angle in [0,2*np.pi] for the direction to sort the vertices.
-            return_g (bool): Whether to return the g(v) values along with the sorted vertices.
+            theta : float
+                The angle in [0,2*np.pi] for the direction to sort the vertices.
+            return_g : bool
+                Whether to return the g(v) values along with the sorted vertices.
 
         Returns:
-            list: A list of vertices sorted in increasing order of the g(v) values.
-            If return_g is True, returns a tuple of the sorted vertices and the g dictionary with the function values. 
+            list: 
+                A list of vertices sorted in increasing order of the g(v) values. 
+            dict: 
+                If return_g is True, also returns the g dictionary with the function values. 
 
         """
         g = self.g_omega(theta)
@@ -204,8 +216,10 @@ class EmbeddedGraph(nx.Graph):
         Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).
 
         Parameters:
-            v (str): The vertex to compute the number of lower edges for.
-            omega (tuple): The direction vector to consider.
+            v : str
+                The vertex to compute the number of lower edges for.
+            omega : tuple 
+                The direction vector to consider given as an angle in [0, 2pi].
 
         Returns:
             int: The number of lower edges of the vertex v.

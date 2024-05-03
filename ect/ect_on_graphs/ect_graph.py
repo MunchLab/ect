@@ -7,25 +7,25 @@ import matplotlib.pyplot as plt
 class ECT:
     """
     A class to calculate the Euler Characteristic Transform (ECT) from an input ``embed_graph.EmbeddedGraph``.
-    The result is a matrix where entry {math}``a^2 + b^2 = c^2`` {math}``M[i,j]`` is r"$\chi(K_{a_i})$" for the direction $\omega_j$ where $a_i$ is the $i$th entry in self.threshes, and $\omega_j$ is the ith entry in self.thetas.
+    The result is a matrix where entry ``M[i,j]`` is ``chi(K_{a_i})`` for the direction $\omega_j$ where $a_i$ is the $i$th entry in ``self.threshes``, and $\omega_j$ is the ith entry in self.thetas.
 
     ...
 
     Attributes
-    ----------
-    num_dirs : int
-        The number of directions to consider in the matrix.
-    num_thresh : int
-        The number of thresholds to consider in the matrix.
-    matrix : np.array
-        The matrix to store the ECT.
+        num_dirs : int
+            The number of directions to consider in the matrix.
+        num_thresh : int
+            The number of thresholds to consider in the matrix.
+        bound_radius : int
+            Either None, or a positive radius of the bounding circle.
+        matrix : np.array
+            The matrix to store the ECT.
 
     Methods
-    -------
-    __init__(num_dirs, num_thresh):
-        Constructs all the necessary attributes for the ECT object.
-    calculate(graph):
-        Calculates the ECT from an input EmbeddedGraph.
+        __init__(num_dirs, num_thresh):
+            Constructs all the necessary attributes for the ECT object.
+        calculate(graph):
+            Calculates the ECT from an input EmbeddedGraph.
 
     """
 
@@ -34,9 +34,12 @@ class ECT:
         Constructs all the necessary attributes for the ECT object.
 
         Parameters:
-            num_dirs (int): The number of directions to consider in the matrix.
-            num_thresh (int): The number of thresholds to consider in the matrix.
-            bound_radius (int): Either None, or a positive radius of the bounding circle.
+            num_dirs : int
+                The number of directions to consider in the matrix.
+            num_thresh : int
+                The number of thresholds to consider in the matrix.
+            bound_radius : int
+                Either None, or a positive radius of the bounding circle.
         """
         self.num_dirs = num_dirs
 
@@ -65,14 +68,15 @@ class ECT:
 
     def calculateECC(self, G, theta, tightbbox=False):
         """
-        Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos), 
-        using a specified number of thresholds and bounding box defined by radius r.
+        Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).
 
         Parameters:
-            G (EmbeddedGraph): The input graph.
-            theta (float): The angle in [0,2*np.pi] for the direction to compute the ECC.
-            tightbbox (bool): Whether to use the tight bounding box computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
-
+            G : Graph
+                The graph to compute the Euler Characteristic for.
+            theta : float
+                The angle (in radians) to rotate the graph by before computing the Euler Characteristic.
+            tightbbox : bool, optional
+                If True, use the tight bounding box of the graph. If False, use the bounding circle. Default is False.
         """
         
         # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate 
@@ -158,12 +162,14 @@ class ECT:
         Calculates the ECT from an input EmbeddedGraph. The entry M[i,j] is $\chi(K_{a_j})$ for the direction $\omega_i$ where $a_j$ is the $j$th entry in self.threshes, and $\omega_i$ is the ith entry in self.thetas.
 
         Parameters:
-            graph (EmbeddedGraph): The input graph to calculate the ECT from.
-            tightbbox (bool): Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
+            graph : EmbeddedGraph
+                The input graph to calculate the ECT from.
+            tightbbox : bool, optional
+                Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
 
         Returns:
-            np.array: The matrix representing the ECT of size (num_dirs,num_thresh).
-
+            np.array
+                The matrix representing the ECT of size (num_dirs,num_thresh).
         """
 
         if tightbbox == False and self.bound_radius is None:
@@ -185,8 +191,10 @@ class ECT:
         Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.
 
         Parameters:
-            graph (EmbeddedGraph): The input graph.
-            theta (float): The angle in [0,2*np.pi] for the direction to plot the ECC.
+            graph : EmbeddedGraph
+                The input graph.
+            theta : float
+                The angle in [0,2*np.pi] for the direction to plot the ECC.
         """
 
         ECC = self.calculateECC(graph, theta, tightbbox)
@@ -202,7 +210,7 @@ class ECT:
         """
         Function to plot the Euler Characteristic Transform (ECT) matrix.
 
-        The result will have the angle on the x-axis and the threshold on the y-axis.
+        The resulting plot will have the angle on the x-axis and the threshold on the y-axis.
         """
 
         # Make meshgrid.
