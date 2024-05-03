@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2.1. ECT on Graphs &mdash; ect 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,7 +48,17 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. ECT on graphs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. ECT on graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateECC"><code class="docutils literal notranslate"><span class="pre">ECT.calculateECC()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateECT"><code class="docutils literal notranslate"><span class="pre">ECT.calculateECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plotECC"><code class="docutils literal notranslate"><span class="pre">ECT.plotECC()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plotECT"><code class="docutils literal notranslate"><span class="pre">ECT.plotECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.set_bounding_radius"><code class="docutils literal notranslate"><span class="pre">ECT.set_bounding_radius()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="embed_graph.html">2.2. Embedded graphs</a></li>
 </ul>
 </li>
@@ -83,10 +93,10 @@
            <div itemprop="articleBody">
              
   <section id="module-ect_graph">
-<span id="ect-on-graphs"></span><h1><span class="section-number">2.1. </span>ECT on Graphs<a class="headerlink" href="#module-ect_graph" title="Permalink to this heading"></a></h1>
+<span id="ect-on-graphs"></span><h1><span class="section-number">2.1. </span>ECT on Graphs<a class="headerlink" href="#module-ect_graph" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ect_graph.ECT">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ect_graph.</span></span><span class="sig-name descname"><span class="pre">ECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ect_graph.</span></span><span class="sig-name descname"><span class="pre">ECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT" title="Link to this definition"></a></dt>
 <dd><p>A class to calculate the Euler Characteristic Transform (ECT) from an input <code class="docutils literal notranslate"><span class="pre">embed_graph.EmbeddedGraph</span></code>.
 The result is a matrix where entry <code class="docutils literal notranslate"><span class="pre">M[i,j]</span></code> is <code class="docutils literal notranslate"><span class="pre">chi(K_{a_i})</span></code> for the direction $omega_j$ where $a_i$ is the $i$th entry in <code class="docutils literal notranslate"><span class="pre">self.threshes</span></code>, and $omega_j$ is the ith entry in self.thetas.</p>
 <p>…</p>
@@ -112,7 +122,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECC">
-<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Link to this definition"></a></dt>
 <dd><p>Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -129,7 +139,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECT">
-<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Link to this definition"></a></dt>
 <dd><p>Calculates the ECT from an input EmbeddedGraph. The entry M[i,j] is $chi(K_{a_j})$ for the direction $omega_i$ where $a_j$ is the $j$th entry in self.threshes, and $omega_i$ is the ith entry in self.thetas.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -149,7 +159,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECC">
-<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -164,14 +174,14 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECT">
-<span class="sig-name descname"><span class="pre">plotECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plotECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECT" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the Euler Characteristic Transform (ECT) matrix.</p>
 <p>The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.set_bounding_radius">
-<span class="sig-name descname"><span class="pre">set_bounding_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.set_bounding_radius" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_bounding_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.set_bounding_radius" title="Link to this definition"></a></dt>
 <dd><p>Manually sets the radius of the bounding circle centered at the origin for the ECT object.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><p>bound_radius (int): Either None, or a positive radius of the bounding circle.</p>

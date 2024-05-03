@@ -181,6 +181,26 @@ class EmbeddedGraph(nx.Graph):
             g[v] = np.dot(self.coordinates[v], omega)
         return g
     
+    def g_omega_edges(self, theta):
+        """
+        Calculates the function value of the edges of the graph by making the value equal to the max vertex value 
+
+        Parameters
+        theta : float 
+            The direction of the function to be calculated.
+        
+        Returns
+            g_edges : dict
+                A dictionary of the function values of the edges.
+        """
+        g = self.g_omega(theta)
+
+        g_edges = {}
+        for e in self.edges:
+            g_edges[e] = max(g[e[0]], g[e[1]])
+
+        return g_edges 
+ 
     def sort_vertices(self, theta,return_g = False):
         """
         Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
@@ -209,6 +229,35 @@ class EmbeddedGraph(nx.Graph):
             return  v_list, g
         else:
             return v_list
+
+    def sort_edges(self, theta,return_g = False):
+        """
+        Function to sort the edges of the graph according to the function 
+            g_omega(e) = max { g_omega(v) for v in e }
+        in the direction of theta \in [0,2*np.pi].
+
+        Parameters:
+            theta : float
+                The angle in [0,2*np.pi] for the direction to sort the vertices.
+            return_g : bool
+                Whether to return the g(v) values along with the sorted vertices.
+
+        Returns:
+            list: 
+                A list of vertices sorted in increasing order of the g(v) values. 
+            dict: 
+                If return_g is True, also returns the g dictionary with the function values. 
+
+        """
+        g_e = self.g_omega_edges(theta)
+
+        e_list = sorted(self.edges, key=lambda e: g_e[e])
+
+        if return_g:
+            # g_sorted = [g[v] for v in v_list]
+            return  e_list, g_e
+        else:
+            return e_list
         
     
     def lower_edges(self, v, omega):
@@ -230,19 +279,41 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v],omega) for v in L]
         return sum(n >= gv for n in Lg) # includes possible duplicate counts 
 
-    def plot(self):
+    def plot(self, bounding_circle = False, color_nodes_theta = None):
         """
         Function to plot the graph with the embedded coordinates.
+
+        If ``bounding_circle`` is True, a bounding circle is drawn around the graph.
+
+        If ``color_nodes_theta`` is not None, it should be given as a theta in [0,2pi]. Then the nodes are colored according to the g(v) values in the direction of theta.
 
         """
 
         fig, ax = plt.subplots()
 
         pos = self.coordinates
-        nx.draw(self, pos, with_labels=True, font_weight='bold')
+        if color_nodes_theta == None:
+            nx.draw(self, pos, with_labels=True)
+        else:
+            g = self.g_omega(color_nodes_theta)
+            color_map = [g[v] for v in self.nodes]
+            # Some weird plotting to make the colorbar work.
+            pathcollection = nx.draw_networkx_nodes(self, pos, node_color=color_map)
+            nx.draw_networkx_labels(self, pos=pos, font_color='black')
+            nx.draw_networkx_edges(self, pos)
+            plt.colorbar(pathcollection)
+
         plt.axis('on')
         ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
-        # plt.show()
+
+        if bounding_circle:
+            r = self.get_bounding_radius()
+            ax = plt.gca()
+            circle1 = plt.Circle((0, 0), r, fill = False, linestyle = '--', color = 'r')
+            ax.add_patch(circle1)
+            plt.axis('square')
+        
+        
 
 
 def create_example_graph(mean_centered = True):

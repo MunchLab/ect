@@ -64,9 +64,9 @@ class ECT:
         if self.bound_radius is None:
             self.threshes = None
         else:
-            self.threshes = np.linspace(bound_radius, -bound_radius, self.num_thresh)
+            self.threshes = np.linspace(-bound_radius, bound_radius, self.num_thresh)
 
-    def calculateECC(self, G, theta, tightbbox=False):
+    def calculateECC(self, G, theta, tightbbox = False):
         """
         Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).
 
@@ -84,7 +84,7 @@ class ECT:
         if tightbbox:
             # thresholds for filtration, r should be defined from global bounding box
             r = G.get_bounding_radius()
-            r_threshes = np.linspace(r, -r, self.num_thresh)
+            r_threshes = np.linspace(-r,r, self.num_thresh)
         else:
             # The user wants to use the internally determined bounding radius
             if self.bound_radius is None:
@@ -93,68 +93,41 @@ class ECT:
                 r = self.bound_radius
                 r_threshes = self.threshes
 
+        #--
+        def num_below_threshold(func_list,thresh):
+            """ 
+            Returns the number of entries in func_list that are below the threshold thresh. 
+            Warning: func_list must be sorted in ascending order.
 
-        # Direction given as 2d coordinates
-        omega = (np.cos(theta), np.sin(theta))
+            Parameters
+            func_list: list of floats
+            thresh: float
+
+            Returns
+                int 
+            """
+            func_max = func_list[-1]
+            if thresh < func_max:
+                return np.argmin(func_list < thresh)
+            else: 
+                return len(func_list)
+        #--    
         
-        # sort the vertices according to the direction
         v_list, g = G.sort_vertices(theta, return_g=True)
-                   
-        def count_duplicate_edges(newV):
-            """
-            Function to count the number of duplicate counted edges from lower_edges. These duplicate edges are added to the EC value.
-            """
+        g_list = [g[v] for v in v_list]
 
-            # @jit <----- Liz can't figure out how to make this work in here
-            def find_combos(newV):
-                #res = list(combinations(newV, 2))
-                res = []
-                n = len(newV)
-                for i in range(n):
-                    for j in range(i+1, n):
-                        res.append((newV[i], newV[j]))
-                return res
+        vertex_count = np.array([num_below_threshold(g_list,thresh) for thresh in r_threshes])
+        # print(vertex_count)
 
 
-            res = find_combos(newV)
-            count=0
-            for v,w in res:
-                if G.has_edge(v,w) and g[v]==g[w]:
-                    count+=1
-            return count
-        
+        e_list, g_e = G.sort_edges(np.pi/2, return_g=True)
+        g_e_list = [g_e[e] for e in e_list]
+        edge_count = np.array([num_below_threshold(g_e_list,thresh) for thresh in r_threshes])
+        # print(edge_count)
 
-        
-        # Full ECC vector
-        ecc=[]
-        ecc.append(0)
+        # print(vertex_count - edge_count)
+        ecc = vertex_count - edge_count
 
-        
-        for i in range(self.num_thresh):
-
-            #set of new vertices that appear in this threshold band
-            if i==self.num_thresh-1:
-                newV =list(compress(v_list,[r_threshes[i]>g[v] for v in v_list]))
-            else:
-                newV =list(compress(v_list,[r_threshes[i]>g[v]>=r_threshes[i+1] for v in v_list]))
-    
-            x = ecc[i]#previous value of ECC (not index i-1 becuase of extra 0 appended to begining)
-            if newV: # if there's new vertices to count
-                v_count=0
-                e_count=0
-                for v in newV:
-                    k = G.lower_edges(v, omega)
-                    v_count+=1 #add 1 to vertex count
-                    e_count+=k #subtract the the number of lower edges
-                #check for duplicate edges counted
-                dupl = count_duplicate_edges(newV)
-                # after counting all new vertices and edges
-                ecc.append(x+v_count-e_count+dupl)
-            else:
-                ecc.append(x)
-        ecc = ecc[1:] #Drop the initial 0 value
-        #print('ECC for direction', omega, '= ', ecc)
-        
         return ecc
 
     def calculateECT(self, graph, tightbbox=False):
@@ -186,7 +159,7 @@ class ECT:
 
 
 
-    def plotECC(self, graph, theta, tightbbox=False):
+    def plotECC(self, graph, theta):
         """
         Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.
 
@@ -197,10 +170,11 @@ class ECT:
                 The angle in [0,2*np.pi] for the direction to plot the ECC.
         """
 
-        ECC = self.calculateECC(graph, theta, tightbbox)
+        ECC = self.calculateECC(graph, theta)
         
         plt.step(self.threshes,ECC)
-        plt.title(r'ECC for $\omega = \frac{3 \pi}{4}$')
+        theta_round = str(np.round(theta,2))
+        plt.title(r'ECC for $\omega = ' + theta_round + '$')
         plt.xlabel('$a$')
         plt.ylabel(r'$\chi(K_a)$')
 
