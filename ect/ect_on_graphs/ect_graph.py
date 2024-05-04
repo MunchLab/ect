@@ -161,7 +161,7 @@ class ECT:
 
     def plotECC(self, graph, theta):
         """
-        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.
+        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
 
         Parameters:
             graph : EmbeddedGraph
@@ -182,7 +182,7 @@ class ECT:
     def plotECT(self):
 
         """
-        Function to plot the Euler Characteristic Transform (ECT) matrix.
+        Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.
 
         The resulting plot will have the angle on the x-axis and the threshold on the y-axis.
         """

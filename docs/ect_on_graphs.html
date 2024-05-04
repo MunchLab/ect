@@ -18,6 +18,7 @@
         <script src="_static/documentation_options.js?v=d45e8c67"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -62,9 +63,10 @@
 <li class="toctree-l2"><a class="reference internal" href="embed_graph.html">2.2. Embedded graphs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">3. Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">4. License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="citing.html">5. Citing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">6. Citing</a></li>
 </ul>
 
         </div>
@@ -160,7 +162,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECC">
 <span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
-<dd><p>Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta.</p>
+<dd><p>Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
 <dt>graph<span class="classifier">EmbeddedGraph</span></dt><dd><p>The input graph.</p>
@@ -175,7 +177,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECT">
 <span class="sig-name descname"><span class="pre">plotECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECT" title="Link to this definition"></a></dt>
-<dd><p>Function to plot the Euler Characteristic Transform (ECT) matrix.</p>
+<dd><p>Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.</p>
 <p>The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</p>
 </dd></dl>
 

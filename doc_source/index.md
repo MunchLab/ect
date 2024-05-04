@@ -10,6 +10,7 @@
 
    Getting Started <installation.md>
    Modules <modules.rst>
+   Tutorials <tutorials.md>
    Contributing <contributing.md>
    License <license.md>
    Citing <citing.md>
