@@ -9,7 +9,7 @@ class TestECT(unittest.TestCase):
         num_dirs = 8
         num_thresh = 10
         myect = ect_graph.ECT(num_dirs, num_thresh)
-        self.assertEqual( myect.matrix.shape, (8,10))
+        self.assertEqual( myect.ECT_matrix.shape, (8,10))
 
         r = G.get_bounding_radius()
         myect.set_bounding_radius(1.2*r)

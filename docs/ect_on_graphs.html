@@ -53,8 +53,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateECC"><code class="docutils literal notranslate"><span class="pre">ECT.calculateECC()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateECT"><code class="docutils literal notranslate"><span class="pre">ECT.calculateECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateSECT"><code class="docutils literal notranslate"><span class="pre">ECT.calculateSECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.get_ECT"><code class="docutils literal notranslate"><span class="pre">ECT.get_ECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.get_SECT"><code class="docutils literal notranslate"><span class="pre">ECT.get_SECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plot"><code class="docutils literal notranslate"><span class="pre">ECT.plot()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plotECC"><code class="docutils literal notranslate"><span class="pre">ECT.plotECC()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plotECT"><code class="docutils literal notranslate"><span class="pre">ECT.plotECT()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.plotSECT"><code class="docutils literal notranslate"><span class="pre">ECT.plotSECT()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.set_bounding_radius"><code class="docutils literal notranslate"><span class="pre">ECT.set_bounding_radius()</span></code></a></li>
 </ul>
 </li>
@@ -110,7 +115,9 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 </dd>
 <dt>bound_radius<span class="classifier">int</span></dt><dd><p>Either None, or a positive radius of the bounding circle.</p>
 </dd>
-<dt>matrix<span class="classifier">np.array</span></dt><dd><p>The matrix to store the ECT.</p>
+<dt>ECT_matrix<span class="classifier">np.array</span></dt><dd><p>The matrix to store the ECT.</p>
+</dd>
+<dt>SECT_matrix<span class="classifier">np.array</span></dt><dd><p>The matrix to store the SECT.</p>
 </dd>
 </dl>
 </dd>
@@ -141,7 +148,7 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECT">
-<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_SECT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Link to this definition"></a></dt>
 <dd><p>Calculates the ECT from an input EmbeddedGraph. The entry M[i,j] is $chi(K_{a_j})$ for the direction $omega_i$ where $a_j$ is the $j$th entry in self.threshes, and $omega_i$ is the ith entry in self.thetas.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -149,10 +156,50 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 </dd>
 <dt>tightbbox<span class="classifier">bool, optional</span></dt><dd><p>Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the <cite>set_bounding_box</cite> method.</p>
 </dd>
+<dt>compute_SECT<span class="classifier">bool, optional</span></dt><dd><p>Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn’t return it. Can be returned with the get_SECT method.</p>
+</dd>
 </dl>
 </dd>
 <dt>Returns:</dt><dd><dl class="simple">
 <dt>np.array</dt><dd><p>The matrix representing the ECT of size (num_dirs,num_thresh).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.calculateSECT">
+<span class="sig-name descname"><span class="pre">calculateSECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.calculateSECT" title="Link to this definition"></a></dt>
+<dd><p>Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>np.array</dt><dd><p>The matrix representing the SECT of size (num_dirs,num_thresh).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.get_ECT">
+<span class="sig-name descname"><span class="pre">get_ECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.get_ECT" title="Link to this definition"></a></dt>
+<dd><p>Returns the ECT matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.get_SECT">
+<span class="sig-name descname"><span class="pre">get_SECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.get_SECT" title="Link to this definition"></a></dt>
+<dd><p>Returns the SECT matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plot" title="Link to this definition"></a></dt>
+<dd><p>Function to plot the ECT or SECT matrix. The type parameter should be either ‘ECT’ or ‘SECT’.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>type<span class="classifier">str</span></dt><dd><p>The type of plot to make. Either ‘ECT’ or ‘SECT’.</p>
 </dd>
 </dl>
 </dd>
@@ -178,6 +225,13 @@ The result is a matrix where entry <code class="docutils literal notranslate"><s
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECT">
 <span class="sig-name descname"><span class="pre">plotECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotECT" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.</p>
+<p>The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.plotSECT">
+<span class="sig-name descname"><span class="pre">plotSECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ect_graph.ECT.plotSECT" title="Link to this definition"></a></dt>
+<dd><p>Function to plot the Smooth Euler Characteristic Transform (SECT) matrix. Note that the SECT matrix must be calculated before calling this function.</p>
 <p>The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</p>
 </dd></dl>
 
