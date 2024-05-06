@@ -18,8 +18,10 @@ class ECT:
             The number of thresholds to consider in the matrix.
         bound_radius : int
             Either None, or a positive radius of the bounding circle.
-        matrix : np.array
+        ECT_matrix : np.array
             The matrix to store the ECT.
+        SECT_matrix : np.array
+            The matrix to store the SECT.
 
     Methods
         __init__(num_dirs, num_thresh):
@@ -50,7 +52,8 @@ class ECT:
         self.num_thresh = num_thresh
         self.set_bounding_radius(bound_radius)
 
-        self.matrix = np.zeros((num_dirs, num_thresh))
+        self.ECT_matrix = np.zeros((num_dirs, num_thresh))
+        self.SECT_matrix = np.zeros((num_dirs, num_thresh))
 
     def set_bounding_radius(self, bound_radius):
         """
@@ -65,6 +68,18 @@ class ECT:
             self.threshes = None
         else:
             self.threshes = np.linspace(-bound_radius, bound_radius, self.num_thresh)
+
+    def get_ECT(self):
+        """
+        Returns the ECT matrix.
+        """
+        return self.ECT_matrix
+
+    def get_SECT(self):
+        """
+        Returns the SECT matrix.
+        """
+        return self.SECT_matrix
 
     def calculateECC(self, G, theta, tightbbox = False):
         """
@@ -130,7 +145,7 @@ class ECT:
 
         return ecc
 
-    def calculateECT(self, graph, tightbbox=False):
+    def calculateECT(self, graph, tightbbox=False, compute_SECT=True):
         """
         Calculates the ECT from an input EmbeddedGraph. The entry M[i,j] is $\chi(K_{a_j})$ for the direction $\omega_i$ where $a_j$ is the $j$th entry in self.threshes, and $\omega_i$ is the ith entry in self.thetas.
 
@@ -139,6 +154,8 @@ class ECT:
                 The input graph to calculate the ECT from.
             tightbbox : bool, optional
                 Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
+            compute_SECT : bool, optional
+                Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn't return it. Can be returned with the get_SECT method.
 
         Returns:
             np.array
@@ -153,11 +170,35 @@ class ECT:
         for i, theta in enumerate(self.thetas):
             M[i] = self.calculateECC(graph, theta, tightbbox)
         
-        self.matrix = M
+        self.ECT_matrix = M
+
+        if compute_SECT:
+            self.SECT_matrix = self.calculateSECT()
        
-        return self.matrix
+        return self.ECT_matrix
 
+    def calculateSECT(self):
+        """
+        Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix. 
 
+        Returns:
+            np.array
+                The matrix representing the SECT of size (num_dirs,num_thresh).
+        """
+
+        # Calculate the SECT
+        M = self.ECT_matrix
+
+        # Get average of each row, corresponds to each direction
+        A = np.average(M, axis = 1)
+
+        # Subtract the average from each row
+        M_normalized = M - A[:, np.newaxis]
+
+        # Take the cumulative sum of each row to get the SECT
+        M_SECT = np.cumsum(M_normalized, axis = 1)
+
+        return M_SECT
 
     def plotECC(self, graph, theta):
         """
@@ -193,7 +234,7 @@ class ECT:
         X,Y = np.meshgrid(thetas,self.threshes)
         M = np.zeros_like(X)
 
-        M[:,:-1] = self.matrix.T # Transpose to get the correct orientation
+        M[:,:-1] = self.ECT_matrix.T # Transpose to get the correct orientation
         M[:,-1] = M[:,0] # Add the 2pi direction to the 0 direction
         
 
@@ -221,3 +262,63 @@ class ECT:
         plt.ylabel(r'$a$')
 
         plt.title(r'ECT of Input Graph')
+    
+
+    def plotSECT(self):
+
+        """
+        Function to plot the Smooth Euler Characteristic Transform (SECT) matrix. Note that the SECT matrix must be calculated before calling this function.
+
+        The resulting plot will have the angle on the x-axis and the threshold on the y-axis.
+        """
+
+        # Make meshgrid.
+        # Add back the 2pi to thetas for the pcolormesh
+        thetas = np.concatenate((self.thetas,[2*np.pi]))
+        X,Y = np.meshgrid(thetas,self.threshes)
+        M = np.zeros_like(X)
+
+        M[:,:-1] = self.SECT_matrix.T # Transpose to get the correct orientation
+        M[:,-1] = M[:,0] # Add the 2pi direction to the 0 direction
+        
+
+        plt.pcolormesh(X,Y,M, cmap = 'viridis')
+        plt.colorbar()
+
+        ax = plt.gca()
+        ax.set_xticks(np.linspace(0,2*np.pi,9))
+
+        labels = [r'$0$',
+                r'$\frac{\pi}{4}$',
+                r'$\frac{\pi}{2}$',
+                r'$\frac{3\pi}{4}$',
+                r'$\pi$',
+                r'$\frac{5\pi}{4}$',
+                r'$\frac{3\pi}{2}$',
+                r'$\frac{7\pi}{4}$',
+                r'$2\pi$',
+                ]
+
+        ax.set_xticklabels(labels)
+
+
+        plt.xlabel(r'$\omega$')
+        plt.ylabel(r'$t$')
+
+        plt.title(r'SECT of Input Graph')
+
+    def plot(self, type):
+        """
+        Function to plot the ECT or SECT matrix. The type parameter should be either 'ECT' or 'SECT'.
+
+        Parameters:
+            type : str
+                The type of plot to make. Either 'ECT' or 'SECT'.
+        """
+
+        if type == 'ECT':
+            self.plotECT()
+        elif type == 'SECT':
+            self.plotSECT()
+        else:
+            raise ValueError('Type must be either "ECT" or "SECT".')
