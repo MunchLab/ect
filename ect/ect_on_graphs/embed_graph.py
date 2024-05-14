@@ -185,11 +185,13 @@ class EmbeddedGraph(nx.Graph):
         """
         Calculates the function value of the edges of the graph by making the value equal to the max vertex value 
 
-        Parameters
-        theta : float 
-            The direction of the function to be calculated.
-        
-        Returns
+        Parameters:
+
+            theta : float 
+                The direction of the function to be calculated.
+            
+        Returns:
+
             g_edges : dict
                 A dictionary of the function values of the edges.
         """
@@ -232,21 +234,25 @@ class EmbeddedGraph(nx.Graph):
 
     def sort_edges(self, theta,return_g = False):
         """
-        Function to sort the edges of the graph according to the function 
-            g_omega(e) = max { g_omega(v) for v in e }
-        in the direction of theta \in [0,2*np.pi].
+        Function to sort the edges of the graph according to the function
+
+        .. math ::
+
+            g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
+        
+        in the direction of :math:`\\theta \in [0,2\pi]` .
 
         Parameters:
             theta : float
-                The angle in [0,2*np.pi] for the direction to sort the vertices.
+                The angle in :math:`[0,2\pi]` for the direction to sort the vertices.
             return_g : bool
-                Whether to return the g(v) values along with the sorted vertices.
+                Whether to return the :math:`g(v)` values along with the sorted vertices.
 
         Returns:
             list: 
-                A list of vertices sorted in increasing order of the g(v) values. 
+                A list of vertices sorted in increasing order of the :math:`g(v)` values. 
             dict: 
-                If return_g is True, also returns the g dictionary with the function values. 
+                If ``return_g`` is True, also returns the ``g`` dictionary with the function values. 
 
         """
         g_e = self.g_omega_edges(theta)
@@ -285,7 +291,7 @@ class EmbeddedGraph(nx.Graph):
 
         If ``bounding_circle`` is True, a bounding circle is drawn around the graph.
 
-        If ``color_nodes_theta`` is not None, it should be given as a theta in [0,2pi]. Then the nodes are colored according to the g(v) values in the direction of theta.
+        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
 
         """
 
@@ -318,10 +324,10 @@ class EmbeddedGraph(nx.Graph):
 
 def create_example_graph(mean_centered = True):
     """
-    Function to create an example EmbeddedGraph object. Helpful for testing.
+    Function to create an example ``EmbeddedGraph`` object. Helpful for testing.
 
     Returns:
-        EmbeddedGraph: An example EmbeddedGraph object.
+        EmbeddedGraph: An example ``EmbeddedGraph`` object.
 
     """
     graph = EmbeddedGraph()

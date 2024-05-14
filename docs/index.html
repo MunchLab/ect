@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ect: Euler Characteristic Transform in Python &mdash; ect 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -68,9 +68,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">ect</span></code>: Euler Characteristic Transform in Python</li>
+      <li class="breadcrumb-item active">ect: Euler Characteristic Transform in Python</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,9 +79,10 @@
            <div itemprop="articleBody">
              
   <section id="ect-euler-characteristic-transform-in-python">
-<h1><code class="docutils literal notranslate"><span class="pre">ect</span></code>: Euler Characteristic Transform in Python<a class="headerlink" href="#ect-euler-characteristic-transform-in-python" title="Link to this heading"></a></h1>
+<h1>ect: Euler Characteristic Transform in Python<a class="headerlink" href="#ect-euler-characteristic-transform-in-python" title="Permalink to this heading"></a></h1>
+<p>Python computation tools for computing the Euler Characteristic Transform of embedded graphs.</p>
 <section id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -114,15 +115,59 @@
 </ul>
 </div>
 </section>
-<section id="collaborators">
-<h2>Collaborators<a class="headerlink" href="#collaborators" title="Link to this heading"></a></h2>
-<p>The code is a compilation of work done by <a class="reference external" href="http://www.elizabethmunch.com">Elizabeth Munch</a> along with her students and collaborators.  People who have contributed to <code class="docutils literal notranslate"><span class="pre">ect</span></code> include:</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>Right now, the content includes stuff for doing ECT on graphs embedded in 2D. Eventually the goal is to get voxel versions, higher dimensional simplicial complexes, etc in here.</p>
+<p>For more information on the ECT, see:</p>
+<blockquote>
+<div><p>Elizabeth Munch. An Invitation to the Euler Characteristic Transform. <a class="reference external" href="https://arxiv.org/abs/2310.10395">arXiv:2310.10395</a>. 2023.</p>
+</div></blockquote>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<section id="documentation-and-tutorials">
+<h3>Documentation and tutorials<a class="headerlink" href="#documentation-and-tutorials" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>The documentation is available at: <a class="reference external" href="https://munchlab.github.io/ect/">munchlab.github.io/ect</a></p></li>
+<li><p>A tutorial jupyter notebook can be found <a class="reference external" href="https://munchlab.github.io/ect/notebooks/Tutorial-ECT_for_embedded_graphs.html">here</a></p></li>
+</ul>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>networkx</cite></p></li>
+<li><p><cite>numpy</cite></p></li>
+<li><p><cite>matplotlib</cite></p></li>
+<li><p><cite>numba</cite></p></li>
+</ul>
+</section>
+<section id="installing">
+<h3>Installing<a class="headerlink" href="#installing" title="Permalink to this heading"></a></h3>
+<p>The package can be installed using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ect
+</pre></div>
+</div>
+<p>Alternatively, you can clone the repo and install directly</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:MunchLab/ect.git
+<span class="nb">cd</span><span class="w"> </span>ect
+pip<span class="w"> </span>install<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this heading"></a></h2>
+<p>This code was written by <a class="reference external" href="https://elizabethmunch.com/">Liz Munch</a> along with her research group and collaborators. People who have contributed to <cite>ect</cite> include:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.sarah-mcguire.com/">Sarah McGuire</a></p></li>
 </ul>
 </section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<p>This project is licensed under the GPLv3 License - see the License file for details</p>
+</section>
 <section id="contact-information">
-<h2>Contact Information<a class="headerlink" href="#contact-information" title="Link to this heading"></a></h2>
+<h2>Contact Information<a class="headerlink" href="#contact-information" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Liz Munch: <a class="reference external" href="http://www.elizabethmunch.com">Website</a>, <a class="reference external" href="mailto:muncheli&#37;&#52;&#48;msu&#46;edu">Email</a></p></li>
 </ul>

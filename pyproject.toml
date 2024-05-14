@@ -1,0 +1,28 @@
+[project]
+name = "ect"
+version = "0.1.3"
+authors = [
+  { name="Liz Munch", email="muncheli@msu.edu" },
+]
+description = "A python package for computing the Euler Characteristic Transform"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = ["numpy",
+            "networkx",
+            "matplotlib",
+            "numba",
+            ]
+
+[tool.setuptools.packages.find]
+where = ["ect"]
+
+
+[project.urls]
+Homepage = "https://munchlab.github.io/ect"
+Repository = "https://github.com/MunchLab/ect"
+Issues = "https://github.com/MunchLab/ect/issues"

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 class ECT:
     """
     A class to calculate the Euler Characteristic Transform (ECT) from an input ``embed_graph.EmbeddedGraph``.
-    The result is a matrix where entry ``M[i,j]`` is ``chi(K_{a_i})`` for the direction $\omega_j$ where $a_i$ is the $i$th entry in ``self.threshes``, and $\omega_j$ is the ith entry in self.thetas.
+    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.threshes``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
 
     ...
 
