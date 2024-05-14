@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2.2. Embedded graphs &mdash; ect 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,27 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="ect_on_graphs.html">2.1. ECT on graphs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Embedded graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.add_edge"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_edge()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.add_vertex"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_vertex()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.g_omega"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.g_omega()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.g_omega_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.g_omega_edges()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_bounding_box"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_box()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_bounding_radius"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_radius()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_coordinates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.get_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_mean_centered_coordinates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.lower_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.lower_edges()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.plot"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.plot()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.set_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_coordinates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.set_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_mean_centered_coordinates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.sort_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.sort_edges()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_graph.EmbeddedGraph.sort_vertices"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.sort_vertices()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Embedded graphs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a></li>
@@ -105,10 +87,10 @@
            <div itemprop="articleBody">
              
   <section id="module-embed_graph">
-<span id="embedded-graphs"></span><h1><span class="section-number">2.2. </span>Embedded graphs<a class="headerlink" href="#module-embed_graph" title="Link to this heading"></a></h1>
+<span id="embedded-graphs"></span><h1><span class="section-number">2.2. </span>Embedded graphs<a class="headerlink" href="#module-embed_graph" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">EmbeddedGraph</span></span><a class="headerlink" href="#embed_graph.EmbeddedGraph" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">EmbeddedGraph</span></span><a class="headerlink" href="#embed_graph.EmbeddedGraph" title="Permalink to this definition"></a></dt>
 <dd><p>A class to represent a graph with 2D embedded coordinates for each vertex.</p>
 <dl class="simple">
 <dt>Attributes</dt><dd><dl class="simple">
@@ -130,7 +112,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.add_edge">
-<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_edge" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_edge" title="Permalink to this definition"></a></dt>
 <dd><p>Adds an edge between the vertices u and v if they exist.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -145,7 +127,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.add_vertex">
-<span class="sig-name descname"><span class="pre">add_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_vertex" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.add_vertex" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a vertex to the graph and assigns it the given coordinates.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -162,7 +144,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.g_omega">
-<span class="sig-name descname"><span class="pre">g_omega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.g_omega" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">g_omega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.g_omega" title="Permalink to this definition"></a></dt>
 <dd><p>Function to compute the function g_omega(v) for all vertices v in the graph in the direction of theta in [0,2*np.pi]. This function is defined by $g_omega(v) = &lt; pos(v), omega &gt;$.</p>
 <p>Parameters:</p>
 <blockquote>
@@ -179,25 +161,27 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.g_omega_edges">
-<span class="sig-name descname"><span class="pre">g_omega_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.g_omega_edges" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">g_omega_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.g_omega_edges" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the function value of the edges of the graph by making the value equal to the max vertex value</p>
-<p>Parameters
-theta : float</p>
+<p>Parameters:</p>
 <blockquote>
-<div><p>The direction of the function to be calculated.</p>
+<div><dl class="simple">
+<dt>theta<span class="classifier">float </span></dt><dd><p>The direction of the function to be calculated.</p>
+</dd>
+</dl>
 </div></blockquote>
-<dl class="simple">
-<dt>Returns</dt><dd><dl class="simple">
+<p>Returns:</p>
+<blockquote>
+<div><dl class="simple">
 <dt>g_edges<span class="classifier">dict</span></dt><dd><p>A dictionary of the function values of the edges.</p>
 </dd>
 </dl>
-</dd>
-</dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_bounding_box">
-<span class="sig-name descname"><span class="pre">get_bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_box" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_box" title="Permalink to this definition"></a></dt>
 <dd><p>Method to find a bounding box of the vertex coordinates in the graph.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>list: A list of tuples representing the minimum and maximum x and y coordinates.</p>
@@ -207,7 +191,7 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_bounding_radius">
-<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_radius" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_bounding_radius" title="Permalink to this definition"></a></dt>
 <dd><p>Method to find the radius of the bounding circle of the vertex coordinates in the graph.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>float: The radius of the bounding circle.</p>
@@ -217,7 +201,7 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_coordinates">
-<span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_coordinates" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_coordinates" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the coordinates of the given vertex.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -232,7 +216,7 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.get_mean_centered_coordinates">
-<span class="sig-name descname"><span class="pre">get_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_mean_centered_coordinates" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.get_mean_centered_coordinates" title="Permalink to this definition"></a></dt>
 <dd><p>Method to find the mean-centered coordinates of the vertices in the graph.</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>dict: A dictionary mapping vertices to their mean-centered coordinates.</p>
@@ -242,7 +226,7 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.lower_edges">
-<span class="sig-name descname"><span class="pre">lower_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.lower_edges" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">lower_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.lower_edges" title="Permalink to this definition"></a></dt>
 <dd><p>Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -259,15 +243,15 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Function to plot the graph with the embedded coordinates.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in [0,2pi]. Then the nodes are colored according to the g(v) values in the direction of theta.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in <span class="math notranslate nohighlight">\([0,2\pi]\)</span>. Then the nodes are colored according to the <span class="math notranslate nohighlight">\(g(v)\)</span> values in the direction of theta.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.set_coordinates">
-<span class="sig-name descname"><span class="pre">set_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_coordinates" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_coordinates" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the coordinates of the given vertex.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
@@ -286,30 +270,29 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.set_mean_centered_coordinates">
-<span class="sig-name descname"><span class="pre">set_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_mean_centered_coordinates" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.set_mean_centered_coordinates" title="Permalink to this definition"></a></dt>
 <dd><p>Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.sort_edges">
-<span class="sig-name descname"><span class="pre">sort_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.sort_edges" title="Link to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>Function to sort the edges of the graph according to the function </dt><dd><p>g_omega(e) = max { g_omega(v) for v in e }</p>
-</dd>
-</dl>
-<p>in the direction of theta in [0,2*np.pi].</p>
+<span class="sig-name descname"><span class="pre">sort_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.sort_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Function to sort the edges of the graph according to the function</p>
+<div class="math notranslate nohighlight">
+\[g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}\]</div>
+<p>in the direction of <span class="math notranslate nohighlight">\(\theta \in [0,2\pi]\)</span> .</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><dl class="simple">
-<dt>theta<span class="classifier">float</span></dt><dd><p>The angle in [0,2*np.pi] for the direction to sort the vertices.</p>
+<dt>theta<span class="classifier">float</span></dt><dd><p>The angle in <span class="math notranslate nohighlight">\([0,2\pi]\)</span> for the direction to sort the vertices.</p>
 </dd>
-<dt>return_g<span class="classifier">bool</span></dt><dd><p>Whether to return the g(v) values along with the sorted vertices.</p>
+<dt>return_g<span class="classifier">bool</span></dt><dd><p>Whether to return the <span class="math notranslate nohighlight">\(g(v)\)</span> values along with the sorted vertices.</p>
 </dd>
 </dl>
 </dd>
 <dt>Returns:</dt><dd><dl class="simple">
-<dt>list: </dt><dd><p>A list of vertices sorted in increasing order of the g(v) values.</p>
+<dt>list: </dt><dd><p>A list of vertices sorted in increasing order of the <span class="math notranslate nohighlight">\(g(v)\)</span> values.</p>
 </dd>
-<dt>dict: </dt><dd><p>If return_g is True, also returns the g dictionary with the function values.</p>
+<dt>dict: </dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">return_g</span></code> is True, also returns the <code class="docutils literal notranslate"><span class="pre">g</span></code> dictionary with the function values.</p>
 </dd>
 </dl>
 </dd>
@@ -318,7 +301,7 @@ theta : float</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="embed_graph.EmbeddedGraph.sort_vertices">
-<span class="sig-name descname"><span class="pre">sort_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.sort_vertices" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sort_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.EmbeddedGraph.sort_vertices" title="Permalink to this definition"></a></dt>
 <dd><p>Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta in [0,2*np.pi].</p>
 <p>TODO: eventually, do we want this to return a sorted list of g values as well? Since we’re already doing the sorting work, it might be helpful.</p>
 <dl class="simple">
@@ -343,10 +326,10 @@ theta : float</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="embed_graph.create_example_graph">
-<span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">create_example_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.create_example_graph" title="Link to this definition"></a></dt>
-<dd><p>Function to create an example EmbeddedGraph object. Helpful for testing.</p>
+<span class="sig-prename descclassname"><span class="pre">embed_graph.</span></span><span class="sig-name descname"><span class="pre">create_example_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#embed_graph.create_example_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Function to create an example <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> object. Helpful for testing.</p>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>EmbeddedGraph: An example EmbeddedGraph object.</p>
+<dt>Returns:</dt><dd><p>EmbeddedGraph: An example <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> object.</p>
 </dd>
 </dl>
 </dd></dl>
