@@ -17,7 +17,7 @@ clean:
 
 tests:
 	# Running unittests
-	@pytest
+	@python -m unittest
 
 release:
 	python setup.py sdist bdist_wheel

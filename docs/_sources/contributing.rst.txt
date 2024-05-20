@@ -92,7 +92,7 @@ You should always include tests for new features and bug fixes. The `ect` packag
 
     pytest
 
-or by running::
+or the standard `unittest` python framework by running::
 
     make tests
 
