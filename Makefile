@@ -17,7 +17,7 @@ clean:
 
 tests:
 	# Running unittests
-	@python -m unittest
+	@pytest
 
 release:
 	python setup.py sdist bdist_wheel
@@ -31,26 +31,11 @@ html:
 	rm -r docs/html
 	
 all:
-	# Cleaning build folder
-	@mkdir $(shell pwd)/build/temp
-	@rm -rf $(shell pwd)/build/
-	@mkdir $(shell pwd)/build/
-	
-	# Cleaning docs folder
-	@mkdir $(shell pwd)/docs/temp
-	@rm -rf $(shell pwd)/docs/
-	@mkdir $(shell pwd)/docs/
-	
-	# Running sphinx-build to build html files.
-	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	
-	# Copying over contents of build/html to docs
-	@mkdir $(shell pwd)/docs/.doctrees
-	@cp -a $(shell pwd)/build/doctrees/. $(shell pwd)/docs/.doctrees/
-	@cp -a $(shell pwd)/build/html/. $(shell pwd)/docs/
-	
 	# Running autopep8
-	@autopep8 -r --in-place ect/
+	@make clean
+	
+	# Generate documentation 
+	@make html
 	
 	# Running unittests
-	@python -m unittest
+	@make tests

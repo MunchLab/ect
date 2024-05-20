@@ -11,21 +11,11 @@ class EmbeddedGraph(nx.Graph):
         coordinates : dict
             a dictionary mapping vertices to their (x, y) coordinates
 
-    Methods
-        add_vertex(vertex, x, y):
-            Adds a vertex to the graph and assigns it the given coordinates.
-        add_edge(u, v):
-            Adds an edge between the vertices u and v.
-        get_coordinates(vertex):
-            Returns the coordinates of the given vertex.
-        set_coordinates(vertex, x, y):
-            Sets the coordinates of the given vertex.
-
     """
 
     def __init__(self):
         """
-        Constructs all the necessary attributes for the EmbeddedGraph object.
+        Initializes an empty EmbeddedGraph object.
 
         """
         super().__init__()
@@ -36,11 +26,11 @@ class EmbeddedGraph(nx.Graph):
         Adds a vertex to the graph and assigns it the given coordinates.
 
         Parameters:
-            vertex: str
+            vertex (str):
                 The vertex to be added.
-            x : float
+            x (float):
                 The x-coordinate of the vertex.
-            y : float
+            y (float):
                 The y-coordinate of the vertex.
 
         """
@@ -52,9 +42,9 @@ class EmbeddedGraph(nx.Graph):
         Adds an edge between the vertices u and v if they exist.
 
         Parameters:
-            u : str
+            u (str):
                 The first vertex of the edge.
-            v : str
+            v (str):
                 The second vertex of the edge.
 
         """
@@ -68,7 +58,7 @@ class EmbeddedGraph(nx.Graph):
         Returns the coordinates of the given vertex.
 
         Parameters:
-            vertex : str
+            vertex (str):
                 The vertex whose coordinates are to be returned.
 
         Returns:
@@ -82,11 +72,11 @@ class EmbeddedGraph(nx.Graph):
         Sets the coordinates of the given vertex.
 
         Parameters:
-            vertex : str
+            vertex (str):
                 The vertex whose coordinates are to be set.
-            x : float
+            x (float):
                 The new x-coordinate of the vertex.
-            y : float 
+            y (float): 
                 The new y-coordinate of the vertex.
 
         Raises:
@@ -97,8 +87,6 @@ class EmbeddedGraph(nx.Graph):
             self.coordinates[vertex] = (x, y)
         else:
             raise ValueError("Vertex does not exist in the graph.")
-
-
 
     def get_bounding_box(self):
         """
@@ -113,7 +101,7 @@ class EmbeddedGraph(nx.Graph):
 
         x_coords, y_coords = zip(*self.coordinates.values())
         return [(min(x_coords), max(x_coords)), (min(y_coords), max(y_coords))]
-    
+
     def get_bounding_radius(self):
         """
         Method to find the radius of the bounding circle of the vertex coordinates in the graph.
@@ -129,7 +117,7 @@ class EmbeddedGraph(nx.Graph):
         norms = [np.linalg.norm(point) for point in zip(x_coords, y_coords)]
 
         return max(norms)
-    
+
     def get_mean_centered_coordinates(self):
         """
         Method to find the mean-centered coordinates of the vertices in the graph.
@@ -145,54 +133,48 @@ class EmbeddedGraph(nx.Graph):
         mean_x, mean_y = np.mean(x_coords), np.mean(y_coords)
 
         return {v: (x - mean_x, y - mean_y) for v, (x, y) in self.coordinates.items()}
-    
-
 
     def set_mean_centered_coordinates(self):
         """
         Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates
 
         """
-        
+
         self.coordinates = self.get_mean_centered_coordinates()
-
-
-
 
     def g_omega(self, theta):
         """
-        Function to compute the function g_omega(v) for all vertices v in the graph in the direction of theta \in [0,2*np.pi]. This function is defined by $g_\omega(v) = < pos(v), \omega >$.
+        Function to compute the function :math:`g_\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \in [0,2\pi]` . This function is defined by :math:`g_\omega(v) = \langle \\texttt{pos}(v), \omega \\rangle` .
 
         Parameters:
 
-            theta : float
-                The angle in [0,2*np.pi] for the direction to compute the g(v) values.
+            theta (float):
+                The angle in :math:`[0,2\pi]` for the direction to compute the :math:`g(v)` values.
 
         Returns:
 
-            dict: A dictionary mapping vertices to their g(v) values.
+            dict: A dictionary mapping vertices to their :math:`g(v)` values.
 
         """
-        
+
         omega = (np.cos(theta), np.sin(theta))
 
         g = {}
         for v in self.nodes:
             g[v] = np.dot(self.coordinates[v], omega)
         return g
-    
+
     def g_omega_edges(self, theta):
         """
         Calculates the function value of the edges of the graph by making the value equal to the max vertex value 
 
         Parameters:
 
-            theta : float 
+            theta (float): 
                 The direction of the function to be calculated.
-            
-        Returns:
 
-            g_edges : dict
+        Returns:
+            dict
                 A dictionary of the function values of the edges.
         """
         g = self.g_omega(theta)
@@ -201,25 +183,24 @@ class EmbeddedGraph(nx.Graph):
         for e in self.edges:
             g_edges[e] = max(g[e[0]], g[e[1]])
 
-        return g_edges 
- 
-    def sort_vertices(self, theta,return_g = False):
+        return g_edges
+
+    def sort_vertices(self, theta, return_g=False):
         """
         Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
 
         TODO: eventually, do we want this to return a sorted list of g values as well? Since we're already doing the sorting work, it might be helpful.
 
         Parameters:
-            theta : float
+            theta (float):
                 The angle in [0,2*np.pi] for the direction to sort the vertices.
-            return_g : bool
+            return_g (bool):
                 Whether to return the g(v) values along with the sorted vertices.
 
         Returns:
-            list: 
-                A list of vertices sorted in increasing order of the g(v) values. 
-            dict: 
-                If return_g is True, also returns the g dictionary with the function values. 
+            list
+                A list of vertices sorted in increasing order of the :math:`g(v)` values. 
+                If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
 
         """
         g = self.g_omega(theta)
@@ -228,31 +209,29 @@ class EmbeddedGraph(nx.Graph):
 
         if return_g:
             # g_sorted = [g[v] for v in v_list]
-            return  v_list, g
+            return v_list, g
         else:
             return v_list
 
-    def sort_edges(self, theta,return_g = False):
+    def sort_edges(self, theta, return_g=False):
         """
         Function to sort the edges of the graph according to the function
 
         .. math ::
 
             g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
-        
+
         in the direction of :math:`\\theta \in [0,2\pi]` .
 
         Parameters:
-            theta : float
-                The angle in :math:`[0,2\pi]` for the direction to sort the vertices.
-            return_g : bool
-                Whether to return the :math:`g(v)` values along with the sorted vertices.
+            theta (float):
+                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+            return_g (bool):
+                Whether to return the :math:`g(v)` values along with the sorted edges.
 
         Returns:
-            list: 
-                A list of vertices sorted in increasing order of the :math:`g(v)` values. 
-            dict: 
-                If ``return_g`` is True, also returns the ``g`` dictionary with the function values. 
+            A list of edges sorted in increasing order of the :math:`g(v)` values. 
+            If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
 
         """
         g_e = self.g_omega_edges(theta)
@@ -261,19 +240,18 @@ class EmbeddedGraph(nx.Graph):
 
         if return_g:
             # g_sorted = [g[v] for v in v_list]
-            return  e_list, g_e
+            return e_list, g_e
         else:
             return e_list
-        
-    
+
     def lower_edges(self, v, omega):
         """
         Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).
 
         Parameters:
-            v : str
+            v (str):
                 The vertex to compute the number of lower edges for.
-            omega : tuple 
+            omega (tuple): 
                 The direction vector to consider given as an angle in [0, 2pi].
 
         Returns:
@@ -281,11 +259,11 @@ class EmbeddedGraph(nx.Graph):
 
         """
         L = [n for n in self.neighbors(v)]
-        gv = np.dot(self.coordinates[v],omega)
-        Lg = [np.dot(self.coordinates[v],omega) for v in L]
-        return sum(n >= gv for n in Lg) # includes possible duplicate counts 
+        gv = np.dot(self.coordinates[v], omega)
+        Lg = [np.dot(self.coordinates[v], omega) for v in L]
+        return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def plot(self, bounding_circle = False, color_nodes_theta = None):
+    def plot(self, bounding_circle=False, color_nodes_theta=None):
         """
         Function to plot the graph with the embedded coordinates.
 
@@ -304,25 +282,26 @@ class EmbeddedGraph(nx.Graph):
             g = self.g_omega(color_nodes_theta)
             color_map = [g[v] for v in self.nodes]
             # Some weird plotting to make the colorbar work.
-            pathcollection = nx.draw_networkx_nodes(self, pos, node_color=color_map)
+            pathcollection = nx.draw_networkx_nodes(
+                self, pos, node_color=color_map)
             nx.draw_networkx_labels(self, pos=pos, font_color='black')
             nx.draw_networkx_edges(self, pos)
             plt.colorbar(pathcollection)
 
         plt.axis('on')
-        ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
+        ax.tick_params(left=True, bottom=True,
+                       labelleft=True, labelbottom=True)
 
         if bounding_circle:
             r = self.get_bounding_radius()
             ax = plt.gca()
-            circle1 = plt.Circle((0, 0), r, fill = False, linestyle = '--', color = 'r')
+            circle1 = plt.Circle((0, 0), r, fill=False,
+                                 linestyle='--', color='r')
             ax.add_patch(circle1)
             plt.axis('square')
-        
-        
 
 
-def create_example_graph(mean_centered = True):
+def create_example_graph(mean_centered=True):
     """
     Function to create an example ``EmbeddedGraph`` object. Helpful for testing.
 
