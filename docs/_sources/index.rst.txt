@@ -7,16 +7,16 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :numbered:
    :caption: Contents:
 
-   Getting Started <installation.md>
+   Getting Started <installation.rst>
    Modules <modules.rst>
    Tutorials <tutorials.md>
-   Contributing <contributing.md>
+   Contributing <contributing.rst>
    License <license.md>
-   Citing <citing.md>
+   Citing <citing.rst>
 
 Description
 -----------

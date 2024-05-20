@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3.1. Tutorial : ECT for embedded graphs &mdash; ect 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>3.1. Tutorial : ECT for embedded graphs &mdash; ect 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
 
   
@@ -14,11 +15,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=360bc84d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -92,7 +93,7 @@
            <div itemprop="articleBody">
              
   <section id="Tutorial-:-ECT-for-embedded-graphs">
-<h1><span class="section-number">3.1. </span>Tutorial : ECT for embedded graphs<a class="headerlink" href="#Tutorial-:-ECT-for-embedded-graphs" title="Permalink to this heading"></a></h1>
+<h1><span class="section-number">3.1. </span>Tutorial : ECT for embedded graphs<a class="headerlink" href="#Tutorial-:-ECT-for-embedded-graphs" title="Link to this heading"></a></h1>
 <p>This jupyter notebook will walk you through using the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package to compute the Euler characteristic transform of a 2D embedded graph. This tutorial assumes you already know what an ECT is; see <a class="reference external" href="https://arxiv.org/abs/2310.10395">this paper</a> for a more thorough treatment of details.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -107,7 +108,7 @@
 </div>
 </div>
 <section id="Constructing-the-embedded-graph">
-<h2><span class="section-number">3.1.1. </span>Constructing the embedded graph<a class="headerlink" href="#Constructing-the-embedded-graph" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.1. </span>Constructing the embedded graph<a class="headerlink" href="#Constructing-the-embedded-graph" title="Link to this heading"></a></h2>
 <p>We assume our input is an undirected graph <span class="math notranslate nohighlight">\(G\)</span> with an embedding in 2D given by a map on the vertices <span class="math notranslate nohighlight">\(f: V(G) \to \mathbb{R}^2\)</span>. A graph can be constructed as follows.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -278,7 +279,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 </section>
 <section id="Computing-the-ECT-of-G">
-<h2><span class="section-number">3.1.2. </span>Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#Computing-the-ECT-of-G" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.2. </span>Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#Computing-the-ECT-of-G" title="Link to this heading"></a></h2>
 <p>Now we can set up the ECT for the embedded graph. The ECT is defined as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{matrix}
@@ -407,7 +408,7 @@ array([0, 0, 0, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0])
 </div>
 </section>
 <section id="SECT">
-<h2><span class="section-number">3.1.3. </span>SECT<a class="headerlink" href="#SECT" title="Permalink to this heading"></a></h2>
+<h2><span class="section-number">3.1.3. </span>SECT<a class="headerlink" href="#SECT" title="Link to this heading"></a></h2>
 <p>The Smooth Euler Characteristic Transform (SECT) can be calculated from the ECT. Fix a radius <span class="math notranslate nohighlight">\(R\)</span> bounding the graph. The average ECT in a direction <span class="math notranslate nohighlight">\(\omega\)</span> defined on function values <span class="math notranslate nohighlight">\([-R,R]\)</span> is given by</p>
 <div class="math notranslate nohighlight">
 \[\overline{\text{ECT}_\omega} = \frac{1}{2R} \int_{t = -R}^{R} \chi(g_\omega^{-1}(-\infty,t]) \; dt.\]</div>

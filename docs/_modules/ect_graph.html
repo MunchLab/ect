@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ect_graph &mdash; ect 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=360bc84d"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ect
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ect_graph</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ect_graph</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">compress</span><span class="p">,</span> <span class="n">combinations</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="ECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT">[docs]</a>
+<span class="k">class</span> <span class="nc">ECT</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to calculate the Euler Characteristic Transform (ECT) from an input embedded graph.</span>
+
+<span class="sd">    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.threshes``, and :math:`\omega_j` is the ith entry in ``self.thetas``.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        num_dirs (int):</span>
+<span class="sd">            The number of directions to consider in the matrix.</span>
+<span class="sd">        num_thresh (int):</span>
+<span class="sd">            The number of thresholds to consider in the matrix.</span>
+<span class="sd">        bound_radius (int):</span>
+<span class="sd">            Either ``None``, or a positive radius of the bounding circle.</span>
+<span class="sd">        ECT_matrix (np.array):</span>
+<span class="sd">            The matrix to store the ECT.</span>
+<span class="sd">        SECT_matrix (np.array):</span>
+<span class="sd">            The matrix to store the SECT.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ECT.__init__">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_dirs</span><span class="p">,</span> <span class="n">num_thresh</span><span class="p">,</span> <span class="n">bound_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs all the necessary attributes for the ECT object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            num_dirs (int):</span>
+<span class="sd">                The number of directions to consider in the matrix.</span>
+<span class="sd">            num_thresh (int):</span>
+<span class="sd">                The number of thresholds to consider in the matrix.</span>
+<span class="sd">            bound_radius (int):</span>
+<span class="sd">                Either None, or a positive radius of the bounding circle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="n">num_dirs</span>
+
+        <span class="c1"># Note: This version doesn&#39;t include 2pi since its the same as the 0 direction.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="n">num_thresh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="n">bound_radius</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">num_thresh</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SECT_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">num_thresh</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ECT.set_bounding_radius">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.set_bounding_radius">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_bounding_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bound_radius</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Manually sets the radius of the bounding circle centered at the origin for the ECT object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            bound_radius (int): </span>
+<span class="sd">                Either None, or a positive radius of the bounding circle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="o">=</span> <span class="n">bound_radius</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threshes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threshes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">bound_radius</span><span class="p">,</span>
+                                        <span class="n">bound_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ECT.get_ECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.get_ECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_ECT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the ECT matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span></div>
+
+
+<div class="viewcode-block" id="ECT.get_SECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.get_SECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_SECT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the SECT matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">SECT_matrix</span></div>
+
+
+<div class="viewcode-block" id="ECT.calculateECC">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.calculateECC">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculateECC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">tightbbox</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            G (nx.Graph):</span>
+<span class="sd">                The graph to compute the Euler Characteristic for.</span>
+<span class="sd">            theta (float):</span>
+<span class="sd">                The angle (in radians) to rotate the graph by before computing the Euler Characteristic.</span>
+<span class="sd">            tightbbox (bool):</span>
+<span class="sd">                If True, use the tight bounding box of the graph. If False, use the bounding circle. Default is False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Either use the global radius and the set self.threshes; or use the tight bounding box and calculate</span>
+        <span class="c1"># the thresholds from that.</span>
+        <span class="k">if</span> <span class="n">tightbbox</span><span class="p">:</span>
+            <span class="c1"># thresholds for filtration, r should be defined from global bounding box</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+            <span class="n">r_threshes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># The user wants to use the internally determined bounding radius</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;Bounding radius must be set before calculating ECC when you have tightbbox=False.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span>
+                <span class="n">r_threshes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshes</span>
+
+        <span class="c1"># --</span>
+        <span class="k">def</span> <span class="nf">num_below_threshold</span><span class="p">(</span><span class="n">func_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">            Returns the number of entries in func_list that are below the threshold thresh. </span>
+<span class="sd">            Warning: func_list must be sorted in ascending order.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">                func_list (list): sorted list of function values</span>
+<span class="sd">                thresh (float): threshold value</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">                int </span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">func_max</span> <span class="o">=</span> <span class="n">func_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">thresh</span> <span class="o">&lt;</span> <span class="n">func_max</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">func_list</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">func_list</span><span class="p">)</span>
+        <span class="c1"># --</span>
+
+        <span class="n">v_list</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">g_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">v_list</span><span class="p">]</span>
+
+        <span class="n">vertex_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num_below_threshold</span><span class="p">(</span>
+            <span class="n">g_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">r_threshes</span><span class="p">])</span>
+        <span class="c1"># print(vertex_count)</span>
+
+        <span class="n">e_list</span><span class="p">,</span> <span class="n">g_e</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sort_edges</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">g_e_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">g_e</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">e_list</span><span class="p">]</span>
+        <span class="n">edge_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num_below_threshold</span><span class="p">(</span>
+            <span class="n">g_e_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">r_threshes</span><span class="p">])</span>
+        <span class="c1"># print(edge_count)</span>
+
+        <span class="c1"># print(vertex_count - edge_count)</span>
+        <span class="n">ecc</span> <span class="o">=</span> <span class="n">vertex_count</span> <span class="o">-</span> <span class="n">edge_count</span>
+
+        <span class="k">return</span> <span class="n">ecc</span></div>
+
+
+<div class="viewcode-block" id="ECT.calculateECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.calculateECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculateECT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">tightbbox</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compute_SECT</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the ECT from an input ``EmbeddedGraph``. The entry ``M[i,j]`` is :math:`\\chi(K_{a_j})` for the direction :math:`\omega_i` where :math:`a_j` is the jth entry in ``self.threshes``, and :math:`\omega_i` is the ith entry in ``self.thetas``.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            graph (EmbeddedGraph):</span>
+<span class="sd">                The input graph to calculate the ECT from.</span>
+<span class="sd">            tightbbox (bool):</span>
+<span class="sd">                Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.</span>
+<span class="sd">            compute_SECT (bool):</span>
+<span class="sd">                Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn&#39;t return it. Can be returned with the get_SECT method.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array</span>
+<span class="sd">                The matrix representing the ECT of size (num_dirs,num_thresh).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">tightbbox</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">())</span>
+
+        <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thetas</span><span class="p">):</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">tightbbox</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span> <span class="o">=</span> <span class="n">M</span>
+
+        <span class="k">if</span> <span class="n">compute_SECT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SECT_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculateSECT</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span></div>
+
+
+<div class="viewcode-block" id="ECT.calculateSECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.calculateSECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculateSECT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix. </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.array</span>
+<span class="sd">                The matrix representing the SECT of size (num_dirs,num_thresh).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Calculate the SECT</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span>
+
+        <span class="c1"># Get average of each row, corresponds to each direction</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Subtract the average from each row</span>
+        <span class="n">M_normalized</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">A</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+        <span class="c1"># Take the cumulative sum of each row to get the SECT</span>
+        <span class="n">M_SECT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">M_normalized</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">M_SECT</span></div>
+
+
+<div class="viewcode-block" id="ECT.plotECC">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.plotECC">[docs]</a>
+    <span class="k">def</span> <span class="nf">plotECC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            graph (EmbeddedGraph):</span>
+<span class="sd">                The input graph.</span>
+<span class="sd">            theta (float):</span>
+<span class="sd">                The angle in :math:`[0,2\pi]` for the direction to plot the ECC.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ECC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshes</span><span class="p">,</span> <span class="n">ECC</span><span class="p">)</span>
+        <span class="n">theta_round</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECC for $\omega = &#39;</span> <span class="o">+</span> <span class="n">theta_round</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\chi(K_a)$&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ECT.plotECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.plotECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">plotECT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.</span>
+
+<span class="sd">        The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make meshgrid.</span>
+        <span class="c1"># Add back the 2pi to thetas for the pcolormesh</span>
+        <span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">thetas</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]))</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshes</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Transpose to get the correct orientation</span>
+        <span class="n">M</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECT_matrix</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">M</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Add the 2pi direction to the 0 direction</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
+                  <span class="p">]</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECT of Input Graph&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ECT.plotSECT">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.plotSECT">[docs]</a>
+    <span class="k">def</span> <span class="nf">plotSECT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to plot the Smooth Euler Characteristic Transform (SECT) matrix. Note that the SECT matrix must be calculated before calling this function.</span>
+
+<span class="sd">        The resulting plot will have the angle on the x-axis and the threshold on the y-axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make meshgrid.</span>
+        <span class="c1"># Add back the 2pi to thetas for the pcolormesh</span>
+        <span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">thetas</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]))</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshes</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Transpose to get the correct orientation</span>
+        <span class="n">M</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SECT_matrix</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">M</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Add the 2pi direction to the 0 direction</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
+                  <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
+                  <span class="p">]</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;SECT of Input Graph&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ECT.plot">
+<a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT.plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to plot the ECT or SECT matrix. The type parameter should be either &#39;ECT&#39; or &#39;SECT&#39;.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            plot_type : str</span>
+<span class="sd">                The type of plot to make. Either &#39;ECT&#39; or &#39;SECT&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">plot_type</span> <span class="o">==</span> <span class="s1">&#39;ECT&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">plot_type</span> <span class="o">==</span> <span class="s1">&#39;SECT&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plotSECT</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;plot_type must be either &quot;ECT&quot; or &quot;SECT&quot;.&#39;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

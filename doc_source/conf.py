@@ -28,7 +28,7 @@ copyright = '2024, MunchLab'
 author = 'MunchLab'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '0.1.3'
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,14 +36,24 @@ release = '0.0.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 'myst_parser', 
-              "sphinx.ext.githubpages",
+extensions = ['sphinx.ext.autodoc',
+            #   'numpydoc',
+              'sphinx.ext.coverage',
+              'sphinx.ext.napoleon',
+              'matplotlib.sphinxext.mathmpl',
+              'matplotlib.sphinxext.plot_directive',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.doctest',
+              'sphinx.ext.intersphinx',
+              'sphinx.ext.todo',
               'sphinx.ext.mathjax',
-              "sphinx.ext.autodoc",
-                "sphinx.ext.autosummary",
-                # "myst_nb"
-                "nbsphinx"
-]
+              'sphinx.ext.ifconfig',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.githubpages',
+              'myst_parser', 
+              'sphinx.ext.autosummary',
+              'nbsphinx',
+              'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -60,6 +70,15 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'special-members': '__init__',
+    'undoc-members': True,
+    'exclude-members': '__weakref__'
+}
+numpydoc_show_class_members = False
+autodoc_typehints = "none"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
