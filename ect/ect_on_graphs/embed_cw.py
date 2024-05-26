@@ -46,7 +46,10 @@ class EmbeddedCW(EmbeddedGraph):
 
         TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)
         """
-        self.faces.append(face)
+
+        # Note: faces need to be tuples to make
+        # the face hashable so it can be used as a key in a dictionary
+        self.faces.append(tuple(face))
 
     def g_omega_faces(self, theta):
         """

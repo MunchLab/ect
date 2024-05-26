@@ -57,6 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.__init__"><code class="docutils literal notranslate"><span class="pre">ECT.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.set_bounding_radius"><code class="docutils literal notranslate"><span class="pre">ECT.set_bounding_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.get_radius_and_thresh"><code class="docutils literal notranslate"><span class="pre">ECT.get_radius_and_thresh()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.get_ECT"><code class="docutils literal notranslate"><span class="pre">ECT.get_ECT()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.get_SECT"><code class="docutils literal notranslate"><span class="pre">ECT.get_SECT()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect_graph.ECT.calculateECC"><code class="docutils literal notranslate"><span class="pre">ECT.calculateECC()</span></code></a></li>
@@ -152,6 +153,27 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ect_graph.ECT.get_radius_and_thresh">
+<span class="sig-name descname"><span class="pre">get_radius_and_thresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.get_radius_and_thresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.get_radius_and_thresh" title="Link to this definition"></a></dt>
+<dd><p>An internally used function to get the bounding radius and thresholds for the ECT calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> (<em>EmbeddedGraph/EmbeddedCW</em>) – The input graph to calculate the ECT for.</p></li>
+<li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>float, np.array</dt><dd><p>The bounding radius and the thresholds for the ECT calculation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.get_ECT">
 <span class="sig-name descname"><span class="pre">get_ECT</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.get_ECT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.get_ECT" title="Link to this definition"></a></dt>
 <dd><p>Returns the ECT matrix.</p>
@@ -165,14 +187,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECC">
-<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Link to this definition"></a></dt>
-<dd><p>Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).</p>
+<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Link to this definition"></a></dt>
+<dd><p>Function to compute the Euler Characteristic of an <cite>EmbeddedGraph</cite>, that is, a graph with coordinates for each vertex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>G</strong> (<em>nx.Graph</em>) – The graph to compute the Euler Characteristic for.</p></li>
-<li><p><strong>theta</strong> (<em>float</em>) – The angle (in radians) to rotate the graph by before computing the Euler Characteristic.</p></li>
-<li><p><strong>tightbbox</strong> (<em>bool</em>) – If True, use the tight bounding box of the graph. If False, use the bounding circle. Default is False.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The angle (in radians) to use for the direction function when computing the Euler Characteristic Curve.</p></li>
+<li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -180,13 +202,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECT">
-<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tightbbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_SECT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Link to this definition"></a></dt>
-<dd><p>Calculates the ECT from an input <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code>. The entry <code class="docutils literal notranslate"><span class="pre">M[i,j]</span></code> is <span class="math notranslate nohighlight">\(\chi(K_{a_j})\)</span> for the direction <span class="math notranslate nohighlight">\(\omega_i\)</span> where <span class="math notranslate nohighlight">\(a_j\)</span> is the jth entry in <code class="docutils literal notranslate"><span class="pre">self.threshes</span></code>, and <span class="math notranslate nohighlight">\(\omega_i\)</span> is the ith entry in <code class="docutils literal notranslate"><span class="pre">self.thetas</span></code>.</p>
+<span class="sig-name descname"><span class="pre">calculateECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_SECT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECT" title="Link to this definition"></a></dt>
+<dd><p>Calculates the ECT from an input either <cite>EmbeddedGraph</cite> or <cite>EmbeddedCW</cite>. The entry <code class="docutils literal notranslate"><span class="pre">M[i,j]</span></code> is <span class="math notranslate nohighlight">\(\chi(K_{a_j})\)</span> for the direction <span class="math notranslate nohighlight">\(\omega_i\)</span> where <span class="math notranslate nohighlight">\(a_j\)</span> is the jth entry in <code class="docutils literal notranslate"><span class="pre">self.threshes</span></code>, and <span class="math notranslate nohighlight">\(\omega_i\)</span> is the ith entry in <code class="docutils literal notranslate"><span class="pre">self.thetas</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>graph</strong> (<a class="reference internal" href="embed_graph.html#embed_graph.EmbeddedGraph" title="embed_graph.EmbeddedGraph"><em>EmbeddedGraph</em></a>) – The input graph to calculate the ECT from.</p></li>
-<li><p><strong>tightbbox</strong> (<em>bool</em>) – Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the <cite>set_bounding_box</cite> method.</p></li>
+<li><p><strong>graph</strong> (<em>EmbeddedGraph/EmbeddedCW</em>) – The input graph to calculate the ECT from.</p></li>
+<li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
 <li><p><strong>compute_SECT</strong> (<em>bool</em>) – Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn’t return it. Can be returned with the get_SECT method.</p></li>
 </ul>
 </dd>
@@ -217,13 +239,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECC">
-<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.plotECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.plotECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>graph</strong> (<a class="reference internal" href="embed_graph.html#embed_graph.EmbeddedGraph" title="embed_graph.EmbeddedGraph"><em>EmbeddedGraph</em></a>) – The input graph.</p></li>
+<li><p><strong>graph</strong> (<em>EmbeddedGraph/EmbeddedCW</em>) – The input graph or CW complex.</p></li>
 <li><p><strong>theta</strong> (<em>float</em>) – The angle in <span class="math notranslate nohighlight">\([0,2\pi]\)</span> for the direction to plot the ECC.</p></li>
+<li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
