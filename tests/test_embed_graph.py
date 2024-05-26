@@ -29,6 +29,12 @@ class TestEmbeddedGraph(unittest.TestCase):
         coords = G.get_coordinates('A')
         self.assertEqual( coords, (1, 2))
 
+    def test_coords_list(self):
+        # Make sure the keys in the coordinates list are the same as the nodes
+        G = embed_graph.create_example_graph(mean_centered=False)
+        self.assertEqual( len(G.nodes), len(G.coordinates))
+        self.assertEqual( set(G.nodes), set(G.coordinates.keys()))
+
     def test_mean_centered_coordinates(self):
         # Make sure the mean centered coordinates are correct
         G = embed_graph.create_example_graph(mean_centered=False)
