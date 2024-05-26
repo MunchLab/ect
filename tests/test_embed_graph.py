@@ -10,10 +10,10 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertEqual( len(G.nodes), 6)  # assuming my_function squares its input
 
 
-    def test_add_vertex(self):
+    def test_add_node(self):
         # Make sure adding a vertex updates the coordiantes list 
         G = embed_graph.create_example_graph()
-        G.add_vertex('G', 1, 2)
+        G.add_node('G', 1, 2)
         self.assertEqual( len(G.nodes), 7)
         self.assertEqual( len(G.coordinates), 7)
 

@@ -4,3 +4,4 @@
 
 from .ect_graph import ECT
 from .embed_graph import EmbeddedGraph, create_example_graph
+from .embed_cw import EmbeddedCW
