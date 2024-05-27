@@ -94,7 +94,8 @@ class ECT:
         else:
             # The user wants to use a different bounding radius
             if bound_radius <= 0:
-                raise ValueError(f'Bounding radius given was {bound_radius}, but must be a positive number.')
+                raise ValueError(
+                    f'Bounding radius given was {bound_radius}, but must be a positive number.')
             r = bound_radius
             r_threshes = np.linspace(-r, r, self.num_thresh)
 
@@ -112,7 +113,7 @@ class ECT:
         """
         return self.SECT_matrix
 
-    def calculateECC(self, G, theta, bound_radius=None):
+    def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
         """
         Function to compute the Euler Characteristic of an `EmbeddedGraph`, that is, a graph with coordinates for each vertex.
 
@@ -123,6 +124,8 @@ class ECT:
                 The angle (in radians) to use for the direction function when computing the Euler Characteristic Curve.
             bound_radius (float):
                 If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
+            return_counts (bool):
+                Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.
         """
 
         r, r_threshes = self.get_radius_and_thresh(G, bound_radius)
@@ -158,7 +161,7 @@ class ECT:
             g_list, thresh) for thresh in r_threshes])
         # print(vertex_count)
 
-        e_list, g_e = G.sort_edges(np.pi/2, return_g=True)
+        e_list, g_e = G.sort_edges(theta, return_g=True)
         g_e_list = [g_e[e] for e in e_list]
         edge_count = np.array([num_below_threshold(
             g_e_list, thresh) for thresh in r_threshes])
@@ -176,7 +179,10 @@ class ECT:
         # print(vertex_count - edge_count)
         ecc = vertex_count - edge_count + face_count
 
-        return ecc
+        if return_counts:
+            return ecc, vertex_count, edge_count, face_count
+        else:
+            return ecc
 
     def calculateECT(self, graph, bound_radius=None, compute_SECT=True):
         """
@@ -235,7 +241,7 @@ class ECT:
 
         return M_SECT
 
-    def plotECC(self, graph, theta, bound_radius=None):
+    def plotECC(self, graph, theta, bound_radius=None, draw_counts=False):
         """
         Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
 
@@ -249,13 +255,23 @@ class ECT:
         """
 
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
+        if not draw_counts:
+            ECC = self.calculateECC(graph, theta, r)
+        else:
+            ECC, vertex_count, edge_count, face_count = self.calculateECC(
+                graph, theta, r, return_counts=True)
 
-        ECC = self.calculateECC(graph, theta, r)
+        # if self.threshes is None:
+        #     self.set_bounding_radius(graph.get_bounding_radius())
 
-        if self.threshes is None:
-            self.set_bounding_radius(graph.get_bounding_radius())
+        plt.step(r_threshes, ECC, label='ECC')
 
-        plt.step(r_threshes, ECC)
+        if draw_counts:
+            plt.step(r_threshes, vertex_count, label='Vertices')
+            plt.step(r_threshes, edge_count, label='Edges')
+            plt.step(r_threshes, face_count, label='Faces')
+            plt.legend()
+
         theta_round = str(np.round(theta, 2))
         plt.title(r'ECC for $\omega = ' + theta_round + '$')
         plt.xlabel('$a$')

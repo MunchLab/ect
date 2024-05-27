@@ -188,7 +188,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.calculateECC">
-<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">calculateECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.calculateECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.calculateECC" title="Link to this definition"></a></dt>
 <dd><p>Function to compute the Euler Characteristic of an <cite>EmbeddedGraph</cite>, that is, a graph with coordinates for each vertex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -196,6 +196,7 @@
 <li><p><strong>G</strong> (<em>nx.Graph</em>) – The graph to compute the Euler Characteristic for.</p></li>
 <li><p><strong>theta</strong> (<em>float</em>) – The angle (in radians) to use for the direction function when computing the Euler Characteristic Curve.</p></li>
 <li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
+<li><p><strong>return_counts</strong> (<em>bool</em>) – Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -240,7 +241,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect_graph.ECT.plotECC">
-<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.plotECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plotECC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT.plotECC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT.plotECC" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
