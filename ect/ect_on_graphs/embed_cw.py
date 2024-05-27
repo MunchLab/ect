@@ -3,6 +3,7 @@ from itertools import compress, combinations
 import matplotlib.pyplot as plt
 import networkx as nx
 from ect.ect_on_graphs.embed_graph import EmbeddedGraph, create_example_graph
+from scipy.optimize import linprog
 
 
 class EmbeddedCW(EmbeddedGraph):
@@ -10,13 +11,6 @@ class EmbeddedCW(EmbeddedGraph):
     A class to represent a straight-line-embedded CW complex. We assume that the coordinates for the embedding of the vertices are given, the 1-skeleton is in fact a graph (so not as general as a full CW complex) with straight line embeddings, and 2-Cells are the interior of the shape outlined by its boundary edges. 
 
     Faces should be passed in as a list of vertices, where the vertices are in order around the face. However, the ECT function will likely still work if the ordering is different. The drawing functions however might look strange. Note the class does not (yet?) check to make sure the face is valid, i.e. is a cycle in the graph, and bounds a region in the plane.
-
-    Attributes
-        graph : nx.Graph
-        faces : list
-            A list of faces, where each face is a list of vertices
-        coordinates : dict
-            a dictionary mapping vertices to their (x, y) coordinates
 
     """
 
@@ -40,12 +34,45 @@ class EmbeddedCW(EmbeddedGraph):
         self.add_nodes_from(G.nodes(), G.coordinates)
         self.add_edges_from(G.edges())
 
-    def add_face(self, face):
+    def add_face(self, face, check=True):
         """
         Adds a face to the list of faces.
 
         TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)
+
+        Parameters:
+            face (list):
+                A list of vertices that make up the face.
+            check (bool):
+                Whether to check that the face is a valid addition to the cw complex.
         """
+        if check:
+
+            # Make sure all edges are in the graph
+            edges = list(zip(face, face[1:] + [face[0]]))
+            for edge in edges:
+                if edge not in self.edges:
+                    raise ValueError(f"Edge {edge} not in graph.")
+
+            # TODO: The goal here is to check that none of the other vertices are in the polygon defined by the face.
+            # Problem is that the face could be concave, so we can't just check if the point is in the convex hull of the face.
+            # This is a bit of a tricky problem, so I'm going to leave it for now.
+
+            # def in_hull(points, x):
+            #     # Solution for checking if a point is in a convex hull
+            #     # from Nils answer here:
+            #     # https://stackoverflow.com/questions/16750618/whats-an-efficient-way-to-find-if-a-point-lies-in-the-convex-hull-of-a-point-cl
+            #     n_points = len(points)
+            #     n_dim = len(x)
+            #     c = np.zeros(n_points)
+            #     A = np.r_[points.T,np.ones((1,n_points))]
+            #     b = np.r_[x, np.ones(1)]
+            #     lp = linprog(c, A_eq=A, b_eq=b)
+            #     return lp.success
+
+            # points = np.array([self.coordinates[v] for v in face])
+            # if not in_hull(points.T, self.coordinates[face[0]]):
+            #     raise ValueError(f"Face {face} does not bound an empty region in the plane.")
 
         # Note: faces need to be tuples to make
         # the face hashable so it can be used as a key in a dictionary

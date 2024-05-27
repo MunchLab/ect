@@ -110,7 +110,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="ect_graph.ECT">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ect_graph.</span></span><span class="sig-name descname"><span class="pre">ECT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bound_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect_graph.html#ECT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect_graph.ECT" title="Link to this definition"></a></dt>
-<dd><p>A class to calculate the Euler Characteristic Transform (ECT) from an input embedded graph.</p>
+<dd><p>A class to calculate the Euler Characteristic Transform (ECT) from an input <a class="reference internal" href="embed_graph.html#embed_graph.EmbeddedGraph" title="embed_graph.EmbeddedGraph"><code class="xref any py py-class docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a> or <a class="reference internal" href="embed_cw.html#embed_cw.EmbeddedCW" title="embed_cw.EmbeddedCW"><code class="xref any py py-class docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a>.</p>
 <p>The result is a matrix where entry <code class="docutils literal notranslate"><span class="pre">M[i,j]</span></code> is <span class="math notranslate nohighlight">\(\chi(K_{a_i})\)</span> for the direction <span class="math notranslate nohighlight">\(\omega_j\)</span> where <span class="math notranslate nohighlight">\(a_i\)</span> is the ith entry in <code class="docutils literal notranslate"><span class="pre">self.threshes</span></code>, and <span class="math notranslate nohighlight">\(\omega_j\)</span> is the ith entry in <code class="docutils literal notranslate"><span class="pre">self.thetas</span></code>.</p>
 <dl class="simple">
 <dt>Attributes</dt><dd><dl class="simple">
@@ -160,7 +160,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>G</strong> (<em>EmbeddedGraph/EmbeddedCW</em>) – The input graph to calculate the ECT for.</p></li>
+<li><p><strong>G</strong> (<em>EmbeddedGraph / EmbeddedCW</em>) – The input graph to calculate the ECT for.</p></li>
 <li><p><strong>bound_radius</strong> (<em>float</em>) – If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float <span class="math notranslate nohighlight">\(R\)</span> where the ECC will be computed at thresholds in <span class="math notranslate nohighlight">\([-R,R]\)</span>. Default is None.</p></li>
 </ul>
 </dd>

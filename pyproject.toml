@@ -16,6 +16,7 @@ dependencies = ["numpy",
             "networkx",
             "matplotlib",
             "numba",
+            "scipy"
             ]
 
 [tool.setuptools.packages.find]

@@ -6,7 +6,7 @@ from ect.ect_on_graphs.embed_cw import EmbeddedCW
 
 
 class ECT:
-    """A class to calculate the Euler Characteristic Transform (ECT) from an input embedded graph.
+    """A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedGraph` or :any:`EmbeddedCW`.
 
     The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.threshes``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
 
@@ -68,7 +68,7 @@ class ECT:
         An internally used function to get the bounding radius and thresholds for the ECT calculation.
 
         Parameters:
-            G (EmbeddedGraph/EmbeddedCW):
+            G (EmbeddedGraph / EmbeddedCW):
                 The input graph to calculate the ECT for.
             bound_radius (float):
                 If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
@@ -94,7 +94,7 @@ class ECT:
         else:
             # The user wants to use a different bounding radius
             if bound_radius <= 0:
-                raise ValueError('Bounding radius must be a positive number.')
+                raise ValueError(f'Bounding radius given was {bound_radius}, but must be a positive number.')
             r = bound_radius
             r_threshes = np.linspace(-r, r, self.num_thresh)
 
@@ -140,11 +140,15 @@ class ECT:
             Returns
                 int 
             """
-            func_max = func_list[-1]
-            if thresh < func_max:
-                return np.argmin(func_list < thresh)
+            # If the list is empty, return 0
+            if len(func_list) == 0:
+                return 0
             else:
-                return len(func_list)
+                func_max = func_list[-1]
+                if thresh < func_max:
+                    return np.argmin(func_list < thresh)
+                else:
+                    return len(func_list)
         # --
 
         v_list, g = G.sort_vertices(theta, return_g=True)

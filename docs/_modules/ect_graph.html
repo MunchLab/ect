@@ -88,7 +88,7 @@
 <div class="viewcode-block" id="ECT">
 <a class="viewcode-back" href="../ect_on_graphs.html#ect_graph.ECT">[docs]</a>
 <span class="k">class</span> <span class="nc">ECT</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to calculate the Euler Characteristic Transform (ECT) from an input embedded graph.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedGraph` or :any:`EmbeddedCW`.</span>
 
 <span class="sd">    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.threshes``, and :math:`\omega_j` is the ith entry in ``self.thetas``.</span>
 
@@ -158,7 +158,7 @@
 <span class="sd">        An internally used function to get the bounding radius and thresholds for the ECT calculation.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            G (EmbeddedGraph/EmbeddedCW):</span>
+<span class="sd">            G (EmbeddedGraph / EmbeddedCW):</span>
 <span class="sd">                The input graph to calculate the ECT for.</span>
 <span class="sd">            bound_radius (float):</span>
 <span class="sd">                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.</span>

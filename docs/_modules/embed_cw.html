@@ -83,6 +83,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">ect.ect_on_graphs.embed_graph</span> <span class="kn">import</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">create_example_graph</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linprog</span>
 
 
 <div class="viewcode-block" id="EmbeddedCW">
@@ -92,13 +93,6 @@
 <span class="sd">    A class to represent a straight-line-embedded CW complex. We assume that the coordinates for the embedding of the vertices are given, the 1-skeleton is in fact a graph (so not as general as a full CW complex) with straight line embeddings, and 2-Cells are the interior of the shape outlined by its boundary edges. </span>
 
 <span class="sd">    Faces should be passed in as a list of vertices, where the vertices are in order around the face. However, the ECT function will likely still work if the ordering is different. The drawing functions however might look strange. Note the class does not (yet?) check to make sure the face is valid, i.e. is a cycle in the graph, and bounds a region in the plane.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">        graph : nx.Graph</span>
-<span class="sd">        faces : list</span>
-<span class="sd">            A list of faces, where each face is a list of vertices</span>
-<span class="sd">        coordinates : dict</span>
-<span class="sd">            a dictionary mapping vertices to their (x, y) coordinates</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -130,12 +124,45 @@
 
 <div class="viewcode-block" id="EmbeddedCW.add_face">
 <a class="viewcode-back" href="../embed_cw.html#embed_cw.EmbeddedCW.add_face">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">face</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">face</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a face to the list of faces.</span>
 
 <span class="sd">        TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            face (list):</span>
+<span class="sd">                A list of vertices that make up the face.</span>
+<span class="sd">            check (bool):</span>
+<span class="sd">                Whether to check that the face is a valid addition to the cw complex.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
+
+            <span class="c1"># Make sure all edges are in the graph</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">face</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">[</span><span class="n">face</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">edge</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Edge </span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s2"> not in graph.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># TODO: The goal here is to check that none of the other vertices are in the polygon defined by the face.</span>
+            <span class="c1"># Problem is that the face could be concave, so we can&#39;t just check if the point is in the convex hull of the face.</span>
+            <span class="c1"># This is a bit of a tricky problem, so I&#39;m going to leave it for now.</span>
+
+            <span class="c1"># def in_hull(points, x):</span>
+            <span class="c1">#     # Solution for checking if a point is in a convex hull</span>
+            <span class="c1">#     # from Nils answer here:</span>
+            <span class="c1">#     # https://stackoverflow.com/questions/16750618/whats-an-efficient-way-to-find-if-a-point-lies-in-the-convex-hull-of-a-point-cl</span>
+            <span class="c1">#     n_points = len(points)</span>
+            <span class="c1">#     n_dim = len(x)</span>
+            <span class="c1">#     c = np.zeros(n_points)</span>
+            <span class="c1">#     A = np.r_[points.T,np.ones((1,n_points))]</span>
+            <span class="c1">#     b = np.r_[x, np.ones(1)]</span>
+            <span class="c1">#     lp = linprog(c, A_eq=A, b_eq=b)</span>
+            <span class="c1">#     return lp.success</span>
+
+            <span class="c1"># points = np.array([self.coordinates[v] for v in face])</span>
+            <span class="c1"># if not in_hull(points.T, self.coordinates[face[0]]):</span>
+            <span class="c1">#     raise ValueError(f&quot;Face {face} does not bound an empty region in the plane.&quot;)</span>
 
         <span class="c1"># Note: faces need to be tuples to make</span>
         <span class="c1"># the face hashable so it can be used as a key in a dictionary</span>
