@@ -8,6 +8,8 @@ class EmbeddedGraph(nx.Graph):
     A class to represent a graph with 2D embedded coordinates for each vertex.
 
     Attributes
+        graph : nx.Graph
+            a NetworkX graph object
         coordinates : dict
             a dictionary mapping vertices to their (x, y) coordinates
 
@@ -21,7 +23,7 @@ class EmbeddedGraph(nx.Graph):
         super().__init__()
         self.coordinates = {}
 
-    def add_vertex(self, vertex, x, y):
+    def add_node(self, vertex, x, y):
         """
         Adds a vertex to the graph and assigns it the given coordinates.
 
@@ -34,8 +36,22 @@ class EmbeddedGraph(nx.Graph):
                 The y-coordinate of the vertex.
 
         """
-        self.add_node(vertex)
+        super().add_node(vertex)
         self.coordinates[vertex] = (x, y)
+
+    def add_nodes_from(self, nodes, coordinates):
+        """
+        Adds multiple vertices to the graph and assigns them the given coordinates.
+
+        Parameters:
+            nodes (list):
+                A list of vertices to be added.
+            coordinates (dict):
+                A dictionary mapping vertices to their coordinates.
+
+        """
+        super().add_nodes_from(nodes)
+        self.coordinates.update(coordinates)
 
     def add_edge(self, u, v):
         """
@@ -263,7 +279,7 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def plot(self, bounding_circle=False, color_nodes_theta=None):
+    def plot(self, bounding_circle=False, color_nodes_theta=None, ax=None, **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
 
@@ -272,21 +288,24 @@ class EmbeddedGraph(nx.Graph):
         If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
 
         """
-
-        fig, ax = plt.subplots()
+        if ax is None:
+            fig, ax = plt.subplots()
+            # print("making new figure")
+        else:
+            fig = ax.get_figure()
 
         pos = self.coordinates
         if color_nodes_theta == None:
-            nx.draw(self, pos, with_labels=True)
+            nx.draw(self, pos, with_labels=True, ax=ax, **kwargs)
         else:
             g = self.g_omega(color_nodes_theta)
             color_map = [g[v] for v in self.nodes]
             # Some weird plotting to make the colorbar work.
             pathcollection = nx.draw_networkx_nodes(
-                self, pos, node_color=color_map)
-            nx.draw_networkx_labels(self, pos=pos, font_color='black')
-            nx.draw_networkx_edges(self, pos)
-            plt.colorbar(pathcollection)
+                self, pos, node_color=color_map, ax=ax)
+            nx.draw_networkx_labels(self, pos=pos, font_color='black', ax=ax)
+            nx.draw_networkx_edges(self, pos, ax=ax, width=1, **kwargs)
+            fig.colorbar(pathcollection, ax=ax, **kwargs)
 
         plt.axis('on')
         ax.tick_params(left=True, bottom=True,
@@ -300,6 +319,8 @@ class EmbeddedGraph(nx.Graph):
             ax.add_patch(circle1)
             plt.axis('square')
 
+        return ax
+
 
 def create_example_graph(mean_centered=True):
     """
@@ -311,12 +332,12 @@ def create_example_graph(mean_centered=True):
     """
     graph = EmbeddedGraph()
 
-    graph.add_vertex('A', 1, 2)
-    graph.add_vertex('B', 3, 4)
-    graph.add_vertex('C', 5, 7)
-    graph.add_vertex('D', 3, 6)
-    graph.add_vertex('E', 4, 3)
-    graph.add_vertex('F', 4, 5)
+    graph.add_node('A', 1, 2)
+    graph.add_node('B', 3, 4)
+    graph.add_node('C', 5, 7)
+    graph.add_node('D', 3, 6)
+    graph.add_node('E', 4, 3)
+    graph.add_node('F', 4, 5)
 
     graph.add_edge('A', 'B')
     graph.add_edge('B', 'C')
@@ -338,9 +359,9 @@ if __name__ == "__main__":
     graph = EmbeddedGraph()
 
     # Add vertices with their coordinates
-    graph.add_vertex('A', 1, 2)
-    graph.add_vertex('B', 3, 4)
-    graph.add_vertex('C', 5, 6)
+    graph.add_node('A', 1, 2)
+    graph.add_node('B', 3, 4)
+    graph.add_node('C', 5, 6)
 
     # Add edges between vertices
     graph.add_edge('A', 'B')

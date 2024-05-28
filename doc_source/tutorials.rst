@@ -6,4 +6,5 @@ Tutorials
    :caption: Contents:
 
    notebooks/Tutorial-ECT_for_embedded_graphs
+   notebooks/Tutorial-ECT_for_CW_Complexes
 

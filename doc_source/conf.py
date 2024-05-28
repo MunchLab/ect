@@ -28,7 +28,7 @@ copyright = '2024, MunchLab'
 author = 'MunchLab'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.3'
+release = '0.1.4'
 
 
 # -- General configuration ---------------------------------------------------

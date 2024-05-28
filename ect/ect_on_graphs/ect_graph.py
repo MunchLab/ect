@@ -2,10 +2,11 @@ import numpy as np
 from itertools import compress, combinations
 from numba import jit
 import matplotlib.pyplot as plt
+from ect.ect_on_graphs.embed_cw import EmbeddedCW
 
 
 class ECT:
-    """A class to calculate the Euler Characteristic Transform (ECT) from an input embedded graph.
+    """A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedGraph` or :any:`EmbeddedCW`.
 
     The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.threshes``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
 
@@ -62,6 +63,44 @@ class ECT:
             self.threshes = np.linspace(-bound_radius,
                                         bound_radius, self.num_thresh)
 
+    def get_radius_and_thresh(self, G, bound_radius):
+        """
+        An internally used function to get the bounding radius and thresholds for the ECT calculation.
+
+        Parameters:
+            G (EmbeddedGraph / EmbeddedCW):
+                The input graph to calculate the ECT for.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
+
+        Returns:
+            float, np.array
+                The bounding radius and the thresholds for the ECT calculation.
+
+        """
+       # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate
+        # the thresholds from that.
+        if bound_radius == None:
+            # First try to get the internally stored bounding radius
+            if self.bound_radius is not None:
+                r = self.bound_radius
+                r_threshes = self.threshes
+
+            # If the bounding radius is not set, use the global bounding radius
+            else:
+                r = G.get_bounding_radius()
+                r_threshes = np.linspace(-r, r, self.num_thresh)
+
+        else:
+            # The user wants to use a different bounding radius
+            if bound_radius <= 0:
+                raise ValueError(
+                    f'Bounding radius given was {bound_radius}, but must be a positive number.')
+            r = bound_radius
+            r_threshes = np.linspace(-r, r, self.num_thresh)
+
+        return r, r_threshes
+
     def get_ECT(self):
         """
         Returns the ECT matrix.
@@ -74,33 +113,23 @@ class ECT:
         """
         return self.SECT_matrix
 
-    def calculateECC(self, G, theta, tightbbox=False):
+    def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
         """
-        Function to compute the Euler Characteristic of a graph with coordinates for each vertex (pos).
+        Function to compute the Euler Characteristic of an `EmbeddedGraph`, that is, a graph with coordinates for each vertex.
 
         Parameters:
             G (nx.Graph):
                 The graph to compute the Euler Characteristic for.
             theta (float):
-                The angle (in radians) to rotate the graph by before computing the Euler Characteristic.
-            tightbbox (bool):
-                If True, use the tight bounding box of the graph. If False, use the bounding circle. Default is False.
+                The angle (in radians) to use for the direction function when computing the Euler Characteristic Curve.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
+            return_counts (bool):
+                Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.
+
         """
 
-        # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate
-        # the thresholds from that.
-        if tightbbox:
-            # thresholds for filtration, r should be defined from global bounding box
-            r = G.get_bounding_radius()
-            r_threshes = np.linspace(-r, r, self.num_thresh)
-        else:
-            # The user wants to use the internally determined bounding radius
-            if self.bound_radius is None:
-                raise ValueError(
-                    'Bounding radius must be set before calculating ECC when you have tightbbox=False.')
-            else:
-                r = self.bound_radius
-                r_threshes = self.threshes
+        r, r_threshes = self.get_radius_and_thresh(G, bound_radius)
 
         # --
         def num_below_threshold(func_list, thresh):
@@ -115,11 +144,15 @@ class ECT:
             Returns
                 int 
             """
-            func_max = func_list[-1]
-            if thresh < func_max:
-                return np.argmin(func_list < thresh)
+            # If the list is empty, return 0
+            if len(func_list) == 0:
+                return 0
             else:
-                return len(func_list)
+                func_max = func_list[-1]
+                if thresh < func_max:
+                    return np.argmin(func_list < thresh)
+                else:
+                    return len(func_list)
         # --
 
         v_list, g = G.sort_vertices(theta, return_g=True)
@@ -129,26 +162,38 @@ class ECT:
             g_list, thresh) for thresh in r_threshes])
         # print(vertex_count)
 
-        e_list, g_e = G.sort_edges(np.pi/2, return_g=True)
+        e_list, g_e = G.sort_edges(theta, return_g=True)
         g_e_list = [g_e[e] for e in e_list]
         edge_count = np.array([num_below_threshold(
             g_e_list, thresh) for thresh in r_threshes])
         # print(edge_count)
 
+        if type(G) == EmbeddedCW:
+            f_list, g_f = G.sort_faces(theta, return_g=True)
+            g_f_list = [g_f[f] for f in f_list]
+            face_count = np.array([num_below_threshold(
+                g_f_list, thresh) for thresh in r_threshes])
+            # print(face_count)
+        else:
+            face_count = np.zeros_like(vertex_count)
+
         # print(vertex_count - edge_count)
-        ecc = vertex_count - edge_count
+        ecc = vertex_count - edge_count + face_count
 
-        return ecc
+        if return_counts:
+            return ecc, vertex_count, edge_count, face_count
+        else:
+            return ecc
 
-    def calculateECT(self, graph, tightbbox=False, compute_SECT=True):
+    def calculateECT(self, graph, bound_radius=None, compute_SECT=True):
         """
-        Calculates the ECT from an input ``EmbeddedGraph``. The entry ``M[i,j]`` is :math:`\\chi(K_{a_j})` for the direction :math:`\omega_i` where :math:`a_j` is the jth entry in ``self.threshes``, and :math:`\omega_i` is the ith entry in ``self.thetas``.
+        Calculates the ECT from an input either `EmbeddedGraph` or `EmbeddedCW`. The entry ``M[i,j]`` is :math:`\\chi(K_{a_j})` for the direction :math:`\omega_i` where :math:`a_j` is the jth entry in ``self.threshes``, and :math:`\omega_i` is the ith entry in ``self.thetas``.
 
         Parameters:
-            graph (EmbeddedGraph):
+            graph (EmbeddedGraph/EmbeddedCW):
                 The input graph to calculate the ECT from.
-            tightbbox (bool):
-                Whether to use the tight bounding box (a different value in each direction) computed from the input graph. Otherwise, a bounding box needs to already be set manually with the `set_bounding_box` method.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
             compute_SECT (bool):
                 Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn't return it. Can be returned with the get_SECT method.
 
@@ -157,13 +202,15 @@ class ECT:
                 The matrix representing the ECT of size (num_dirs,num_thresh).
         """
 
-        if tightbbox == False and self.bound_radius is None:
-            self.set_bounding_radius(graph.get_bounding_radius())
+        r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
+
+        # Note... this overwrites the self.threshes if it's not set.
+        self.set_bounding_radius(r)
 
         M = np.zeros((self.num_dirs, self.num_thresh))
 
         for i, theta in enumerate(self.thetas):
-            M[i] = self.calculateECC(graph, theta, tightbbox)
+            M[i] = self.calculateECC(graph, theta, r)
 
         self.ECT_matrix = M
 
@@ -195,20 +242,39 @@ class ECT:
 
         return M_SECT
 
-    def plotECC(self, graph, theta):
+    def plotECC(self, graph, theta, bound_radius=None, draw_counts=False):
         """
         Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
 
         Parameters:
-            graph (EmbeddedGraph):
-                The input graph.
+            graph (EmbeddedGraph/EmbeddedCW):
+                The input graph or CW complex.
             theta (float):
                 The angle in :math:`[0,2\pi]` for the direction to plot the ECC.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None. 
+            draw_counts (bool):
+                Whether to draw the counts of vertices, edges, and faces varying across thresholds. Default is False.
         """
 
-        ECC = self.calculateECC(graph, theta)
+        r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
+        if not draw_counts:
+            ECC = self.calculateECC(graph, theta, r)
+        else:
+            ECC, vertex_count, edge_count, face_count = self.calculateECC(
+                graph, theta, r, return_counts=True)
 
-        plt.step(self.threshes, ECC)
+        # if self.threshes is None:
+        #     self.set_bounding_radius(graph.get_bounding_radius())
+
+        plt.step(r_threshes, ECC, label='ECC')
+
+        if draw_counts:
+            plt.step(r_threshes, vertex_count, label='Vertices')
+            plt.step(r_threshes, edge_count, label='Edges')
+            plt.step(r_threshes, face_count, label='Faces')
+            plt.legend()
+
         theta_round = str(np.round(theta, 2))
         plt.title(r'ECC for $\omega = ' + theta_round + '$')
         plt.xlabel('$a$')

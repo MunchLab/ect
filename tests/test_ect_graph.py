@@ -29,23 +29,25 @@ class TestECT(unittest.TestCase):
         self.assertIs( myect.bound_radius, None)
 
         # Try to calculate the ECC without a radius set
-        myect.calculateECC(G, 0, tightbbox=True)
+        myect.calculateECC(G, 0, bound_radius=None)
 
-        # Try to calculate the ECC without a radius set.
+        # Try to calculate the ECC with a negative radius.
         # It should throw an error.
         with self.assertRaises(ValueError):  
-            myect.calculateECC(G, 0, tightbbox=False)
+            myect.calculateECC(G, 0, bound_radius= -1)
 
         # Try to calculate the ECC with tightbbox set to True 
         # This should  work fine 
-        ecc = myect.calculateECC(G, 0, tightbbox=True)
+        ecc = myect.calculateECC(G, 0, bound_radius=None)
         self.assertEqual( len(ecc), num_thresh)
 
         # Now set the bounding radius 
         r = G.get_bounding_radius()
         myect.set_bounding_radius(1.2*r)
-        ecc = myect.calculateECC(G, 0, tightbbox=False)
+        ecc = myect.calculateECC(G, 0, bound_radius=None)
         self.assertEqual( len(ecc), num_thresh)
+
+        # TODO: write a test where we check that if None is passed and the radius is set internally, it will use that one.
 
 
     

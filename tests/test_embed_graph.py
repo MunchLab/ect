@@ -10,10 +10,10 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertEqual( len(G.nodes), 6)  # assuming my_function squares its input
 
 
-    def test_add_vertex(self):
+    def test_add_node(self):
         # Make sure adding a vertex updates the coordiantes list 
         G = embed_graph.create_example_graph()
-        G.add_vertex('G', 1, 2)
+        G.add_node('G', 1, 2)
         self.assertEqual( len(G.nodes), 7)
         self.assertEqual( len(G.coordinates), 7)
 
@@ -28,6 +28,12 @@ class TestEmbeddedGraph(unittest.TestCase):
         G = embed_graph.create_example_graph(mean_centered=False)
         coords = G.get_coordinates('A')
         self.assertEqual( coords, (1, 2))
+
+    def test_coords_list(self):
+        # Make sure the keys in the coordinates list are the same as the nodes
+        G = embed_graph.create_example_graph(mean_centered=False)
+        self.assertEqual( len(G.nodes), len(G.coordinates))
+        self.assertEqual( set(G.nodes), set(G.coordinates.keys()))
 
     def test_mean_centered_coordinates(self):
         # Make sure the mean centered coordinates are correct
