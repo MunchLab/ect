@@ -126,6 +126,7 @@ class ECT:
                 If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
             return_counts (bool):
                 Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.
+
         """
 
         r, r_threshes = self.get_radius_and_thresh(G, bound_radius)
@@ -252,6 +253,8 @@ class ECT:
                 The angle in :math:`[0,2\pi]` for the direction to plot the ECC.
             bound_radius (float):
                 If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None. 
+            draw_counts (bool):
+                Whether to draw the counts of vertices, edges, and faces varying across thresholds. Default is False.
         """
 
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)

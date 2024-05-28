@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; ect 0.1.4 documentation</title>
+  <title>3.2. Tutorial: ECT for CW complexes &mdash; ect 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -25,7 +25,9 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Contributing to the ect Package" href="../contributing.html" />
+    <link rel="prev" title="3.1. Tutorial : ECT for embedded graphs" href="Tutorial-ECT_for_embedded_graphs.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,10 +50,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Tutorial: ECT for CW complexes</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">5. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">6. Citing</a></li>
@@ -71,7 +77,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+          <li class="breadcrumb-item"><a href="../tutorials.html"><span class="section-number">3. </span>Tutorials</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.2. </span>Tutorial: ECT for CW complexes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/Tutorial-ECT_for_CW_Complexes.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,101 +88,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>.
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Processing /Users/liz/Library/CloudStorage/Dropbox/Math/Code/ect
-  Installing build dependencies ... done
-  Getting requirements to build wheel ... done
-  Installing backend dependencies ... done
-  Preparing metadata (pyproject.toml) ... done
-Requirement already satisfied: numpy in /Users/liz/anaconda3/lib/python3.10/site-packages (from ect==0.1.4) (1.23.5)
-Requirement already satisfied: networkx in /Users/liz/anaconda3/lib/python3.10/site-packages (from ect==0.1.4) (3.2.1)
-Requirement already satisfied: matplotlib in /Users/liz/anaconda3/lib/python3.10/site-packages (from ect==0.1.4) (3.7.0)
-Requirement already satisfied: numba in /Users/liz/anaconda3/lib/python3.10/site-packages (from ect==0.1.4) (0.56.4)
-Requirement already satisfied: scipy in /Users/liz/anaconda3/lib/python3.10/site-packages (from ect==0.1.4) (1.10.0)
-Requirement already satisfied: contourpy&gt;=1.0.1 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (1.0.5)
-Requirement already satisfied: cycler&gt;=0.10 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (0.11.0)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (4.49.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (1.4.4)
-Requirement already satisfied: packaging&gt;=20.0 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (23.2)
-Requirement already satisfied: pillow&gt;=6.2.0 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (10.0.1)
-Requirement already satisfied: pyparsing&gt;=2.3.1 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (3.0.9)
-Requirement already satisfied: python-dateutil&gt;=2.7 in /Users/liz/anaconda3/lib/python3.10/site-packages (from matplotlib-&gt;ect==0.1.4) (2.8.2)
-Requirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /Users/liz/anaconda3/lib/python3.10/site-packages (from numba-&gt;ect==0.1.4) (0.39.1)
-Requirement already satisfied: setuptools in /Users/liz/anaconda3/lib/python3.10/site-packages (from numba-&gt;ect==0.1.4) (65.6.3)
-Requirement already satisfied: six&gt;=1.5 in /Users/liz/anaconda3/lib/python3.10/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;ect==0.1.4) (1.16.0)
-Building wheels for collected packages: ect
-  Building wheel for ect (pyproject.toml) ... done
-  Created wheel for ect: filename=ect-0.1.4-py3-none-any.whl size=40205 sha256=1a297b65949d477c6ceeae6d0cff6e6e6c6840b5d46b262bd72a8e083698bcf2
-  Stored in directory: /private/var/folders/lm/dn75vz_d72b1cntn3ncjj10c0000gn/T/pip-ephem-wheel-cache-b8z93fr2/wheels/63/e8/b6/c1ed3cda3e641c4df1351d804e411763c0776b1f4494126c2f
-Successfully built ect
-Installing collected packages: ect
-  Attempting uninstall: ect
-    Found existing installation: ect 0.1.4
-    Uninstalling ect-0.1.4:
-      Successfully uninstalled ect-0.1.4
-Successfully installed ect-0.1.4
-</pre></div></div>
-</div>
+  <section id="Tutorial:-ECT-for-CW-complexes">
+<h1><span class="section-number">3.2. </span>Tutorial: ECT for CW complexes<a class="headerlink" href="#Tutorial:-ECT-for-CW-complexes" title="Link to this heading"></a></h1>
+<p>This tutorial walks you through how to build a CW complex with the <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> class, and then use the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class to compute the Euler characteristic transform</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span> <span class="n">create_example_graph</span><span class="p">,</span> <span class="n">create_example_cw</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span> <span class="n">create_example_cw</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">(</span><span class="n">mean_centered</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</div>
+<p>The CW complex is the same as the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class with that additional ability to add faces. Faces are added by passing in a list of vertices. Note that we are generally assuming that these vertices follow around an empty region (as in, no other vertex is in the interior) in the graph bounded by the vertices, and further that all edges are already included in the graph. However the class does not yet check for this so you need to be careful!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedCW</span><span class="p">()</span>
+
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">K</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)))</span>
+
+<span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
+
+<span class="n">K</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
 <span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;Axes: &gt;
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_2_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_2_1.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">(</span><span class="n">mean_centered</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -190,13 +137,99 @@ Successfully installed ect-0.1.4
 <img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_3_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_3_1.png" />
 </div>
 </div>
+<p>Just to have something a bit more interesting, let’s make a more complicated example that’s built into the class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">(</span><span class="n">mean_centered</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_5_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_5_1.png" />
+</div>
+</div>
+<p>We can also color the nodes based on a function value for a given direction.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">7</span>
+<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_7_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_7_1.png" />
+</div>
+</div>
+<p>The function value for any direction can be computed and returned for vertices, edges, or faces. The function value for an edge or face <span class="math notranslate nohighlight">\(\sigma\)</span> is given by <span class="math notranslate nohighlight">\(g_\omega(\sigma) = \max_{v \in \sigma}\{f(v)\}\)</span>. Here we show the function values for the triangle <code class="docutils literal notranslate"><span class="pre">KDC</span></code> and its faces.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vert_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">edge_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_edges</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">face_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_faces</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">vert_g</span><span class="p">[</span><span class="n">v</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">)]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">edge_g</span><span class="p">[</span><span class="n">edge</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">)]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">face</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">face_g</span><span class="p">[</span><span class="n">face</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+K: 0.29
+D: 0.75
+C: 2.99
+(&#39;D&#39;, &#39;K&#39;): 0.75
+(&#39;C&#39;, &#39;D&#39;): 2.99
+(&#39;C&#39;, &#39;K&#39;): 2.99
+[(&#39;B&#39;, &#39;A&#39;, &#39;G&#39;, &#39;H&#39;, &#39;D&#39;), (&#39;K&#39;, &#39;D&#39;, &#39;C&#39;)]
+(&#39;K&#39;, &#39;D&#39;, &#39;C&#39;): 2.99
+</pre></div></div>
+</div>
+<p>As with the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class, we can initialize the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class by deciding how many directions and how many thresholds to use.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-<span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -213,11 +246,35 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
 </pre></div></div>
 </div>
+<p>Then we can compute the ECC for a single direction. In this case, the <span class="math notranslate nohighlight">\(x\)</span>-axis will be computed for the <code class="docutils literal notranslate"><span class="pre">num_thresh=80</span></code> stopping points in the interval <span class="math notranslate nohighlight">\([-1.2r,1.2r]\)</span> where <span class="math notranslate nohighlight">\(r\)</span> is the minimum bounding radius for the input complex.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+<span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,
+        3,  3,  3,  3,  3,  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -1, -1, -1, -1, -1, -1,
+       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
+</pre></div></div>
+</div>
+<p>But of course it’s easier to see this in a plot. This command calculates the ECC and immediately plots it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -225,19 +282,21 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_5_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_5_0.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_15_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_15_0.png" />
 </div>
 </div>
+<p>Similarly, we can compute the ECT and return the matrix. We make sure to internally set the bounding radius to use to control the <span class="math notranslate nohighlight">\(y\)</span> axis of the plot.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -251,228 +310,13 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
        [ 0.,  0.,  0., ..., -1., -1., -1.]])
 </pre></div></div>
 </div>
+<p>Once it’s been computed, we can use the internal plotting function to take a look.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_7_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_7_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-networkx.classes.reportviews.NodeView
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-dict
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># K = EmbeddedCW()</span>
-<span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
-
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">K</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)))</span>
-
-<span class="c1"># K.add_face([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])</span>
-
-<span class="n">K</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;Axes: &gt;
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_10_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_10_1.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-
-<span class="n">r</span><span class="p">,</span><span class="n">thresh</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">get_radius_and_thresh</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">thresh</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-0.7071067811865476
-0.7071067811865476 [-0.70710678 -0.68920534 -0.67130391 -0.65340247 -0.63550103 -0.61759959
- -0.59969816 -0.58179672 -0.56389528 -0.54599384 -0.52809241 -0.51019097
- -0.49228953 -0.47438809 -0.45648666 -0.43858522 -0.42068378 -0.40278234
- -0.38488091 -0.36697947 -0.34907803 -0.33117659 -0.31327516 -0.29537372
- -0.27747228 -0.25957084 -0.24166941 -0.22376797 -0.20586653 -0.18796509
- -0.17006366 -0.15216222 -0.13426078 -0.11635934 -0.09845791 -0.08055647
- -0.06265503 -0.04475359 -0.02685216 -0.00895072  0.00895072  0.02685216
-  0.04475359  0.06265503  0.08055647  0.09845791  0.11635934  0.13426078
-  0.15216222  0.17006366  0.18796509  0.20586653  0.22376797  0.24166941
-  0.25957084  0.27747228  0.29537372  0.31327516  0.33117659  0.34907803
-  0.36697947  0.38488091  0.40278234  0.42068378  0.43858522  0.45648666
-  0.47438809  0.49228953  0.51019097  0.52809241  0.54599384  0.56389528
-  0.58179672  0.59969816  0.61759959  0.63550103  0.65340247  0.67130391
-  0.68920534  0.70710678]
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;Axes: &gt;
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_12_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_12_1.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_13_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_13_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
-
-<span class="n">myect</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_14_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_14_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span><span class="o">.</span><span class="n">g_omega_edges</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-{(&#39;A&#39;, &#39;B&#39;): 5.551115123125783e-17,
- (&#39;A&#39;, &#39;D&#39;): -5.551115123125783e-17,
- (&#39;B&#39;, &#39;C&#39;): 0.7071067811865475,
- (&#39;C&#39;, &#39;D&#39;): 0.7071067811865475}
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#....... check on the list of sorted edges, something is wrong</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="p">,</span> <span class="n">r_thresh</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">get_radius_and_thresh</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">r_thresh</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_thresh</span><span class="p">,</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myect</span><span class="o">.</span><span class="n">bound_radius</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -481,46 +325,22 @@ dict
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[-0.70710678 -0.68920534 -0.67130391 -0.65340247 -0.63550103 -0.61759959
- -0.59969816 -0.58179672 -0.56389528 -0.54599384 -0.52809241 -0.51019097
- -0.49228953 -0.47438809 -0.45648666 -0.43858522 -0.42068378 -0.40278234
- -0.38488091 -0.36697947 -0.34907803 -0.33117659 -0.31327516 -0.29537372
- -0.27747228 -0.25957084 -0.24166941 -0.22376797 -0.20586653 -0.18796509
- -0.17006366 -0.15216222 -0.13426078 -0.11635934 -0.09845791 -0.08055647
- -0.06265503 -0.04475359 -0.02685216 -0.00895072  0.00895072  0.02685216
-  0.04475359  0.06265503  0.08055647  0.09845791  0.11635934  0.13426078
-  0.15216222  0.17006366  0.18796509  0.20586653  0.22376797  0.24166941
-  0.25957084  0.27747228  0.29537372  0.31327516  0.33117659  0.34907803
-  0.36697947  0.38488091  0.40278234  0.42068378  0.43858522  0.45648666
-  0.47438809  0.49228953  0.51019097  0.52809241  0.54599384  0.56389528
-  0.58179672  0.59969816  0.61759959  0.63550103  0.65340247  0.67130391
-  0.68920534  0.70710678]
-[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
- 2 2 2 2 2 4]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&lt;matplotlib.lines.Line2D at 0x135b2aa70&gt;]
+3.9529463851622046
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_18_2.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_18_2.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_19_1.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_19_1.png" />
 </div>
 </div>
+<p>Similarly we can take a look at the SECT. This one was computed when we asked to compute the ECT.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">,</span><span class="n">draw_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotSECT</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -528,143 +348,18 @@ dict
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_19_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_19_0.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_21_0.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_21_0.png" />
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">funcdict</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">funcdict</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">funcdict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-A -0.71
-B 0.0
-C 0.71
-D -0.0
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;Axes: &gt;
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_20_2.png" src="../_images/notebooks_Tutorial-ECT_for_CW_Complexes_20_2.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">num_below_threshold</span><span class="p">(</span><span class="n">func_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the number of entries in func_list that are below the threshold thresh.</span>
-<span class="sd">    Warning: func_list must be sorted in ascending order.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">        func_list (list): sorted list of function values</span>
-<span class="sd">        thresh (float): threshold value</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">        int</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># If the list is empty, return 0</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">func_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">func_max</span> <span class="o">=</span> <span class="n">func_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">thresh</span> <span class="o">&lt;</span> <span class="n">func_max</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">func_list</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">func_list</span><span class="p">)</span>
-<span class="c1"># --</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">K</span>
-<span class="n">r</span><span class="p">,</span><span class="n">r_threshes</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">get_radius_and_thresh</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v_list</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">g_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">v_list</span><span class="p">]</span>
-
-<span class="n">vertex_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num_below_threshold</span><span class="p">(</span>
-    <span class="n">g_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">r_threshes</span><span class="p">])</span>
-<span class="c1"># print(vertex_count)</span>
-
-<span class="n">e_list</span><span class="p">,</span> <span class="n">g_e</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sort_edges</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">g_e_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">g_e</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">e_list</span><span class="p">]</span>
-<span class="n">edge_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num_below_threshold</span><span class="p">(</span>
-    <span class="n">g_e_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">r_threshes</span><span class="p">])</span>
-<span class="c1"># print(edge_count)</span>
-
-<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">==</span> <span class="n">EmbeddedCW</span><span class="p">:</span>
-    <span class="n">f_list</span><span class="p">,</span> <span class="n">g_f</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">sort_faces</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">g_f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">g_f</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">f_list</span><span class="p">]</span>
-    <span class="n">face_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num_below_threshold</span><span class="p">(</span>
-        <span class="n">g_f_list</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="n">r_threshes</span><span class="p">])</span>
-    <span class="c1"># print(face_count)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">face_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">vertex_count</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g_e_list</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[-0.49999999999999994, 0.49999999999999994, 0.5, 0.5]
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Tutorial-ECT_for_embedded_graphs.html" class="btn btn-neutral float-left" title="3.1. Tutorial : ECT for embedded graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="4. Contributing to the ect Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

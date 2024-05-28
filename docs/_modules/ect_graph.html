@@ -225,6 +225,7 @@
 <span class="sd">                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.</span>
 <span class="sd">            return_counts (bool):</span>
 <span class="sd">                Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">r</span><span class="p">,</span> <span class="n">r_threshes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radius_and_thresh</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">bound_radius</span><span class="p">)</span>
@@ -360,6 +361,8 @@
 <span class="sd">                The angle in :math:`[0,2\pi]` for the direction to plot the ECC.</span>
 <span class="sd">            bound_radius (float):</span>
 <span class="sd">                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None. </span>
+<span class="sd">            draw_counts (bool):</span>
+<span class="sd">                Whether to draw the counts of vertices, edges, and faces varying across thresholds. Default is False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">r</span><span class="p">,</span> <span class="n">r_threshes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radius_and_thresh</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">bound_radius</span><span class="p">)</span>
