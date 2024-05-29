@@ -1,6 +1,6 @@
 # Embedded CW complex  
 
 ```{eval-rst}
-.. automodule:: embed_cw
+.. automodule:: ect.embed_cw
    :members:
 ```

@@ -1,5 +1,5 @@
 import unittest
-from ect.ect_on_graphs import embed_graph, ect_graph
+from ect import embed_graph, ect_graph
 
 
 

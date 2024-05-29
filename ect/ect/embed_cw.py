@@ -2,7 +2,7 @@ import numpy as np
 from itertools import compress, combinations
 import matplotlib.pyplot as plt
 import networkx as nx
-from ect.ect_on_graphs.embed_graph import EmbeddedGraph, create_example_graph
+from ect.embed_graph import EmbeddedGraph, create_example_graph
 from scipy.optimize import linprog
 
 

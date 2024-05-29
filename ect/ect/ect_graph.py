@@ -2,7 +2,7 @@ import numpy as np
 from itertools import compress, combinations
 from numba import jit
 import matplotlib.pyplot as plt
-from ect.ect_on_graphs.embed_cw import EmbeddedCW
+from ect.embed_cw import EmbeddedCW
 
 
 class ECT:

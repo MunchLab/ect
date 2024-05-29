@@ -1,6 +1,6 @@
 # ECT on Graphs
 
 ```{eval-rst}
-.. automodule:: ect_graph
+.. automodule:: ect.ect_graph
    :members:
 ```
