@@ -1,6 +1,6 @@
 # Embedded graphs  
 
 ```{eval-rst}
-.. automodule:: embed_graph
+.. automodule:: ect.embed_graph
    :members:
 ```

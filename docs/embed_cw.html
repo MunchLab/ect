@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2.2. Embedded CW complex &mdash; ect 0.1.4 documentation</title>
+  <title>2.2. Embedded CW complex &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=fd825880"></script>
+        <script src="_static/documentation_options.js?v=59fadc99"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -54,17 +54,17 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="embed_graph.html">2.1. Embedded graphs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Embedded CW complex</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.__init__"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.add_from_embedded_graph"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.add_from_embedded_graph()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.add_face"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.add_face()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.g_omega_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.g_omega_faces()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.sort_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.sort_faces()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.plot_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.plot_faces()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embed_cw.EmbeddedCW.plot"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.__init__"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.add_from_embedded_graph"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.add_from_embedded_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.add_face"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.add_face()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.g_omega_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.g_omega_faces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.sort_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.sort_faces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.plot_faces"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.plot_faces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_cw.EmbeddedCW.plot"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW.plot()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#embed_cw.create_example_cw"><code class="docutils literal notranslate"><span class="pre">create_example_cw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ect.embed_cw.create_example_cw"><code class="docutils literal notranslate"><span class="pre">create_example_cw()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ect_on_graphs.html">2.3. ECT on graphs</a></li>
@@ -101,33 +101,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-embed_cw">
-<span id="embedded-cw-complex"></span><h1><span class="section-number">2.2. </span>Embedded CW complex<a class="headerlink" href="#module-embed_cw" title="Link to this heading"></a></h1>
+  <section id="module-ect.embed_cw">
+<span id="embedded-cw-complex"></span><h1><span class="section-number">2.2. </span>Embedded CW complex<a class="headerlink" href="#module-ect.embed_cw" title="Link to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">embed_cw.</span></span><span class="sig-name descname"><span class="pre">EmbeddedCW</span></span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ect.embed_cw.</span></span><span class="sig-name descname"><span class="pre">EmbeddedCW</span></span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW" title="Link to this definition"></a></dt>
 <dd><p>A class to represent a straight-line-embedded CW complex. We assume that the coordinates for the embedding of the vertices are given, the 1-skeleton is in fact a graph (so not as general as a full CW complex) with straight line embeddings, and 2-Cells are the interior of the shape outlined by its boundary edges.</p>
 <p>Faces should be passed in as a list of vertices, where the vertices are in order around the face. However, the ECT function will likely still work if the ordering is different. The drawing functions however might look strange. Note the class does not (yet?) check to make sure the face is valid, i.e. is a cycle in the graph, and bounds a region in the plane.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.__init__" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initializes an empty EmbeddedCW object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.add_from_embedded_graph">
-<span class="sig-name descname"><span class="pre">add_from_embedded_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.add_from_embedded_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.add_from_embedded_graph" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.add_from_embedded_graph">
+<span class="sig-name descname"><span class="pre">add_from_embedded_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.add_from_embedded_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.add_from_embedded_graph" title="Link to this definition"></a></dt>
 <dd><p>Adds the edges and coordinates from an EmbeddedGraph object to the EmbeddedCW object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>embedded_graph</strong> (<a class="reference internal" href="embed_graph.html#embed_graph.EmbeddedGraph" title="embed_graph.EmbeddedGraph"><em>EmbeddedGraph</em></a>) – The EmbeddedGraph object to add from.</p>
+<dd class="field-odd"><p><strong>embedded_graph</strong> (<a class="reference internal" href="embed_graph.html#ect.embed_graph.EmbeddedGraph" title="ect.embed_graph.EmbeddedGraph"><em>EmbeddedGraph</em></a>) – The EmbeddedGraph object to add from.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.add_face">
-<span class="sig-name descname"><span class="pre">add_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.add_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.add_face" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.add_face">
+<span class="sig-name descname"><span class="pre">add_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.add_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.add_face" title="Link to this definition"></a></dt>
 <dd><p>Adds a face to the list of faces.</p>
 <p>TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)</p>
 <dl class="field-list simple">
@@ -141,8 +141,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.g_omega_faces">
-<span class="sig-name descname"><span class="pre">g_omega_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.g_omega_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.g_omega_faces" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.g_omega_faces">
+<span class="sig-name descname"><span class="pre">g_omega_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.g_omega_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.g_omega_faces" title="Link to this definition"></a></dt>
 <dd><p>Calculates the function value of the faces of the graph by making the value equal to the max vertex value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -159,8 +159,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.sort_faces">
-<span class="sig-name descname"><span class="pre">sort_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.sort_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.sort_faces" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.sort_faces">
+<span class="sig-name descname"><span class="pre">sort_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.sort_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.sort_faces" title="Link to this definition"></a></dt>
 <dd><p>Function to sort the faces of the graph according to the function</p>
 <div class="math notranslate nohighlight">
 \[g_\omega(\sigma) = \max \{ g_\omega(v) \mid  v \in \sigma \}\]</div>
@@ -180,8 +180,8 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.plot_faces">
-<span class="sig-name descname"><span class="pre">plot_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.plot_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.plot_faces" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.plot_faces">
+<span class="sig-name descname"><span class="pre">plot_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.plot_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.plot_faces" title="Link to this definition"></a></dt>
 <dd><p>Plots the faces of the graph in the direction of theta.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -202,8 +202,8 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="embed_cw.EmbeddedCW.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#EmbeddedCW.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.EmbeddedCW.plot" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.EmbeddedCW.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#EmbeddedCW.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.EmbeddedCW.plot" title="Link to this definition"></a></dt>
 <dd><p>Plots the graph with the faces filled in.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -219,8 +219,8 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="embed_cw.create_example_cw">
-<span class="sig-prename descclassname"><span class="pre">embed_cw.</span></span><span class="sig-name descname"><span class="pre">create_example_cw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/embed_cw.html#create_example_cw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embed_cw.create_example_cw" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ect.embed_cw.create_example_cw">
+<span class="sig-prename descclassname"><span class="pre">ect.embed_cw.</span></span><span class="sig-name descname"><span class="pre">create_example_cw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_cw.html#create_example_cw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_cw.create_example_cw" title="Link to this definition"></a></dt>
 <dd><p>Creates an example EmbeddedCW object with a simple CW complex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
