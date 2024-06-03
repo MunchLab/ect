@@ -40,6 +40,8 @@ class EmbeddedCW(EmbeddedGraph):
 
         TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)
 
+        TODO: see if the edges = list(zip(face, face[1:] + tuple(face[0]))) line is OK
+
         Parameters:
             face (list):
                 A list of vertices that make up the face.
@@ -49,7 +51,7 @@ class EmbeddedCW(EmbeddedGraph):
         if check:
 
             # Make sure all edges are in the graph
-            edges = list(zip(face, face[1:] + [face[0]]))
+            edges = list(zip(face, face[1:] + tuple([face[0]])))
             for edge in edges:
                 if edge not in self.edges:
                     raise ValueError(f"Edge {edge} not in graph.")
