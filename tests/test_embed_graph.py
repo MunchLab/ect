@@ -43,7 +43,30 @@ class TestEmbeddedGraph(unittest.TestCase):
 
         self.assertAlmostEqual( np.average(x_coords), 0, places = 1)
 
-    
+    def test_get_center(self):
+        G = embed_graph.create_example_graph()
+        center = G.get_center()
+        self.assertIsInstance(center, np.ndarray)
+        self.assertEqual(len(center), 2)
+        
+        # Check if center is correctly calculated
+        coords = np.array(list(G.coordinates.values()))
+        expected_center = np.mean(coords, axis=0)
+        np.testing.assert_almost_equal(center, expected_center)
+
+    def test_rescale_to_unit_disk(self):
+        G = embed_graph.create_example_graph()
+        original_center = G.get_center()
+        G.rescale_to_unit_disk(preserve_center=True)
+        
+        self.assertAlmostEqual(G.get_bounding_radius(), 1.0, places=6)
+        np.testing.assert_almost_equal(G.get_center(), original_center)
+
+        G = embed_graph.create_example_graph()
+        G.rescale_to_unit_disk(preserve_center=False)
+        self.assertAlmostEqual(G.get_bounding_radius(), 1.0, places=6)
+        np.testing.assert_almost_equal(G.get_center(), np.array([0, 0]), decimal=6)
+
 
 if __name__ == '__main__':
     unittest.main()
