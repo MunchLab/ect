@@ -118,6 +118,18 @@ class EmbeddedGraph(nx.Graph):
         x_coords, y_coords = zip(*self.coordinates.values())
         return [(min(x_coords), max(x_coords)), (min(y_coords), max(y_coords))]
 
+    def get_center(self):
+        """
+        Calculate and return the center of the graph.
+
+        Returns:
+            numpy.ndarray: The (x, y) coordinates of the center.
+        """
+        if not self.coordinates:
+            return np.array([0.0, 0.0])
+        coords = np.array(list(self.coordinates.values()))
+        return np.mean(coords, axis=0)
+
     def get_bounding_radius(self):
         """
         Method to find the radius of the bounding circle of the vertex coordinates in the graph.
@@ -129,10 +141,10 @@ class EmbeddedGraph(nx.Graph):
         if not self.coordinates:
             return 0
 
-        x_coords, y_coords = zip(*self.coordinates.values())
-        norms = [np.linalg.norm(point) for point in zip(x_coords, y_coords)]
-
-        return max(norms)
+        center = self.get_center()
+        coords = np.array(list(self.coordinates.values()))
+        distances = np.linalg.norm(coords - center, axis=1)
+        return np.max(distances)
 
     def get_mean_centered_coordinates(self):
         """
@@ -290,12 +302,14 @@ class EmbeddedGraph(nx.Graph):
         """
         if ax is None:
             fig, ax = plt.subplots()
-            # print("making new figure")
         else:
             fig = ax.get_figure()
 
         pos = self.coordinates
-        if color_nodes_theta == None:
+        center = self.get_center()
+        r = self.get_bounding_radius()
+
+        if color_nodes_theta is None:
             nx.draw(self, pos, with_labels=True, ax=ax, **kwargs)
         else:
             g = self.g_omega(color_nodes_theta)
@@ -308,19 +322,55 @@ class EmbeddedGraph(nx.Graph):
             fig.colorbar(pathcollection, ax=ax, **kwargs)
 
         plt.axis('on')
-        ax.tick_params(left=True, bottom=True,
-                       labelleft=True, labelbottom=True)
+        ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
 
         if bounding_circle:
             r = self.get_bounding_radius()
-            ax = plt.gca()
-            circle1 = plt.Circle((0, 0), r, fill=False,
-                                 linestyle='--', color='r')
-            ax.add_patch(circle1)
-            plt.axis('square')
+            circle = plt.Circle(center, r, fill=False, linestyle='--', color='r')
+            ax.add_patch(circle)
+
+        # Always adjust the plot limits to show the full graph
+        ax.set_xlim(center[0] - r, center[0] + r)
+        ax.set_ylim(center[1] - r, center[1] + r)
+        ax.set_aspect('equal', 'box')
 
         return ax
 
+    def rescale_to_unit_disk(self, preserve_center=True):
+        """
+        Rescales the graph coordinates to fit within a radius 1 disk.
+
+        Parameters:
+            preserve_center (bool): If True, maintains the current center point.
+                                    If False, centers the graph at (0, 0).
+
+        Returns:
+            self: Returns the instance for method chaining.
+
+        Raises:
+            ValueError: If the graph has no coordinates or all coordinates are identical.
+        """
+        if not self.coordinates:
+            raise ValueError("Graph has no coordinates to rescale.")
+
+        center = self.get_center()
+        coords = np.array(list(self.coordinates.values()))
+        
+        coords_centered = coords - center
+        
+        max_distance = np.max(np.linalg.norm(coords_centered, axis=1))
+        
+        if np.isclose(max_distance, 0):
+            raise ValueError("All coordinates are identical. Cannot rescale.")
+
+        scale_factor = 1 / max_distance
+
+        new_coords = (coords_centered * scale_factor) + (center if preserve_center else 0)
+
+        for vertex, new_coord in zip(self.coordinates.keys(), new_coords):
+            self.coordinates[vertex] = tuple(new_coord)
+
+        return self
 
 def create_example_graph(mean_centered=True):
     """
