@@ -97,7 +97,7 @@
 <h1><span class="section-number">3.1. </span>Tutorial : ECT for embedded graphs<a class="headerlink" href="#Tutorial-:-ECT-for-embedded-graphs" title="Link to this heading"></a></h1>
 <p>This jupyter notebook will walk you through using the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package to compute the Euler characteristic transform of a 2D embedded graph. This tutorial assumes you already know what an ECT is; see <a class="reference external" href="https://arxiv.org/abs/2310.10395">this paper</a> for a more thorough treatment of details.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">create_example_graph</span>
@@ -112,7 +112,7 @@
 <h2><span class="section-number">3.1.1. </span>Constructing the embedded graph<a class="headerlink" href="#Constructing-the-embedded-graph" title="Link to this heading"></a></h2>
 <p>We assume our input is an undirected graph <span class="math notranslate nohighlight">\(G\)</span> with an embedding in 2D given by a map on the vertices <span class="math notranslate nohighlight">\(f: V(G) \to \mathbb{R}^2\)</span>. A graph can be constructed as follows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct an example graph</span>
@@ -140,7 +140,7 @@
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -157,7 +157,7 @@
 </div>
 <p>The coordinates of all vertices, given as a dictionary, can be accessed using the <code class="docutils literal notranslate"><span class="pre">coordinates</span></code> attribute.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">coordinates</span>
@@ -165,7 +165,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -175,7 +175,7 @@
 </div>
 <p>Because of the rotational aspect of the ECT, we often want our graph to be centered, so you can use the <code class="docutils literal notranslate"><span class="pre">set_mean_centered_coordinates</span></code> method shift the graph to have the average of the vertex coordinates be 0. Note that this does overwrite the coordinates of the points.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
@@ -193,7 +193,7 @@
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -210,7 +210,7 @@
 </div>
 <p>To get a bounding radius we can use the <code class="docutils literal notranslate"><span class="pre">get_bounding_radius</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is actually getting the radius</span>
@@ -231,7 +231,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -246,12 +246,40 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 <img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_9_2.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_9_2.png" />
 </div>
 </div>
+<p>We can also rescale our graph to have unit radius using <code class="docutils literal notranslate"><span class="pre">rescale_to_unit_disk</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">rescale_to_unit_disk</span><span class="p">(</span><span class="n">preserve_center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The radius of bounding circle centered at the origin is </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The radius of bounding circle centered at the origin is 1.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_11_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_11_1.png" />
+</div>
+</div>
 <p>Directions are given in the code by specifying <span class="math notranslate nohighlight">\(\theta \in [0,2\pi]\)</span>. We often convert this to <span class="math notranslate nohighlight">\(\omega \in \mathbb{S}^1\)</span> by defining the unit vector <span class="math notranslate nohighlight">\(\omega = (\cos(\theta), \sin(\theta))\)</span>. Then the function <span class="math notranslate nohighlight">\(g_\omega\)</span> is defined on the vertices of <span class="math notranslate nohighlight">\(G\)</span> by taking the dot product of the embedding coordinates with the unit vector, specifically</p>
 <div class="math notranslate nohighlight">
 \[g_\omega(v) = \langle f(v), \omega\rangle.\]</div>
 <p>This is done in the code using the <code class="docutils literal notranslate"><span class="pre">g_omega</span></code> method as shown.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This gives the function value of the nodes as a dictionary</span>
@@ -260,7 +288,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -274,7 +302,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This input to the plotting function will color the nodes by function value.</span>
@@ -283,7 +311,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -295,7 +323,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_12_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_12_1.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_14_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_14_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -320,7 +348,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_13_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_13_1.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_15_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_15_1.png" />
 </div>
 </div>
 </section>
@@ -415,7 +443,7 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_21_0.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_21_0.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_23_0.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_23_0.png" />
 </div>
 </div>
 <p>To calculate the full ECT, we call the <code class="docutils literal notranslate"><span class="pre">calculateECT</span></code> method. This matrix is size <code class="docutils literal notranslate"><span class="pre">myect.num_dirs</span> <span class="pre">x</span> <span class="pre">myect.num_thresh</span></code>. Once computed, it is stored in the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class as <code class="docutils literal notranslate"><span class="pre">ECT.matrix</span></code>.</p>
@@ -449,7 +477,7 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_23_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_23_1.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_25_1.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_25_1.png" />
 </div>
 </div>
 </section>
@@ -500,7 +528,7 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_29_0.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_29_0.png" />
+<img alt="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_31_0.png" src="../_images/notebooks_Tutorial-ECT_for_embedded_graphs_31_0.png" />
 </div>
 </div>
 </section>

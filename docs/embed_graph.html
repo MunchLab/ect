@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_bounding_box"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_box()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_center"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_center()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_bounding_radius"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_radius()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_mean_centered_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_mean_centered_coordinates()</span></code></a></li>
@@ -70,6 +71,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.sort_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.sort_edges()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.lower_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.lower_edges()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.plot"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.rescale_to_unit_disk()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#ect.embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
@@ -224,6 +226,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_center">
+<span class="sig-name descname"><span class="pre">get_center</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_center"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_center" title="Link to this definition"></a></dt>
+<dd><p>Calculate and return the center of the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The (x, y) coordinates of the center.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_bounding_radius">
 <span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_bounding_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_bounding_radius" title="Link to this definition"></a></dt>
 <dd><p>Method to find the radius of the bounding circle of the vertex coordinates in the graph.</p>
@@ -362,6 +378,27 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 <dd><p>Function to plot the graph with the embedded coordinates.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in <span class="math notranslate nohighlight">\([0,2\pi]\)</span>. Then the nodes are colored according to the <span class="math notranslate nohighlight">\(g(v)\)</span> values in the direction of theta.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk">
+<span class="sig-name descname"><span class="pre">rescale_to_unit_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preserve_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.rescale_to_unit_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk" title="Link to this definition"></a></dt>
+<dd><p>Rescales the graph coordinates to fit within a radius 1 disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>preserve_center</strong> (<em>bool</em>) – If True, maintains the current center point.
+If False, centers the graph at (0, 0).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the instance for method chaining.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the graph has no coordinates or all coordinates are identical.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
