@@ -17,7 +17,7 @@ dependencies = ["numpy",
             "matplotlib",
             "numba",
             "scipy",
-            "sklearn"
+            "scikit-learn"
             ]
 
 [tool.setuptools.packages.find]
