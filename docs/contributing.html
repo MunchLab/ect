@@ -128,46 +128,26 @@
 </div>
 <p>This will generate the documentation in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. You can view the documentation by opening the <code class="docutils literal notranslate"><span class="pre">docs/index.html</span></code> file in your browser.</p>
 <p>An example of a docstring for a function is given below. Note the use of indentation since rst is picky about it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sort_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This is a brief description of the function.</span>
+<span class="sd">    Function to sort the edges of the graph according to the function</span>
 
-<span class="sd">    This is a more detailed description of the function. It should include</span>
-<span class="sd">    information about the arguments and the return value. If the function</span>
-<span class="sd">    raises any exceptions, they should be documented here as well. Math can be included in text by using the math directive, e.g. :math:`y = x^2`. A displayed equation can be added as well using the math block directive. Note that for certain letters that are reserved by rst, you need to escape them with a backslash, e.g. `\\f` in the code below.</span>
+<span class="sd">    .. math ::</span>
 
-<span class="sd">        .. math::</span>
+<span class="sd">        g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}</span>
 
-<span class="sd">            \int_0^1 x^2 dx = \\frac{1}{3}</span>
+<span class="sd">    in the direction of :math:`\\theta \in [0,2\pi]` .</span>
 
-<span class="sd">    Code blocks can also be included using the code-block directive:</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        theta (float):</span>
+<span class="sd">            The angle in :math:`[0,2\pi]` for the direction to sort the edges.</span>
+<span class="sd">        return_g (bool):</span>
+<span class="sd">            Whether to return the :math:`g(v)` values along with the sorted edges.</span>
 
-<span class="sd">        .. code-block:: python</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of edges sorted in increasing order of the :math:`g(v)` values.</span>
+<span class="sd">        If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``.</span>
 
-<span class="sd">            def my_function(arg1, arg2):</span>
-<span class="sd">                return arg1 + arg2</span>
-
-<span class="sd">    Just ending a sentence with two colons also will create a code block::</span>
-
-<span class="sd">            def my_function(arg1, arg2):</span>
-<span class="sd">                return arg1 + arg2</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    arg1 (type):</span>
-<span class="sd">        Description of arg1.</span>
-<span class="sd">    arg2 (type):</span>
-<span class="sd">        Description of arg2.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    type</span>
-<span class="sd">        Description of the return value.</span>
-
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">    ExceptionType</span>
-<span class="sd">        Description of when this exception is raised.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
@@ -187,7 +167,7 @@
 </section>
 <section id="issue-tracking-and-pull-requests">
 <h3><span class="section-number">4.2.4. </span>Issue tracking and pull requests<a class="headerlink" href="#issue-tracking-and-pull-requests" title="Link to this heading"></a></h3>
-<p>If you find an issue, please post it on the <cite>GitHub issue tracker &lt;https://github.com/MunchLab/ect/issues&gt;</cite>. Provide as much information as possible, including the version of the <cite>ect</cite> package you are using, the operating system you are using, and any other relevant information.</p>
+<p>If you find an issue, please post it on the <a class="reference external" href="https://github.com/MunchLab/ect/issues">GitHub issue tracker</a>. Provide as much information as possible, including the version of the <cite>ect</cite> package you are using, the operating system you are using, and any other relevant information.</p>
 <p>If you would like to fix an issue and you are a contributor to the project, please create a new branch for the fix. Note that the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch is protected so you will not be able to push directly to that branch. Once you are ready to open discussion, you will create a pull request. The pull request should include a description of the issue and the fix. There is a template for pull requests that you can use to fill out helpful information.</p>
 <ul class="simple">
 <li><p>Note that in order for the <cite>pip install</cite> command to work, the version number in the <cite>pyproject.toml</cite> file must be updated.</p></li>

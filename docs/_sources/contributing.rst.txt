@@ -41,46 +41,26 @@ This will generate the documentation in the ``docs`` directory. You can view the
 
 An example of a docstring for a function is given below. Note the use of indentation since rst is picky about it::
 
-    def my_function(arg1, arg2):
+    def sort_edges(self, theta, return_g=False):
         """
-        This is a brief description of the function.
+        Function to sort the edges of the graph according to the function
 
-        This is a more detailed description of the function. It should include
-        information about the arguments and the return value. If the function
-        raises any exceptions, they should be documented here as well. Math can be included in text by using the math directive, e.g. :math:`y = x^2`. A displayed equation can be added as well using the math block directive. Note that for certain letters that are reserved by rst, you need to escape them with a backslash, e.g. `\\f` in the code below.
-                
-            .. math::
+        .. math ::
 
-                \int_0^1 x^2 dx = \\frac{1}{3}
-        
-        Code blocks can also be included using the code-block directive:
-        
-            .. code-block:: python
-    
-                def my_function(arg1, arg2):
-                    return arg1 + arg2
-        
-        Just ending a sentence with two colons also will create a code block::
-            
-                def my_function(arg1, arg2):
-                    return arg1 + arg2
+            g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
 
-        Parameters
-        ----------
-        arg1 (type):
-            Description of arg1.
-        arg2 (type):
-            Description of arg2.
+        in the direction of :math:`\\theta \in [0,2\pi]` .
 
-        Returns
-        -------
-        type
-            Description of the return value.
+        Parameters:
+            theta (float):
+                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+            return_g (bool):
+                Whether to return the :math:`g(v)` values along with the sorted edges.
 
-        Raises
-        ------
-        ExceptionType
-            Description of when this exception is raised.
+        Returns:
+            A list of edges sorted in increasing order of the :math:`g(v)` values. 
+            If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
+
         """
 
 
@@ -103,7 +83,7 @@ Note that in order for a function written in the test folder to be run, the func
 Issue tracking and pull requests
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you find an issue, please post it on the `GitHub issue tracker <https://github.com/MunchLab/ect/issues>`. Provide as much information as possible, including the version of the `ect` package you are using, the operating system you are using, and any other relevant information.
+If you find an issue, please post it on the `GitHub issue tracker <https://github.com/MunchLab/ect/issues>`_. Provide as much information as possible, including the version of the `ect` package you are using, the operating system you are using, and any other relevant information.
 
 If you would like to fix an issue and you are a contributor to the project, please create a new branch for the fix. Note that the ``main`` branch is protected so you will not be able to push directly to that branch. Once you are ready to open discussion, you will create a pull request. The pull request should include a description of the issue and the fix. There is a template for pull requests that you can use to fill out helpful information. 
 

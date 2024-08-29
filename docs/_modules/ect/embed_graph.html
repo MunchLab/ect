@@ -81,7 +81,7 @@
 <span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span> <span class="c1"># for PCA for normalization</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>  <span class="c1"># for PCA for normalization</span>
 
 
 <div class="viewcode-block" id="EmbeddedGraph">
@@ -111,7 +111,7 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.add_node">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.add_node">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a vertex to the Reeb graph. </span>
 <span class="sd">        If the vertex name is given as None, it will be assigned via the next_vert_name method.</span>
 
@@ -122,14 +122,15 @@
 <span class="sd">                If True, will reset the positions of the nodes based on the function values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The vertex name </span><span class="si">{</span><span class="n">vertex</span><span class="si">}</span><span class="s1"> is already used in the graph.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The vertex name </span><span class="si">{</span><span class="n">vertex</span><span class="si">}</span><span class="s1"> is already used in the graph.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">vertex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">vertex</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">vertex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_vert_name</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
-            
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
 
@@ -153,7 +154,7 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.next_vert_name">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.next_vert_name">[docs]</a>
-    <span class="k">def</span> <span class="nf">next_vert_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">num_verts</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">next_vert_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">num_verts</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Making a simple name generator for vertices. </span>
 <span class="sd">        If you&#39;re using integers, it will just up the count by one. </span>
@@ -188,12 +189,12 @@
                 <span class="k">if</span> <span class="n">num_verts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="k">return</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_verts</span><span class="p">)]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span> <span class="s1">&#39;A&#39;</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="s1">&#39;A&#39;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">num_verts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="k">return</span> <span class="p">[</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_verts</span><span class="p">)]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">*</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input must be a string or an integer&#39;</span><span class="p">)</span></div>
 
@@ -234,10 +235,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">last_name</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
 
-        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_vert_name</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="n">num_verts</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_vert_name</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="n">num_verts</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">coord_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
-        <span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></div>
 
 
@@ -333,26 +334,25 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span></div>
 
 
-    <span class="c1">#------</span>
+    <span class="c1"># ------</span>
     <span class="c1"># Methods for normalizing the coordinates in various ways</span>
-    <span class="c1">#------</span>
+    <span class="c1"># ------</span>
 
 <div class="viewcode-block" id="EmbeddedGraph.get_min_max_centered_coordinates">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_min_max_centered_coordinates">[docs]</a>
     <span class="k">def</span> <span class="nf">get_min_max_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to find the min-max normalized coordinates of the vertices in the graph.&quot;&quot;&quot;</span>
-            
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-
 
         <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_coords</span><span class="p">)</span>
         <span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_coords</span><span class="p">)</span>
         <span class="n">shift_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">shift_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_y</span><span class="o">-</span><span class="n">min_y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span> <span class="o">-</span><span class="n">shift_x</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">min_y</span><span class="p">)</span><span class="o">-</span><span class="n">shift_y</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span> <span class="o">-</span> <span class="n">shift_x</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">min_y</span><span class="p">)</span><span class="o">-</span><span class="n">shift_y</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="EmbeddedGraph.set_min_max_centered_coordinates">
@@ -363,7 +363,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_max_centered_coordinates</span><span class="p">()</span></div>
-
 
 
 <div class="viewcode-block" id="EmbeddedGraph.get_mean_centered_coordinates">
@@ -414,13 +413,14 @@
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">max_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">))</span>
+        <span class="n">max_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">))</span>
         <span class="n">x_coords</span> <span class="o">=</span> <span class="n">x_coords</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">/</span> <span class="n">max_norm</span>
         <span class="n">y_coords</span> <span class="o">=</span> <span class="n">y_coords</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">/</span> <span class="n">max_norm</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">)}</span></div>
 
-    
+
 <div class="viewcode-block" id="EmbeddedGraph.set_scaled_coordinates">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_scaled_coordinates">[docs]</a>
     <span class="k">def</span> <span class="nf">set_scaled_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -430,7 +430,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_scaled_coordinates</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
-
 
 
 <div class="viewcode-block" id="EmbeddedGraph.get_PCA_coordinates">
@@ -447,23 +446,22 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_coords</span><span class="p">,</span><span class="n">y_coords</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
 
-        <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># initiate PCA</span>
-        <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="c1"># fit PCA to coordinates to find longest axis</span>
-        <span class="n">pca_scores</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="c1"># retrieve PCA coordinates</span>
+        <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># initiate PCA</span>
+        <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>  <span class="c1"># fit PCA to coordinates to find longest axis</span>
+        <span class="n">pca_scores</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>  <span class="c1"># retrieve PCA coordinates</span>
 
         <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">:</span> <span class="n">pca_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">pca_scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
 
         <span class="k">return</span> <span class="n">out</span></div>
 
-    
 
 <div class="viewcode-block" id="EmbeddedGraph.set_PCA_coordinates">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_PCA_coordinates">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_PCA_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center_type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scale_radius</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_PCA_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment. </span>
 <span class="sd">        If you also want to center at zero, the options for `center_type` are `mean` or `min_max`.</span>
@@ -619,10 +617,10 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.plot">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounding_circle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-             <span class="n">color_nodes_theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-             <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-             <span class="n">with_labels</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounding_circle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">color_nodes_theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
              <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to plot the graph with the embedded coordinates.</span>
@@ -656,11 +654,13 @@
             <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pathcollection</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;on&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">bounding_circle</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-            <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
 
         <span class="c1"># Always adjust the plot limits to show the full graph</span>
@@ -692,23 +692,25 @@
 
         <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">()</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-        
+
         <span class="n">coords_centered</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">center</span>
-        
+
         <span class="n">max_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coords_centered</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        
+
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">max_distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All coordinates are identical. Cannot rescale.&quot;</span><span class="p">)</span>
 
         <span class="n">scale_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">max_distance</span>
 
-        <span class="n">new_coords</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords_centered</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">center</span> <span class="k">if</span> <span class="n">preserve_center</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">new_coords</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords_centered</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">)</span> <span class="o">+</span> \
+            <span class="p">(</span><span class="n">center</span> <span class="k">if</span> <span class="n">preserve_center</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">new_coord</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">new_coords</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_coord</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
 </div>
+
 
 
 <div class="viewcode-block" id="create_example_graph">
