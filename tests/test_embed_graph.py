@@ -43,6 +43,36 @@ class TestEmbeddedGraph(unittest.TestCase):
 
         self.assertAlmostEqual( np.average(x_coords), 0, places = 1)
 
+    def test_min_max_centered_coordinates(self):
+        # Make sure the min-max centered coordinates are correct
+        G = embed_graph.create_example_graph(mean_centered=False)
+        G.set_min_max_centered_coordinates()
+        x_coords = [x for x, y in G.coordinates.values()]
+        y_coords = [y for x, y in G.coordinates.values()]
+
+        self.assertAlmostEqual( np.max(x_coords) + np.min(x_coords), 0, places = 1)
+        self.assertAlmostEqual( np.max(y_coords) + np.min(y_coords), 0, places = 1)
+
+    def test_PCA_coords(self):
+        # Make sure the PCA coordinates are running
+        # Note this doesn't check correctness
+        G = embed_graph.create_example_graph(mean_centered=False)
+        G.set_PCA_coordinates()
+        self.assertEqual( len(G.coordinates), 6)
+
+    def test_add_cycle(self):
+        # Make sure we can add a loop of input 
+        G = embed_graph.create_example_graph(mean_centered=False)
+        num_verts = len(G.nodes)
+        num_edges = len(G.edges)
+        verts_to_add = 8
+        loop_coords = 3*np.random.rand(verts_to_add, 2)
+
+        G.add_cycle(loop_coords)
+        G.plot()
+        self.assertEqual( len(G.nodes), num_verts + verts_to_add)
+        self.assertEqual( len(G.edges), num_edges + verts_to_add)
+
     
 
 if __name__ == '__main__':
