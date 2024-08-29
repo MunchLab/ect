@@ -1,7 +1,7 @@
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA # for PCA for normalization
+from sklearn.decomposition import PCA  # for PCA for normalization
 
 
 class EmbeddedGraph(nx.Graph):
@@ -24,7 +24,7 @@ class EmbeddedGraph(nx.Graph):
         super().__init__()
         self.coordinates = {}
 
-    def add_node(self, vertex, x,y ):
+    def add_node(self, vertex, x, y):
         """Add a vertex to the Reeb graph. 
         If the vertex name is given as None, it will be assigned via the next_vert_name method.
 
@@ -35,14 +35,15 @@ class EmbeddedGraph(nx.Graph):
                 If True, will reset the positions of the nodes based on the function values.
         """
         if vertex in self.nodes:
-            raise ValueError(f'The vertex name {vertex} is already used in the graph.')
+            raise ValueError(
+                f'The vertex name {vertex} is already used in the graph.')
 
         if vertex is None:
             if len(self.nodes) == 0:
                 vertex = 0
             else:
                 vertex = self.next_vert_name(max(self.nodes))
-            
+
         super().add_node(vertex)
         self.coordinates[vertex] = (x, y)
 
@@ -60,7 +61,7 @@ class EmbeddedGraph(nx.Graph):
         super().add_nodes_from(nodes)
         self.coordinates.update(coordinates)
 
-    def next_vert_name(self, s, num_verts = 1):
+    def next_vert_name(self, s, num_verts=1):
         """ 
         Making a simple name generator for vertices. 
         If you're using integers, it will just up the count by one. 
@@ -95,12 +96,12 @@ class EmbeddedGraph(nx.Graph):
                 if num_verts > 1:
                     return [s[:-1] + chr(ord('A')+1+i) for i in range(num_verts)]
                 else:
-                    return (len(s)+1)* 'A'
+                    return (len(s)+1) * 'A'
             else:
                 if num_verts > 1:
                     return [s[:-1] + chr(ord(s[-1])+1+i) for i in range(num_verts)]
                 else:
-                    return len(s)* chr(ord(s[-1])+1+1)
+                    return len(s) * chr(ord(s[-1])+1+1)
         else:
             ValueError('Input must be a string or an integer')
 
@@ -135,10 +136,10 @@ class EmbeddedGraph(nx.Graph):
         else:
             last_name = max(self.nodes)
 
-        nodes = self.next_vert_name(last_name, num_verts = n)
+        nodes = self.next_vert_name(last_name, num_verts=n)
         coords = {nodes[i]: coord_matrix[i] for i in range(n)}
         self.add_nodes_from(nodes, coords)
-        edges = [(nodes[i], nodes[ (i+1) % n]) for i in range(n)]
+        edges = [(nodes[i], nodes[(i+1) % n]) for i in range(n)]
         self.add_edges_from(edges)
 
     def get_coordinates(self, vertex):
@@ -218,24 +219,23 @@ class EmbeddedGraph(nx.Graph):
         distances = np.linalg.norm(coords - center, axis=1)
         return np.max(distances)
 
-    #------
+    # ------
     # Methods for normalizing the coordinates in various ways
-    #------
+    # ------
 
     def get_min_max_centered_coordinates(self):
         """
         Method to find the min-max normalized coordinates of the vertices in the graph."""
-            
+
         if not self.coordinates:
             return None
-
 
         x_coords, y_coords = zip(*self.coordinates.values())
         min_x, max_x = min(x_coords), max(x_coords)
         min_y, max_y = min(y_coords), max(y_coords)
         shift_x = (max_x-min_x)/2
         shift_y = (max_y-min_y)/2
-        return {v: ( (x-min_x) -shift_x, (y-min_y)-shift_y) for v, (x, y) in self.coordinates.items()}
+        return {v: ((x-min_x) - shift_x, (y-min_y)-shift_y) for v, (x, y) in self.coordinates.items()}
 
     def set_min_max_centered_coordinates(self):
         """
@@ -243,7 +243,6 @@ class EmbeddedGraph(nx.Graph):
         """
 
         self.coordinates = self.get_min_max_centered_coordinates()
-
 
     def get_mean_centered_coordinates(self):
         """
@@ -285,12 +284,13 @@ class EmbeddedGraph(nx.Graph):
             return None
 
         x_coords, y_coords = zip(*self.coordinates.values())
-        max_norm = max(np.linalg.norm(point) for point in zip(x_coords, y_coords))
+        max_norm = max(np.linalg.norm(point)
+                       for point in zip(x_coords, y_coords))
         x_coords = x_coords * radius / max_norm
         y_coords = y_coords * radius / max_norm
 
         return {v: (x, y) for v, x, y in zip(self.coordinates.keys(), x_coords, y_coords)}
-    
+
     def set_scaled_coordinates(self, radius=1):
         """
         Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`. Warning: This overwrites the original coordinates
@@ -298,7 +298,6 @@ class EmbeddedGraph(nx.Graph):
         """
 
         self.coordinates = self.get_scaled_coordinates(radius)
-
 
     def get_PCA_coordinates(self):
         """
@@ -312,20 +311,19 @@ class EmbeddedGraph(nx.Graph):
         if not self.coordinates:
             return None
         x_coords, y_coords = zip(*self.coordinates.values())
-        M = np.array((x_coords,y_coords)).T
+        M = np.array((x_coords, y_coords)).T
 
-        pca = PCA(n_components=2) # initiate PCA
-        pca.fit_transform(M) # fit PCA to coordinates to find longest axis
-        pca_scores = pca.transform(M) # retrieve PCA coordinates
+        pca = PCA(n_components=2)  # initiate PCA
+        pca.fit_transform(M)  # fit PCA to coordinates to find longest axis
+        pca_scores = pca.transform(M)  # retrieve PCA coordinates
 
         nodes = list(self.coordinates.keys())
         n = len(nodes)
-        out = {nodes[i] : pca_scores[i] for i in range(n)}
+        out = {nodes[i]: pca_scores[i] for i in range(n)}
 
         return out
-    
 
-    def set_PCA_coordinates(self, center_type = None, scale_radius = None):
+    def set_PCA_coordinates(self, center_type=None, scale_radius=None):
         """
         Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment. 
         If you also want to center at zero, the options for `center_type` are `mean` or `min_max`.
@@ -463,10 +461,10 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def plot(self, bounding_circle=False, 
-             color_nodes_theta=None, 
-             ax=None, 
-             with_labels = True, 
+    def plot(self, bounding_circle=False,
+             color_nodes_theta=None,
+             ax=None,
+             with_labels=True,
              **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
@@ -500,11 +498,13 @@ class EmbeddedGraph(nx.Graph):
             fig.colorbar(pathcollection, ax=ax, **kwargs)
 
         plt.axis('on')
-        ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
+        ax.tick_params(left=True, bottom=True,
+                       labelleft=True, labelbottom=True)
 
         if bounding_circle:
             r = self.get_bounding_radius()
-            circle = plt.Circle(center, r, fill=False, linestyle='--', color='r')
+            circle = plt.Circle(center, r, fill=False,
+                                linestyle='--', color='r')
             ax.add_patch(circle)
 
         # Always adjust the plot limits to show the full graph
@@ -533,22 +533,24 @@ class EmbeddedGraph(nx.Graph):
 
         center = self.get_center()
         coords = np.array(list(self.coordinates.values()))
-        
+
         coords_centered = coords - center
-        
+
         max_distance = np.max(np.linalg.norm(coords_centered, axis=1))
-        
+
         if np.isclose(max_distance, 0):
             raise ValueError("All coordinates are identical. Cannot rescale.")
 
         scale_factor = 1 / max_distance
 
-        new_coords = (coords_centered * scale_factor) + (center if preserve_center else 0)
+        new_coords = (coords_centered * scale_factor) + \
+            (center if preserve_center else 0)
 
         for vertex, new_coord in zip(self.coordinates.keys(), new_coords):
             self.coordinates[vertex] = tuple(new_coord)
 
         return self
+
 
 def create_example_graph(mean_centered=True):
     """
