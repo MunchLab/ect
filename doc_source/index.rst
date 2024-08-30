@@ -37,7 +37,6 @@ Documentation and tutorials
 * A tutorial jupyter notebook can be found `here <https://munchlab.github.io/ect/notebooks/Tutorial-ECT_for_embedded_graphs.html>`_
 * The source code can be found at: `github.com/MunchLab/ect  <https://github.com/MunchLab/ect>`_
 
-
 Dependencies
 ^^^^^^^^^^^^
 

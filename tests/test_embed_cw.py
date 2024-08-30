@@ -19,14 +19,14 @@ class TestEmbeddedCW(unittest.TestCase):
 
     def test_get_coordinates(self):
         # Make sure we can get the coordinates of a vertex
-        G = create_example_cw(mean_centered=False)
+        G = create_example_cw(centered=False)
         coords = G.get_coordinates('A')
         self.assertEqual( coords, (1, 2))
 
     def test_mean_centered_coordinates(self):
         # Make sure the mean centered coordinates are correct
-        G = create_example_cw(mean_centered=False)
-        G.set_mean_centered_coordinates()
+        G = create_example_cw(centered=False)
+        G.set_centered_coordinates(type = 'mean')
         x_coords = [x for x, y in G.coordinates.values()]
 
         self.assertAlmostEqual( np.average(x_coords), 0, places = 1)

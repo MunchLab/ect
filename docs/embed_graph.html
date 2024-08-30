@@ -57,14 +57,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.__init__"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.add_node"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_node()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.add_nodes_from"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_nodes_from()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.next_vert_name"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.next_vert_name()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.add_edge"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_edge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.add_cycle"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.add_cycle()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_bounding_box"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_box()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_center"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_center()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_bounding_radius"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_bounding_radius()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_mean_centered_coordinates()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_mean_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_mean_centered_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_centered_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_centered_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_centered_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_scaled_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_scaled_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_scaled_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_scaled_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.get_PCA_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.get_PCA_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.set_PCA_coordinates"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.set_PCA_coordinates()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.g_omega"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.g_omega()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.g_omega_edges"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.g_omega_edges()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ect.embed_graph.EmbeddedGraph.sort_vertices"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph.sort_vertices()</span></code></a></li>
@@ -136,13 +142,15 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.add_node">
 <span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.add_node" title="Link to this definition"></a></dt>
-<dd><p>Adds a vertex to the graph and assigns it the given coordinates.</p>
+<dd><p>Add a vertex to the graph.
+If the vertex name is given as None, it will be assigned via the next_vert_name method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>vertex</strong> (<em>str</em>) – The vertex to be added.</p></li>
-<li><p><strong>x</strong> (<em>float</em>) – The x-coordinate of the vertex.</p></li>
-<li><p><strong>y</strong> (<em>float</em>) – The y-coordinate of the vertex.</p></li>
+<li><p><strong>vertex</strong> (<em>hashable like int</em><em> or </em><em>str</em><em>, or </em><em>None</em>) – The name of the vertex to add.</p></li>
+<li><p><strong>x</strong> (<em>floats</em>) – The function value of the vertex being added.</p></li>
+<li><p><strong>y</strong> (<em>floats</em>) – The function value of the vertex being added.</p></li>
+<li><p><strong>reset_pos</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will reset the positions of the nodes based on the function values.</p></li>
 </ul>
 </dd>
 </dl>
@@ -163,6 +171,26 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.next_vert_name">
+<span class="sig-name descname"><span class="pre">next_vert_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_verts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.next_vert_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.next_vert_name" title="Link to this definition"></a></dt>
+<dd><p>Making a simple name generator for vertices.
+If you’re using integers, it will just up the count by one.
+Letters will be incremented in the alphabet. If you reach ‘Z’, it will return ‘AA’. If you reach ‘ZZ’, it will return ‘AAA’, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em><em> or </em><em>int</em>) – The name of the vertex to increment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>str or int</dt><dd><p>The next name in the sequence.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.add_edge">
 <span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.add_edge" title="Link to this definition"></a></dt>
 <dd><p>Adds an edge between the vertices u and v if they exist.</p>
@@ -172,6 +200,19 @@
 <li><p><strong>u</strong> (<em>str</em>) – The first vertex of the edge.</p></li>
 <li><p><strong>v</strong> (<em>str</em>) – The second vertex of the edge.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.add_cycle">
+<span class="sig-name descname"><span class="pre">add_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.add_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.add_cycle" title="Link to this definition"></a></dt>
+<dd><p>Add nodes and edges from a cycle of coordinates.
+Specifically, will add a node for each row and the edges connecting the nodes in the order they appear in the matrix as a closed cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coord_matrix</strong> – numpy array
+An (n x 2) matrix of coordinates.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -227,39 +268,82 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_center">
-<span class="sig-name descname"><span class="pre">get_center</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_center"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_center" title="Link to this definition"></a></dt>
-<dd><p>Calculate and return the center of the graph.</p>
+<span class="sig-name descname"><span class="pre">get_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_center"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_center" title="Link to this definition"></a></dt>
+<dd><p>Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (<cite>mean</cite>), the center of the bounding box (<cite>min_max</cite>), or the origin (<cite>origin</cite>).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The (x, y) coordinates of the center.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>str</em>) – The type of center to calculate. Options are ‘mean’, ‘min_max’, or ‘origin’.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>numpy.ndarray</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (x, y) coordinates of the center.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_bounding_radius">
-<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_bounding_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_bounding_radius" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_bounding_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_bounding_radius" title="Link to this definition"></a></dt>
 <dd><p>Method to find the radius of the bounding circle of the vertex coordinates in the graph.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The radius of the bounding circle.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>str</em>) – The type of center to calculate the radius relative to. Options are ‘mean’, ‘min_max’, or ‘origin’.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The radius of the bounding circle.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_mean_centered_coordinates">
-<span class="sig-name descname"><span class="pre">get_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_mean_centered_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_mean_centered_coordinates" title="Link to this definition"></a></dt>
-<dd><p>Method to find the mean-centered coordinates of the vertices in the graph.</p>
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_centered_coordinates">
+<span class="sig-name descname"><span class="pre">get_centered_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min_max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_centered_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_centered_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to find the centered coordinates of the vertices in the graph.</p>
+<p>If type is ‘min_max’, the coordinates are centered at the mean of the min and max values of the x and y coordinates.
+If type is ‘mean’, the coordinates are centered at the mean of the x and y coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.set_centered_coordinates">
+<span class="sig-name descname"><span class="pre">set_centered_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min_max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.set_centered_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.set_centered_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to set the centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_scaled_coordinates">
+<span class="sig-name descname"><span class="pre">get_scaled_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_scaled_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_scaled_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by <cite>radius</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>radius</strong> (<em>float</em>) – The radius of the bounding disk.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping vertices to their scaled coordinates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.set_scaled_coordinates">
+<span class="sig-name descname"><span class="pre">set_scaled_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.set_scaled_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.set_scaled_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by <cite>radius</cite>. Warning: This overwrites the original coordinates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_PCA_coordinates">
+<span class="sig-name descname"><span class="pre">get_PCA_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_PCA_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_PCA_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to find the PCA coordinates of the vertices in the graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping vertices to their mean-centered coordinates.</p>
+<dd class="field-odd"><p>A dictionary mapping vertices to their PCA normalized coordinates.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict</p>
@@ -268,9 +352,12 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.set_mean_centered_coordinates">
-<span class="sig-name descname"><span class="pre">set_mean_centered_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.set_mean_centered_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.set_mean_centered_coordinates" title="Link to this definition"></a></dt>
-<dd><p>Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates</p>
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.set_PCA_coordinates">
+<span class="sig-name descname"><span class="pre">set_PCA_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.set_PCA_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.set_PCA_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment.
+If you also want to center at zero, the options for <cite>center_type</cite> are <cite>mean</cite> or <cite>min_max</cite>.
+Set <cite>scale_radius</cite> to a value to scale to a specific radius.
+Warning: This overwrites the original coordinates</p>
 </dd></dl>
 
 <dl class="py method">
@@ -374,19 +461,20 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the graph with the embedded coordinates.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph. This is centered at the center type defined by <code class="docutils literal notranslate"><span class="pre">bounding_center_type</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in <span class="math notranslate nohighlight">\([0,2\pi]\)</span>. Then the nodes are colored according to the <span class="math notranslate nohighlight">\(g(v)\)</span> values in the direction of theta.</p>
+<p>If with_labels is True, the nodes are labeled with their names.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk">
-<span class="sig-name descname"><span class="pre">rescale_to_unit_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preserve_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.rescale_to_unit_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rescale_to_unit_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preserve_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.rescale_to_unit_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk" title="Link to this definition"></a></dt>
 <dd><p>Rescales the graph coordinates to fit within a radius 1 disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>preserve_center</strong> (<em>bool</em>) – If True, maintains the current center point.
+<dd class="field-odd"><p><strong>preserve_center</strong> (<em>bool</em>) – If True, maintains the current center point of type <code class="docutils literal notranslate"><span class="pre">center_type</span></code>.
 If False, centers the graph at (0, 0).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -405,8 +493,8 @@ If False, centers the graph at (0, 0).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ect.embed_graph.create_example_graph">
-<span class="sig-prename descclassname"><span class="pre">ect.embed_graph.</span></span><span class="sig-name descname"><span class="pre">create_example_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#create_example_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.create_example_graph" title="Link to this definition"></a></dt>
-<dd><p>Function to create an example <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> object. Helpful for testing.</p>
+<span class="sig-prename descclassname"><span class="pre">ect.embed_graph.</span></span><span class="sig-name descname"><span class="pre">create_example_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'min_max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#create_example_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.create_example_graph" title="Link to this definition"></a></dt>
+<dd><p>Function to create an example <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> object. Helpful for testing. If <code class="docutils literal notranslate"><span class="pre">centered</span></code> is True, the coordinates are centered using the center type given by <code class="docutils literal notranslate"><span class="pre">center_type</span></code>, either <code class="docutils literal notranslate"><span class="pre">mean</span></code> or <code class="docutils literal notranslate"><span class="pre">min_max</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>An example <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> object.</p>

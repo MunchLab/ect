@@ -1,6 +1,7 @@
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA  # for PCA for normalization
 
 
 class EmbeddedGraph(nx.Graph):
@@ -24,18 +25,25 @@ class EmbeddedGraph(nx.Graph):
         self.coordinates = {}
 
     def add_node(self, vertex, x, y):
-        """
-        Adds a vertex to the graph and assigns it the given coordinates.
+        """Add a vertex to the graph. 
+        If the vertex name is given as None, it will be assigned via the next_vert_name method.
 
         Parameters:
-            vertex (str):
-                The vertex to be added.
-            x (float):
-                The x-coordinate of the vertex.
-            y (float):
-                The y-coordinate of the vertex.
-
+            vertex (hashable like int or str, or None) : The name of the vertex to add.
+            x, y (floats) : The function value of the vertex being added.
+            reset_pos (bool, optional) 
+                If True, will reset the positions of the nodes based on the function values.
         """
+        if vertex in self.nodes:
+            raise ValueError(
+                f'The vertex name {vertex} is already used in the graph.')
+
+        if vertex is None:
+            if len(self.nodes) == 0:
+                vertex = 0
+            else:
+                vertex = self.next_vert_name(max(self.nodes))
+
         super().add_node(vertex)
         self.coordinates[vertex] = (x, y)
 
@@ -53,6 +61,50 @@ class EmbeddedGraph(nx.Graph):
         super().add_nodes_from(nodes)
         self.coordinates.update(coordinates)
 
+    def next_vert_name(self, s, num_verts=1):
+        """ 
+        Making a simple name generator for vertices. 
+        If you're using integers, it will just up the count by one. 
+        Letters will be incremented in the alphabet. If you reach 'Z', it will return 'AA'. If you reach 'ZZ', it will return 'AAA', etc.
+
+        Parameters:
+            s (str or int): The name of the vertex to increment.
+
+        Returns:
+            str or int
+                The next name in the sequence.
+        """
+
+        if type(s) == int:
+            if num_verts > 1:
+                return [s+1+i for i in range(num_verts)]
+            else:
+                return s+1
+        elif type(s) == str and len(s) == 1:
+            if not s == 'Z':
+                if num_verts > 1:
+                    return [chr(ord(s)+1+i) for i in range(num_verts)]
+                else:
+                    return chr(ord(s)+1)
+            else:
+                if num_verts > 1:
+                    return [chr(ord('AA')+1+i) for i in range(num_verts)]
+                else:
+                    return 'AA'
+        elif type(s) == str and len(s) > 1:
+            if s[-1] == 'Z':
+                if num_verts > 1:
+                    return [s[:-1] + chr(ord('A')+1+i) for i in range(num_verts)]
+                else:
+                    return (len(s)+1) * 'A'
+            else:
+                if num_verts > 1:
+                    return [s[:-1] + chr(ord(s[-1])+1+i) for i in range(num_verts)]
+                else:
+                    return len(s) * chr(ord(s[-1])+1+1)
+        else:
+            raise ValueError('Input must be a string or an integer')
+
     def add_edge(self, u, v):
         """
         Adds an edge between the vertices u and v if they exist.
@@ -68,6 +120,27 @@ class EmbeddedGraph(nx.Graph):
             raise ValueError("One or both vertices do not exist in the graph.")
         else:
             super().add_edge(u, v)
+
+    def add_cycle(self, coord_matrix):
+        """
+        Add nodes and edges from a cycle of coordinates. 
+        Specifically, will add a node for each row and the edges connecting the nodes in the order they appear in the matrix as a closed cycle.
+
+        Parameters:
+            coord_matrix : numpy array
+                An (n x 2) matrix of coordinates.
+        """
+        n = len(coord_matrix)
+        if len(self.nodes) == 0:
+            last_name = 0
+        else:
+            last_name = max(self.nodes)
+
+        nodes = self.next_vert_name(last_name, num_verts=n)
+        coords = {nodes[i]: coord_matrix[i] for i in range(n)}
+        self.add_nodes_from(nodes, coords)
+        edges = [(nodes[i], nodes[(i+1) % n]) for i in range(n)]
+        self.add_edges_from(edges)
 
     def get_coordinates(self, vertex):
         """
@@ -118,21 +191,36 @@ class EmbeddedGraph(nx.Graph):
         x_coords, y_coords = zip(*self.coordinates.values())
         return [(min(x_coords), max(x_coords)), (min(y_coords), max(y_coords))]
 
-    def get_center(self):
+    def get_center(self, type='origin'):
         """
-        Calculate and return the center of the graph.
+        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (`mean`), the center of the bounding box (`min_max`), or the origin (`origin`).
+
+        Parameters:
+            type (str): The type of center to calculate. Options are 'mean', 'min_max', or 'origin'.
 
         Returns:
             numpy.ndarray: The (x, y) coordinates of the center.
         """
         if not self.coordinates:
             return np.array([0.0, 0.0])
-        coords = np.array(list(self.coordinates.values()))
-        return np.mean(coords, axis=0)
 
-    def get_bounding_radius(self):
+        if type == 'origin':
+            return np.array([0.0, 0.0])
+        elif type == 'mean':
+            coords = np.array(list(self.coordinates.values()))
+            return np.mean(coords, axis=0)
+        elif type == 'min_max':
+            x_coords, y_coords = zip(*self.coordinates.values())
+            min_x, max_x = min(x_coords), max(x_coords)
+            min_y, max_y = min(y_coords), max(y_coords)
+            return np.array([(max_x+min_x)/2, (max_y+min_y)/2])
+
+    def get_bounding_radius(self, type='origin'):
         """
-        Method to find the radius of the bounding circle of the vertex coordinates in the graph.
+        Method to find the radius of the bounding circle of the vertex coordinates in the graph. 
+
+        Parameters:
+            type (str): The type of center to calculate the radius relative to. Options are 'mean', 'min_max', or 'origin'.
 
         Returns:
             float: The radius of the bounding circle.
@@ -141,34 +229,105 @@ class EmbeddedGraph(nx.Graph):
         if not self.coordinates:
             return 0
 
-        center = self.get_center()
+        center = self.get_center(type)
         coords = np.array(list(self.coordinates.values()))
         distances = np.linalg.norm(coords - center, axis=1)
         return np.max(distances)
 
-    def get_mean_centered_coordinates(self):
+    # ------
+    # Methods for normalizing the coordinates in various ways
+    # ------
+
+    def get_centered_coordinates(self, type='min_max'):
         """
-        Method to find the mean-centered coordinates of the vertices in the graph.
+        Method to find the centered coordinates of the vertices in the graph.
+
+        If type is 'min_max', the coordinates are centered at the mean of the min and max values of the x and y coordinates.
+        If type is 'mean', the coordinates are centered at the mean of the x and y coordinates.
+        """
+
+        if not self.coordinates:
+            return None
+
+        center = self.get_center(type)
+        return {v: (x - center[0], y - center[1]) for v, (x, y) in self.coordinates.items()}
+
+    def set_centered_coordinates(self, type='min_max'):
+        """
+        Method to set the centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates.
+        """
+
+        self.coordinates = self.get_centered_coordinates(type=type)
+
+    def get_scaled_coordinates(self, radius=1):
+        """
+        Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`.
+
+        Parameters:
+            radius (float):
+                The radius of the bounding disk.
 
         Returns:
-            dict: A dictionary mapping vertices to their mean-centered coordinates.
+            dict: A dictionary mapping vertices to their scaled coordinates.
 
         """
         if not self.coordinates:
             return None
 
         x_coords, y_coords = zip(*self.coordinates.values())
-        mean_x, mean_y = np.mean(x_coords), np.mean(y_coords)
+        max_norm = max(np.linalg.norm(point)
+                       for point in zip(x_coords, y_coords))
+        x_coords = x_coords * radius / max_norm
+        y_coords = y_coords * radius / max_norm
 
-        return {v: (x - mean_x, y - mean_y) for v, (x, y) in self.coordinates.items()}
+        return {v: (x, y) for v, x, y in zip(self.coordinates.keys(), x_coords, y_coords)}
 
-    def set_mean_centered_coordinates(self):
+    def set_scaled_coordinates(self, radius=1):
         """
-        Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates
+        Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`. Warning: This overwrites the original coordinates
 
         """
 
-        self.coordinates = self.get_mean_centered_coordinates()
+        self.coordinates = self.get_scaled_coordinates(radius)
+
+    def get_PCA_coordinates(self):
+        """
+        Method to find the PCA coordinates of the vertices in the graph.
+
+        Returns:
+            dict: A dictionary mapping vertices to their PCA normalized coordinates.
+
+        """
+
+        if not self.coordinates:
+            return None
+        x_coords, y_coords = zip(*self.coordinates.values())
+        M = np.array((x_coords, y_coords)).T
+
+        pca = PCA(n_components=2)  # initiate PCA
+        pca.fit_transform(M)  # fit PCA to coordinates to find longest axis
+        pca_scores = pca.transform(M)  # retrieve PCA coordinates
+
+        nodes = list(self.coordinates.keys())
+        n = len(nodes)
+        out = {nodes[i]: pca_scores[i] for i in range(n)}
+
+        return out
+
+    def set_PCA_coordinates(self, center_type=None, scale_radius=None):
+        """
+        Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment. 
+        If you also want to center at zero, the options for `center_type` are `mean` or `min_max`.
+        Set `scale_radius` to a value to scale to a specific radius.
+        Warning: This overwrites the original coordinates
+        """
+        self.coordinates = self.get_PCA_coordinates()
+
+        if center_type:
+            self.set_centered_coordinates(center_type)
+
+        if scale_radius:
+            self.set_scaled_coordinates(radius=scale_radius)
 
     def g_omega(self, theta):
         """
@@ -291,13 +450,21 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def plot(self, bounding_circle=False, color_nodes_theta=None, ax=None, **kwargs):
+    def plot(self,
+             bounding_circle=False,
+             bounding_center_type='origin',
+             color_nodes_theta=None,
+             ax=None,
+             with_labels=True,
+             **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
 
-        If ``bounding_circle`` is True, a bounding circle is drawn around the graph.
+        If ``bounding_circle`` is True, a bounding circle is drawn around the graph. This is centered at the center type defined by ``bounding_center_type``.
 
         If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
+
+        If with_labels is True, the nodes are labeled with their names.
 
         """
         if ax is None:
@@ -306,11 +473,11 @@ class EmbeddedGraph(nx.Graph):
             fig = ax.get_figure()
 
         pos = self.coordinates
-        center = self.get_center()
-        r = self.get_bounding_radius()
+        # center = self.get_center(type = 'min_max')
+        # r = self.get_bounding_radius(type = 'min_max')
 
         if color_nodes_theta is None:
-            nx.draw(self, pos, with_labels=True, ax=ax, **kwargs)
+            nx.draw(self, pos, with_labels=with_labels, ax=ax, **kwargs)
         else:
             g = self.g_omega(color_nodes_theta)
             color_map = [g[v] for v in self.nodes]
@@ -322,26 +489,29 @@ class EmbeddedGraph(nx.Graph):
             fig.colorbar(pathcollection, ax=ax, **kwargs)
 
         plt.axis('on')
-        ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
+        ax.tick_params(left=True, bottom=True,
+                       labelleft=True, labelbottom=True)
 
         if bounding_circle:
-            r = self.get_bounding_radius()
-            circle = plt.Circle(center, r, fill=False, linestyle='--', color='r')
+            circle_center = self.get_center(bounding_center_type)
+            r = self.get_bounding_radius(type=bounding_center_type)
+            circle = plt.Circle(circle_center, r, fill=False,
+                                linestyle='--', color='r')
             ax.add_patch(circle)
 
-        # Always adjust the plot limits to show the full graph
-        ax.set_xlim(center[0] - r, center[0] + r)
-        ax.set_ylim(center[1] - r, center[1] + r)
+            # Always adjust the plot limits to show the full graph
+            ax.set_xlim(circle_center[0] - r, circle_center[0] + r)
+            ax.set_ylim(circle_center[1] - r, circle_center[1] + r)
         ax.set_aspect('equal', 'box')
 
         return ax
 
-    def rescale_to_unit_disk(self, preserve_center=True):
+    def rescale_to_unit_disk(self, preserve_center=True, center_type='origin'):
         """
         Rescales the graph coordinates to fit within a radius 1 disk.
 
         Parameters:
-            preserve_center (bool): If True, maintains the current center point.
+            preserve_center (bool): If True, maintains the current center point of type ``center_type``.
                                     If False, centers the graph at (0, 0).
 
         Returns:
@@ -353,28 +523,30 @@ class EmbeddedGraph(nx.Graph):
         if not self.coordinates:
             raise ValueError("Graph has no coordinates to rescale.")
 
-        center = self.get_center()
+        center = self.get_center(center_type)
         coords = np.array(list(self.coordinates.values()))
-        
+
         coords_centered = coords - center
-        
+
         max_distance = np.max(np.linalg.norm(coords_centered, axis=1))
-        
+
         if np.isclose(max_distance, 0):
             raise ValueError("All coordinates are identical. Cannot rescale.")
 
         scale_factor = 1 / max_distance
 
-        new_coords = (coords_centered * scale_factor) + (center if preserve_center else 0)
+        new_coords = (coords_centered * scale_factor) + \
+            (center if preserve_center else 0)
 
         for vertex, new_coord in zip(self.coordinates.keys(), new_coords):
             self.coordinates[vertex] = tuple(new_coord)
 
         return self
 
-def create_example_graph(mean_centered=True):
+
+def create_example_graph(centered=True, center_type='min_max'):
     """
-    Function to create an example ``EmbeddedGraph`` object. Helpful for testing.
+    Function to create an example ``EmbeddedGraph`` object. Helpful for testing. If ``centered`` is True, the coordinates are centered using the center type given by ``center_type``, either ``mean`` or ``min_max``.
 
     Returns:
         EmbeddedGraph: An example ``EmbeddedGraph`` object.
@@ -396,8 +568,8 @@ def create_example_graph(mean_centered=True):
     graph.add_edge('C', 'D')
     graph.add_edge('E', 'F')
 
-    if mean_centered:
-        graph.set_mean_centered_coordinates()
+    if centered:
+        graph.set_centered_coordinates(center_type)
 
     return graph
 
