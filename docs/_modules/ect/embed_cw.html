@@ -281,16 +281,16 @@
 
 <div class="viewcode-block" id="create_example_cw">
 <a class="viewcode-back" href="../../embed_cw.html#ect.embed_cw.create_example_cw">[docs]</a>
-<span class="k">def</span> <span class="nf">create_example_cw</span><span class="p">(</span><span class="n">mean_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">create_example_cw</span><span class="p">(</span><span class="n">centered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates an example EmbeddedCW object with a simple CW complex.</span>
+<span class="sd">    Creates an example EmbeddedCW object with a simple CW complex. If centered is True, the coordinates are centered around the center type, which could be ``mean``, ``min_max`` or ``origin``.</span>
 
 
 <span class="sd">    Returns:</span>
 <span class="sd">        EmbeddedCW</span>
 <span class="sd">            The example EmbeddedCW object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">G</span> <span class="o">=</span> <span class="n">create_example_graph</span><span class="p">(</span><span class="n">mean_centered</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">create_example_graph</span><span class="p">(</span><span class="n">centered</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedCW</span><span class="p">()</span>
     <span class="n">K</span><span class="o">.</span><span class="n">add_from_embedded_graph</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
     <span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -303,8 +303,8 @@
     <span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
     <span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
 
-    <span class="k">if</span> <span class="n">mean_centered</span><span class="p">:</span>
-        <span class="n">K</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">centered</span><span class="p">:</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">center_type</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">K</span></div>
 
