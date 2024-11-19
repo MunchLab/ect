@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Figure generation for Invitation to the ECT &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=59fadc99"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -91,16 +89,16 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><br/><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="c1"># import teaspoon</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><br/><span></span>import numpy as np
+import matplotlib.pyplot as plt
+# import teaspoon
 
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-    <span class="s2">&quot;text.usetex&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="c1"># &quot;font.family&quot;: &quot;Helvetica&quot;,</span>
-    <span class="s2">&quot;font.family&quot;</span><span class="p">:</span> <span class="s2">&quot;serif&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;font.size&quot;</span><span class="p">:</span> <span class="mi">8</span>
-<span class="p">})</span>
+plt.rcParams.update({
+    &quot;text.usetex&quot;: True,
+    # &quot;font.family&quot;: &quot;Helvetica&quot;,
+    &quot;font.family&quot;: &quot;serif&quot;,
+    &quot;font.size&quot;: 8
+})
 </pre></div>
 </div>
 </div>
@@ -108,8 +106,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">__version__</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib
+matplotlib.__version__
 </pre></div>
 </div>
 </div>
@@ -125,14 +123,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Code to set colormaps to deal with the transparency issue</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Code to set colormaps to deal with the transparency issue
 
-<span class="n">cmap_viridis</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span>
-<span class="n">cmap_viridis</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">,</span><span class="mf">1.</span><span class="p">)</span>
+cmap_viridis = matplotlib.cm.viridis
+cmap_viridis.set_bad(&#39;white&#39;,1.)
 
 
-<span class="n">cmap_binary</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">tab20b</span>
-<span class="n">cmap_binary</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">,</span><span class="mf">1.</span><span class="p">)</span>
+cmap_binary = matplotlib.cm.tab20b
+cmap_binary.set_bad(&#39;white&#39;,1.)
 </pre></div>
 </div>
 </div>
@@ -140,32 +138,32 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;figures/leafbw.tif&#39;</span><span class="p">)</span>
-<span class="n">F</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span>
-<span class="n">F</span> <span class="o">=</span> <span class="n">F</span><span class="o">/</span><span class="mf">255.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>F = plt.imread(&#39;figures/leafbw.tif&#39;)
+F = F.T
+F = F/255.
 
-<span class="n">F_finite</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
-<span class="n">F_finite</span><span class="p">[</span><span class="n">F</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2000</span>
+F_finite = np.copy(F)
+F_finite[F==0] = 2000
 
-<span class="c1"># G = np.ones_like(F)</span>
-<span class="c1"># G[F==0] = 1</span>
-<span class="c1"># print(G.shape)</span>
+# G = np.ones_like(F)
+# G[F==0] = 1
+# print(G.shape)
 
-<span class="n">F</span><span class="p">[</span><span class="n">F</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+F[F==0] = np.nan
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_binary</span><span class="p">)</span>
-<span class="c1"># plt.matshow(G, origin = &#39;lower&#39;)</span>
+plt.matshow(F, origin = &#39;lower&#39;,cmap = cmap_binary)
+# plt.matshow(G, origin = &#39;lower&#39;)
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="c1"># fig.set_rasterized(True)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+fig = plt.gcf()
+# fig.set_rasterized(True)
+fig.set_figwidth(5)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Testing&#39;</span><span class="p">)</span>
+plt.title(&#39;Testing&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.png&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.eps&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.pdf&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/test.png&#39;, dpi = 300)
+plt.savefig(&#39;figures/test.eps&#39;, facecolor=&#39;white&#39;, transparent=False,bbox_inches=&#39;tight&#39;)
+plt.savefig(&#39;figures/test.pdf&#39;)
 </pre></div>
 </div>
 </div>
@@ -188,7 +186,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>F
 </pre></div>
 </div>
 </div>
@@ -210,19 +208,19 @@ array([[nan, nan, nan, ..., nan, nan, nan],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">makeFernPic</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-    <span class="n">maxRow</span><span class="p">,</span> <span class="n">maxCol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
-    <span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def makeFernPic(F, theta, plot = True):
+    maxRow, maxCol = np.shape(F)
+    omega = (np.cos(theta), np.sin(theta))
 
-    <span class="c1"># center origin</span>
-    <span class="n">Col</span><span class="p">,</span><span class="n">Row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">maxCol</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">maxRow</span><span class="p">))</span>
-    <span class="n">Col</span> <span class="o">=</span> <span class="n">Col</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">maxCol</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">Row</span> <span class="o">=</span> <span class="n">Row</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">maxRow</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    # center origin
+    Col,Row = np.meshgrid(range(maxCol),range(maxRow))
+    Col = Col - np.floor(maxCol/2)
+    Row = Row-np.floor(maxRow/2)
 
-    <span class="n">fMask</span> <span class="o">=</span> <span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">Col</span> <span class="o">+</span> <span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">Row</span>
-    <span class="n">DT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">fMask</span><span class="p">)</span>
+    fMask = omega[0]*Col + omega[1]*Row
+    DT = np.multiply(F,fMask)
 
-    <span class="k">return</span> <span class="n">DT</span>
+    return DT
 <br/></pre></div>
 </div>
 </div>
@@ -230,19 +228,19 @@ array([[nan, nan, nan, ..., nan, nan, nan],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span>
-<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">,</span><span class="mf">1.</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cmap = matplotlib.cm.viridis
+cmap.set_bad(&#39;white&#39;,1.)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPic</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mf">0.035</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+plt.matshow(makeFernPic(F,np.pi/2), origin = &#39;lower&#39;, cmap = cmap_viridis)
+plt.colorbar(fraction=0.035, pad=0.04)
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="c1"># fig.set_rasterized(True)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+fig = plt.gcf()
+# fig.set_rasterized(True)
+fig.set_figwidth(5)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.png&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.eps&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/test.pdf&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/test.png&#39;, dpi = 300)
+plt.savefig(&#39;figures/test.eps&#39;, facecolor=&#39;white&#39;, transparent=False,bbox_inches=&#39;tight&#39;)
+plt.savefig(&#39;figures/test.pdf&#39;)
 </pre></div>
 </div>
 </div>
@@ -260,11 +258,11 @@ array([[nan, nan, nan, ..., nan, nan, nan],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">demeter.euler</span> <span class="k">as</span> <span class="nn">euler</span>
-<span class="kn">import</span> <span class="nn">demeter.directions</span> <span class="k">as</span> <span class="nn">dirs</span>
-<span class="kn">import</span> <span class="nn">demeter.misc</span> <span class="k">as</span> <span class="nn">misc</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">tifffile</span> <span class="k">as</span> <span class="nn">tf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import demeter.euler as euler
+import demeter.directions as dirs
+import demeter.misc as misc
+import time
+import tifffile as tf
 </pre></div>
 </div>
 </div>
@@ -272,14 +270,14 @@ array([[nan, nan, nan, ..., nan, nan, nan],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaf_file</span> <span class="o">=</span> <span class="s1">&#39;figures/leafbw.tif&#39;</span>
-<span class="n">leaf_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">leaf_file</span><span class="p">)</span>
-<span class="n">leaf_img</span><span class="p">[</span><span class="n">leaf_img</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaf_file = &#39;figures/leafbw.tif&#39;
+leaf_img = tf.imread(leaf_file)
+leaf_img[leaf_img &gt; 0] = 1
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">leaf_img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span> <span class="p">[</span><span class="mi">280</span><span class="p">,</span><span class="mi">310</span><span class="p">,</span><span class="mi">310</span><span class="p">,</span><span class="mi">280</span><span class="p">,</span><span class="mi">280</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">);</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">leaf_img</span><span class="p">[</span><span class="mi">280</span><span class="p">:</span><span class="mi">310</span><span class="p">,</span> <span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+fig, ax = plt.subplots(1,2,figsize=(20,6))
+ax[0].imshow(leaf_img, cmap=&#39;gray&#39;);
+ax[0].plot([200,200,250,250,200], [280,310,310,280,280], c=&#39;red&#39;, lw=4);
+ax[1].imshow(leaf_img[280:310, 200:250], cmap=&#39;gray&#39;);
 </pre></div>
 </div>
 </div>
@@ -294,13 +292,13 @@ array([[nan, nan, nan, ..., nan, nan, nan],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-<span class="n">leaf</span> <span class="o">=</span> <span class="n">euler</span><span class="o">.</span><span class="n">CubicalComplex</span><span class="p">(</span><span class="n">leaf_img</span><span class="p">)</span><span class="o">.</span><span class="n">complexify</span><span class="p">()</span>
-<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tic = time.perf_counter()
+leaf = euler.CubicalComplex(leaf_img).complexify()
+toc = time.perf_counter()
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Complexify in </span><span class="si">{:.4f}</span><span class="s2"> seconds.</span><span class="se">\n\n</span><span class="s2">Cubical complex made of:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="p">))</span>
+print(&quot;Complexify in {:.4f} seconds.\n\nCubical complex made of:&quot;.format(toc-tic))
 
-<span class="n">leaf</span><span class="o">.</span><span class="n">summary</span><span class="p">();</span>
+leaf.summary();
 </pre></div>
 </div>
 </div>
@@ -323,7 +321,7 @@ Euler Characteristic: -197
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaf</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaf.summary()
 </pre></div>
 </div>
 </div>
@@ -351,7 +349,7 @@ Euler Characteristic: -197
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaf.cells
 </pre></div>
 </div>
 </div>
@@ -387,9 +385,9 @@ Euler Characteristic: -197
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = np.pi/4
+omega = (np.cos(theta),np.sin(theta))
+heights = np.sum(leaf.cells[0]*omega, axis=1)
 <br/></pre></div>
 </div>
 </div>
@@ -397,7 +395,7 @@ Euler Characteristic: -197
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>heights
 </pre></div>
 </div>
 </div>
@@ -416,9 +414,9 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = 6*np.pi/4
+omega = (np.cos(theta), np.sin(theta))
+heights = np.sum(leaf.cells[0]*omega, axis=1)
 <br/></pre></div>
 </div>
 </div>
@@ -426,9 +424,9 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">0</span><span class="p">],</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span>
-                         <span class="n">s</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">heights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(leaf.cells[0][:,0],leaf.cells[0][:,1],
+                         s=0.1, c=heights, cmap=&#39;magma&#39;, label=&#39;T = {}&#39;.format(32))
+plt.colorbar()
 </pre></div>
 </div>
 </div>
@@ -451,10 +449,10 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Figuring out centering</span>
-<span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Figuring out centering
+size = np.shape(F)
+print(np.floor(size[0]/2))
+print(np.floor(size[1]/2))
 <br/></pre></div>
 </div>
 </div>
@@ -471,19 +469,19 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPic</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">theta</span><span class="p">),</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">150</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">midx</span> <span class="o">=</span> <span class="mi">279</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">midx</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.matshow(makeFernPic(F,theta), origin = &#39;lower&#39;, cmap = cmap_viridis, vmin = -150, vmax = 150)
+ax = plt.gca()
+midx = 279
+ax.set_xticks(midx+100*np.arange(-2,3))
+ax.set_xticklabels(np.arange(-2,3)*100)
 
-<span class="n">midy</span> <span class="o">=</span> <span class="mi">177</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">midy</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+midy = 177
+ax.set_yticks(midy+100*np.arange(-2,3))
+ax.set_yticklabels(np.arange(-2,3)*100)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+plt.colorbar()
 
-<span class="c1"># plt.savefig(&#39;figures/Fern&#39; + str(int(theta*1000)) + &#39;.png&#39;, bbox_inches = &#39;tight&#39;)</span>
+# plt.savefig(&#39;figures/Fern&#39; + str(int(theta*1000)) + &#39;.png&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -506,37 +504,37 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Version without colorbars</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Version without colorbars
 
-<span class="n">thetaStrs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\pi/4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3\pi/4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3\pi/2&#39;</span><span class="p">,</span> <span class="s1">&#39;7\pi/4&#39;</span><span class="p">]</span>
-<span class="n">thetaStrsFile</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;pi_over_4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3pi_over_4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3pi_over_2&#39;</span><span class="p">,</span> <span class="s1">&#39;7pi_over_4&#39;</span><span class="p">]</span>
-<span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">]</span>
+thetaStrs = [r&#39;\pi/4&#39;, r&#39;3\pi/4&#39;, r&#39;3\pi/2&#39;, &#39;7\pi/4&#39;]
+thetaStrsFile = [r&#39;pi_over_4&#39;, r&#39;3pi_over_4&#39;, r&#39;3pi_over_2&#39;, &#39;7pi_over_4&#39;]
+thetas = [np.pi/4, 3*np.pi/4, 3*np.pi/2, 7*np.pi/4]
 
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPic</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">theta</span><span class="p">),</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-    <span class="n">midx</span> <span class="o">=</span> <span class="mi">279</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">midx</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+for i, theta in enumerate(thetas):
+    print(theta)
+    im = plt.matshow(makeFernPic(F,theta), origin = &#39;lower&#39;, cmap = cmap_viridis, vmin = -200, vmax = 200)
+    ax = plt.gca()
+    midx = 279
+    ax.set_xticks(midx+100*np.arange(-2,3))
+    ax.set_xticklabels(np.arange(-2,3)*100)
+    ax.xaxis.set_ticks_position(&#39;bottom&#39;)
 
-    <span class="n">midy</span> <span class="o">=</span> <span class="mi">177</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">midy</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    midy = 177
+    ax.set_yticks(midy+100*np.arange(-2,3))
+    ax.set_yticklabels(np.arange(-2,3)*100)
 
-    <span class="c1"># plt.colorbar(fraction=0.035, pad=0.04)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f_{\omega}$ for $\omega = &#39;</span> <span class="o">+</span> <span class="n">thetaStrs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mf">1.8</span><span class="p">)</span>
+    # plt.colorbar(fraction=0.035, pad=0.04)
+    plt.title(r&#39;$f_{\omega}$ for $\omega = &#39; + thetaStrs[i] + r&#39;$&#39;)
+    fig = plt.gcf()
+    fig.set_figwidth(1.8)
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">())</span>
-    <span class="n">height_fig</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">height_fig</span><span class="p">)</span>
+    print(fig.get_size_inches())
+    height_fig = fig.get_size_inches()[0]
+    print(height_fig)
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_&#39;</span> <span class="o">+</span> <span class="n">thetaStrsFile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_nocolorbar.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_&#39;</span> <span class="o">+</span> <span class="n">thetaStrsFile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_nocolorbar.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    plt.savefig(&#39;figures/Fern_&#39; + thetaStrsFile[i] + &#39;_nocolorbar.png&#39;, bbox_inches = &#39;tight&#39;, dpi = 300)
+    plt.savefig(&#39;figures/Fern_&#39; + thetaStrsFile[i] + &#39;_nocolorbar.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -591,35 +589,35 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><br/><span></span><span class="n">thetaStrs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\pi/4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3\pi/4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3\pi/2&#39;</span><span class="p">,</span> <span class="s1">&#39;7\pi/4&#39;</span><span class="p">]</span>
-<span class="n">thetaStrsFile</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;pi_over_4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3pi_over_4&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;3pi_over_2&#39;</span><span class="p">,</span> <span class="s1">&#39;7pi_over_4&#39;</span><span class="p">]</span>
-<span class="n">thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><br/><span></span>thetaStrs = [r&#39;\pi/4&#39;, r&#39;3\pi/4&#39;, r&#39;3\pi/2&#39;, &#39;7\pi/4&#39;]
+thetaStrsFile = [r&#39;pi_over_4&#39;, r&#39;3pi_over_4&#39;, r&#39;3pi_over_2&#39;, &#39;7pi_over_4&#39;]
+thetas = [np.pi/4, 3*np.pi/4, 3*np.pi/2, 7*np.pi/4]
 
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPic</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">theta</span><span class="p">),</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-    <span class="n">midx</span> <span class="o">=</span> <span class="mi">279</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">midx</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+for i, theta in enumerate(thetas):
+    print(theta)
+    plt.matshow(makeFernPic(F,theta), origin = &#39;lower&#39;, cmap = cmap_viridis, vmin = -200, vmax = 200)
+    ax = plt.gca()
+    midx = 279
+    ax.set_xticks(midx+100*np.arange(-2,3))
+    ax.set_xticklabels(np.arange(-2,3)*100)
+    ax.xaxis.set_ticks_position(&#39;bottom&#39;)
 
-    <span class="n">midy</span> <span class="o">=</span> <span class="mi">177</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">midy</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    midy = 177
+    ax.set_yticks(midy+100*np.arange(-2,3))
+    ax.set_yticklabels(np.arange(-2,3)*100)
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f_{\omega}$ for $\omega = &#39;</span> <span class="o">+</span> <span class="n">thetaStrs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-    <span class="c1"># fig.set_figwidth(2.4)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">height_fig</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">height_fig</span><span class="p">)</span>
+    plt.colorbar(fraction=0.03, pad=0.04)
+    plt.title(r&#39;$f_{\omega}$ for $\omega = &#39; + thetaStrs[i] + r&#39;$&#39;)
+    fig = plt.gcf()
+    # fig.set_figwidth(2.4)
+    print(height_fig)
+    fig.set_figheight(height_fig)
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">())</span>
+    print(fig.get_size_inches())
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_&#39;</span> <span class="o">+</span> <span class="n">thetaStrsFile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_&#39;</span> <span class="o">+</span> <span class="n">thetaStrsFile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    plt.savefig(&#39;figures/Fern_&#39; + thetaStrsFile[i] + &#39;.png&#39;, bbox_inches = &#39;tight&#39;, dpi = 300)
+    plt.savefig(&#39;figures/Fern_&#39; + thetaStrsFile[i] + &#39;.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -674,13 +672,13 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig,ax = plt.subplots()
+plt.colorbar(im,ax=ax)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/OnlyColorbar.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/OnlyColorbar.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+ax.remove()
+fig.set_figwidth(0.8)
+plt.savefig(&#39;figures/OnlyColorbar.png&#39;, bbox_inches = &#39;tight&#39;, dpi = 300)
+plt.savefig(&#39;figures/OnlyColorbar.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -703,7 +701,7 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">theta</span><span class="o">*</span><span class="mi">1000</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>str(int(theta*1000))
 </pre></div>
 </div>
 </div>
@@ -722,34 +720,34 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">makeFernPicThreshold</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">thresh</span><span class="p">,</span> <span class="n">both</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-    <span class="n">maxRow</span><span class="p">,</span> <span class="n">maxCol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
-    <span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def makeFernPicThreshold(F, theta, thresh, both = False):
+    maxRow, maxCol = np.shape(F)
+    omega = (np.cos(theta), np.sin(theta))
 
-    <span class="c1"># center origin</span>
-    <span class="n">Col</span><span class="p">,</span><span class="n">Row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">maxCol</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">maxRow</span><span class="p">))</span>
-    <span class="n">Col</span> <span class="o">=</span> <span class="n">Col</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">maxCol</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">Row</span> <span class="o">=</span> <span class="n">Row</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">maxRow</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    # center origin
+    Col,Row = np.meshgrid(range(maxCol),range(maxRow))
+    Col = Col - np.floor(maxCol/2)
+    Row = Row-np.floor(maxRow/2)
 
-    <span class="n">fMask</span> <span class="o">=</span> <span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">Col</span> <span class="o">+</span> <span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">Row</span>
+    fMask = omega[0]*Col + omega[1]*Row
 
-    <span class="n">fMaskBelow</span> <span class="o">=</span> <span class="n">fMask</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">fMaskBelow</span><span class="p">[</span><span class="n">fMaskBelow</span> <span class="o">&lt;=</span> <span class="n">thresh</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    fMaskBelow = fMask.copy()
+    fMaskBelow[fMaskBelow &lt;= thresh] = np.nan
 
-    <span class="n">fMaskAbove</span> <span class="o">=</span> <span class="n">fMask</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">fMaskAbove</span><span class="p">[</span><span class="n">fMaskAbove</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    fMaskAbove = fMask.copy()
+    fMaskAbove[fMaskAbove &gt; thresh] = np.nan
 
 
-    <span class="n">DTdown</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">fMaskAbove</span><span class="p">)</span>
-    <span class="n">DTup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">fMaskBelow</span><span class="p">)</span>
+    DTdown = np.multiply(F,fMaskAbove)
+    DTup = np.multiply(F,fMaskBelow)
 
-    <span class="c1"># Why the fork is this backwards!?!?!?!?!</span>
-    <span class="c1"># Must have something to do with meshgrid but i just can&#39;t fight it right now</span>
-    <span class="k">if</span> <span class="n">both</span><span class="p">:</span>
+    # Why the fork is this backwards!?!?!?!?!
+    # Must have something to do with meshgrid but i just can&#39;t fight it right now
+    if both:
 
-        <span class="k">return</span> <span class="n">DTdown</span><span class="p">,</span><span class="n">DTup</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">DTdown</span>
+        return DTdown,DTup
+    else:
+        return DTdown
 <br/></pre></div>
 </div>
 </div>
@@ -757,45 +755,45 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = 3*np.pi/4
 
-<span class="k">for</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">]:</span>
-
-
-    <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Plot colors above theshold</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPicThreshold</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">thresh</span><span class="p">),</span>
-                <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span>
-                <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">,</span>
-                <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
-
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-    <span class="n">midx</span> <span class="o">=</span> <span class="mi">279</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">midx</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelrotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+for thresh in [-150,-100,-50,0,50,100,150]:
 
 
-    <span class="n">midy</span> <span class="o">=</span> <span class="mi">177</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">midy</span><span class="o">+</span><span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    heights = np.sum(leaf.cells[0]*omega, axis=1)
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$K_{&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">thresh</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;}$&#39;</span><span class="p">)</span>
+    # Plot colors above theshold
+    plt.matshow(makeFernPicThreshold(F,theta,thresh),
+                origin = &#39;lower&#39;,
+                cmap = cmap_viridis,
+                vmin = -200, vmax = 200)
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mf">1.25</span><span class="p">)</span>
+    ax = plt.gca()
+    midx = 279
+    ax.set_xticks(midx+100*np.arange(-2,3))
+    ax.set_xticklabels(np.arange(-2,3)*100)
+    ax.xaxis.set_ticks_position(&#39;bottom&#39;)
+    ax.tick_params(axis=&#39;x&#39;, labelrotation=45)
 
-    <span class="n">thresh_size_fig</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">thresh_size_fig</span><span class="p">)</span>
 
-    <span class="c1"># plt.colorbar()</span>
+    midy = 177
+    ax.set_yticks(midy+100*np.arange(-2,3))
+    ax.set_yticklabels(np.arange(-2,3)*100)
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_Thresh&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">thresh</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_Thresh&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">thresh</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    plt.title(r&#39;$K_{&#39; + str(thresh) + r&#39;}$&#39;)
 
-    <span class="c1"># plt.clf()</span>
+    fig = plt.gcf()
+    fig.set_figwidth(1.25)
+
+    thresh_size_fig = fig.get_size_inches()
+    print(thresh_size_fig)
+
+    # plt.colorbar()
+
+    plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.png&#39;, bbox_inches = &#39;tight&#39;,dpi = 300)
+    plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.eps&#39;, bbox_inches = &#39;tight&#39;)
+
+    # plt.clf()
 </pre></div>
 </div>
 </div>
@@ -866,51 +864,51 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = 3*np.pi/4
 
-<span class="n">fig</span><span class="p">,</span><span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">sharey</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+fig,axes = plt.subplots(1,5,sharey = True, figsize = (6,2))
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">thresh</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">150</span><span class="p">]):</span>
+for i, thresh in enumerate([-150,-50,0,50,150]):
 
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    ax = axes[i]
 
-    <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    heights = np.sum(leaf.cells[0]*omega, axis=1)
 
-    <span class="c1"># Plot colors above theshold</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">makeFernPicThreshold</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">thresh</span><span class="p">),</span>
-                <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span>
-                <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap_viridis</span><span class="p">,</span>
-                <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+    # Plot colors above theshold
+    ax.matshow(makeFernPicThreshold(F,theta,thresh),
+                origin = &#39;lower&#39;,
+                cmap = cmap_viridis,
+                vmin = -200, vmax = 200)
 
-    <span class="c1"># midx = 279</span>
-    <span class="c1"># ax.set_xticks(midx+100*np.arange(-2,3))</span>
-    <span class="c1"># ax.set_xticklabels(np.arange(-2,3)*100)</span>
-    <span class="c1"># ax.xaxis.set_ticks_position(&#39;bottom&#39;)</span>
-    <span class="c1"># ax.tick_params(axis=&#39;x&#39;, labelrotation=45)</span>
+    # midx = 279
+    # ax.set_xticks(midx+100*np.arange(-2,3))
+    # ax.set_xticklabels(np.arange(-2,3)*100)
+    # ax.xaxis.set_ticks_position(&#39;bottom&#39;)
+    # ax.tick_params(axis=&#39;x&#39;, labelrotation=45)
 
 
-    <span class="c1"># midy = 177</span>
-    <span class="c1"># ax.set_yticks(midy+100*np.arange(-2,3))</span>
-    <span class="c1"># ax.set_yticklabels(np.arange(-2,3)*100)</span>
+    # midy = 177
+    # ax.set_yticks(midy+100*np.arange(-2,3))
+    # ax.set_yticklabels(np.arange(-2,3)*100)
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$K_{&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">thresh</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;}$&#39;</span><span class="p">)</span>
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(r&#39;$K_{&#39; + str(thresh) + r&#39;}$&#39;)
 
-    <span class="c1"># fig = plt.gcf()</span>
-    <span class="c1"># fig.set_figwidth(1.25)</span>
+    # fig = plt.gcf()
+    # fig.set_figwidth(1.25)
 
-    <span class="c1"># thresh_size_fig = fig.get_size_inches()</span>
-    <span class="c1"># print(thresh_size_fig)</span>
+    # thresh_size_fig = fig.get_size_inches()
+    # print(thresh_size_fig)
 
-    <span class="c1"># plt.colorbar()</span>
+    # plt.colorbar()
 
-    <span class="c1"># plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.png&#39;, bbox_inches = &#39;tight&#39;,dpi = 300)</span>
-    <span class="c1"># plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.eps&#39;, bbox_inches = &#39;tight&#39;)</span>
+    # plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.png&#39;, bbox_inches = &#39;tight&#39;,dpi = 300)
+    # plt.savefig(&#39;figures/Fern_3pi_over_4_Thresh&#39;+str(thresh)+&#39;.eps&#39;, bbox_inches = &#39;tight&#39;)
 
-    <span class="c1"># plt.clf()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_AllThresh.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_AllThresh.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+    # plt.clf()
+plt.savefig(&#39;figures/Fern_3pi_over_4_AllThresh.png&#39;, bbox_inches = &#39;tight&#39;,dpi = 300)
+plt.savefig(&#39;figures/Fern_3pi_over_4_AllThresh.eps&#39;, bbox_inches = &#39;tight&#39;,dpi = 300)
 </pre></div>
 </div>
 </div>
@@ -928,52 +926,52 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omega</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">numThresh</span> <span class="o">=</span> <span class="mi">64</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = 3*np.pi/4
+omega = (np.cos(theta), np.sin(theta))
+heights = np.sum(leaf.cells[0]*omega, axis=1)
+numThresh = 64
 
-<span class="n">threshes</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">numThresh</span><span class="p">)</span>
+threshes= np.linspace(heights.min(), heights.max(), numThresh)
 
-<span class="n">outECC</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">ECC</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">numThresh</span><span class="p">)</span>
+outECC = leaf.ECC(heights, numThresh)
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+fig = plt.figure()
+ax = plt.gca()
 
-<span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-
-
-
-<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">threshes</span><span class="p">,</span><span class="n">outECC</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECC for $\omega = \frac{3 \pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\chi(K_a)$&#39;</span><span class="p">)</span>
-
-<span class="c1"># ax.set_xticks([-200,-150,-100,-50,0,50,100,150,200])</span>
-    <span class="c1"># midx = 279</span>
-    <span class="c1"># ax.set_xticks(midx+100*np.arange(-2,3))</span>
-    <span class="c1"># ax.set_xticklabels(np.arange(-2,3)*100)</span>
-    <span class="c1"># ax.xaxis.set_ticks_position(&#39;bottom&#39;)</span>
-    <span class="c1"># ax.tick_params(axis=&#39;x&#39;, labelrotation=45)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelrotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelrotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+positions = [-150, -50, 0, 50, 150]
+for pos in positions:
+    ax.axvline(x=pos, color=&#39;grey&#39;, linestyle=&#39;--&#39;)
 
 
+
+plt.step(threshes,outECC)
+plt.title(r&#39;ECC for $\omega = \frac{3 \pi}{4}$&#39;)
+plt.xlabel(&#39;$a$&#39;)
+plt.ylabel(r&#39;$\chi(K_a)$&#39;)
+
+# ax.set_xticks([-200,-150,-100,-50,0,50,100,150,200])
+    # midx = 279
+    # ax.set_xticks(midx+100*np.arange(-2,3))
+    # ax.set_xticklabels(np.arange(-2,3)*100)
+    # ax.xaxis.set_ticks_position(&#39;bottom&#39;)
+    # ax.tick_params(axis=&#39;x&#39;, labelrotation=45)
+ax.tick_params(axis=&#39;x&#39;, labelrotation=45)
+ax.tick_params(axis=&#39;y&#39;, labelrotation=45)
 
 
 
 
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="c1"># fig.set_size_inches(thresh_size_fig)</span>
-<span class="c1"># print(thresh_size_fig)</span>
-<span class="c1"># print(fig.get_size_inches())</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_ECC.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_3pi_over_4_ECC.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+fig = plt.gcf()
+fig.set_size_inches(5,2)
+# fig.set_size_inches(thresh_size_fig)
+# print(thresh_size_fig)
+# print(fig.get_size_inches())
+
+plt.savefig(&#39;figures/Fern_3pi_over_4_ECC.png&#39;, bbox_inches = &#39;tight&#39;,dpi=300)
+plt.savefig(&#39;figures/Fern_3pi_over_4_ECC.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -988,7 +986,7 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">outECC</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(outECC[-1])
 </pre></div>
 </div>
 </div>
@@ -1007,12 +1005,12 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all the directions around the circle</span>
-<span class="n">numCircleDirs</span> <span class="o">=</span> <span class="mi">32</span>
-<span class="n">circledirs</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">numCircleDirs</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">circledirs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get all the directions around the circle
+numCircleDirs = 32
+circledirs =  np.linspace(0, 2*np.pi, num=numCircleDirs, endpoint=False)
+circledirs
 
-<span class="nb">print</span><span class="p">(</span><span class="n">circledirs</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+print(circledirs/np.pi)
 </pre></div>
 </div>
 </div>
@@ -1031,8 +1029,8 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose number of thresholds for the ECC to stop at</span>
-<span class="n">numThresh</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Choose number of thresholds for the ECC to stop at
+numThresh = 100
 </pre></div>
 </div>
 </div>
@@ -1040,32 +1038,32 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ECT_preprocess</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ECT_preprocess = {}
 
-<span class="n">overallmin</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">overallmax</span> <span class="o">=</span> <span class="mi">0</span>
+overallmin = 0
+overallmax = 0
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">omega</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">circledirs</span><span class="p">):</span>
+for i, omega in enumerate(circledirs):
 
-    <span class="n">omegavec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">omega</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">omega</span><span class="p">)))</span>
+    omegavec = np.array((np.cos(omega),np.sin(omega)))
 
-    <span class="c1"># Function values of all the pixels</span>
-    <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">omegavec</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    # Function values of all the pixels
+    heights = np.sum(leaf.cells[0]*omegavec, axis=1)
 
-    <span class="c1"># Thresholds implicitly calculated by Erik&#39;s code</span>
-    <span class="n">threshes</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">numThresh</span><span class="p">)</span>
+    # Thresholds implicitly calculated by Erik&#39;s code
+    threshes= np.linspace(heights.min(), heights.max(), numThresh)
 
-    <span class="k">if</span> <span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">&lt;</span><span class="n">overallmin</span><span class="p">:</span>
-        <span class="n">overallmin</span> <span class="o">=</span> <span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">&gt;</span><span class="n">overallmax</span><span class="p">:</span>
-        <span class="n">overallmax</span><span class="o">=</span> <span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    if heights.min()&lt;overallmin:
+        overallmin = heights.min()
+    if heights.max()&gt;overallmax:
+        overallmax= heights.max()
 
 
-    <span class="n">outECC</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">ECC</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">numThresh</span><span class="p">)</span>
+    outECC = leaf.ECC(heights, numThresh)
 
-    <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">threshes</span><span class="p">,</span><span class="n">outECC</span><span class="p">)</span>
+    ECT_preprocess[i] = (threshes,outECC)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">overallmin</span><span class="p">,</span><span class="n">overallmax</span><span class="p">)</span>
+print(overallmin,overallmax)
 </pre></div>
 </div>
 </div>
@@ -1081,9 +1079,9 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>i = 2
 
-<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span> <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>  <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+plt.step( ECT_preprocess[i][0],  ECT_preprocess[i][1])
 </pre></div>
 </div>
 </div>
@@ -1106,32 +1104,32 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Making a matrix of size numThreshes x numCircleDirs</span>
-<span class="c1"># M[i,j] =</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Making a matrix of size numThreshes x numCircleDirs
+# M[i,j] =
 
 
-<span class="c1"># Make meshgrid. The +1 is to draw 2pi on both ends</span>
-<span class="n">X</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">numCircleDirs</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="n">numThresh</span><span class="p">))</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+# Make meshgrid. The +1 is to draw 2pi on both ends
+X,Y = np.meshgrid(range(numCircleDirs+1),np.linspace(-250,250,numThresh))
+M = np.ones_like(X)
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">omegai</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        omegai = X[i,j]
 
-        <span class="c1"># Deal with redrawing the 2pi</span>
-        <span class="n">omegai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">omegai</span><span class="p">,</span><span class="n">numCircleDirs</span><span class="p">)</span>
+        # Deal with redrawing the 2pi
+        omegai = np.mod(omegai,numCircleDirs)
 
 
-        <span class="n">omega</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">numCircleDirs</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
-        <span class="n">threshes</span> <span class="o">=</span> <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">omegai</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="c1">#         print(threshes)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">threshes</span><span class="o">&gt;=</span><span class="n">a</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        omega = i*np.pi/numCircleDirs
+        a = Y[i,j]
+        threshes = ECT_preprocess[omegai][0]
+#         print(threshes)
+        try:
+            index = np.where(threshes&gt;=a)[0][0]
+        except:
+            index = [-1]
 
-        <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">omegai</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+        M[i,j] = ECT_preprocess[omegai][1][index]
 </pre></div>
 </div>
 </div>
@@ -1148,35 +1146,35 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">M</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.pcolormesh(X,Y,M, cmap = &#39;viridis&#39;)
+plt.colorbar()
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">numCircleDirs</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+ax = plt.gca()
+ax.set_xticks(np.arange(0,numCircleDirs+1,4))
 
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
-         <span class="p">]</span>
+labels = [r&#39;$0$&#39;,
+          r&#39;$\frac{\pi}{4}$&#39;,
+          r&#39;$\frac{\pi}{2}$&#39;,
+          r&#39;$\frac{3\pi}{4}$&#39;,
+          r&#39;$\pi$&#39;,
+          r&#39;$\frac{5\pi}{4}$&#39;,
+          r&#39;$\frac{3\pi}{2}$&#39;,
+          r&#39;$\frac{7\pi}{4}$&#39;,
+          r&#39;$2\pi$&#39;,
+         ]
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+ax.set_xticklabels(labels)
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+plt.xlabel(r&#39;$\omega$&#39;)
+plt.ylabel(r&#39;$a$&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECT of Fern Leaf&#39;</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+plt.title(r&#39;ECT of Fern Leaf&#39;)
+fig = plt.gcf()
+fig.set_size_inches(3,2)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_ECT.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern_ECT.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/Fern_ECT.png&#39;, bbox_inches = &#39;tight&#39;,dpi=900)
+plt.savefig(&#39;figures/Fern_ECT.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -1191,7 +1189,7 @@ array([-128.46877882, -127.76167204, -128.46877882, ...,  152.25261331,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>M[0,:]
 </pre></div>
 </div>
 </div>
@@ -1208,10 +1206,10 @@ array([ 1,  1,  1,  1,  6,  1,  1,  1,  1,  2,  1,  4,  1,  1,  3,  3,  2,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">&gt;</span><span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bigvals = np.where(M[0,:] &gt;3)[0]
 
 
-<span class="n">circledirs</span><span class="p">[</span><span class="n">bigvals</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">16</span>
+circledirs[bigvals]/np.pi*16
 </pre></div>
 </div>
 </div>
@@ -1230,14 +1228,14 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+import matplotlib.pyplot as plt
 
-<span class="c1"># pip install ipympl</span>
+# pip install ipympl
 
-<span class="c1"># %matplotlib widget</span>
+# %matplotlib widget
 </pre></div>
 </div>
 </div>
@@ -1245,8 +1243,8 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = M[:,:-1]
+print(grid.shape)
 </pre></div>
 </div>
 </div>
@@ -1262,14 +1260,14 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_dimension</span> <span class="o">=</span> <span class="n">grid</span> <span class="c1"># change to desired fourth dimension</span>
-<span class="n">minn</span><span class="p">,</span> <span class="n">maxx</span> <span class="o">=</span> <span class="n">color_dimension</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">color_dimension</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-<span class="n">norm</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">minn</span><span class="p">,</span> <span class="n">maxx</span><span class="p">)</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">set_array</span><span class="p">([])</span>
-<span class="n">fcolors</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">color_dimension</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>color_dimension = grid # change to desired fourth dimension
+minn, maxx = color_dimension.min(), color_dimension.max()
+norm = matplotlib.colors.Normalize(minn, maxx)
+m = plt.cm.ScalarMappable(norm=norm, cmap=&#39;viridis&#39;)
+m.set_array([])
+fcolors = m.to_rgba(color_dimension)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">fcolors</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+print(fcolors.shape)
 </pre></div>
 </div>
 </div>
@@ -1285,10 +1283,10 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-<span class="c1"># theta = circledirs[:-1]</span>
-<span class="c1"># print(theta, theta.shape)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = np.linspace(0, 2 * np.pi, 24)
+print(theta)
+# theta = circledirs[:-1]
+# print(theta, theta.shape)
 <br/></pre></div>
 </div>
 </div>
@@ -1307,43 +1305,43 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">equation for a circle</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;
+equation for a circle
 
-<span class="sd">x  =  h + r cosθ</span>
-<span class="sd">y  =  k + r sinθ</span>
+x  =  h + r cosθ
+y  =  k + r sinθ
 
-<span class="sd">where h and k are the co-ordinates of the center</span>
+where h and k are the co-ordinates of the center
 
-<span class="sd">0 &lt;= θ &lt;= 360</span>
-<span class="sd">&quot;&quot;&quot;</span>
+0 &lt;= θ &lt;= 360
+&quot;&quot;&quot;
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+fig = plt.figure(figsize=(4,3))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
 
-<span class="c1"># theta = np.linspace(0, 2 * np.pi, 24)</span>
-<span class="n">radius</span> <span class="o">=</span> <span class="mi">1</span>
+# theta = np.linspace(0, 2 * np.pi, 24)
+radius = 1
 
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numThresh</span><span class="p">,</span> <span class="n">numThresh</span><span class="p">)</span>
+x = np.linspace(0, numThresh, numThresh)
 
-<span class="c1"># theta = circledirs</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+# theta = circledirs
+theta = np.linspace(0, 2 * np.pi, 32)
 
-<span class="n">thetas</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+thetas, xs = np.meshgrid(theta, x)
 
-<span class="n">y</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
+y = radius * np.cos(thetas)
+z = radius * np.sin(thetas)
 
-<span class="c1">#ax.plot_surface(xs, y, z, color=&#39;orange&#39;)</span>
-<span class="c1">#ax.plot_surface(xs, y, z, facecolors=fcolors)</span>
-<span class="n">surf</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">facecolors</span> <span class="o">=</span> <span class="n">fcolors</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">surf</span><span class="o">.</span><span class="n">set_edgecolor</span><span class="p">(</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+#ax.plot_surface(xs, y, z, color=&#39;orange&#39;)
+#ax.plot_surface(xs, y, z, facecolors=fcolors)
+surf = ax.plot_surface(xs, y, z, facecolors = fcolors,linewidth = 0.1)
+surf.set_edgecolor(&#39;grey&#39;)
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+ax.set_axis_off()
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/fern_ECT_cylinder.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span> <span class="o">=</span> <span class="mi">900</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/fern_ECT_cylinder.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/fern_ECT_cylinder.png&#39;, bbox_inches = &#39;tight&#39;,dpi = 900)
+plt.savefig(&#39;figures/fern_ECT_cylinder.eps&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -1358,16 +1356,16 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omegai</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">omega</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">numCircleDirs</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mi">17</span>
-<span class="n">threshes</span> <span class="o">=</span> <span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">omegai</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">threshes</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omegai = 5
+omega = i*np.pi/numCircleDirs
+a = 17
+threshes = ECT_preprocess[omegai][0]
+print(threshes)
 
-<span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">threshes</span><span class="o">&gt;=</span><span class="n">a</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">threshes</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-<span class="n">ECT_preprocess</span><span class="p">[</span><span class="n">omegai</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+index = np.where(threshes&gt;=a)[0][0]
+print(index)
+print(threshes[index])
+ECT_preprocess[omegai][1][index]
 </pre></div>
 </div>
 </div>
@@ -1415,16 +1413,16 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># t = 32</span>
-<span class="c1"># tic = time.perf_counter()</span>
-<span class="c1"># ect = leaf.ECT(circle_dirs, T=t)</span>
-<span class="c1"># toc = time.perf_counter()</span>
-<span class="c1"># print(&quot;Complex with {} vertices\n&quot;.format(len(leaf.cells[0])))</span>
-<span class="c1"># print(&quot;ECT with {} directions in {:.4f} seconds.\n{:.4f}s per direction&quot;.format(len(circle_dirs), toc-tic, (toc-tic)/len(circle_dirs)))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># t = 32
+# tic = time.perf_counter()
+# ect = leaf.ECT(circle_dirs, T=t)
+# toc = time.perf_counter()
+# print(&quot;Complex with {} vertices\n&quot;.format(len(leaf.cells[0])))
+# print(&quot;ECT with {} directions in {:.4f} seconds.\n{:.4f}s per direction&quot;.format(len(circle_dirs), toc-tic, (toc-tic)/len(circle_dirs)))
 
-<span class="c1"># plt.figure(figsize=(15,2))</span>
-<span class="c1"># plt.plot(ect);</span>
-<span class="c1"># plt.title(&#39;ECT for {} directions and {} thresholds each&#39;.format(len(circle_dirs),t), fontsize=24);</span>
+# plt.figure(figsize=(15,2))
+# plt.plot(ect);
+# plt.title(&#39;ECT for {} directions and {} thresholds each&#39;.format(len(circle_dirs),t), fontsize=24);
 </pre></div>
 </div>
 </div>
@@ -1436,33 +1434,33 @@ array([ 4., 11., 19.])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># THe original ECT</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># THe original ECT
 
-<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">M</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+plt.pcolormesh(X,Y,M, cmap = &#39;viridis&#39;)
+plt.colorbar()
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">numCircleDirs</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+ax = plt.gca()
+ax.set_xticks(np.arange(0,numCircleDirs+1,4))
 
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
-         <span class="p">]</span>
+labels = [r&#39;$0$&#39;,
+          r&#39;$\frac{\pi}{4}$&#39;,
+          r&#39;$\frac{\pi}{2}$&#39;,
+          r&#39;$\frac{3\pi}{4}$&#39;,
+          r&#39;$\pi$&#39;,
+          r&#39;$\frac{5\pi}{4}$&#39;,
+          r&#39;$\frac{3\pi}{2}$&#39;,
+          r&#39;$\frac{7\pi}{4}$&#39;,
+          r&#39;$2\pi$&#39;,
+         ]
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+ax.set_xticklabels(labels)
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+fig = plt.gcf()
+fig.set_size_inches(3,2)
+plt.xlabel(r&#39;$\omega$&#39;)
+plt.ylabel(r&#39;$a$&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECT of Fern Leaf&#39;</span><span class="p">)</span>
+plt.title(r&#39;ECT of Fern Leaf&#39;)
 </pre></div>
 </div>
 </div>
@@ -1485,16 +1483,16 @@ Text(0.5, 1.0, &#39;ECT of Fern Leaf&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Following Crawford2019 for the moment. Is this different in the Meng22 version?</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Following Crawford2019 for the moment. Is this different in the Meng22 version?
+print(M.shape)
 
-<span class="c1"># Averages for a fixed direction</span>
-<span class="n">AvgOverOmega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">AvgOverOmega</span><span class="p">)</span>
+# Averages for a fixed direction
+AvgOverOmega = np.average(M,axis = 0)
+print(AvgOverOmega)
 
-<span class="c1"># Mean centered</span>
+# Mean centered
 
-<span class="n">Mcentered</span> <span class="o">=</span> <span class="n">M</span><span class="o">-</span><span class="n">AvgOverOmega</span>
+Mcentered = M-AvgOverOmega
 </pre></div>
 </div>
 </div>
@@ -1514,35 +1512,35 @@ Text(0.5, 1.0, &#39;ECT of Fern Leaf&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Mcentered</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.pcolormesh(X,Y,Mcentered, cmap = &#39;viridis&#39;)
+plt.colorbar()
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">numCircleDirs</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+ax = plt.gca()
+ax.set_xticks(np.arange(0,numCircleDirs+1,4))
 
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
-         <span class="p">]</span>
+labels = [r&#39;$0$&#39;,
+          r&#39;$\frac{\pi}{4}$&#39;,
+          r&#39;$\frac{\pi}{2}$&#39;,
+          r&#39;$\frac{3\pi}{4}$&#39;,
+          r&#39;$\pi$&#39;,
+          r&#39;$\frac{5\pi}{4}$&#39;,
+          r&#39;$\frac{3\pi}{2}$&#39;,
+          r&#39;$\frac{7\pi}{4}$&#39;,
+          r&#39;$2\pi$&#39;,
+         ]
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+ax.set_xticklabels(labels)
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$a$&#39;</span><span class="p">)</span>
+plt.xlabel(r&#39;$\omega$&#39;)
+plt.ylabel(r&#39;$a$&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;ECT of Fern Leaf with value centered&#39;</span><span class="p">)</span>
+plt.title(r&#39;ECT of Fern Leaf with value centered&#39;)
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+fig = plt.gcf()
+fig.set_size_inches(3,2)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern-ECT-centered.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/Fern-ECT-centered.png&#39;, bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>
@@ -1557,7 +1555,7 @@ Text(0.5, 1.0, &#39;ECT of Fern Leaf&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Mcentered</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Mcentered.sum(axis = 0)
 </pre></div>
 </div>
 </div>
@@ -1581,9 +1579,9 @@ array([-1.09992015e-11,  1.23066002e-11, -1.07718279e-11,  0.00000000e+00,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = np.array([[1,2,3], [4,5,6]])
+print(a)
+np.cumsum(a,axis = 0)
 </pre></div>
 </div>
 </div>
@@ -1609,7 +1607,7 @@ array([[1, 2, 3],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Mint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">Mcentered</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Mint = np.cumsum(Mcentered,axis = 0)
 </pre></div>
 </div>
 </div>
@@ -1617,36 +1615,36 @@ array([[1, 2, 3],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Mint</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.pcolormesh(X,Y,Mint, cmap = &#39;viridis&#39;)
+plt.colorbar()
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">numCircleDirs</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+ax = plt.gca()
+ax.set_xticks(np.arange(0,numCircleDirs+1,4))
 
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$0$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\pi$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{5\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{3\pi}</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$\frac{7\pi}</span><span class="si">{4}</span><span class="s1">$&#39;</span><span class="p">,</span>
-          <span class="sa">r</span><span class="s1">&#39;$2\pi$&#39;</span><span class="p">,</span>
-         <span class="p">]</span>
+labels = [r&#39;$0$&#39;,
+          r&#39;$\frac{\pi}{4}$&#39;,
+          r&#39;$\frac{\pi}{2}$&#39;,
+          r&#39;$\frac{3\pi}{4}$&#39;,
+          r&#39;$\pi$&#39;,
+          r&#39;$\frac{5\pi}{4}$&#39;,
+          r&#39;$\frac{3\pi}{2}$&#39;,
+          r&#39;$\frac{7\pi}{4}$&#39;,
+          r&#39;$2\pi$&#39;,
+         ]
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+ax.set_xticklabels(labels)
 
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+fig = plt.gcf()
+fig.set_size_inches(3,2)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">)</span>
+plt.xlabel(r&#39;$\omega$&#39;)
+plt.ylabel(r&#39;$t$&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;SECT of Fern Leaf&#39;</span><span class="p">)</span>
+plt.title(r&#39;SECT of Fern Leaf&#39;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern-SECT.png&#39;</span><span class="p">,</span><span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figures/Fern-SECT.eps&#39;</span><span class="p">,</span><span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+plt.savefig(&#39;figures/Fern-SECT.png&#39;,bbox_inches = &#39;tight&#39;,dpi=900)
+plt.savefig(&#39;figures/Fern-SECT.eps&#39;,bbox_inches = &#39;tight&#39;)
 </pre></div>
 </div>
 </div>

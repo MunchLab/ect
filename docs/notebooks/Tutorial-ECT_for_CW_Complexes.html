@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.2. Tutorial: ECT for CW complexes &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=59fadc99"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -96,8 +94,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span> <span class="n">create_example_cw</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from ect import ECT, EmbeddedCW, create_example_cw
+import numpy as np
 </pre></div>
 </div>
 </div>
@@ -106,19 +104,19 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedCW</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = EmbeddedCW()
 
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+K.add_node(&#39;A&#39;, 0,0)
+K.add_node(&#39;B&#39;, 1,0)
+K.add_node(&#39;C&#39;, 1,1)
+K.add_node(&#39;D&#39;, 0,1)
 
-<span class="n">K</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)))</span>
+K.add_edges_from(((&#39;A&#39;, &#39;B&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;C&#39;, &#39;D&#39;), (&#39;D&#39;, &#39;A&#39;)))
 
-<span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
+K.add_face([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
 
-<span class="n">K</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+K.set_mean_centered_coordinates()
+K.plot()
 </pre></div>
 </div>
 </div>
@@ -143,8 +141,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">(</span><span class="n">mean_centered</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = create_example_cw(mean_centered = True)
+K.plot(bounding_circle=True)
 </pre></div>
 </div>
 </div>
@@ -169,8 +167,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">7</span>
-<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = np.pi/7
+K.plot(bounding_circle=True,color_nodes_theta=theta)
 </pre></div>
 </div>
 </div>
@@ -195,18 +193,18 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vert_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-<span class="n">edge_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_edges</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-<span class="n">face_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_faces</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vert_g = K.g_omega(theta)
+edge_g = K.g_omega_edges(theta)
+face_g = K.g_omega_faces(theta)
 
-<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">vert_g</span><span class="p">[</span><span class="n">v</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+for v in [&#39;K&#39;,&#39;D&#39;,&#39;C&#39;]:
+    print(f&#39;{v}: {round(vert_g[v],2)}&#39;)
 
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">)]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">edge_g</span><span class="p">[</span><span class="n">edge</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+for edge in [(&#39;D&#39;,&#39;K&#39;),(&#39;C&#39;,&#39;D&#39;),(&#39;C&#39;,&#39;K&#39;)]:
+    print(f&#39;{edge}: {round(edge_g[edge],2)}&#39;)
 
-<span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">)]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">face</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">face_g</span><span class="p">[</span><span class="n">face</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+for face in [(&#39;K&#39;,&#39;D&#39;,&#39;C&#39;)]:
+    print(f&#39;{face}: {round(face_g[face],2)}&#39;)
 </pre></div>
 </div>
 </div>
@@ -230,7 +228,7 @@ C: 2.99
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect = ECT(num_dirs = 100,num_thresh = 80)
 </pre></div>
 </div>
 </div>
@@ -252,8 +250,8 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-<span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>r = K.get_bounding_radius()
+myect.calculateECC(K,0,1.2*r)
 </pre></div>
 </div>
 </div>
@@ -275,7 +273,7 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotECC(K,theta,1.2*r)
 </pre></div>
 </div>
 </div>
@@ -291,8 +289,8 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
-<span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.set_bounding_radius(1.2*r)
+myect.calculateECT(K)
 </pre></div>
 </div>
 </div>
@@ -316,8 +314,8 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myect</span><span class="o">.</span><span class="n">bound_radius</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotECT()
+print(myect.bound_radius)
 </pre></div>
 </div>
 </div>
@@ -341,7 +339,7 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotSECT</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotSECT()
 </pre></div>
 </div>
 </div>
