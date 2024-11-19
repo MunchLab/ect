@@ -112,12 +112,12 @@
 <div class="viewcode-block" id="EmbeddedGraph.add_node">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.add_node">[docs]</a>
     <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a vertex to the Reeb graph. </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a vertex to the graph. </span>
 <span class="sd">        If the vertex name is given as None, it will be assigned via the next_vert_name method.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            vertex (hashable like int or str, or None) : The name of the vertex to add.</span>
-<span class="sd">            f_vertex (float) : The function value of the vertex being added.</span>
+<span class="sd">            x, y (floats) : The function value of the vertex being added.</span>
 <span class="sd">            reset_pos (bool, optional) </span>
 <span class="sd">                If True, will reset the positions of the nodes based on the function values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -196,7 +196,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input must be a string or an integer&#39;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input must be a string or an integer&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EmbeddedGraph.add_edge">
@@ -302,24 +302,39 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.get_center">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_center">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate and return the center of the graph.</span>
+<span class="sd">        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (`mean`), the center of the bounding box (`min_max`), or the origin (`origin`).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            type (str): The type of center to calculate. Options are &#39;mean&#39;, &#39;min_max&#39;, or &#39;origin&#39;.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray: The (x, y) coordinates of the center.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;origin&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;min_max&#39;</span><span class="p">:</span>
+            <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_coords</span><span class="p">)</span>
+            <span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_coords</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">max_x</span><span class="o">+</span><span class="n">min_x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">max_y</span><span class="o">+</span><span class="n">min_y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="EmbeddedGraph.get_bounding_radius">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_bounding_radius">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_bounding_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_bounding_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to find the radius of the bounding circle of the vertex coordinates in the graph.</span>
+<span class="sd">        Method to find the radius of the bounding circle of the vertex coordinates in the graph. </span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            type (str): The type of center to calculate the radius relative to. Options are &#39;mean&#39;, &#39;min_max&#39;, or &#39;origin&#39;.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: The radius of the bounding circle.</span>
@@ -328,7 +343,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
 
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">()</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coords</span> <span class="o">-</span> <span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span></div>
@@ -338,61 +353,31 @@
     <span class="c1"># Methods for normalizing the coordinates in various ways</span>
     <span class="c1"># ------</span>
 
-<div class="viewcode-block" id="EmbeddedGraph.get_min_max_centered_coordinates">
-<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_min_max_centered_coordinates">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_min_max_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EmbeddedGraph.get_centered_coordinates">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_centered_coordinates">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to find the min-max normalized coordinates of the vertices in the graph.&quot;&quot;&quot;</span>
+<span class="sd">        Method to find the centered coordinates of the vertices in the graph.</span>
+
+<span class="sd">        If type is &#39;min_max&#39;, the coordinates are centered at the mean of the min and max values of the x and y coordinates.</span>
+<span class="sd">        If type is &#39;mean&#39;, the coordinates are centered at the mean of the x and y coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_coords</span><span class="p">)</span>
-        <span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_coords</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_coords</span><span class="p">)</span>
-        <span class="n">shift_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">shift_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_y</span><span class="o">-</span><span class="n">min_y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span> <span class="o">-</span> <span class="n">shift_x</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">min_y</span><span class="p">)</span><span class="o">-</span><span class="n">shift_y</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span> <span class="o">-</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
 
-<div class="viewcode-block" id="EmbeddedGraph.set_min_max_centered_coordinates">
-<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_min_max_centered_coordinates">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_min_max_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EmbeddedGraph.set_centered_coordinates">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_centered_coordinates">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to set the min-max normalized coordinates of the vertices in the graph. Warning: This overwrites the original coordinates</span>
+<span class="sd">        Method to set the centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_min_max_centered_coordinates</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="EmbeddedGraph.get_mean_centered_coordinates">
-<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_mean_centered_coordinates">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_mean_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to find the mean-centered coordinates of the vertices in the graph.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary mapping vertices to their mean-centered coordinates.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="n">mean_x</span><span class="p">,</span> <span class="n">mean_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_coords</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_coords</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean_x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">mean_y</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
-
-
-<div class="viewcode-block" id="EmbeddedGraph.set_mean_centered_coordinates">
-<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_mean_centered_coordinates">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_mean_centered_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to set the mean-centered coordinates of the vertices in the graph. Warning: This overwrites the original coordinates</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mean_centered_coordinates</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_centered_coordinates</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EmbeddedGraph.get_scaled_coordinates">
@@ -470,10 +455,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_PCA_coordinates</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">center_type</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">center_type</span> <span class="o">==</span> <span class="s1">&#39;min_max&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_min_max_centered_coordinates</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">center_type</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="n">center_type</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">scale_radius</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_scaled_coordinates</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">scale_radius</span><span class="p">)</span></div>
@@ -617,7 +600,9 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.plot">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounding_circle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">bounding_circle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">bounding_center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span>
              <span class="n">color_nodes_theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -625,7 +610,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to plot the graph with the embedded coordinates.</span>
 
-<span class="sd">        If ``bounding_circle`` is True, a bounding circle is drawn around the graph.</span>
+<span class="sd">        If ``bounding_circle`` is True, a bounding circle is drawn around the graph. This is centered at the center type defined by ``bounding_center_type``.</span>
 
 <span class="sd">        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.</span>
 
@@ -638,8 +623,8 @@
             <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
 
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+        <span class="c1"># center = self.get_center(type = &#39;min_max&#39;)</span>
+        <span class="c1"># r = self.get_bounding_radius(type = &#39;min_max&#39;)</span>
 
         <span class="k">if</span> <span class="n">color_nodes_theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="n">with_labels</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -658,14 +643,15 @@
                        <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">bounding_circle</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-            <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">circle_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">bounding_center_type</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">bounding_center_type</span><span class="p">)</span>
+            <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">circle_center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                 <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
 
-        <span class="c1"># Always adjust the plot limits to show the full graph</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+            <span class="c1"># Always adjust the plot limits to show the full graph</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="s1">&#39;box&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ax</span></div>
@@ -673,12 +659,12 @@
 
 <div class="viewcode-block" id="EmbeddedGraph.rescale_to_unit_disk">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk">[docs]</a>
-    <span class="k">def</span> <span class="nf">rescale_to_unit_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preserve_center</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">rescale_to_unit_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preserve_center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rescales the graph coordinates to fit within a radius 1 disk.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            preserve_center (bool): If True, maintains the current center point.</span>
+<span class="sd">            preserve_center (bool): If True, maintains the current center point of type ``center_type``.</span>
 <span class="sd">                                    If False, centers the graph at (0, 0).</span>
 
 <span class="sd">        Returns:</span>
@@ -690,7 +676,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Graph has no coordinates to rescale.&quot;</span><span class="p">)</span>
 
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">()</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">center_type</span><span class="p">)</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 
         <span class="n">coords_centered</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">center</span>
@@ -715,9 +701,9 @@
 
 <div class="viewcode-block" id="create_example_graph">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.create_example_graph">[docs]</a>
-<span class="k">def</span> <span class="nf">create_example_graph</span><span class="p">(</span><span class="n">mean_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">create_example_graph</span><span class="p">(</span><span class="n">centered</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function to create an example ``EmbeddedGraph`` object. Helpful for testing.</span>
+<span class="sd">    Function to create an example ``EmbeddedGraph`` object. Helpful for testing. If ``centered`` is True, the coordinates are centered using the center type given by ``center_type``, either ``mean`` or ``min_max``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        EmbeddedGraph: An example ``EmbeddedGraph`` object.</span>
@@ -739,8 +725,8 @@
     <span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
     <span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">mean_centered</span><span class="p">:</span>
-        <span class="n">graph</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">centered</span><span class="p">:</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="n">center_type</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">graph</span></div>
 
