@@ -3,6 +3,7 @@ from itertools import compress, combinations
 from numba import jit
 import matplotlib.pyplot as plt
 from ect.embed_cw import EmbeddedCW
+import time
 
 
 class ECT:
@@ -115,69 +116,42 @@ class ECT:
 
     def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
         """
-        Function to compute the Euler Characteristic of an `EmbeddedGraph`, that is, a graph with coordinates for each vertex.
-
+        Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
+        
         Parameters:
-            G (nx.Graph):
-                The graph to compute the Euler Characteristic for.
-            theta (float):
-                The angle (in radians) to use for the direction function when computing the Euler Characteristic Curve.
-            bound_radius (float):
-                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
-            return_counts (bool):
-                Whether to return the counts of vertices, edges, and faces below the threshold. Default is False.
-
+            G (nx.Graph): The graph to compute the ECC for.
+            theta (float): The angle (in radians) for the direction function.
+            bound_radius (float, optional): Radius for threshold range. Default is None.
+            return_counts (bool, optional): Whether to return vertex, edge, and face counts. Default is False.
+        
+        Returns:
+            numpy.ndarray: ECC values at each threshold.
+            (Optional) Tuple of counts: (ecc, vertex_count, edge_count, face_count)
         """
-
         r, r_threshes = self.get_radius_and_thresh(G, bound_radius)
 
-        # --
-        def num_below_threshold(func_list, thresh):
-            """ 
-            Returns the number of entries in func_list that are below the threshold thresh. 
-            Warning: func_list must be sorted in ascending order.
+        r_threshes = np.array(r_threshes)
 
-            Parameters
-                func_list (list): sorted list of function values
-                thresh (float): threshold value
-
-            Returns
-                int 
-            """
-            # If the list is empty, return 0
-            if len(func_list) == 0:
-                return 0
-            else:
-                func_max = func_list[-1]
-                if thresh < func_max:
-                    return np.argmin(func_list < thresh)
-                else:
-                    return len(func_list)
-        # --
-
+        # Sort vertices and edges based on projection
         v_list, g = G.sort_vertices(theta, return_g=True)
-        g_list = [g[v] for v in v_list]
-
-        vertex_count = np.array([num_below_threshold(
-            g_list, thresh) for thresh in r_threshes])
-        # print(vertex_count)
+        g_list = np.array([g[v] for v in v_list])
+        sorted_g_list = np.sort(g_list)
 
         e_list, g_e = G.sort_edges(theta, return_g=True)
-        g_e_list = [g_e[e] for e in e_list]
-        edge_count = np.array([num_below_threshold(
-            g_e_list, thresh) for thresh in r_threshes])
-        # print(edge_count)
+        g_e_list = np.array([g_e[e] for e in e_list])
+        sorted_g_e_list = np.sort(g_e_list)
 
-        if type(G) == EmbeddedCW:
+        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='left')
+        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='left')
+
+        if isinstance(G, EmbeddedCW):
             f_list, g_f = G.sort_faces(theta, return_g=True)
-            g_f_list = [g_f[f] for f in f_list]
-            face_count = np.array([num_below_threshold(
-                g_f_list, thresh) for thresh in r_threshes])
-            # print(face_count)
+            g_f_list = np.array([g_f[f] for f in f_list])
+            sorted_g_f_list = np.sort(g_f_list)
+            face_count = np.searchsorted(sorted_g_f_list, r_threshes, side='left')
         else:
-            face_count = np.zeros_like(vertex_count)
+            face_count = np.zeros_like(r_threshes, dtype=np.int32)
 
-        # print(vertex_count - edge_count)
         ecc = vertex_count - edge_count + face_count
 
         if return_counts:
