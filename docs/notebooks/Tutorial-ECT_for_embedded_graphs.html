@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.1. Tutorial : ECT for embedded graphs &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=59fadc99"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -101,11 +99,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">create_example_graph</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from ect import ECT, EmbeddedGraph, create_example_graph
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+import matplotlib.pyplot as plt
+import numpy as np
+import networkx as nx
 </pre></div>
 </div>
 </div>
@@ -116,27 +114,27 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct an example graph</span>
-<span class="c1"># Note that this is the same graph that is returned by:</span>
-<span class="c1"># G = create_example_graph()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Construct an example graph
+# Note that this is the same graph that is returned by:
+# G = create_example_graph()
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
+G = EmbeddedGraph()
 
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+G.add_node(&#39;A&#39;, 1, 2)
+G.add_node(&#39;B&#39;, 3, 4)
+G.add_node(&#39;C&#39;, 5, 7)
+G.add_node(&#39;D&#39;, 3, 6)
+G.add_node(&#39;E&#39;, 4, 3)
+G.add_node(&#39;F&#39;, 4, 5)
 
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>
+G.add_edge(&#39;A&#39;, &#39;B&#39;)
+G.add_edge(&#39;B&#39;, &#39;C&#39;)
+G.add_edge(&#39;B&#39;, &#39;D&#39;)
+G.add_edge(&#39;B&#39;, &#39;E&#39;)
+G.add_edge(&#39;C&#39;, &#39;D&#39;)
+G.add_edge(&#39;E&#39;, &#39;F&#39;)
 
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+G.plot()
 <br/></pre></div>
 </div>
 </div>
@@ -161,7 +159,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">coordinates</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>G.coordinates
 </pre></div>
 </div>
 </div>
@@ -179,9 +177,9 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">set_mean_centered_coordinates</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">coordinates</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>G.set_mean_centered_coordinates()
+print(G.coordinates)
+G.plot()
 </pre></div>
 </div>
 </div>
@@ -214,12 +212,12 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is actually getting the radius</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The radius of bounding circle centered at the origin is </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># This is actually getting the radius
+r = G.get_bounding_radius()
+print(f&#39;The radius of bounding circle centered at the origin is {r}&#39;)
 
-<span class="c1"># plotting the graph with it&#39;s bounding circle of radius r.</span>
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# plotting the graph with it&#39;s bounding circle of radius r.
+G.plot(bounding_circle=True)
 <br/></pre></div>
 </div>
 </div>
@@ -252,11 +250,11 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">rescale_to_unit_disk</span><span class="p">(</span><span class="n">preserve_center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>G.rescale_to_unit_disk(preserve_center=False)
+G.plot(bounding_circle=True)
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The radius of bounding circle centered at the origin is </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+r = G.get_bounding_radius()
+print(f&#39;The radius of bounding circle centered at the origin is {r}&#39;)
 <br/></pre></div>
 </div>
 </div>
@@ -283,8 +281,8 @@ The radius of bounding circle centered at the origin is 1.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This gives the function value of the nodes as a dictionary</span>
-<span class="n">G</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span> <span class="o">=</span> <span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># This gives the function value of the nodes as a dictionary
+G.g_omega(theta = 7*np.pi/4)
 </pre></div>
 </div>
 </div>
@@ -306,8 +304,8 @@ The radius of bounding circle centered at the origin is 1.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This input to the plotting function will color the nodes by function value.</span>
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># This input to the plotting function will color the nodes by function value.
+G.plot(color_nodes_theta=7*np.pi/4)
 </pre></div>
 </div>
 </div>
@@ -331,8 +329,8 @@ The radius of bounding circle centered at the origin is 1.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here&#39;s an example in another direction.</span>
-<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Here&#39;s an example in another direction.
+G.plot(color_nodes_theta=np.pi/2)
 </pre></div>
 </div>
 </div>
@@ -366,13 +364,13 @@ The radius of bounding circle centered at the origin is 1.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">num_thresh</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect = ECT(num_dirs = 16, num_thresh=20)
 
-<span class="c1"># The ECT object will automatically choose the directions.</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Directions chosen are: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">thetas</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+# The ECT object will automatically choose the directions.
+print(f&#39;Directions chosen are: {myect.thetas}&#39;)
 
-<span class="c1"># However, because a bounding radius hasn&#39;t been chosen yet, the thresholds are not yet set.</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Thresholds chosen are: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">threshes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+# However, because a bounding radius hasn&#39;t been chosen yet, the thresholds are not yet set.
+print(f&#39;Thresholds chosen are: {myect.threshes}&#39;)
 </pre></div>
 </div>
 </div>
@@ -392,12 +390,12 @@ Thresholds chosen are: None
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span> <span class="o">*</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.set_bounding_radius(1.2 * G.get_bounding_radius())
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Internally set radius is: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">bound_radius</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;Internally set radius is: {myect.bound_radius}&#39;)
 
-<span class="c1"># Now the thresholds are set.</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Thresholds chosen are: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">threshes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+# Now the thresholds are set.
+print(f&#39;Thresholds chosen are: {myect.threshes}&#39;)
 </pre></div>
 </div>
 </div>
@@ -418,7 +416,7 @@ Thresholds chosen are: [-4.10365691 -3.67169302 -3.23972914 -2.80776525 -2.37580
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">bound_radius</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.calculateECC(G, np.pi/2,bound_radius=True)
 </pre></div>
 </div>
 </div>
@@ -436,7 +434,7 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotECC(G, -np.pi/2)
 </pre></div>
 </div>
 </div>
@@ -452,16 +450,16 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.calculateECT(G)
 
-<span class="c1"># The matrix is passed as an output above but is also saved internally. Get the saved matrix</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">get_ECT</span><span class="p">()</span>
+# The matrix is passed as an output above but is also saved internally. Get the saved matrix
+M = myect.get_ECT()
 
-<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myect</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">myect</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span>
+print(M.shape)
+print(myect.num_dirs, myect.num_thresh)
 
-<span class="c1"># We can use the built in command to plot the matrix. Unlike the plotECC function, this command does not calculate the ECT when called so it must have been run earlier. An equivalent command is myect.plotECT()</span>
-<span class="n">myect</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;ECT&#39;</span><span class="p">)</span>
+# We can use the built in command to plot the matrix. Unlike the plotECC function, this command does not calculate the ECT when called so it must have been run earlier. An equivalent command is myect.plotECT()
+myect.plot(&#39;ECT&#39;)
 </pre></div>
 </div>
 </div>
@@ -499,8 +497,8 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M_SECT</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">calculateSECT</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">M_SECT</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>M_SECT = myect.calculateSECT()
+print(M_SECT.shape)
 </pre></div>
 </div>
 </div>
@@ -521,7 +519,7 @@ array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;SECT&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plot(&#39;SECT&#39;)
 </pre></div>
 </div>
 </div>

@@ -1,6 +1,6 @@
 [project]
 name = "ect"
-version = "0.1.7"
+version = "0.1.8"
 authors = [
   { name="Liz Munch", email="muncheli@msu.edu" },
 ]
