@@ -97,6 +97,16 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertEqual( len(G.nodes), num_verts + verts_to_add)
         self.assertEqual( len(G.edges), num_edges + verts_to_add)
 
+    def test_next_name(self):
+
+        G = embed_graph.EmbeddedGraph()
+
+        # test integer input
+        self.assertEqual(G.next_vert_name(0), 1)
+        self.assertEqual(G.next_vert_name(5,3), [6,7,8])
+
+        self.assertEqual(G.next_vert_name('A'), 'B')
+        self.assertEqual(G.next_vert_name('AZ', 3), ['BA', 'BB', 'BC'])
 
 
 if __name__ == '__main__':
