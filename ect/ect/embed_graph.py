@@ -69,41 +69,32 @@ class EmbeddedGraph(nx.Graph):
 
         Parameters:
             s (str or int): The name of the vertex to increment.
+            num_verts (int): The number of vertices to generate names for.
 
         Returns:
             str or int
-                The next name in the sequence.
+                The next name in the sequence or a list of names if num_verts > 1.
         """
-
-        if type(s) == int:
-            if num_verts > 1:
-                return [s+1+i for i in range(num_verts)]
-            else:
-                return s+1
-        elif type(s) == str and len(s) == 1:
-            if not s == 'Z':
-                if num_verts > 1:
-                    return [chr(ord(s)+1+i) for i in range(num_verts)]
-                else:
-                    return chr(ord(s)+1)
-            else:
-                if num_verts > 1:
-                    return [chr(ord('AA')+1+i) for i in range(num_verts)]
-                else:
-                    return 'AA'
-        elif type(s) == str and len(s) > 1:
-            if s[-1] == 'Z':
-                if num_verts > 1:
-                    return [s[:-1] + chr(ord('A')+1+i) for i in range(num_verts)]
-                else:
-                    return (len(s)+1) * 'A'
-            else:
-                if num_verts > 1:
-                    return [s[:-1] + chr(ord(s[-1])+1+i) for i in range(num_verts)]
-                else:
-                    return len(s) * chr(ord(s[-1])+1+1)
+        if isinstance(s, int):
+            result = [s + i + 1 for i in range(num_verts)]
+        elif isinstance(s, str):
+            # convert to number (A=0, B=1, ..., Z=25, AA=26, AB=27, etc) then increment
+            n = sum((ord(c) - ord('A') + 1) * 26**i for i, c in enumerate(reversed(s)))
+            
+            # Generate next num_verts names
+            result = []
+            for i in range(num_verts):
+                num = n + i + 1
+                # Convert back to string
+                name = ''
+                while num > 0:
+                    num, r = divmod(num - 1, 26)
+                    name = chr(ord('A') + r) + name
+                result.append(name)
         else:
-            raise ValueError('Input must be a string or an integer')
+            raise TypeError('Input must be a string or an integer')
+            
+        return result[0] if num_verts == 1 else result
 
     def add_edge(self, u, v):
         """
