@@ -142,14 +142,14 @@ class ECT:
         g_e_list = np.array([g_e[e] for e in e_list])
         sorted_g_e_list = np.sort(g_e_list)
 
-        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='left')
-        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='left')
+        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='right')
+        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='right')
 
         if isinstance(G, EmbeddedCW):
             f_list, g_f = G.sort_faces(theta, return_g=True)
             g_f_list = np.array([g_f[f] for f in f_list])
             sorted_g_f_list = np.sort(g_f_list)
-            face_count = np.searchsorted(sorted_g_f_list, r_threshes, side='left')
+            face_count = np.searchsorted(sorted_g_f_list, r_threshes, side='right')
         else:
             face_count = np.zeros_like(r_threshes, dtype=np.int32)
 
