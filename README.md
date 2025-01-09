@@ -8,7 +8,7 @@ Right now, the content includes stuff for doing ECT on graphs embedded in 2D. Ev
 
 For more information on the ECT, see:
 
-> Elizabeth Munch. An Invitation to the Euler Characteristic Transform. [arXiv:2310.10395](https://arxiv.org/abs/2310.10395). 2023.
+>  Munch, Elizabeth. An Invitation to the Euler Characteristic Transform. The American Mathematical Monthly, 132(1), 15-25. [doi:10.1080/00029890.2024.2409616](https://doi.org/10.1080/00029890.2024.2409616). 2024.
 
 ## Getting Started
 
@@ -45,6 +45,7 @@ pip install .
 This code was written by [Liz Munch](https://elizabethmunch.com/) along with her research group and collaborators. People who have contributed to `ect` include:
 
 - [Sarah McGuire](https://www.sarah-mcguire.com/)
+- [Yemeen Ayub](https://yemeen.com/)
 
 ## License
 
