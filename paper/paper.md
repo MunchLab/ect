@@ -44,7 +44,31 @@ We start by defining the Euler Characteristic Transform, and direct the reader t
 
 To start, we assume our input is an undirected graph $G$ with an embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as follows. 
 
-![An example of an embedded graph](figures/GraphExample.png)
+![An example of an embedded graph](figures/example_graph.png)
+
+For a choice of direction $\theta \in [0,2\pi]$, we can induce a function on the vertex set. 
+Thinking of  this as $\omega \in \mathbb{S}^1$ by defining the unit vector $\omega = (\cos(\theta), \sin(\theta))$, the function $g_\omega$ is defined on the vertices of $G$ by taking the dot product of the embedding coordinates with the unit vector, specifically
+$$
+g_\omega(v) = \langle f(v), \omega\rangle.
+$$
+<!-- This is done in the code using the `g_omega` method as shown.  -->
+
+Some examples are shown below. 
+
+![Example 1](figures/example_graph_pi_over_2.png)
+![Example 2](figures/example_graph_pi_over_2.png)
+
+Now we can set up the ECT for the embedded graph. The ECT is defined as 
+$$
+\begin{matrix}
+\text{ECT}(G): & \mathbb{S}^1 & \to & \text{Func}(\mathbb{R}, \mathbb{Z})\\
+& \omega & \mapsto & \{ a \mapsto \chi(g_\omega^{-1}(-\infty,a]) \}
+\end{matrix}
+$$
+
+
+
+
 
 TODO..... Liz is going to steal content from the tutorials for this. 
 
