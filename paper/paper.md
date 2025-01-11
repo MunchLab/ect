@@ -74,6 +74,11 @@ TODO..... Liz is going to steal content from the tutorials for this.
 
 # Statement of need
 
+The Euler Characteristic Transform (ECT) is a powerful tool in Topological Data Analysis (TDA) that captures the inherent shape of the data across varying thresholds and directions. As the complexity and availability of data increases, there is a growing need for methods that reliably utilize the inherent geometric information provided by the data. 
+Despite significant theoretical advantages, the practical utilization of the ECT has been restrained by the absense of a comprehensive, efficient, and normalized software implementation.
+
+The `DECT` package [@Roell24a] provides an efficient implentation of the Differentiable Euler Characteristic Transform (DECT) for point clouds, graphs, and meshes but it does not provide many of the supporting utility functions often used normalize input data. The `DEMETER` package [@amezquita2022] gives a fast way to compute the ECT of 2D and 3D images. Our package provides 
+
 **TODO: Are there any existing ECT packages?**
 
 Yemeen is going to find any needed references.
