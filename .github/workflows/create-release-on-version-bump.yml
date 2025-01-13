@@ -15,7 +15,7 @@ jobs:
     - name: Extract version
       id: get_version
       run: |
-        version=$(grep -m1 'version = ' pyproject.toml | cut -d'"' -f2)
+        version=$(python setup.py --version)
         echo "::set-output name=VERSION::$version"
 
     - name: Create Tag
