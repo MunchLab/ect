@@ -4,6 +4,7 @@ from numba import jit
 import matplotlib.pyplot as plt
 from ect.embed_cw import EmbeddedCW
 import time
+from numba import jit, prange
 
 
 class ECT:
@@ -161,31 +162,83 @@ class ECT:
         else:
             return ecc
 
+    @staticmethod
+    @jit(nopython=True, parallel=True)
+    def fast_threshold_comp(projections, edge_maxes, thresholds):
+        """Calculate the euler characteristic for each direction in parallel
+
+        Parameters:
+            projections (np.array):
+                The projections of the vertices.
+            edge_maxes (np.array):
+                The projections of the edges.
+            thresholds (np.array):
+                The thresholds to compute the ECT at.
+
+        Returns:
+            np.array:
+                The ECT matrix of size (num_dirs, num_thresh).
+        """
+        num_vertices, num_dir = projections.shape
+        num_edges = edge_maxes.shape[0]
+        num_thresh = len(thresholds)
+        result = np.empty((num_dir, num_thresh), dtype=np.int32)
+
+        # parallelize over directions
+        for i in prange(num_dir):
+            for j in range(num_thresh):
+                thresh = thresholds[j]
+                vert_count = 0
+                edge_count = 0
+
+                # Use SIMD-friendly loops
+                for v in range(num_vertices):
+                    if projections[v, i] <= thresh:
+                        vert_count += 1
+                for e in range(num_edges):
+                    if edge_maxes[e, i] <= thresh:
+                        edge_count += 1
+
+                result[i, j] = vert_count - edge_count
+
+        return result
+
     def calculateECT(self, graph, bound_radius=None, compute_SECT=False):
-        """Vectorized ECT calculation"""
+        """Vectorized ECT calculation using optimized numpy operations
+
+        Parameters:
+            graph (EmbeddedGraph/EmbeddedCW):
+                The input graph or CW complex.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
+            compute_SECT (bool):
+                Whether to compute the SECT. Default is False.
+
+        Returns:
+            np.array:
+                The ECT matrix of size (num_dirs, num_thresh).
+        """
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
 
-        # get g-values for all directions at once
-        g_values = graph.g_omega_vectorized(self.thetas)
-        g_edge_values = graph.g_omega_edges_vectorized(self.thetas)
+        coords = np.array([graph.coordinates[v] for v in graph.nodes()])
 
-        # [num_vertices, num_dirs]
-        vertex_projs = np.array([g_values[v] for v in graph.nodes()])
-        edge_projs = np.array([g_edge_values[e]
-                              for e in graph.edges()])  # [num_edges, num_dirs]
+        # create vertex index mapping and convert edges
+        vertex_to_idx = {v: i for i, v in enumerate(graph.nodes())}
+        edges = np.array([[vertex_to_idx[u], vertex_to_idx[v]]
+                         for u, v in graph.edges()])
 
-        M = np.zeros((self.num_dirs, self.num_thresh))
+        directions = np.empty((self.num_dirs, 2), order='F')
+        np.stack([np.cos(self.thetas), np.sin(self.thetas)],
+                 axis=1, out=directions)
 
-        thresholds = r_threshes.reshape(1, -1)  # [1, num_thresh]
+        projections = np.empty((len(coords), self.num_dirs), order='F')
+        np.matmul(coords, directions.T, out=projections)
 
-        # Count vertices and edges below each threshold for each direction
-        vertices_below = (vertex_projs[:, :, None] <= thresholds).sum(
-            axis=0)  # [num_dirs, num_thresh]
-        edges_below = (edge_projs[:, :, None] <= thresholds).sum(
-            axis=0)  # [num_dirs, num_thresh]
+        edge_maxes = np.maximum(
+            projections[edges[:, 0]], projections[edges[:, 1]])
 
-        # Compute ECT
-        M = vertices_below - edges_below
+        # use numba-optimized threshold computation
+        M = self.fast_threshold_comp(projections, edge_maxes, r_threshes)
 
         self.ECT_matrix = M
         if compute_SECT:
