@@ -34,7 +34,11 @@ bibliography: paper.bib
 
 # Summary
 
-TODO
+The field of Topological Data Analysis encodes the shape of data in quantifiable representations of the information, sometimes called "topological signatures" or "topological summaries". 
+The goal is to ensure that these summaries are robust enough to be useable in the face of noise, while having access to fast enough algorithms to make them useful in practice. 
+Often, these two goals are at odds with each other since the more complex the representation in order to retain as much information as possible generally results in larger computation time.  
+The Euler Characteristic Transform (ECT) is a construction which is rapidly gaining popularity in Topological Data Analysis settings due to its ability to be both at once: robust to the input providing a provably complete representation of an input embedded shape, while being much faster to compute than its commonly used cousin, the Persistent Homology Transform. 
+The *ECT* package for Python prsented here provides a fast and well-documented implementation of the ECT for graphs embedded in 2 or 3 dimensions. This new package is particularly timely since access to easy-to-use code will make the ECT accessible to more practitioners and domain scientists interested in using it for applications. ***TODO Assuming we actually have this up to 3d***
 
 # The ECT
 
@@ -65,9 +69,20 @@ $$
 & \omega & \mapsto & \{ a \mapsto \chi(g_\omega^{-1}(-\infty,a]) \}
 \end{matrix}
 $$
+Perhaps a better way of looking at this same function for visualization purposes is to treat this function as defined on a cylinder,
+$$
+\begin{matrix}
+\text{ECT}(G): & \mathbb{S}^1 \times \R & \to &  \mathbb{Z}\\
+& (\omega,a) & \mapsto & \chi(g_\omega^{-1}(-\infty,a]) 
+\end{matrix}
+$$
+After discretizing, the example embedded graph has an ECT matrix as shown below. 
+![Example ECT](figures/example_ect.png)
 
+The main functionality of the package is to be able to compute the ECT matrix for graphs embedded in $\mathbb{R}^d$ for $d \in \{2,3\}$.
+Additional functionality is given for embedded CW complexes, such as the example shown below.  
 
-
+**TODO: If we're going to have 3D stuff implemented, we need the version for that descibed.**
 
 
 TODO..... Liz is going to steal content from the tutorials for this. 
