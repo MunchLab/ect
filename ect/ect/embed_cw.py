@@ -171,7 +171,8 @@ class EmbeddedCW(EmbeddedGraph):
             fig = ax.get_figure()
 
         ax = self.plot_faces(0, facecolor='lightblue', ax=ax)
-        ax = super().plot(bounding_circle, color_nodes_theta, ax)
+        ax = super().plot(bounding_circle=bounding_circle,
+                          color_nodes_theta=color_nodes_theta, ax=ax)
         return ax
 
 
