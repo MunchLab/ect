@@ -1,0 +1,37 @@
+name: Create Release on Version Bump
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Extract version
+      id: get_version
+      run: |
+        version=$(grep -m1 'version = ' pyproject.toml | cut -d'"' -f2)
+        echo "::set-output name=VERSION::$version"
+
+    - name: Create Tag
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git tag v${{ steps.get_version.outputs.VERSION }}
+        git push origin v${{ steps.get_version.outputs.VERSION }}
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v${{ steps.get_version.outputs.VERSION }}
+        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        body: |
+          Release of version ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
