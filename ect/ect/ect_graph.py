@@ -118,13 +118,13 @@ class ECT:
     def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
         """
         Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
-        
+
         Parameters:
             G (nx.Graph): The graph to compute the ECC for.
             theta (float): The angle (in radians) for the direction function.
             bound_radius (float, optional): Radius for threshold range. Default is None.
             return_counts (bool, optional): Whether to return vertex, edge, and face counts. Default is False.
-        
+
         Returns:
             numpy.ndarray: ECC values at each threshold.
             (Optional) Tuple of counts: (ecc, vertex_count, edge_count, face_count)
@@ -149,7 +149,8 @@ class ECT:
             f_list, g_f = G.sort_faces(theta, return_g=True)
             g_f_list = np.array([g_f[f] for f in f_list])
             sorted_g_f_list = np.sort(g_f_list)
-            face_count = np.searchsorted(sorted_g_f_list, r_threshes, side='right')
+            face_count = np.searchsorted(
+                sorted_g_f_list, r_threshes, side='right')
         else:
             face_count = np.zeros_like(r_threshes, dtype=np.int32)
 
@@ -160,39 +161,37 @@ class ECT:
         else:
             return ecc
 
-    def calculateECT(self, graph, bound_radius=None, compute_SECT=True):
-        """
-        Calculates the ECT from an input either `EmbeddedGraph` or `EmbeddedCW`. The entry ``M[i,j]`` is :math:`\\chi(K_{a_j})` for the direction :math:`\omega_i` where :math:`a_j` is the jth entry in ``self.threshes``, and :math:`\omega_i` is the ith entry in ``self.thetas``.
-
-        Parameters:
-            graph (EmbeddedGraph/EmbeddedCW):
-                The input graph to calculate the ECT from.
-            bound_radius (float):
-                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
-            compute_SECT (bool):
-                Whether to compute the SECT after the ECT is computed. Default is True. Sets the SECT_matrix attribute, but doesn't return it. Can be returned with the get_SECT method.
-
-        Returns:
-            np.array
-                The matrix representing the ECT of size (num_dirs,num_thresh).
-        """
-
+    def calculateECT(self, graph, bound_radius=None, compute_SECT=False):
+        """Vectorized ECT calculation"""
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
 
-        # Note... this overwrites the self.threshes if it's not set.
-        self.set_bounding_radius(r)
+        # get g-values for all directions at once
+        g_values = graph.g_omega_vectorized(self.thetas)
+        g_edge_values = graph.g_omega_edges_vectorized(self.thetas)
+
+        # [num_vertices, num_dirs]
+        vertex_projs = np.array([g_values[v] for v in graph.nodes()])
+        edge_projs = np.array([g_edge_values[e]
+                              for e in graph.edges()])  # [num_edges, num_dirs]
 
         M = np.zeros((self.num_dirs, self.num_thresh))
 
-        for i, theta in enumerate(self.thetas):
-            M[i] = self.calculateECC(graph, theta, r)
+        thresholds = r_threshes.reshape(1, -1)  # [1, num_thresh]
+
+        # Count vertices and edges below each threshold for each direction
+        vertices_below = (vertex_projs[:, :, None] <= thresholds).sum(
+            axis=0)  # [num_dirs, num_thresh]
+        edges_below = (edge_projs[:, :, None] <= thresholds).sum(
+            axis=0)  # [num_dirs, num_thresh]
+
+        # Compute ECT
+        M = vertices_below - edges_below
 
         self.ECT_matrix = M
-
         if compute_SECT:
             self.SECT_matrix = self.calculateSECT()
 
-        return self.ECT_matrix
+        return M
 
     def calculateSECT(self):
         """

@@ -543,6 +543,58 @@ class EmbeddedGraph(nx.Graph):
 
         return self
 
+    def g_omega_vectorized(self, thetas):
+        """
+        Vectorized computation of g-values for multiple directions.
+
+        Args:
+            thetas: numpy array of angles in radians
+
+        Returns:
+            Dictionary mapping vertex indices to arrays of g-values
+        """
+        # Get all coordinates as a numpy array
+        vertices = list(self.nodes())
+        coords = np.array([self.coordinates[v] for v in vertices])
+
+        # Create direction vectors for all angles
+        directions = np.stack(
+            [np.cos(thetas), np.sin(thetas)], axis=1)  # [num_dirs, 2]
+
+        # Project all points onto all directions at once
+        projections = np.matmul(coords, directions.T)  # [num_points, num_dirs]
+
+        # Create dictionary mapping vertex indices to their projection arrays
+        g_values = {v: projections[i] for i, v in enumerate(vertices)}
+
+        return g_values
+
+    def g_omega_edges_vectorized(self, thetas):
+        """
+        Vectorized computation of edge g-values for multiple directions.
+
+        Args:
+            thetas: numpy array of angles in radians
+
+        Returns:
+            Dictionary mapping edge tuples to arrays of g-values
+        """
+        # Get vertex projections first
+        vertex_g_values = self.g_omega_vectorized(thetas)
+
+        # Pre-compute edge g-values for all directions at once
+        edge_g_values = {}
+        for u, v in self.edges():
+            # Get projections for both endpoints
+            u_proj = vertex_g_values[u]
+            v_proj = vertex_g_values[v]
+
+            # Maximum projection for each direction
+            edge_g_values[(u, v)] = np.maximum(u_proj, v_proj)
+            edge_g_values[(v, u)] = edge_g_values[(u, v)]  # symmetric
+
+        return edge_g_values
+
 
 def create_example_graph(centered=True, center_type='min_max'):
     """
