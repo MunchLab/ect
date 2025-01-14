@@ -26,12 +26,12 @@ jobs:
         git push origin v${{ steps.get_version.outputs.VERSION }}
 
     - name: Create Release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         tag_name: v${{ steps.get_version.outputs.VERSION }}
-        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        name: Release ${{ steps.get_version.outputs.VERSION }}
         body: |
           Release of version ${{ steps.get_version.outputs.VERSION }}
         draft: false
         prerelease: false
-        token: ${{ secrets.GITHUB_TOKEN }}
