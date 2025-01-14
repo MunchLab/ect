@@ -9,14 +9,15 @@
 name: Upload Python Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ "main" ]
 
 permissions:
   contents: read
 
 jobs:
   deploy:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -35,5 +36,4 @@ jobs:
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
         user: __token__
-        password: ${{ secrets.PYPI }}
-
+        password: ${{ secrets.PYPI}}
