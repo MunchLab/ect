@@ -3,6 +3,8 @@
 doc_source/notebooks/Matisse/outlines/*
 *.DS_Store
 
+benchmarks/results/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
