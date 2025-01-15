@@ -22,10 +22,11 @@ def benchmark_graph_ect(num_runs=5):
     results = {}
 
     configs = [
-        (100, 1),    # Simple shape, few points
-        (1000, 1),   # Simple shape, many points
-        (100, 3),    # Complex shape, few points
-        (1000, 3),   # Complex shape, many points
+        (100, 1),
+        (1000, 1),
+        (100, 3),
+        (1000, 3),
+        (10000, 3),
     ]
 
     for points, complexity in configs:
