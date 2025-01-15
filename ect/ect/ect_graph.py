@@ -1,10 +1,8 @@
-import numpy as np
-from itertools import compress, combinations
-from numba import jit
 import matplotlib.pyplot as plt
-from ect.embed_cw import EmbeddedCW
-import time
+import numpy as np
 from numba import jit, prange
+
+from ect.embed_cw import EmbeddedCW
 
 
 class ECT:
@@ -20,9 +18,9 @@ class ECT:
             The number of thresholds to consider in the matrix.
         bound_radius (int):
             Either ``None``, or a positive radius of the bounding circle.
-        ECT_matrix (np.array):
+        ect_matrix (np.array):
             The matrix to store the ECT.
-        SECT_matrix (np.array):
+        sect_matrix (np.array):
             The matrix to store the SECT.
 
     """
@@ -83,7 +81,7 @@ class ECT:
         """
        # Either use the global radius and the set self.threshes; or use the tight bounding box and calculate
         # the thresholds from that.
-        if bound_radius == None:
+        if bound_radius is None:
             # First try to get the internally stored bounding radius
             if self.bound_radius is not None:
                 r = self.bound_radius
@@ -104,19 +102,19 @@ class ECT:
 
         return r, r_threshes
 
-    def get_ECT(self):
+    def get_ect(self):
         """
         Returns the ECT matrix.
         """
-        return self.ECT_matrix
+        return self.ect_matrix
 
-    def get_SECT(self):
+    def get_sect(self):
         """
         Returns the SECT matrix.
         """
-        return self.SECT_matrix
+        return self.sect_matrix
 
-    def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
+    def calculate_ecc(self, G, theta, bound_radius=None, return_counts=False):
         """
         Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
 
@@ -203,7 +201,7 @@ class ECT:
 
         return result
 
-    def calculateECT(self, graph, bound_radius=None, compute_SECT=False):
+    def calculate_ect(self, graph, bound_radius=None,):
         """Vectorized ECT calculation using optimized numpy operations
 
         Parameters:
@@ -211,8 +209,6 @@ class ECT:
                 The input graph or CW complex.
             bound_radius (float):
                 If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
-            compute_SECT (bool):
-                Whether to compute the SECT. Default is False.
 
         Returns:
             np.array:
@@ -238,15 +234,14 @@ class ECT:
             projections[edges[:, 0]], projections[edges[:, 1]])
 
         # use numba-optimized threshold computation
-        M = self.fast_threshold_comp(projections, edge_maxes, r_threshes)
+        ect_matrix = self.fast_threshold_comp(
+            projections, edge_maxes, r_threshes)
 
-        self.ECT_matrix = M
-        if compute_SECT:
-            self.SECT_matrix = self.calculateSECT()
+        self.ect_matrix = ect_matrix
 
-        return M
+        return ect_matrix
 
-    def calculateSECT(self):
+    def calculate_sect(self):
         """
         Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix. 
 
@@ -265,11 +260,11 @@ class ECT:
         M_normalized = M - A[:, np.newaxis]
 
         # Take the cumulative sum of each row to get the SECT
-        M_SECT = np.cumsum(M_normalized, axis=1)
+        M_sect = np.cumsum(M_normalized, axis=1)
 
-        return M_SECT
+        return M_sect
 
-    def plotECC(self, graph, theta, bound_radius=None, draw_counts=False):
+    def plot_ecc(self, graph, theta, bound_radius=None, draw_counts=False):
         """
         Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
 
@@ -286,9 +281,9 @@ class ECT:
 
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
         if not draw_counts:
-            ECC = self.calculateECC(graph, theta, r)
+            ECC = self.calculate_ecc(graph, theta, r)
         else:
-            ECC, vertex_count, edge_count, face_count = self.calculateECC(
+            ECC, vertex_count, edge_count, face_count = self.calculate_ecc(
                 graph, theta, r, return_counts=True)
 
         # if self.threshes is None:
@@ -307,7 +302,7 @@ class ECT:
         plt.xlabel('$a$')
         plt.ylabel(r'$\chi(K_a)$')
 
-    def plotECT(self):
+    def plot_ect(self):
         """
         Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.
 
@@ -330,16 +325,17 @@ class ECT:
         ax = plt.gca()
         ax.set_xticks(np.linspace(0, 2*np.pi, 9))
 
-        labels = [r'$0$',
-                  r'$\frac{\pi}{4}$',
-                  r'$\frac{\pi}{2}$',
-                  r'$\frac{3\pi}{4}$',
-                  r'$\pi$',
-                  r'$\frac{5\pi}{4}$',
-                  r'$\frac{3\pi}{2}$',
-                  r'$\frac{7\pi}{4}$',
-                  r'$2\pi$',
-                  ]
+        labels = [
+            r'$0$',
+            r'$\frac{\pi}{4}$',
+            r'$\frac{\pi}{2}$',
+            r'$\frac{3\pi}{4}$',
+            r'$\pi$',
+            r'$\frac{5\pi}{4}$',
+            r'$\frac{3\pi}{2}$',
+            r'$\frac{7\pi}{4}$',
+            r'$2\pi$',
+        ]
 
         ax.set_xticklabels(labels)
 
@@ -348,7 +344,7 @@ class ECT:
 
         plt.title(r'ECT of Input Graph')
 
-    def plotSECT(self):
+    def plot_sect(self):
         """
         Function to plot the Smooth Euler Characteristic Transform (SECT) matrix. Note that the SECT matrix must be calculated before calling this function.
 
@@ -399,8 +395,8 @@ class ECT:
         """
 
         if plot_type == 'ECT':
-            self.plotECT()
+            self.plot_ect()
         elif plot_type == 'SECT':
-            self.plotSECT()
+            self.plot_sect()
         else:
             raise ValueError('plot_type must be either "ECT" or "SECT".')
