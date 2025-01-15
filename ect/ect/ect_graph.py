@@ -118,13 +118,13 @@ class ECT:
     def calculateECC(self, G, theta, bound_radius=None, return_counts=False):
         """
         Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
-        
+
         Parameters:
             G (nx.Graph): The graph to compute the ECC for.
             theta (float): The angle (in radians) for the direction function.
             bound_radius (float, optional): Radius for threshold range. Default is None.
             return_counts (bool, optional): Whether to return vertex, edge, and face counts. Default is False.
-        
+
         Returns:
             numpy.ndarray: ECC values at each threshold.
             (Optional) Tuple of counts: (ecc, vertex_count, edge_count, face_count)
@@ -142,14 +142,15 @@ class ECT:
         g_e_list = np.array([g_e[e] for e in e_list])
         sorted_g_e_list = np.sort(g_e_list)
 
-        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='left')
-        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='left')
+        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='right')
+        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='right')
 
         if isinstance(G, EmbeddedCW):
             f_list, g_f = G.sort_faces(theta, return_g=True)
             g_f_list = np.array([g_f[f] for f in f_list])
             sorted_g_f_list = np.sort(g_f_list)
-            face_count = np.searchsorted(sorted_g_f_list, r_threshes, side='left')
+            face_count = np.searchsorted(
+                sorted_g_f_list, r_threshes, side='right')
         else:
             face_count = np.zeros_like(r_threshes, dtype=np.int32)
 

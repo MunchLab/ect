@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__),'..', 'ect', 'ect_on_g
 # -- Project information -----------------------------------------------------
 
 project = 'ect'
-copyright = '2024, MunchLab'
+copyright = '2025, MunchLab'
 author = 'MunchLab'
 
 # The full version, including alpha/beta/rc tags
@@ -70,12 +70,29 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_logo = 'img/ECT_Logo.png'
+html_favicon = 'img/ECT_Logo_128x128.png'
+html_theme_options = {
+    'canonical_url': '',
+    'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': True,
+    'style_nav_header_background': '#cececf',
+    # Toc options
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'navigation_depth': 3,
+    'includehidden': True,
+    'titles_only': False,
+}
 autodoc_default_options = {
     'members': True,
     'member-order': 'bysource',
     'special-members': '__init__',
     'undoc-members': True,
-    'exclude-members': '__weakref__'
+    'exclude-members': '__weakref__',
 }
 numpydoc_show_class_members = False
 autodoc_typehints = "none"

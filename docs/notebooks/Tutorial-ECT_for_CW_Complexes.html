@@ -7,16 +7,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.2. Tutorial: ECT for CW complexes &mdash; ect 0.1.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
+    <link rel="shortcut icon" href="../_static/ECT_Logo_128x128.png"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=59fadc99"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -32,12 +33,13 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #cececf" >
 
           
           
           <a href="../index.html" class="icon icon-home">
             ect
+              <img src="../_static/ECT_Logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -49,15 +51,55 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Tutorial: ECT for CW complexes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../embed_graph.html">2.1. Embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../embed_cw.html">2.2. Embedded CW complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.create_example_cw"><code class="docutils literal notranslate"><span class="pre">create_example_cw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ect_on_graphs.html">2.3. ECT on graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Constructing-the-embedded-graph">3.1.1. Constructing the embedded graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Computing-the-ECT-of-G">3.1.2. Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#SECT">3.1.3. SECT</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#conclusion">4.3. Conclusion</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">5. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../citing.html">6. Citing</a></li>
 </ul>
@@ -66,13 +108,13 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">ect</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
@@ -91,37 +133,37 @@
 <h1><span class="section-number">3.2. </span>Tutorial: ECT for CW complexes<a class="headerlink" href="#Tutorial:-ECT-for-CW-complexes" title="Link to this heading"></a></h1>
 <p>This tutorial walks you through how to build a CW complex with the <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> class, and then use the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class to compute the Euler characteristic transform</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from ect import ECT, EmbeddedCW, create_example_cw
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span> <span class="n">create_example_cw</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 <p>The CW complex is the same as the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class with that additional ability to add faces. Faces are added by passing in a list of vertices. Note that we are generally assuming that these vertices follow around an empty region (as in, no other vertex is in the interior) in the graph bounded by the vertices, and further that all edges are already included in the graph. However the class does not yet check for this so you need to be careful!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = EmbeddedCW()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedCW</span><span class="p">()</span>
 
-K.add_node(&#39;A&#39;, 0,0)
-K.add_node(&#39;B&#39;, 1,0)
-K.add_node(&#39;C&#39;, 1,1)
-K.add_node(&#39;D&#39;, 0,1)
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
-K.add_edges_from(((&#39;A&#39;, &#39;B&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;C&#39;, &#39;D&#39;), (&#39;D&#39;, &#39;A&#39;)))
+<span class="n">K</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)))</span>
 
-K.add_face([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
+<span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
 
-K.set_mean_centered_coordinates()
-K.plot()
+<span class="n">K</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;min_max&#39;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -138,16 +180,16 @@ K.plot()
 </div>
 <p>Just to have something a bit more interesting, let’s make a more complicated example that’s built into the class.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = create_example_cw(mean_centered = True)
-K.plot(bounding_circle=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">()</span>
+<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -164,16 +206,16 @@ K.plot(bounding_circle=True)
 </div>
 <p>We can also color the nodes based on a function value for a given direction.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>theta = np.pi/7
-K.plot(bounding_circle=True,color_nodes_theta=theta)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">7</span>
+<span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -190,21 +232,21 @@ K.plot(bounding_circle=True,color_nodes_theta=theta)
 </div>
 <p>The function value for any direction can be computed and returned for vertices, edges, or faces. The function value for an edge or face <span class="math notranslate nohighlight">\(\sigma\)</span> is given by <span class="math notranslate nohighlight">\(g_\omega(\sigma) = \max_{v \in \sigma}\{f(v)\}\)</span>. Here we show the function values for the triangle <code class="docutils literal notranslate"><span class="pre">KDC</span></code> and its faces.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vert_g = K.g_omega(theta)
-edge_g = K.g_omega_edges(theta)
-face_g = K.g_omega_faces(theta)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vert_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">edge_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_edges</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">face_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega_faces</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-for v in [&#39;K&#39;,&#39;D&#39;,&#39;C&#39;]:
-    print(f&#39;{v}: {round(vert_g[v],2)}&#39;)
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">vert_g</span><span class="p">[</span><span class="n">v</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-for edge in [(&#39;D&#39;,&#39;K&#39;),(&#39;C&#39;,&#39;D&#39;),(&#39;C&#39;,&#39;K&#39;)]:
-    print(f&#39;{edge}: {round(edge_g[edge],2)}&#39;)
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">),(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">)]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">edge_g</span><span class="p">[</span><span class="n">edge</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-for face in [(&#39;K&#39;,&#39;D&#39;,&#39;C&#39;)]:
-    print(f&#39;{face}: {round(face_g[face],2)}&#39;)
+<span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">)]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">face</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">face_g</span><span class="p">[</span><span class="n">face</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -213,67 +255,53 @@ for face in [(&#39;K&#39;,&#39;D&#39;,&#39;C&#39;)]:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-K: 0.29
-D: 0.75
-C: 2.99
-(&#39;D&#39;, &#39;K&#39;): 0.75
-(&#39;C&#39;, &#39;D&#39;): 2.99
-(&#39;C&#39;, &#39;K&#39;): 2.99
-[(&#39;B&#39;, &#39;A&#39;, &#39;G&#39;, &#39;H&#39;, &#39;D&#39;), (&#39;K&#39;, &#39;D&#39;, &#39;C&#39;)]
-(&#39;K&#39;, &#39;D&#39;, &#39;C&#39;): 2.99
+K: 0.18
+D: 0.65
+C: 2.89
+(&#39;D&#39;, &#39;K&#39;): 0.65
+(&#39;C&#39;, &#39;D&#39;): 2.89
+(&#39;C&#39;, &#39;K&#39;): 2.89
+(&#39;K&#39;, &#39;D&#39;, &#39;C&#39;): 2.89
 </pre></div></div>
 </div>
 <p>As with the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class, we can initialize the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class by deciding how many directions and how many thresholds to use.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect = ECT(num_dirs = 100,num_thresh = 80)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,  3,  3,
-        3,  3,  3,  3,  3,  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
-        2,  2,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
-</pre></div></div>
 </div>
 <p>Then we can compute the ECC for a single direction. In this case, the <span class="math notranslate nohighlight">\(x\)</span>-axis will be computed for the <code class="docutils literal notranslate"><span class="pre">num_thresh=80</span></code> stopping points in the interval <span class="math notranslate nohighlight">\([-1.2r,1.2r]\)</span> where <span class="math notranslate nohighlight">\(r\)</span> is the minimum bounding radius for the input complex.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>r = K.get_bounding_radius()
-myect.calculateECC(K,0,1.2*r)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+<span class="n">myect</span><span class="o">.</span><span class="n">calculateECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,
-        3,  3,  3,  3,  3,  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+        0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,  3,
+        3,  3,  3,  3,  3,  3,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  1,
         1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -1, -1, -1, -1, -1, -1,
        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
 </pre></div></div>
 </div>
 <p>But of course it’s easier to see this in a plot. This command calculates the ECC and immediately plots it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotECC(K,theta,1.2*r)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -286,16 +314,16 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 </div>
 <p>Similarly, we can compute the ECT and return the matrix. We make sure to internally set the bounding radius to use to control the <span class="math notranslate nohighlight">\(y\)</span> axis of the plot.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.set_bounding_radius(1.2*r)
-myect.calculateECT(K)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+<span class="n">myect</span><span class="o">.</span><span class="n">calculateECT</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -311,11 +339,11 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
 </div>
 <p>Once it’s been computed, we can use the internal plotting function to take a look.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotECT()
-print(myect.bound_radius)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myect</span><span class="o">.</span><span class="n">bound_radius</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -324,7 +352,7 @@ print(myect.bound_radius)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-3.9529463851622046
+3.841874542459709
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -336,10 +364,10 @@ print(myect.bound_radius)
 </div>
 <p>Similarly we can take a look at the SECT. This one was computed when we asked to compute the ECT.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>myect.plotSECT()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotSECT</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -363,7 +391,7 @@ print(myect.bound_radius)
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, MunchLab.</p>
+    <p>&#169; Copyright 2025, MunchLab.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
@@ -380,7 +408,18 @@ print(myect.bound_radius)
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>
