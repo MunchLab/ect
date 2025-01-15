@@ -1,51 +1,48 @@
 """Main benchmark runner for ECT package"""
 import numpy as np
 import time
-from ect import ECT, EmbeddedGraph
-import json
 from pathlib import Path
+import json
+from benchmark_graph import benchmark_graph_ect, benchmark_g_omega
+from benchmark_cw import benchmark_cw_ect
+import platform
 
 
-def create_test_shape(num_points=1000):
-    t = np.linspace(0, 2*np.pi, num_points)
-    x = np.cos(t) + 0.5 * np.cos(3*t)
-    y = np.sin(t) + 0.5 * np.sin(3*t)
-    return np.column_stack([x, y])
+def run_all_benchmarks(num_runs=5):
+    """Run all benchmarks and collect results"""
+    results = {
+        'metadata': {
+            'num_runs': num_runs,
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'platform': platform.platform(),
+            'python_version': platform.python_version()
+        },
+        'benchmarks': {}
+    }
 
+    print("\nRunning graph ECT benchmarks...")
+    results['benchmarks']['graph_ect'] = benchmark_graph_ect(num_runs=num_runs)
 
-def run_benchmarks():
-    results = {}
+    print("\nRunning CW complex benchmarks...")
+    results['benchmarks']['cw_ect'] = benchmark_cw_ect(num_runs=num_runs)
 
-    sizes = [100, 500, 1000]
-    for size in sizes:
-        shape = create_test_shape(size)
-        G = EmbeddedGraph()
-        G.add_cycle(shape)
-
-        start_time = time.time()
-        myect = ECT(num_dirs=360, num_thresh=360)
-        myect.calculateECT(G)
-        ect_time = time.time() - start_time
-
-        start_time = time.time()
-        for theta in np.linspace(0, 2*np.pi, 360):
-            G.g_omega(theta)
-        g_omega_time = time.time() - start_time
-
-        results[f'shape_size_{size}'] = {
-            'ect_time': ect_time,
-            'g_omega_time': g_omega_time
-        }
+    print("\nRunning g_omega benchmarks...")
+    results['benchmarks']['g_omega'] = benchmark_g_omega(num_runs=num_runs)
 
     return results
 
 
-if __name__ == "__main__":
-
-    results = run_benchmarks()
-
-    output_dir = Path("benchmark_results")
+def save_results(results, output_dir="benchmarks/results"):
+    """Save benchmark results to JSON file"""
+    output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
 
-    with open(output_dir / "results.json", "w") as f:
+    with open(output_dir / "benchmark_results.json", "w") as f:
         json.dump(results, f, indent=2)
+
+    print(f"\nResults saved to {output_dir}/benchmark_results.json")
+
+
+if __name__ == "__main__":
+    results = run_all_benchmarks()
+    save_results(results)
