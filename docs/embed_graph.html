@@ -472,11 +472,14 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_all_angles">
-<span class="sig-name descname"><span class="pre">get_all_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returntype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_all_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_all_angles" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_all_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returntype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_rounding_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_all_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_all_angles" title="Link to this definition"></a></dt>
 <dd><p>Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>returntype</strong> (<em>str</em>) – The return type of the angles. Options are ‘matrix’ or ‘dict’. If ‘matrix’, returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If ‘dict’, returns a dictionary of angles with <cite>dict[‘A’,’B’]</cite> returning the angle normal to the vector <span class="math notranslate nohighlight">\(\overrightarrow{AB}\)</span>.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>returntype</strong> (<em>str</em>) – The return type of the angles. Options are ‘matrix’ or ‘dict’. If ‘matrix’, returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If ‘dict’, returns a dictionary of angles with <cite>dict[‘A’,’B’]</cite> returning the angle normal to the vector <span class="math notranslate nohighlight">\(\overrightarrow{AB}\)</span>.</p></li>
+<li><p><strong>rounding_digits</strong> (<em>int</em>) – The number of digits to round the angles in either the matrix or the keys of the dictionary.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of angles of the vertices in the graph.</p>

@@ -450,13 +450,15 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def get_all_angles(self, returntype='matrix'):
+    def get_all_angles(self, returntype='matrix', num_rounding_digits=None):
         """
         Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. 
 
         Parameters:
             returntype (str): 
                 The return type of the angles. Options are 'matrix' or 'dict'. If 'matrix', returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If 'dict', returns a dictionary of angles with `dict['A','B']` returning the angle normal to the vector :math:`\\overrightarrow{AB}`.
+            rounding_digits (int):
+                The number of digits to round the angles in either the matrix or the keys of the dictionary. 
 
         Returns:
             list: A list of angles of the vertices in the graph.
@@ -482,18 +484,25 @@ class EmbeddedGraph(nx.Graph):
         np.fill_diagonal(Y_diff, np.nan)
 
         angle_matrix = np.arctan2(X_diff, -Y_diff)
+        if num_rounding_digits != None:
+            angle_matrix = np.round(angle_matrix, num_rounding_digits)
+
         if returntype == 'matrix':
             return angle_matrix, labels
+
         elif returntype == 'dict':
             angle_dict = {}
             for i in range(len(labels)):
                 for j in range(i+1, len(labels)):
-                    if angle_matrix[i, j] not in angle_dict.keys():
-                        angle_dict[angle_matrix[i, j]] = [
-                            (labels[i], labels[j])]
-                    else:
+                    if angle_matrix[i, j] in angle_dict.keys():
                         angle_dict[angle_matrix[i, j]].append(
                             (labels[i], labels[j]))
+                    elif angle_matrix[j, i] in angle_dict.keys():
+                        angle_dict[angle_matrix[j, i]].append(
+                            (labels[j], labels[i]))
+                    else:
+                        angle_dict[angle_matrix[i, j]] = [
+                            (labels[i], labels[j])]
             return angle_dict
 
     def plot(self,
@@ -553,7 +562,6 @@ class EmbeddedGraph(nx.Graph):
             # Always adjust the plot limits to show the full graph
             ax.set_xlim(circle_center[0] - r, circle_center[0] + r)
             ax.set_ylim(circle_center[1] - r, circle_center[1] + r)
-        ax.set_aspect('equal', 'box')
 
         if angle_labels_circle:
             circle_center = self.get_center(type='min_max')
@@ -570,17 +578,23 @@ class EmbeddedGraph(nx.Graph):
             # Draw hash marks on the circle
             hash_length = 0.1*r  # Length of the hash marks
             for theta in angles_dict_labels.keys():
-                for angle in [theta, -theta]:
-                    x_start = (r-hash_length) * np.cos(angle)
-                    y_start = (r-hash_length) * np.sin(angle)
-                    x_end = (r + hash_length) * np.cos(angle)
-                    y_end = (r + hash_length) * np.sin(angle)
+                for angle in [theta, theta + np.pi]:
+                    x_start = circle_center[0] + \
+                        (r-hash_length) * np.cos(angle)
+                    y_start = circle_center[1] + \
+                        (r-hash_length) * np.sin(angle)
+                    x_end = circle_center[0] + \
+                        (r + hash_length) * np.cos(angle)
+                    y_end = circle_center[1] + \
+                        (r + hash_length) * np.sin(angle)
                     ax.plot([x_start, x_end], [y_start, y_end], color='black')
 
                     # Add labels near the hash marks
                     scaling = 3
-                    label_x = (r + scaling * hash_length) * np.cos(angle)
-                    label_y = (r + scaling * hash_length) * np.sin(angle)
+                    label_x = circle_center[0] + \
+                        (r + scaling * hash_length) * np.cos(angle)
+                    label_y = circle_center[1] + \
+                        (r + scaling * hash_length) * np.sin(angle)
                     ax.text(label_x, label_y,
                             angles_dict_labels[theta], ha='center', va='center')
             # Always adjust the plot limits to show the full graph
@@ -589,6 +603,7 @@ class EmbeddedGraph(nx.Graph):
                         circle_center[0] + scale_factor*r)
             ax.set_ylim(circle_center[1] - scale_factor*r,
                         circle_center[1] + scale_factor*r)
+        ax.set_aspect('equal', 'box')
 
         return ax
 
