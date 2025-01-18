@@ -85,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a><ul>
@@ -408,13 +409,13 @@ Warning: This overwrites the original coordinates</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.sort_vertices">
 <span class="sig-name descname"><span class="pre">sort_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.sort_vertices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.sort_vertices" title="Link to this definition"></a></dt>
-<dd><p>Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta in [0,2*np.pi].</p>
+<dd><p>Function to sort the vertices of the graph according to the function <cite>g_omega(v)</cite> in the direction of <span class="math notranslate nohighlight">\(\theta \in [0,2\pi]\)</span>.</p>
 <p>TODO: eventually, do we want this to return a sorted list of g values as well? Since we’re already doing the sorting work, it might be helpful.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>theta</strong> (<em>float</em>) – The angle in [0,2*np.pi] for the direction to sort the vertices.</p></li>
-<li><p><strong>return_g</strong> (<em>bool</em>) – Whether to return the g(v) values along with the sorted vertices.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The angle in <span class="math notranslate nohighlight">\([0,2 \pi]\)</span> for the direction to sort the vertices.</p></li>
+<li><p><strong>return_g</strong> (<em>bool</em>) – Whether to return the <span class="math notranslate nohighlight">\(g(v)\)</span> values along with the sorted vertices.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -470,12 +471,31 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_all_angles">
+<span class="sig-name descname"><span class="pre">get_all_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returntype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_all_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_all_angles" title="Link to this definition"></a></dt>
+<dd><p>Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>returntype</strong> (<em>str</em>) – The return type of the angles. Options are ‘matrix’ or ‘dict’. If ‘matrix’, returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If ‘dict’, returns a dictionary of angles with <cite>dict[‘A’,’B’]</cite> returning the angle normal to the vector <span class="math notranslate nohighlight">\(\overrightarrow{AB}\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of angles of the vertices in the graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_labels_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the graph with the embedded coordinates.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph. This is centered at the center type defined by <code class="docutils literal notranslate"><span class="pre">bounding_center_type</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in <span class="math notranslate nohighlight">\([0,2\pi]\)</span>. Then the nodes are colored according to the <span class="math notranslate nohighlight">\(g(v)\)</span> values in the direction of theta.</p>
 <p>If with_labels is True, the nodes are labeled with their names.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">ax</span></code> is not None, the plot is drawn on the given axis.</p>
+<p>If <cite>angle_labels_circle</cite> is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph.</p>
 </dd></dl>
 
 <dl class="py method">

@@ -97,6 +97,12 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertEqual( len(G.nodes), num_verts + verts_to_add)
         self.assertEqual( len(G.edges), num_edges + verts_to_add)
 
+    def test_get_angles(self):
+        # Make sure we can get the angles of the vertices
+        G = embed_graph.create_example_graph(centered=False)
+        M,L = G.get_all_angles(returntype = 'matrix')
+        self.assertEqual( M.shape, (6, 6))
+
 
 
 if __name__ == '__main__':

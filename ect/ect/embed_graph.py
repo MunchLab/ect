@@ -331,12 +331,12 @@ class EmbeddedGraph(nx.Graph):
 
     def g_omega(self, theta):
         """
-        Function to compute the function :math:`g_\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \in [0,2\pi]` . This function is defined by :math:`g_\omega(v) = \langle \\texttt{pos}(v), \omega \\rangle` .
+        Function to compute the function :math:`g_\\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \\in [0,2\\pi]` . This function is defined by :math:`g_\\omega(v) = \\langle \\texttt{pos}(v), \\omega \\rangle` .
 
         Parameters:
 
             theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to compute the :math:`g(v)` values.
+                The angle in :math:`[0,2\\pi]` for the direction to compute the :math:`g(v)` values.
 
         Returns:
 
@@ -374,15 +374,15 @@ class EmbeddedGraph(nx.Graph):
 
     def sort_vertices(self, theta, return_g=False):
         """
-        Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
+        Function to sort the vertices of the graph according to the function `g_omega(v)` in the direction of :math:`\\theta \\in [0,2\\pi]`.
 
         TODO: eventually, do we want this to return a sorted list of g values as well? Since we're already doing the sorting work, it might be helpful.
 
         Parameters:
             theta (float):
-                The angle in [0,2*np.pi] for the direction to sort the vertices.
+                The angle in :math:`[0,2 \\pi]` for the direction to sort the vertices.
             return_g (bool):
-                Whether to return the g(v) values along with the sorted vertices.
+                Whether to return the :math:`g(v)` values along with the sorted vertices.
 
         Returns:
             list
@@ -406,13 +406,13 @@ class EmbeddedGraph(nx.Graph):
 
         .. math ::
 
-            g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
+            g_\\omega(e) = \max \{ g_\\omega(v) \mid  v \in e \}
 
-        in the direction of :math:`\\theta \in [0,2\pi]` .
+        in the direction of :math:`\\theta \in [0,2\\pi]` .
 
         Parameters:
             theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.
             return_g (bool):
                 Whether to return the :math:`g(v)` values along with the sorted edges.
 
@@ -450,21 +450,72 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
+    def get_all_angles(self, returntype='matrix'):
+        """
+        Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. 
+
+        Parameters:
+            returntype (str): 
+                The return type of the angles. Options are 'matrix' or 'dict'. If 'matrix', returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If 'dict', returns a dictionary of angles with `dict['A','B']` returning the angle normal to the vector :math:`\\overrightarrow{AB}`.
+
+        Returns:
+            list: A list of angles of the vertices in the graph.
+
+        """
+        P = np.array(list(self.coordinates.values()))
+        labels = list(self.coordinates.keys())
+
+        # Make rows of repeated copies of first column of P
+        X_Cols = np.tile(P[:, 0], (P.shape[0], 1)).T
+        X_diff = X_Cols - X_Cols.T  # The x value of the vector from A to B
+
+        # Make rows of repeated copies of second column of P
+        Y_Cols = np.tile(P[:, 1], (P.shape[0], 1)).T
+        Y_diff = Y_Cols - Y_Cols.T
+
+        # Convert to float to allow NaN assignment
+        X_diff = X_diff.astype(float)
+        Y_diff = Y_diff.astype(float)
+
+        # Set diagonals to nan
+        np.fill_diagonal(X_diff, np.nan)
+        np.fill_diagonal(Y_diff, np.nan)
+
+        angle_matrix = np.arctan2(X_diff, -Y_diff)
+        if returntype == 'matrix':
+            return angle_matrix, labels
+        elif returntype == 'dict':
+            angle_dict = {}
+            for i in range(len(labels)):
+                for j in range(i+1, len(labels)):
+                    if angle_matrix[i, j] not in angle_dict.keys():
+                        angle_dict[angle_matrix[i, j]] = [
+                            (labels[i], labels[j])]
+                    else:
+                        angle_dict[angle_matrix[i, j]].append(
+                            (labels[i], labels[j]))
+            return angle_dict
+
     def plot(self,
              bounding_circle=False,
              bounding_center_type='origin',
              color_nodes_theta=None,
              ax=None,
              with_labels=True,
+             angle_labels_circle=False,
              **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
 
         If ``bounding_circle`` is True, a bounding circle is drawn around the graph. This is centered at the center type defined by ``bounding_center_type``.
 
-        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
+        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
 
         If with_labels is True, the nodes are labeled with their names.
+
+        If ``ax`` is not None, the plot is drawn on the given axis.
+
+        If `angle_labels_circle` is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph.
 
         """
         if ax is None:
@@ -503,6 +554,41 @@ class EmbeddedGraph(nx.Graph):
             ax.set_xlim(circle_center[0] - r, circle_center[0] + r)
             ax.set_ylim(circle_center[1] - r, circle_center[1] + r)
         ax.set_aspect('equal', 'box')
+
+        if angle_labels_circle:
+            circle_center = self.get_center(type='min_max')
+            r = 1.3 * self.get_bounding_radius(type='min_max')
+            circle = plt.Circle(circle_center, r, fill=False,
+                                linestyle='--', color='black')
+            ax.add_patch(circle)
+
+            # Get all the angles with the labels to be drawn
+            angles_dict = self.get_all_angles(returntype='dict')
+            angles_dict_labels = {key: ', '.join(
+                [f"{a[0]}{a[1]}" for a in value]) for key, value in angles_dict.items()}
+
+            # Draw hash marks on the circle
+            hash_length = 0.1*r  # Length of the hash marks
+            for theta in angles_dict_labels.keys():
+                for angle in [theta, -theta]:
+                    x_start = (r-hash_length) * np.cos(angle)
+                    y_start = (r-hash_length) * np.sin(angle)
+                    x_end = (r + hash_length) * np.cos(angle)
+                    y_end = (r + hash_length) * np.sin(angle)
+                    ax.plot([x_start, x_end], [y_start, y_end], color='black')
+
+                    # Add labels near the hash marks
+                    scaling = 3
+                    label_x = (r + scaling * hash_length) * np.cos(angle)
+                    label_y = (r + scaling * hash_length) * np.sin(angle)
+                    ax.text(label_x, label_y,
+                            angles_dict_labels[theta], ha='center', va='center')
+            # Always adjust the plot limits to show the full graph
+            scale_factor = 1.5
+            ax.set_xlim(circle_center[0] - scale_factor*r,
+                        circle_center[0] + scale_factor*r)
+            ax.set_ylim(circle_center[1] - scale_factor*r,
+                        circle_center[1] + scale_factor*r)
 
         return ax
 

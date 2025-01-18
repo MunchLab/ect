@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.4. Tutorial for exact ECT computation &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../_static/ECT_Logo_128x128.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Contributing to the ect Package" href="../contributing.html" />
+    <link rel="prev" title="3.3. ECT on Matisse’s “The Parakeet and the Mermaid”" href="Matisse/Matisse_ECT.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ect
+              <img src="../_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../embed_graph.html">2.1. Embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../embed_cw.html">2.2. Embedded CW complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.create_example_cw"><code class="docutils literal notranslate"><span class="pre">create_example_cw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ect_on_graphs.html">2.3. ECT on graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Constructing-the-embedded-graph">3.1.1. Constructing the embedded graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Computing-the-ECT-of-G">3.1.2. Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#SECT">3.1.3. SECT</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_CW_Complexes.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.4. Tutorial for exact ECT computation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#conclusion">4.3. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html"><span class="section-number">3. </span>Tutorials</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.4. </span>Tutorial for exact ECT computation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/Tutorial-ExactECT.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-for-exact-ECT-computation">
+<h1><span class="section-number">3.4. </span>Tutorial for exact ECT computation<a class="headerlink" href="#Tutorial-for-exact-ECT-computation" title="Link to this heading"></a></h1>
+<p><em>Warning: This is a work in progress. Proceed at your own risk.</em></p>
+<p>The goal of this section is so show available tools for exact computation of the ECT.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span><span class="n">create_example_graph</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Circle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+</pre></div>
+</div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class to find the angle normal to any pair of vertices in the graph, whether or not there is a connecting edge. Setting <code class="docutils literal notranslate"><span class="pre">angle_labels_circle=True</span></code> in the plotting command will try to draw these on the circle. Note that this doesn’t tend to do well for large inputs, but can be helpful for small examples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">create_example_graph</span><span class="p">(</span><span class="n">centered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">rescale_to_unit_disk</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">angle_labels_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Tutorial-ExactECT_3_1.png" src="../_images/notebooks_Tutorial-ExactECT_3_1.png" />
+</div>
+</div>
+<p>We can extract the information directly for use in computation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If return type is `matrix`, the function returns the matrix of angles and the labels of the angles in the order of the rows/columns in the matrix</span>
+<span class="n">M</span><span class="p">,</span><span class="n">Labels</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="n">returntype</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Labels</span><span class="p">)),</span> <span class="n">Labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Labels</span><span class="p">)),</span> <span class="n">Labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[        nan -0.78539816 -0.67474094 -0.46364761 -1.24904577 -0.78539816]
+ [ 2.35619449         nan -0.5880026   0.         -2.35619449 -0.78539816]
+ [ 2.46685171  2.55359005         nan  2.03444394  2.89661399  2.67794504]
+ [ 2.67794504  3.14159265 -1.10714872         nan -2.8198421  -2.35619449]
+ [ 1.89254688  0.78539816 -0.24497866  0.32175055         nan  0.        ]
+ [ 2.35619449  2.35619449 -0.46364761  0.78539816  3.14159265         nan]]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.colorbar.Colorbar at 0x16db99bb0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Tutorial-ExactECT_5_2.png" src="../_images/notebooks_Tutorial-ExactECT_5_2.png" />
+</div>
+</div>
+<p>This can also be returned as a dictionary, with keys given by angles (note the negative angle is not repeated), and value a list of the pairs of vertices associated. Note that in the case of more than one pair of vertices having the same normal angle, it is given as a list of all pairs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles_dict</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="n">returntype</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">)</span>
+<span class="n">angles_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{-0.7853981633974483: [(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;)],
+ -0.6747409422235526: [(&#39;A&#39;, &#39;C&#39;)],
+ -0.4636476090008061: [(&#39;A&#39;, &#39;D&#39;)],
+ -1.2490457723982544: [(&#39;A&#39;, &#39;E&#39;)],
+ -0.5880026035475675: [(&#39;B&#39;, &#39;C&#39;)],
+ 0.0: [(&#39;B&#39;, &#39;D&#39;), (&#39;E&#39;, &#39;F&#39;)],
+ -2.356194490192345: [(&#39;B&#39;, &#39;E&#39;), (&#39;D&#39;, &#39;F&#39;)],
+ 2.0344439357957027: [(&#39;C&#39;, &#39;D&#39;)],
+ 2.896613990462929: [(&#39;C&#39;, &#39;E&#39;)],
+ 2.677945044588987: [(&#39;C&#39;, &#39;F&#39;)],
+ -2.819842099193151: [(&#39;D&#39;, &#39;E&#39;)]}
+</pre></div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Matisse/Matisse_ECT.html" class="btn btn-neutral float-left" title="3.3. ECT on Matisse’s “The Parakeet and the Mermaid”" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="4. Contributing to the ect Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
