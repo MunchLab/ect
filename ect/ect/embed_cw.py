@@ -105,13 +105,13 @@ class EmbeddedCW(EmbeddedGraph):
 
         .. math ::
 
-            g_\omega(\sigma) = \max \{ g_\omega(v) \mid  v \in \sigma \}
+            g_\\omega(\\sigma) = \\max \\{ g_\\omega(v) \\mid  v \\in \\sigma \\}
 
-        in the direction of :math:`\\theta \in [0,2\pi]` .
+        in the direction of :math:`\\theta \\in [0,2\\pi]` .
 
         Parameters:
             theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.
             return_g (bool):
                 Whether to return the :math:`g(v)` values along with the sorted edges.
 
@@ -136,7 +136,7 @@ class EmbeddedCW(EmbeddedGraph):
 
         Parameters:
             theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.
             ax (matplotlib.axes.Axes):
                 The axes to plot the graph on. If None, a new figure is created.
             **kwargs:
@@ -171,7 +171,8 @@ class EmbeddedCW(EmbeddedGraph):
             fig = ax.get_figure()
 
         ax = self.plot_faces(0, facecolor='lightblue', ax=ax)
-        ax = super().plot(bounding_circle, color_nodes_theta, ax)
+        ax = super().plot(bounding_circle=bounding_circle,
+                          color_nodes_theta=color_nodes_theta, ax=ax)
         return ax
 
 

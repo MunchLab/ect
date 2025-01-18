@@ -406,7 +406,7 @@ class EmbeddedGraph(nx.Graph):
 
         .. math ::
 
-            g_\\omega(e) = \max \{ g_\\omega(v) \mid  v \in e \}
+            g_\\omega(e) = \max \{ g_\\omega(v) \\mid  v \in e \}
 
         in the direction of :math:`\\theta \in [0,2\\pi]` .
 

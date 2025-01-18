@@ -29,6 +29,9 @@ html:
 	sphinx-build -M html doc_source docs
 	rsync -a docs/html/ docs/
 	rm -r docs/html
+
+benchmark:
+	python benchmarks/run_benchmarks.py
 	
 all:
 	# Running autopep8

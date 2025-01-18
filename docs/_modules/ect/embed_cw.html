@@ -247,13 +247,13 @@
 
 <span class="sd">        .. math ::</span>
 
-<span class="sd">            g_\omega(\sigma) = \max \{ g_\omega(v) \mid  v \in \sigma \}</span>
+<span class="sd">            g_\\omega(\\sigma) = \\max \\{ g_\\omega(v) \\mid  v \\in \\sigma \\}</span>
 
-<span class="sd">        in the direction of :math:`\\theta \in [0,2\pi]` .</span>
+<span class="sd">        in the direction of :math:`\\theta \\in [0,2\\pi]` .</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            theta (float):</span>
-<span class="sd">                The angle in :math:`[0,2\pi]` for the direction to sort the edges.</span>
+<span class="sd">                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.</span>
 <span class="sd">            return_g (bool):</span>
 <span class="sd">                Whether to return the :math:`g(v)` values along with the sorted edges.</span>
 
@@ -281,7 +281,7 @@
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            theta (float):</span>
-<span class="sd">                The angle in :math:`[0,2\pi]` for the direction to sort the edges.</span>
+<span class="sd">                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.</span>
 <span class="sd">            ax (matplotlib.axes.Axes):</span>
 <span class="sd">                The axes to plot the graph on. If None, a new figure is created.</span>
 <span class="sd">            **kwargs:</span>
@@ -319,7 +319,8 @@
             <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
 
         <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_faces</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="p">,</span> <span class="n">color_nodes_theta</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="n">bounding_circle</span><span class="p">,</span>
+                          <span class="n">color_nodes_theta</span><span class="o">=</span><span class="n">color_nodes_theta</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 </div>
 

@@ -134,7 +134,7 @@
 <h1><span class="section-number">3.1. </span>Tutorial : ECT for embedded graphs<a class="headerlink" href="#Tutorial-:-ECT-for-embedded-graphs" title="Link to this heading"></a></h1>
 <p>This jupyter notebook will walk you through using the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package to compute the Euler characteristic transform of a 2D embedded graph. This tutorial assumes you already know what an ECT is; see <a class="reference external" href="https://arxiv.org/abs/2310.10395">this paper</a> for a more thorough treatment of details.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">create_example_graph</span>
@@ -149,7 +149,7 @@
 <h2><span class="section-number">3.1.1. </span>Constructing the embedded graph<a class="headerlink" href="#Constructing-the-embedded-graph" title="Link to this heading"></a></h2>
 <p>We assume our input is an undirected graph <span class="math notranslate nohighlight">\(G\)</span> with an embedding in 2D given by a map on the vertices <span class="math notranslate nohighlight">\(f: V(G) \to \mathbb{R}^2\)</span>. A graph can be constructed as follows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct an example graph</span>
@@ -177,7 +177,7 @@
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -194,7 +194,7 @@
 </div>
 <p>The coordinates of all vertices, given as a dictionary, can be accessed using the <code class="docutils literal notranslate"><span class="pre">coordinates</span></code> attribute.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">coordinates</span>
@@ -202,7 +202,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -212,7 +212,7 @@
 </div>
 <p>Because of the rotational aspect of the ECT, we often want our graph to be centered, so you can use the <code class="docutils literal notranslate"><span class="pre">set_mean_centered_coordinates</span></code> method shift the graph to have the average of the vertex coordinates be 0. Note that this does overwrite the coordinates of the points.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;min_max&#39;</span><span class="p">)</span>
@@ -226,11 +226,11 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;A&#39;: (-0.6246950475544243, -0.7808688094430304), &#39;B&#39;: (0.0, -0.15617376188860607), &#39;C&#39;: (0.6246950475544243, 0.7808688094430304), &#39;D&#39;: (0.0, 0.4685212856658182), &#39;E&#39;: (0.31234752377721214, -0.4685212856658182), &#39;F&#39;: (0.31234752377721214, 0.15617376188860607)}
+{&#39;A&#39;: (-2.0, -2.5), &#39;B&#39;: (0.0, -0.5), &#39;C&#39;: (2.0, 2.5), &#39;D&#39;: (0.0, 1.5), &#39;E&#39;: (1.0, -1.5), &#39;F&#39;: (1.0, 0.5)}
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -247,7 +247,7 @@
 </div>
 <p>To get a bounding radius we can use the <code class="docutils literal notranslate"><span class="pre">get_bounding_radius</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is actually getting the radius</span>
@@ -264,11 +264,11 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The radius of bounding circle centered at the origin is 3.4197140881138655
+The radius of bounding circle centered at the origin is 3.2015621187164243
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -285,7 +285,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 <p>We can also rescale our graph to have unit radius using <code class="docutils literal notranslate"><span class="pre">rescale_to_unit_disk</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">rescale_to_unit_disk</span><span class="p">(</span><span class="n">preserve_center</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -316,7 +316,7 @@ The radius of bounding circle centered at the origin is 1.0
 \[g_\omega(v) = \langle f(v), \omega\rangle.\]</div>
 <p>This is done in the code using the <code class="docutils literal notranslate"><span class="pre">g_omega</span></code> method as shown.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This gives the function value of the nodes as a dictionary</span>
@@ -325,21 +325,21 @@ The radius of bounding circle centered at the origin is 1.0
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;A&#39;: 0.11785113019775861,
- &#39;B&#39;: 0.11785113019775795,
- &#39;C&#39;: -0.5892556509887904,
- &#39;D&#39;: -1.2963624321753375,
- &#39;E&#39;: 1.532064692570853,
- &#39;F&#39;: 0.11785113019775761}
+{&#39;A&#39;: 0.11043152607484681,
+ &#39;B&#39;: 0.11043152607484658,
+ &#39;C&#39;: -0.11043152607484681,
+ &#39;D&#39;: -0.3312945782245397,
+ &#39;E&#39;: 0.5521576303742327,
+ &#39;F&#39;: 0.11043152607484646}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This input to the plotting function will color the nodes by function value.</span>
@@ -348,7 +348,7 @@ The radius of bounding circle centered at the origin is 1.0
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -364,7 +364,7 @@ The radius of bounding circle centered at the origin is 1.0
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here&#39;s an example in another direction.</span>
@@ -373,7 +373,7 @@ The radius of bounding circle centered at the origin is 1.0
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -399,7 +399,7 @@ The radius of bounding circle centered at the origin is 1.0
 \end{matrix}\end{split}\]</div>
 <p>When we initialize the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> object, we specify the number of directions in <span class="math notranslate nohighlight">\(\mathbb{S}^1\)</span> to use with <code class="docutils literal notranslate"><span class="pre">num_dir</span></code>, and the number of thresholds at which to compute the Euler characteristic by <code class="docutils literal notranslate"><span class="pre">num_thresh</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">num_thresh</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -425,7 +425,7 @@ Thresholds chosen are: None
 </div>
 <p>We can set the bounding radius as follows. Note that some methods will automatically set <code class="docutils literal notranslate"><span class="pre">bound_radius</span></code> to be the bounding radius of the input <code class="docutils literal notranslate"><span class="pre">G</span></code> if not already set. I’m choosing the radius to be a bit bigger than the bounding radius of <code class="docutils literal notranslate"><span class="pre">G</span></code> to make some better pictures.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span> <span class="o">*</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">())</span>
@@ -442,11 +442,11 @@ Thresholds chosen are: None
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Internally set radius is: 4.1036569057366385
-Thresholds chosen are: [-4.10365691 -3.67169302 -3.23972914 -2.80776525 -2.37580137 -1.94383748
- -1.5118736  -1.07990971 -0.64794583 -0.21598194  0.21598194  0.64794583
-  1.07990971  1.5118736   1.94383748  2.37580137  2.80776525  3.23972914
-  3.67169302  4.10365691]
+Internally set radius is: 1.2
+Thresholds chosen are: [-1.2        -1.07368421 -0.94736842 -0.82105263 -0.69473684 -0.56842105
+ -0.44210526 -0.31578947 -0.18947368 -0.06315789  0.06315789  0.18947368
+  0.31578947  0.44210526  0.56842105  0.69473684  0.82105263  0.94736842
+  1.07368421  1.2       ]
 </pre></div></div>
 </div>
 <p>If we want the Euler characteristic curve for a fixed direction, we use the <code class="docutils literal notranslate"><span class="pre">calculateECC</span></code> function. This outputs a list of integers where each corresponds to <span class="math notranslate nohighlight">\(\chi(f_\omega^{-1}(-\infty,a])\)</span> for the <span class="math notranslate nohighlight">\(a\)</span> values in <code class="docutils literal notranslate"><span class="pre">myect.threshes</span></code>.</p>
@@ -464,7 +464,7 @@ Thresholds chosen are: [-4.10365691 -3.67169302 -3.23972914 -2.80776525 -2.37580
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+array([0, 0, 0, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0])
 </pre></div></div>
 </div>
 <p>This can also be calculated on the fly and plotted using the <code class="docutils literal notranslate"><span class="pre">plotECC</span></code> method.</p>
