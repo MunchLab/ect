@@ -109,6 +109,12 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertTrue( np.nanmin(M) >= 0)
         self.assertTrue( np.nanmax(M) <= 2*np.pi)
 
+        # Check that all keys in dictionary have the same property 
+        M_dict = G.get_all_angles(returntype='dict', opposites = True)
+        keys = list(M_dict.keys())
+        self.assertTrue( all([0 <= x <= 2*np.pi for x in keys]))
+        
+
         #----
         # Check that the values the dictionary show up in pairs 
         # when asking for opposites

@@ -406,7 +406,7 @@ class EmbeddedGraph(nx.Graph):
 
         .. math ::
 
-            g_\\omega(e) = \max \{ g_\\omega(v) \\mid  v \in e \}
+            g_\\omega(e) = \\max \{ g_\\omega(v) \\mid  v \in e \}
 
         in the direction of :math:`\\theta \in [0,2\\pi]` .
 
@@ -503,8 +503,10 @@ class EmbeddedGraph(nx.Graph):
             angle_dict = {}
             for i in range(len(labels)):
                 for j in range(i+1, len(labels)):
+                    # Skip this edge if edges_only is True and the vertices are not connected
                     if edges_only and not self.has_edge(labels[i], labels[j]):
                         continue
+
                     if angle_matrix[i, j] in angle_dict.keys():
                         angle_dict[angle_matrix[i, j]].append(
                             (labels[i], labels[j]))
@@ -521,6 +523,15 @@ class EmbeddedGraph(nx.Graph):
                     if num_rounding_digits != None:
                         other_key = round(other_key, num_rounding_digits)
                     angle_dict[other_key] = angle_dict[key]
+
+            # Make sure all keys are in the range [0, 2pi]
+            angle_dict = {key % (2*np.pi): value for key,
+                          value in angle_dict.items()}
+
+            # Make sure all keys are rounded to the correct number of digits
+            if num_rounding_digits != None:
+                angle_dict = {round(key, num_rounding_digits)                              : value for key, value in angle_dict.items()}
+
             return angle_dict
 
     def plot(self,

@@ -598,7 +598,7 @@
 
 <span class="sd">        .. math ::</span>
 
-<span class="sd">            g_\\omega(e) = \max \{ g_\\omega(v) \\mid  v \in e \}</span>
+<span class="sd">            g_\\omega(e) = \\max \{ g_\\omega(v) \\mid  v \in e \}</span>
 
 <span class="sd">        in the direction of :math:`\\theta \in [0,2\\pi]` .</span>
 
@@ -701,8 +701,10 @@
             <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
+                    <span class="c1"># Skip this edge if edges_only is True and the vertices are not connected</span>
                     <span class="k">if</span> <span class="n">edges_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
                         <span class="k">continue</span>
+
                     <span class="k">if</span> <span class="n">angle_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                         <span class="n">angle_dict</span><span class="p">[</span><span class="n">angle_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                             <span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
@@ -719,6 +721,15 @@
                     <span class="k">if</span> <span class="n">num_rounding_digits</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">other_key</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">other_key</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="p">)</span>
                     <span class="n">angle_dict</span><span class="p">[</span><span class="n">other_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+            <span class="c1"># Make sure all keys are in the range [0, 2pi]</span>
+            <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span>
+                          <span class="n">value</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+            <span class="c1"># Make sure all keys are rounded to the correct number of digits</span>
+            <span class="k">if</span> <span class="n">num_rounding_digits</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{</span><span class="nb">round</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="p">)</span>                              <span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
             <span class="k">return</span> <span class="n">angle_dict</span></div>
 
 
