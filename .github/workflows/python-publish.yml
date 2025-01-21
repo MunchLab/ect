@@ -11,6 +11,10 @@ name: Upload Python Package
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'ect/**'
+      - 'setup.py'
+      - 'pyproject.toml'
 
 permissions:
   contents: read
