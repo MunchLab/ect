@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -7,21 +5,25 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.4. Tutorial for exact ECT computation &mdash; ect 0.1.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
 
   
     <link rel="shortcut icon" href="../_static/ECT_Logo_128x128.png"/>
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=59fadc99"></script>
-      <script src="../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=59fadc99"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -232,12 +234,12 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[[        nan -0.78539816 -0.67474094 -0.46364761 -1.24904577 -0.78539816]
- [ 2.35619449         nan -0.5880026   0.         -2.35619449 -0.78539816]
- [ 2.46685171  2.55359005         nan  2.03444394  2.89661399  2.67794504]
- [ 2.67794504  3.14159265 -1.10714872         nan -2.8198421  -2.35619449]
- [ 1.89254688  0.78539816 -0.24497866  0.32175055         nan  0.        ]
- [ 2.35619449  2.35619449 -0.46364761  0.78539816  3.14159265         nan]]
+[[       nan 5.49778714 5.60844436 5.8195377  5.03413953 5.49778714]
+ [2.35619449        nan 5.6951827  0.         3.92699082 5.49778714]
+ [2.46685171 2.55359005        nan 2.03444394 2.89661399 2.67794504]
+ [2.67794504 3.14159265 5.17603659        nan 3.46334321 3.92699082]
+ [1.89254688 0.78539816 6.03820664 0.32175055        nan 0.        ]
+ [2.35619449 2.35619449 5.8195377  0.78539816 3.14159265        nan]]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -246,7 +248,7 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.colorbar.Colorbar at 0x146ddb0e0&gt;
+&lt;matplotlib.colorbar.Colorbar at 0x16bf21110&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -272,16 +274,55 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{-0.7853981633974483: [(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;)],
- -0.6747409422235526: [(&#39;A&#39;, &#39;C&#39;)],
- -0.4636476090008061: [(&#39;A&#39;, &#39;D&#39;), (&#39;F&#39;, &#39;C&#39;)],
- -1.2490457723982544: [(&#39;A&#39;, &#39;E&#39;)],
- -0.5880026035475675: [(&#39;B&#39;, &#39;C&#39;)],
+{5.497787143782138: [(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;)],
+ 5.608444364956034: [(&#39;A&#39;, &#39;C&#39;)],
+ 5.81953769817878: [(&#39;A&#39;, &#39;D&#39;), (&#39;F&#39;, &#39;C&#39;)],
+ 5.034139534781332: [(&#39;A&#39;, &#39;E&#39;)],
+ 5.695182703632018: [(&#39;B&#39;, &#39;C&#39;)],
  0.0: [(&#39;B&#39;, &#39;D&#39;), (&#39;E&#39;, &#39;F&#39;)],
- -2.356194490192345: [(&#39;B&#39;, &#39;E&#39;), (&#39;D&#39;, &#39;F&#39;)],
+ 3.9269908169872414: [(&#39;B&#39;, &#39;E&#39;), (&#39;D&#39;, &#39;F&#39;)],
  2.0344439357957027: [(&#39;C&#39;, &#39;D&#39;)],
  2.896613990462929: [(&#39;C&#39;, &#39;E&#39;)],
- -2.819842099193151: [(&#39;D&#39;, &#39;E&#39;)]}
+ 3.4633432079864352: [(&#39;D&#39;, &#39;E&#39;)]}
+</pre></div></div>
+</div>
+<p>We can also get it to return the dictionary with rounded values, as well as to have it include all the opposite angles.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="n">returntype</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                 <span class="n">opposites</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">num_rounding_digits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{5.5: [(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;)],
+ 5.61: [(&#39;A&#39;, &#39;C&#39;)],
+ 5.82: [(&#39;A&#39;, &#39;D&#39;), (&#39;F&#39;, &#39;C&#39;)],
+ 5.03: [(&#39;A&#39;, &#39;E&#39;)],
+ 5.7: [(&#39;B&#39;, &#39;C&#39;)],
+ 0.0: [(&#39;B&#39;, &#39;D&#39;), (&#39;E&#39;, &#39;F&#39;)],
+ 3.93: [(&#39;B&#39;, &#39;E&#39;), (&#39;D&#39;, &#39;F&#39;)],
+ 2.03: [(&#39;C&#39;, &#39;D&#39;)],
+ 2.9: [(&#39;C&#39;, &#39;E&#39;)],
+ 3.46: [(&#39;D&#39;, &#39;E&#39;)],
+ 8.64: [(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;)],
+ 8.75: [(&#39;A&#39;, &#39;C&#39;)],
+ 8.96: [(&#39;A&#39;, &#39;D&#39;), (&#39;F&#39;, &#39;C&#39;)],
+ 8.17: [(&#39;A&#39;, &#39;E&#39;)],
+ 8.84: [(&#39;B&#39;, &#39;C&#39;)],
+ 3.14: [(&#39;B&#39;, &#39;D&#39;), (&#39;E&#39;, &#39;F&#39;)],
+ 7.07: [(&#39;B&#39;, &#39;E&#39;), (&#39;D&#39;, &#39;F&#39;)],
+ 5.17: [(&#39;C&#39;, &#39;D&#39;)],
+ 6.04: [(&#39;C&#39;, &#39;E&#39;)],
+ 6.6: [(&#39;D&#39;, &#39;E&#39;)]}
 </pre></div></div>
 </div>
 </section>

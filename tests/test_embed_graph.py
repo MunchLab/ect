@@ -103,6 +103,31 @@ class TestEmbeddedGraph(unittest.TestCase):
         M,L = G.get_all_angles(returntype = 'matrix')
         self.assertEqual( M.shape, (6, 6))
 
+        # Check that all entries in the matrix are between 0 and 2pi other 
+        # than the diagonal which should be nan
+
+        self.assertTrue( np.nanmin(M) >= 0)
+        self.assertTrue( np.nanmax(M) <= 2*np.pi)
+
+        #----
+        # Check that the values the dictionary show up in pairs 
+        # when asking for opposites
+        M_dict = G.get_all_angles(returntype='dict',opposites=True)
+        vals = list(M_dict.values())
+
+        # Convert to strings to make this hashable for the counter 
+        vals = [','.join([''.join(x) for x in A]) for A in vals]
+        vals
+
+        # Count all the instaces of each value. 
+        # These should come in pairs, so should always be 2. 
+        from collections import Counter
+        counter = Counter(vals)
+        for k,v in counter.items():
+            self.assertEqual(v, 2) 
+
+         
+
 
 
 if __name__ == '__main__':

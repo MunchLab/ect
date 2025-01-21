@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -7,20 +5,24 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2.1. Embedded graphs &mdash; ect 0.1.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
 
   
     <link rel="shortcut icon" href="_static/ECT_Logo_128x128.png"/>
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=59fadc99"></script>
-      <script src="_static/doctools.js?v=9a2dae69"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=59fadc99"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -472,13 +474,15 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.get_all_angles">
-<span class="sig-name descname"><span class="pre">get_all_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returntype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_rounding_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_all_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_all_angles" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_all_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returntype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_rounding_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opposites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.get_all_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.get_all_angles" title="Link to this definition"></a></dt>
 <dd><p>Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>returntype</strong> (<em>str</em>) – The return type of the angles. Options are ‘matrix’ or ‘dict’. If ‘matrix’, returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If ‘dict’, returns a dictionary of angles with <cite>dict[‘A’,’B’]</cite> returning the angle normal to the vector <span class="math notranslate nohighlight">\(\overrightarrow{AB}\)</span>.</p></li>
 <li><p><strong>rounding_digits</strong> (<em>int</em>) – The number of digits to round the angles in either the matrix or the keys of the dictionary.</p></li>
+<li><p><strong>edges_only</strong> (<em>bool</em>) – If True, the dictionary version only returns the angle of the normals to the lines between vertices sharing an edge. The matrix version is unchanged.</p></li>
+<li><p><strong>opposites</strong> (<em>bool</em>) – If True, will also include the opposite angle in the dictionary.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -492,13 +496,13 @@ If <code class="docutils literal notranslate"><span class="pre">return_g</span><
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ect.embed_graph.EmbeddedGraph.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_labels_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'origin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_labels_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_graph.html#EmbeddedGraph.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_graph.EmbeddedGraph.plot" title="Link to this definition"></a></dt>
 <dd><p>Function to plot the graph with the embedded coordinates.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">bounding_circle</span></code> is True, a bounding circle is drawn around the graph. This is centered at the center type defined by <code class="docutils literal notranslate"><span class="pre">bounding_center_type</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">color_nodes_theta</span></code> is not None, it should be given as a theta in <span class="math notranslate nohighlight">\([0,2\pi]\)</span>. Then the nodes are colored according to the <span class="math notranslate nohighlight">\(g(v)\)</span> values in the direction of theta.</p>
 <p>If with_labels is True, the nodes are labeled with their names.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">ax</span></code> is not None, the plot is drawn on the given axis.</p>
-<p>If <cite>angle_labels_circle</cite> is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph.</p>
+<p>If <cite>angle_labels_circle</cite> is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph. If additionally, <cite>edges_only</cite> is True, only hash marks for pairs of vertices sharing an edge are plotted.</p>
 </dd></dl>
 
 <dl class="py method">

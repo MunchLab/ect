@@ -450,7 +450,10 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def get_all_angles(self, returntype='matrix', num_rounding_digits=None):
+    def get_all_angles(self, returntype='matrix',
+                       num_rounding_digits=None,
+                       edges_only=False,
+                       opposites=False):
         """
         Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. 
 
@@ -459,6 +462,10 @@ class EmbeddedGraph(nx.Graph):
                 The return type of the angles. Options are 'matrix' or 'dict'. If 'matrix', returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If 'dict', returns a dictionary of angles with `dict['A','B']` returning the angle normal to the vector :math:`\\overrightarrow{AB}`.
             rounding_digits (int):
                 The number of digits to round the angles in either the matrix or the keys of the dictionary. 
+            edges_only (bool):
+                If True, the dictionary version only returns the angle of the normals to the lines between vertices sharing an edge. The matrix version is unchanged.
+            opposites (bool):
+                If True, will also include the opposite angle in the dictionary.
 
         Returns:
             list: A list of angles of the vertices in the graph.
@@ -484,6 +491,8 @@ class EmbeddedGraph(nx.Graph):
         np.fill_diagonal(Y_diff, np.nan)
 
         angle_matrix = np.arctan2(X_diff, -Y_diff)
+        # Puts all entries between 0 and 2pi
+        angle_matrix = angle_matrix % (2*np.pi)
         if num_rounding_digits != None:
             angle_matrix = np.round(angle_matrix, num_rounding_digits)
 
@@ -494,6 +503,8 @@ class EmbeddedGraph(nx.Graph):
             angle_dict = {}
             for i in range(len(labels)):
                 for j in range(i+1, len(labels)):
+                    if edges_only and not self.has_edge(labels[i], labels[j]):
+                        continue
                     if angle_matrix[i, j] in angle_dict.keys():
                         angle_dict[angle_matrix[i, j]].append(
                             (labels[i], labels[j]))
@@ -503,6 +514,13 @@ class EmbeddedGraph(nx.Graph):
                     else:
                         angle_dict[angle_matrix[i, j]] = [
                             (labels[i], labels[j])]
+
+            if opposites:
+                for key in list(angle_dict.keys()):
+                    other_key = key + np.pi % (2*np.pi)
+                    if num_rounding_digits != None:
+                        other_key = round(other_key, num_rounding_digits)
+                    angle_dict[other_key] = angle_dict[key]
             return angle_dict
 
     def plot(self,
@@ -512,6 +530,7 @@ class EmbeddedGraph(nx.Graph):
              ax=None,
              with_labels=True,
              angle_labels_circle=False,
+             edges_only=False,
              **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
@@ -524,7 +543,7 @@ class EmbeddedGraph(nx.Graph):
 
         If ``ax`` is not None, the plot is drawn on the given axis.
 
-        If `angle_labels_circle` is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph.
+        If `angle_labels_circle` is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph. If additionally, `edges_only` is True, only hash marks for pairs of vertices sharing an edge are plotted. 
 
         """
         if ax is None:
@@ -571,14 +590,15 @@ class EmbeddedGraph(nx.Graph):
             ax.add_patch(circle)
 
             # Get all the angles with the labels to be drawn
-            angles_dict = self.get_all_angles(returntype='dict')
+            angles_dict = self.get_all_angles(
+                returntype='dict', edges_only=edges_only)
             angles_dict_labels = {key: ', '.join(
                 [f"{a[0]}{a[1]}" for a in value]) for key, value in angles_dict.items()}
 
             # Draw hash marks on the circle
             hash_length = 0.1*r  # Length of the hash marks
             for theta in angles_dict_labels.keys():
-                for angle in [theta, theta + np.pi]:
+                for angle in [theta, (theta + np.pi) % (2*np.pi)]:
                     x_start = circle_center[0] + \
                         (r-hash_length) * np.cos(angle)
                     y_start = circle_center[1] + \
@@ -595,8 +615,9 @@ class EmbeddedGraph(nx.Graph):
                         (r + scaling * hash_length) * np.cos(angle)
                     label_y = circle_center[1] + \
                         (r + scaling * hash_length) * np.sin(angle)
+                    text_angle = angle if angle <= np.pi/2 or angle >= 3*np.pi/2 else angle - np.pi
                     ax.text(label_x, label_y,
-                            angles_dict_labels[theta], ha='center', va='center')
+                            angles_dict_labels[theta], ha='center', va='center', rotation=np.degrees(text_angle), fontsize=8)
             # Always adjust the plot limits to show the full graph
             scale_factor = 1.5
             ax.set_xlim(circle_center[0] - scale_factor*r,
