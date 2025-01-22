@@ -26,7 +26,7 @@ class EmbeddedGraph(nx.Graph):
 
     def add_node(self, vertex, x, y):
         """Add a vertex to the graph. 
-        If the vertex name is given as None, it will be assigned via the next_vert_name method.
+        If the vertex name is given as None, it will be assigned via the ``next_vert_name`` method.
 
         Parameters:
             vertex (hashable like int or str, or None) : The name of the vertex to add.
@@ -65,7 +65,7 @@ class EmbeddedGraph(nx.Graph):
         """ 
         Making a simple name generator for vertices. 
         If you're using integers, it will just up the count by one. 
-        Letters will be incremented in the alphabet. If you reach 'Z', it will return 'AA'. If you reach 'ZZ', it will return 'AAA', etc.
+        Letters will be incremented in the alphabet. If you reach ``Z``, it will return ``AA``. If you reach ``ZZ``, it will return ``AAA``, etc.
 
         Parameters:
             s (str or int): The name of the vertex to increment.
@@ -182,7 +182,7 @@ class EmbeddedGraph(nx.Graph):
         Method to find a bounding box of the vertex coordinates in the graph.
 
         Returns:
-            list: A list of tuples representing the minimum and maximum x and y coordinates.
+            list: A list of tuples representing the minimum and maximum :math:`x` and :math:`y` coordinates.
 
         """
         if not self.coordinates:
@@ -193,13 +193,13 @@ class EmbeddedGraph(nx.Graph):
 
     def get_center(self, type='origin'):
         """
-        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (`mean`), the center of the bounding box (`min_max`), or the origin (`origin`).
+        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (``mean``), the center of the bounding box (``min_max``), or the origin (``origin``).
 
         Parameters:
-            type (str): The type of center to calculate. Options are 'mean', 'min_max', or 'origin'.
+            type (str): The type of center to calculate. Options are ``mean``, ``min_max``, or ``origin``.
 
         Returns:
-            numpy.ndarray: The (x, y) coordinates of the center.
+            numpy.ndarray: The :math:`(x, y)` coordinates of the center.
         """
         if not self.coordinates:
             return np.array([0.0, 0.0])
@@ -220,7 +220,7 @@ class EmbeddedGraph(nx.Graph):
         Method to find the radius of the bounding circle of the vertex coordinates in the graph. 
 
         Parameters:
-            type (str): The type of center to calculate the radius relative to. Options are 'mean', 'min_max', or 'origin'.
+            type (str): The type of center to calculate the radius relative to. Options are ``mean``, ``min_max``, or ``origin``.
 
         Returns:
             float: The radius of the bounding circle.
@@ -242,8 +242,8 @@ class EmbeddedGraph(nx.Graph):
         """
         Method to find the centered coordinates of the vertices in the graph.
 
-        If type is 'min_max', the coordinates are centered at the mean of the min and max values of the x and y coordinates.
-        If type is 'mean', the coordinates are centered at the mean of the x and y coordinates.
+        If type is ``min_max``, the coordinates are centered at the mean of the min and max values of the :math:`x` and :math:`y` coordinates.
+        If type is ``mean``, the coordinates are centered at the mean of the :math:`x` and :math:`y` coordinates.
         """
 
         if not self.coordinates:
@@ -261,7 +261,7 @@ class EmbeddedGraph(nx.Graph):
 
     def get_scaled_coordinates(self, radius=1):
         """
-        Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`.
+        Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by ``radius``.
 
         Parameters:
             radius (float):
@@ -284,11 +284,48 @@ class EmbeddedGraph(nx.Graph):
 
     def set_scaled_coordinates(self, radius=1):
         """
-        Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`. Warning: This overwrites the original coordinates
+        Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by ``radius``. Warning: This overwrites the original coordinates
 
         """
 
         self.coordinates = self.get_scaled_coordinates(radius)
+
+    def rescale_to_unit_disk(self, preserve_center=True, center_type='origin'):
+        """
+        Rescales the graph coordinates to fit within a radius 1 disk.
+
+        Parameters:
+            preserve_center (bool): If True, maintains the current center point of type ``center_type``.
+                                    If False, centers the graph at (0, 0).
+
+        Returns:
+            self: Returns the instance for method chaining.
+
+        Raises:
+            ValueError: If the graph has no coordinates or all coordinates are identical.
+        """
+        if not self.coordinates:
+            raise ValueError("Graph has no coordinates to rescale.")
+
+        center = self.get_center(center_type)
+        coords = np.array(list(self.coordinates.values()))
+
+        coords_centered = coords - center
+
+        max_distance = np.max(np.linalg.norm(coords_centered, axis=1))
+
+        if np.isclose(max_distance, 0):
+            raise ValueError("All coordinates are identical. Cannot rescale.")
+
+        scale_factor = 1 / max_distance
+
+        new_coords = (coords_centered * scale_factor) + \
+            (center if preserve_center else 0)
+
+        for vertex, new_coord in zip(self.coordinates.keys(), new_coords):
+            self.coordinates[vertex] = tuple(new_coord)
+
+        return self
 
     def get_PCA_coordinates(self):
         """
@@ -317,9 +354,9 @@ class EmbeddedGraph(nx.Graph):
     def set_PCA_coordinates(self, center_type=None, scale_radius=None):
         """
         Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment. 
-        If you also want to center at zero, the options for `center_type` are `mean` or `min_max`.
-        Set `scale_radius` to a value to scale to a specific radius.
-        Warning: This overwrites the original coordinates
+        If you also want to center at zero, the options for ``center_type`` are ``mean`` or ``min_max``.
+        Set ``scale_radius`` to a value to scale to a specific radius.
+        Warning: This overwrites the original coordinates.
         """
         self.coordinates = self.get_PCA_coordinates()
 
@@ -328,6 +365,10 @@ class EmbeddedGraph(nx.Graph):
 
         if scale_radius:
             self.set_scaled_coordinates(radius=scale_radius)
+
+    # ================
+    # Functions for computing the function g(v) for vertices and edges
+    # ================
 
     def g_omega(self, theta):
         """
@@ -406,9 +447,9 @@ class EmbeddedGraph(nx.Graph):
 
         .. math ::
 
-            g_\\omega(e) = \\max \{ g_\\omega(v) \\mid  v \in e \}
+            g_\\omega(e) = \\max \\{ g_\\omega(v) \\mid  v \in e \\}
 
-        in the direction of :math:`\\theta \in [0,2\\pi]` .
+        in the direction of :math:`\\theta \\in [0,2\\pi]` .
 
         Parameters:
             theta (float):
@@ -433,7 +474,7 @@ class EmbeddedGraph(nx.Graph):
 
     def lower_edges(self, v, omega):
         """
-        Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).
+        Function to compute the number of lower edges of a vertex `v` for a specific direction (included by the use of sorted `v_list`).
 
         Parameters:
             v (str):
@@ -450,26 +491,20 @@ class EmbeddedGraph(nx.Graph):
         Lg = [np.dot(self.coordinates[v], omega) for v in L]
         return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
-    def get_all_angles(self, returntype='matrix',
-                       num_rounding_digits=None,
-                       edges_only=False,
-                       opposites=False):
+    # ================
+    # Functions for getting the angles where vertices switch order
+    # ================
+
+    def get_all_normals_matrix(self, num_rounding_digits=None):
         """
-        Function to get all angles of normals to any line between veritces in the graph. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. 
+        Function to get all angles of normals to any line between vertices in the graph, returned as a matrix. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. 
 
         Parameters:
-            returntype (str): 
-                The return type of the angles. Options are 'matrix' or 'dict'. If 'matrix', returns a tuple consissting of a matrix of angles and the sorted label list for the rows/columns. If 'dict', returns a dictionary of angles with `dict['A','B']` returning the angle normal to the vector :math:`\\overrightarrow{AB}`.
-            rounding_digits (int):
-                The number of digits to round the angles in either the matrix or the keys of the dictionary. 
-            edges_only (bool):
-                If True, the dictionary version only returns the angle of the normals to the lines between vertices sharing an edge. The matrix version is unchanged.
-            opposites (bool):
-                If True, will also include the opposite angle in the dictionary.
+            num_rounding_digits (int):
+                The number of digits to round the angles in the matrix. If `None`, no rounding is done. 
 
         Returns:
-            list: A list of angles of the vertices in the graph.
-
+            A tuple consissting of a matrix of angles, and the sorted label list for the rows/columns.
         """
         P = np.array(list(self.coordinates.values()))
         labels = list(self.coordinates.keys())
@@ -496,66 +531,83 @@ class EmbeddedGraph(nx.Graph):
         if num_rounding_digits != None:
             angle_matrix = np.round(angle_matrix, num_rounding_digits)
 
-        if returntype == 'matrix':
-            return angle_matrix, labels
+        return angle_matrix, labels
 
-        elif returntype == 'dict':
-            angle_dict = {}
-            for i in range(len(labels)):
-                for j in range(i+1, len(labels)):
-                    # Skip this edge if edges_only is True and the vertices are not connected
-                    if edges_only and not self.has_edge(labels[i], labels[j]):
-                        continue
+    def get_normals_dict(self,
+                         num_rounding_digits=None,
+                         edges_only=False,
+                         opposites=False):
+        """
+        Function to get all angles of normals to any line between vertices in the graph, returned as a dictionary of angles with ``dict[theta]`` returning the list of pairs of vertices with vector normal to :math:`\\overrightarrow{AB}` at angle ``theta``. Note this includes both adjacent vertices and non-adjacent unless ``edges_only`` is set to ``True``. This function is useful for knowing the angle of the circle where two vertices switch in order, especially when we want to sort the events around the circle. All angles are rounded to the number of digits given by ``num_rounding_digits``, and are returned in the range :math:`[0, 2\\pi]` .
 
-                    if angle_matrix[i, j] in angle_dict.keys():
-                        angle_dict[angle_matrix[i, j]].append(
-                            (labels[i], labels[j]))
-                    elif angle_matrix[j, i] in angle_dict.keys():
-                        angle_dict[angle_matrix[j, i]].append(
-                            (labels[j], labels[i]))
-                    else:
-                        angle_dict[angle_matrix[i, j]] = [
-                            (labels[i], labels[j])]
+        Parameters:
+            num_rounding_digits (int):
+                The number of digits to round the angles in the dictionary. If None, no rounding is done.
+            edges_only (bool):
+                If True, the dictionary version only returns the angle of the normals to the lines between vertices sharing an edge. The matrix version is unchanged.
+            opposites (bool):
+                If True, will also include both :math:`\\theta` and :math:`\\theta + \\pi` in the dictionary keys.
 
-            if opposites:
-                for key in list(angle_dict.keys()):
-                    other_key = key + np.pi % (2*np.pi)
-                    if num_rounding_digits != None:
-                        other_key = round(other_key, num_rounding_digits)
-                    angle_dict[other_key] = angle_dict[key]
+        Returns:
+            dict: A dictionary of angles with `dict[theta]` returning the list of pairs of vertices with vector normal to :math:`\\overrightarrow\\{AB\\}` at angle `theta`, e.g. ``dict[theta] = [('A','B'), ('C', 'D')]``.
+        """
 
-            # Make sure all keys are in the range [0, 2pi]
-            angle_dict = {key % (2*np.pi): value for key,
-                          value in angle_dict.items()}
+        angle_matrix, labels = self.get_all_normals_matrix(
+            num_rounding_digits=num_rounding_digits)
 
-            # Make sure all keys are rounded to the correct number of digits
-            if num_rounding_digits != None:
-                angle_dict = {round(key, num_rounding_digits)                              : value for key, value in angle_dict.items()}
+        angle_dict = {}
+        for i in range(len(labels)):
+            for j in range(i+1, len(labels)):
+                # Skip this edge if edges_only is True and the vertices are not connected
+                if edges_only and not self.has_edge(labels[i], labels[j]):
+                    continue
 
-            return angle_dict
+                if angle_matrix[i, j] in angle_dict.keys():
+                    angle_dict[angle_matrix[i, j]].append(
+                        (labels[i], labels[j]))
+                elif angle_matrix[j, i] in angle_dict.keys():
+                    angle_dict[angle_matrix[j, i]].append(
+                        (labels[j], labels[i]))
+                else:
+                    angle_dict[angle_matrix[i, j]] = [
+                        (labels[i], labels[j])]
 
+        if opposites:
+            for key in list(angle_dict.keys()):
+                other_key = key + np.pi % (2*np.pi)
+                if num_rounding_digits != None:
+                    other_key = round(other_key, num_rounding_digits)
+                angle_dict[other_key] = angle_dict[key]
+
+        # Make sure all keys are in the range [0, 2pi]
+        angle_dict = {key % (2*np.pi): value for key,
+                      value in angle_dict.items()}
+
+        # Make sure all keys are rounded to the correct number of digits
+        if num_rounding_digits != None:
+            angle_dict = {round(key, num_rounding_digits)                          : value for key, value in angle_dict.items()}
+
+        return angle_dict
+
+    # ================
+    # Plotting functions
+    # ================
     def plot(self,
              bounding_circle=False,
-             bounding_center_type='origin',
              color_nodes_theta=None,
              ax=None,
              with_labels=True,
-             angle_labels_circle=False,
-             edges_only=False,
              **kwargs):
         """
         Function to plot the graph with the embedded coordinates.
 
-        If ``bounding_circle`` is True, a bounding circle is drawn around the graph. This is centered at the center type defined by ``bounding_center_type``.
+        If ``bounding_circle`` is True, a bounding circle is drawn around the graph.
 
-        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.
+        If ``color_nodes_theta`` is not ``None``, it should be given as a :math:`theta` in :math:`[0,2\\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of :math:`\\theta`.
 
-        If with_labels is True, the nodes are labeled with their names.
+        If ``with_labels`` is ``True``, the nodes are labeled with their names.
 
-        If ``ax`` is not None, the plot is drawn on the given axis.
-
-        If `angle_labels_circle` is True, the angles of the normals to the lines between vertices are plotted on a slightly larger circle circle around the graph. If additionally, `edges_only` is True, only hash marks for pairs of vertices sharing an edge are plotted. 
-
+        If ``ax`` is not ``None``, the plot is drawn on the given axis.
         """
         if ax is None:
             fig, ax = plt.subplots()
@@ -583,98 +635,95 @@ class EmbeddedGraph(nx.Graph):
                        labelleft=True, labelbottom=True)
 
         if bounding_circle:
-            circle_center = self.get_center(bounding_center_type)
-            r = self.get_bounding_radius(type=bounding_center_type)
-            circle = plt.Circle(circle_center, r, fill=False,
-                                linestyle='--', color='r')
-            ax.add_patch(circle)
+            self.plot_bounding_circle(ax=ax)
 
-            # Always adjust the plot limits to show the full graph
-            ax.set_xlim(circle_center[0] - r, circle_center[0] + r)
-            ax.set_ylim(circle_center[1] - r, circle_center[1] + r)
-
-        if angle_labels_circle:
-            circle_center = self.get_center(type='min_max')
-            r = 1.3 * self.get_bounding_radius(type='min_max')
-            circle = plt.Circle(circle_center, r, fill=False,
-                                linestyle='--', color='black')
-            ax.add_patch(circle)
-
-            # Get all the angles with the labels to be drawn
-            angles_dict = self.get_all_angles(
-                returntype='dict', edges_only=edges_only)
-            angles_dict_labels = {key: ', '.join(
-                [f"{a[0]}{a[1]}" for a in value]) for key, value in angles_dict.items()}
-
-            # Draw hash marks on the circle
-            hash_length = 0.1*r  # Length of the hash marks
-            for theta in angles_dict_labels.keys():
-                for angle in [theta, (theta + np.pi) % (2*np.pi)]:
-                    x_start = circle_center[0] + \
-                        (r-hash_length) * np.cos(angle)
-                    y_start = circle_center[1] + \
-                        (r-hash_length) * np.sin(angle)
-                    x_end = circle_center[0] + \
-                        (r + hash_length) * np.cos(angle)
-                    y_end = circle_center[1] + \
-                        (r + hash_length) * np.sin(angle)
-                    ax.plot([x_start, x_end], [y_start, y_end], color='black')
-
-                    # Add labels near the hash marks
-                    scaling = 3
-                    label_x = circle_center[0] + \
-                        (r + scaling * hash_length) * np.cos(angle)
-                    label_y = circle_center[1] + \
-                        (r + scaling * hash_length) * np.sin(angle)
-                    text_angle = angle if angle <= np.pi/2 or angle >= 3*np.pi/2 else angle - np.pi
-                    ax.text(label_x, label_y,
-                            angles_dict_labels[theta], ha='center', va='center', rotation=np.degrees(text_angle), fontsize=8)
-            # Always adjust the plot limits to show the full graph
-            scale_factor = 1.5
-            ax.set_xlim(circle_center[0] - scale_factor*r,
-                        circle_center[0] + scale_factor*r)
-            ax.set_ylim(circle_center[1] - scale_factor*r,
-                        circle_center[1] + scale_factor*r)
         ax.set_aspect('equal', 'box')
 
         return ax
 
-    def rescale_to_unit_disk(self, preserve_center=True, center_type='origin'):
+    def plot_bounding_circle(self, ax=None, bounding_center_type='origin', **kwargs):
         """
-        Rescales the graph coordinates to fit within a radius 1 disk.
+        Function to plot the bounding circle of the graph. 
 
-        Parameters:
-            preserve_center (bool): If True, maintains the current center point of type ``center_type``.
-                                    If False, centers the graph at (0, 0).
+        If ``ax`` is not None, the plot is drawn on the given axis.
 
-        Returns:
-            self: Returns the instance for method chaining.
+        If ``bounding_center_type`` is 'origin', the bounding circle is centered at the origin. If it is ``min_max``, the bounding circle is centered at the mean of the min and max values of the :math:`x` and :math`y` coordinates.
 
-        Raises:
-            ValueError: If the graph has no coordinates or all coordinates are identical.
+
         """
-        if not self.coordinates:
-            raise ValueError("Graph has no coordinates to rescale.")
+        if ax is None:
+            fig, ax = plt.subplots()
+        else:
+            fig = ax.get_figure()
 
-        center = self.get_center(center_type)
-        coords = np.array(list(self.coordinates.values()))
+        circle_center = self.get_center(bounding_center_type)
+        r = self.get_bounding_radius(type=bounding_center_type)
+        circle = plt.Circle(circle_center, r, fill=False,
+                            linestyle='--', color='r')
+        ax.add_patch(circle)
 
-        coords_centered = coords - center
+        # Always adjust the plot limits to show the full graph
+        ax.set_xlim(circle_center[0] - r, circle_center[0] + r)
+        ax.set_ylim(circle_center[1] - r, circle_center[1] + r)
 
-        max_distance = np.max(np.linalg.norm(coords_centered, axis=1))
+    def plot_angle_circle(self, ax=None, edges_only=False):
+        """
+        Function to plot the circle of angles for the graph. 
 
-        if np.isclose(max_distance, 0):
-            raise ValueError("All coordinates are identical. Cannot rescale.")
+        Example Usage: 
 
-        scale_factor = 1 / max_distance
+        .. code-block:: python
 
-        new_coords = (coords_centered * scale_factor) + \
-            (center if preserve_center else 0)
+            fig, ax = plt.subplots()
+            G.plot(ax = ax)
+            G.plot_angle_circle(ax = ax)
 
-        for vertex, new_coord in zip(self.coordinates.keys(), new_coords):
-            self.coordinates[vertex] = tuple(new_coord)
+        """
+        if ax is None:
+            fig, ax = plt.subplots()
+        else:
+            fig = ax.get_figure()
 
-        return self
+        circle_center = self.get_center(type='min_max')
+        r = 1.3 * self.get_bounding_radius(type='min_max')
+        circle = plt.Circle(circle_center, r, fill=False,
+                            linestyle='--', color='black')
+        ax.add_patch(circle)
+
+        # Get all the angles with the labels to be drawn
+        angles_dict = self.get_normals_dict(
+            edges_only=edges_only, opposites=True)
+        angles_dict_labels = {key: ', '.join(
+            [f"{a[0]}{a[1]}" for a in value]) for key, value in angles_dict.items()}
+
+        # Draw hash marks on the circle
+        hash_length = 0.1*r  # Length of the hash marks
+        for angle in angles_dict_labels.keys():
+            x_start = circle_center[0] + \
+                (r-hash_length) * np.cos(angle)
+            y_start = circle_center[1] + \
+                (r-hash_length) * np.sin(angle)
+            x_end = circle_center[0] + \
+                (r + hash_length) * np.cos(angle)
+            y_end = circle_center[1] + \
+                (r + hash_length) * np.sin(angle)
+            ax.plot([x_start, x_end], [y_start, y_end], color='black')
+
+            # Add labels near the hash marks
+            scaling = 3
+            label_x = circle_center[0] + \
+                (r + scaling * hash_length) * np.cos(angle)
+            label_y = circle_center[1] + \
+                (r + scaling * hash_length) * np.sin(angle)
+            text_angle = angle if angle <= np.pi/2 or angle >= 3*np.pi/2 else angle - np.pi
+            ax.text(label_x, label_y,
+                    angles_dict_labels[angle], ha='center', va='center', rotation=np.degrees(text_angle), fontsize=8)
+        # Always adjust the plot limits to show the full graph
+        scale_factor = 1.5
+        ax.set_xlim(circle_center[0] - scale_factor*r,
+                    circle_center[0] + scale_factor*r)
+        ax.set_ylim(circle_center[1] - scale_factor*r,
+                    circle_center[1] + scale_factor*r)
 
 
 def create_example_graph(centered=True, center_type='min_max'):

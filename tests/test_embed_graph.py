@@ -100,7 +100,7 @@ class TestEmbeddedGraph(unittest.TestCase):
     def test_get_angles(self):
         # Make sure we can get the angles of the vertices
         G = embed_graph.create_example_graph(centered=False)
-        M,L = G.get_all_angles(returntype = 'matrix')
+        M,L = G.get_all_normals_matrix()
         self.assertEqual( M.shape, (6, 6))
 
         # Check that all entries in the matrix are between 0 and 2pi other 
@@ -110,7 +110,7 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertTrue( np.nanmax(M) <= 2*np.pi)
 
         # Check that all keys in dictionary have the same property 
-        M_dict = G.get_all_angles(returntype='dict', opposites = True)
+        M_dict = G.get_normals_dict(opposites = True)
         keys = list(M_dict.keys())
         self.assertTrue( all([0 <= x <= 2*np.pi for x in keys]))
         
@@ -118,7 +118,7 @@ class TestEmbeddedGraph(unittest.TestCase):
         #----
         # Check that the values the dictionary show up in pairs 
         # when asking for opposites
-        M_dict = G.get_all_angles(returntype='dict',opposites=True)
+        M_dict = G.get_normals_dict(opposites=True)
         vals = list(M_dict.values())
 
         # Convert to strings to make this hashable for the counter 
