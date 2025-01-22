@@ -97,6 +97,43 @@ class TestEmbeddedGraph(unittest.TestCase):
         self.assertEqual( len(G.nodes), num_verts + verts_to_add)
         self.assertEqual( len(G.edges), num_edges + verts_to_add)
 
+    def test_get_angles(self):
+        # Make sure we can get the angles of the vertices
+        G = embed_graph.create_example_graph(centered=False)
+        M,L = G.get_all_normals_matrix()
+        self.assertEqual( M.shape, (6, 6))
+
+        # Check that all entries in the matrix are between 0 and 2pi other 
+        # than the diagonal which should be nan
+
+        self.assertTrue( np.nanmin(M) >= 0)
+        self.assertTrue( np.nanmax(M) <= 2*np.pi)
+
+        # Check that all keys in dictionary have the same property 
+        M_dict = G.get_normals_dict(opposites = True)
+        keys = list(M_dict.keys())
+        self.assertTrue( all([0 <= x <= 2*np.pi for x in keys]))
+        
+
+        #----
+        # Check that the values the dictionary show up in pairs 
+        # when asking for opposites
+        M_dict = G.get_normals_dict(opposites=True)
+        vals = list(M_dict.values())
+
+        # Convert to strings to make this hashable for the counter 
+        vals = [','.join([''.join(x) for x in A]) for A in vals]
+        vals
+
+        # Count all the instaces of each value. 
+        # These should come in pairs, so should always be 2. 
+        from collections import Counter
+        counter = Counter(vals)
+        for k,v in counter.items():
+            self.assertEqual(v, 2) 
+
+         
+
 
 
 if __name__ == '__main__':

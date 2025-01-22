@@ -86,6 +86,7 @@
 <li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
@@ -133,7 +134,7 @@
 <h1><span class="section-number">3.2. </span>Tutorial: ECT for CW complexes<a class="headerlink" href="#Tutorial:-ECT-for-CW-complexes" title="Link to this heading"></a></h1>
 <p>This tutorial walks you through how to build a CW complex with the <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> class, and then use the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class to compute the Euler characteristic transform</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span> <span class="n">create_example_cw</span>
@@ -143,7 +144,7 @@
 </div>
 <p>The CW complex is the same as the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class with that additional ability to add faces. Faces are added by passing in a list of vertices. Note that we are generally assuming that these vertices follow around an empty region (as in, no other vertex is in the interior) in the graph bounded by the vertices, and further that all edges are already included in the graph. However the class does not yet check for this so you need to be careful!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedCW</span><span class="p">()</span>
@@ -157,13 +158,13 @@
 
 <span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
 
-<span class="n">K</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">(</span><span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;min_max&#39;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">set_centered_coordinates</span><span class="p">()</span>
 <span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -180,16 +181,16 @@
 </div>
 <p>Just to have something a bit more interesting, let’s make a more complicated example that’s built into the class.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">create_example_cw</span><span class="p">(</span><span class="n">centered</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">K</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bounding_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -206,7 +207,7 @@
 </div>
 <p>We can also color the nodes based on a function value for a given direction.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">7</span>
@@ -215,7 +216,7 @@
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -232,7 +233,7 @@
 </div>
 <p>The function value for any direction can be computed and returned for vertices, edges, or faces. The function value for an edge or face <span class="math notranslate nohighlight">\(\sigma\)</span> is given by <span class="math notranslate nohighlight">\(g_\omega(\sigma) = \max_{v \in \sigma}\{f(v)\}\)</span>. Here we show the function values for the triangle <code class="docutils literal notranslate"><span class="pre">KDC</span></code> and its faces.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vert_g</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">g_omega</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
@@ -266,7 +267,7 @@ C: 2.89
 </div>
 <p>As with the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class, we can initialize the <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class by deciding how many directions and how many thresholds to use.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
@@ -275,7 +276,7 @@ C: 2.89
 </div>
 <p>Then we can compute the ECC for a single direction. In this case, the <span class="math notranslate nohighlight">\(x\)</span>-axis will be computed for the <code class="docutils literal notranslate"><span class="pre">num_thresh=80</span></code> stopping points in the interval <span class="math notranslate nohighlight">\([-1.2r,1.2r]\)</span> where <span class="math notranslate nohighlight">\(r\)</span> is the minimum bounding radius for the input complex.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
@@ -284,7 +285,7 @@ C: 2.89
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -298,7 +299,7 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 </div>
 <p>But of course it’s easier to see this in a plot. This command calculates the ECC and immediately plots it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECC</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
@@ -314,7 +315,7 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 </div>
 <p>Similarly, we can compute the ECT and return the matrix. We make sure to internally set the bounding radius to use to control the <span class="math notranslate nohighlight">\(y\)</span> axis of the plot.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
@@ -323,7 +324,7 @@ array([ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -339,7 +340,7 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
 </div>
 <p>Once it’s been computed, we can use the internal plotting function to take a look.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotECT</span><span class="p">()</span>
@@ -364,7 +365,7 @@ array([[ 0.,  0.,  0., ..., -1., -1., -1.],
 </div>
 <p>Similarly we can take a look at the SECT. This one was computed when we asked to compute the ECT.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">plotSECT</span><span class="p">()</span>

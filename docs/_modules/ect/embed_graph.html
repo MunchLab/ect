@@ -80,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../notebooks/Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">4. Contributing</a><ul>
@@ -158,7 +159,7 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.add_node">[docs]</a>
     <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a vertex to the graph. </span>
-<span class="sd">        If the vertex name is given as None, it will be assigned via the next_vert_name method.</span>
+<span class="sd">        If the vertex name is given as None, it will be assigned via the ``next_vert_name`` method.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            vertex (hashable like int or str, or None) : The name of the vertex to add.</span>
@@ -203,7 +204,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Making a simple name generator for vertices. </span>
 <span class="sd">        If you&#39;re using integers, it will just up the count by one. </span>
-<span class="sd">        Letters will be incremented in the alphabet. If you reach &#39;Z&#39;, it will return &#39;AA&#39;. If you reach &#39;ZZ&#39;, it will return &#39;AAA&#39;, etc.</span>
+<span class="sd">        Letters will be incremented in the alphabet. If you reach ``Z``, it will return ``AA``. If you reach ``ZZ``, it will return ``AAA``, etc.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            s (str or int): The name of the vertex to increment.</span>
@@ -335,7 +336,7 @@
 <span class="sd">        Method to find a bounding box of the vertex coordinates in the graph.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of tuples representing the minimum and maximum x and y coordinates.</span>
+<span class="sd">            list: A list of tuples representing the minimum and maximum :math:`x` and :math:`y` coordinates.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
@@ -349,13 +350,13 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_center">[docs]</a>
     <span class="k">def</span> <span class="nf">get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (`mean`), the center of the bounding box (`min_max`), or the origin (`origin`).</span>
+<span class="sd">        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (``mean``), the center of the bounding box (``min_max``), or the origin (``origin``).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            type (str): The type of center to calculate. Options are &#39;mean&#39;, &#39;min_max&#39;, or &#39;origin&#39;.</span>
+<span class="sd">            type (str): The type of center to calculate. Options are ``mean``, ``min_max``, or ``origin``.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            numpy.ndarray: The (x, y) coordinates of the center.</span>
+<span class="sd">            numpy.ndarray: The :math:`(x, y)` coordinates of the center.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
@@ -379,7 +380,7 @@
 <span class="sd">        Method to find the radius of the bounding circle of the vertex coordinates in the graph. </span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            type (str): The type of center to calculate the radius relative to. Options are &#39;mean&#39;, &#39;min_max&#39;, or &#39;origin&#39;.</span>
+<span class="sd">            type (str): The type of center to calculate the radius relative to. Options are ``mean``, ``min_max``, or ``origin``.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: The radius of the bounding circle.</span>
@@ -404,8 +405,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to find the centered coordinates of the vertices in the graph.</span>
 
-<span class="sd">        If type is &#39;min_max&#39;, the coordinates are centered at the mean of the min and max values of the x and y coordinates.</span>
-<span class="sd">        If type is &#39;mean&#39;, the coordinates are centered at the mean of the x and y coordinates.</span>
+<span class="sd">        If type is ``min_max``, the coordinates are centered at the mean of the min and max values of the :math:`x` and :math:`y` coordinates.</span>
+<span class="sd">        If type is ``mean``, the coordinates are centered at the mean of the :math:`x` and :math:`y` coordinates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
@@ -429,7 +430,7 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_scaled_coordinates">[docs]</a>
     <span class="k">def</span> <span class="nf">get_scaled_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`.</span>
+<span class="sd">        Method to find the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by ``radius``.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            radius (float):</span>
@@ -455,11 +456,51 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.set_scaled_coordinates">[docs]</a>
     <span class="k">def</span> <span class="nf">set_scaled_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by `radius`. Warning: This overwrites the original coordinates</span>
+<span class="sd">        Method to set the scaled coordinates of the vertices in the graph to fit in the disk centered at 0 with radius given by ``radius``. Warning: This overwrites the original coordinates</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_scaled_coordinates</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EmbeddedGraph.rescale_to_unit_disk">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk">[docs]</a>
+    <span class="k">def</span> <span class="nf">rescale_to_unit_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preserve_center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rescales the graph coordinates to fit within a radius 1 disk.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            preserve_center (bool): If True, maintains the current center point of type ``center_type``.</span>
+<span class="sd">                                    If False, centers the graph at (0, 0).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self: Returns the instance for method chaining.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the graph has no coordinates or all coordinates are identical.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Graph has no coordinates to rescale.&quot;</span><span class="p">)</span>
+
+        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">center_type</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+        <span class="n">coords_centered</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">center</span>
+
+        <span class="n">max_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coords_centered</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">max_distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All coordinates are identical. Cannot rescale.&quot;</span><span class="p">)</span>
+
+        <span class="n">scale_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">max_distance</span>
+
+        <span class="n">new_coords</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords_centered</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">)</span> <span class="o">+</span> \
+            <span class="p">(</span><span class="n">center</span> <span class="k">if</span> <span class="n">preserve_center</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">new_coord</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">new_coords</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_coord</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 
 <div class="viewcode-block" id="EmbeddedGraph.get_PCA_coordinates">
@@ -494,9 +535,9 @@
     <span class="k">def</span> <span class="nf">set_PCA_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to set the PCA coordinates of the vertices in the graph which is helpful for coarse alignment. </span>
-<span class="sd">        If you also want to center at zero, the options for `center_type` are `mean` or `min_max`.</span>
-<span class="sd">        Set `scale_radius` to a value to scale to a specific radius.</span>
-<span class="sd">        Warning: This overwrites the original coordinates</span>
+<span class="sd">        If you also want to center at zero, the options for ``center_type`` are ``mean`` or ``min_max``.</span>
+<span class="sd">        Set ``scale_radius`` to a value to scale to a specific radius.</span>
+<span class="sd">        Warning: This overwrites the original coordinates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_PCA_coordinates</span><span class="p">()</span>
 
@@ -507,16 +548,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">set_scaled_coordinates</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">scale_radius</span><span class="p">)</span></div>
 
 
+    <span class="c1"># ================</span>
+    <span class="c1"># Functions for computing the function g(v) for vertices and edges</span>
+    <span class="c1"># ================</span>
+
 <div class="viewcode-block" id="EmbeddedGraph.g_omega">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.g_omega">[docs]</a>
     <span class="k">def</span> <span class="nf">g_omega</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to compute the function :math:`g_\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \in [0,2\pi]` . This function is defined by :math:`g_\omega(v) = \langle \\texttt{pos}(v), \omega \\rangle` .</span>
+<span class="sd">        Function to compute the function :math:`g_\\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \\in [0,2\\pi]` . This function is defined by :math:`g_\\omega(v) = \\langle \\texttt{pos}(v), \\omega \\rangle` .</span>
 
 <span class="sd">        Parameters:</span>
 
 <span class="sd">            theta (float):</span>
-<span class="sd">                The angle in :math:`[0,2\pi]` for the direction to compute the :math:`g(v)` values.</span>
+<span class="sd">                The angle in :math:`[0,2\\pi]` for the direction to compute the :math:`g(v)` values.</span>
 
 <span class="sd">        Returns:</span>
 
@@ -560,15 +605,15 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.sort_vertices">[docs]</a>
     <span class="k">def</span> <span class="nf">sort_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">return_g</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].</span>
+<span class="sd">        Function to sort the vertices of the graph according to the function `g_omega(v)` in the direction of :math:`\\theta \\in [0,2\\pi]`.</span>
 
 <span class="sd">        TODO: eventually, do we want this to return a sorted list of g values as well? Since we&#39;re already doing the sorting work, it might be helpful.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            theta (float):</span>
-<span class="sd">                The angle in [0,2*np.pi] for the direction to sort the vertices.</span>
+<span class="sd">                The angle in :math:`[0,2 \\pi]` for the direction to sort the vertices.</span>
 <span class="sd">            return_g (bool):</span>
-<span class="sd">                Whether to return the g(v) values along with the sorted vertices.</span>
+<span class="sd">                Whether to return the :math:`g(v)` values along with the sorted vertices.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list</span>
@@ -595,13 +640,13 @@
 
 <span class="sd">        .. math ::</span>
 
-<span class="sd">            g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}</span>
+<span class="sd">            g_\\omega(e) = \\max \\{ g_\\omega(v) \\mid  v \in e \\}</span>
 
-<span class="sd">        in the direction of :math:`\\theta \in [0,2\pi]` .</span>
+<span class="sd">        in the direction of :math:`\\theta \\in [0,2\\pi]` .</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            theta (float):</span>
-<span class="sd">                The angle in :math:`[0,2\pi]` for the direction to sort the edges.</span>
+<span class="sd">                The angle in :math:`[0,2\\pi]` for the direction to sort the edges.</span>
 <span class="sd">            return_g (bool):</span>
 <span class="sd">                Whether to return the :math:`g(v)` values along with the sorted edges.</span>
 
@@ -625,7 +670,7 @@
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.lower_edges">[docs]</a>
     <span class="k">def</span> <span class="nf">lower_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">omega</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).</span>
+<span class="sd">        Function to compute the number of lower edges of a vertex `v` for a specific direction (included by the use of sorted `v_list`).</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            v (str):</span>
@@ -643,11 +688,117 @@
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="n">gv</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">Lg</span><span class="p">)</span>  <span class="c1"># includes possible duplicate counts</span></div>
 
 
+    <span class="c1"># ================</span>
+    <span class="c1"># Functions for getting the angles where vertices switch order</span>
+    <span class="c1"># ================</span>
+
+<div class="viewcode-block" id="EmbeddedGraph.get_all_normals_matrix">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_all_normals_matrix">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_normals_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to get all angles of normals to any line between vertices in the graph, returned as a matrix. Note this includes both adjacent vertices and non-adjacent. This function is useful for knowing the angle of the circle where two vertices switch in order. </span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            num_rounding_digits (int):</span>
+<span class="sd">                The number of digits to round the angles in the matrix. If `None`, no rounding is done. </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple consissting of a matrix of angles, and the sorted label list for the rows/columns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="c1"># Make rows of repeated copies of first column of P</span>
+        <span class="n">X_Cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">X_diff</span> <span class="o">=</span> <span class="n">X_Cols</span> <span class="o">-</span> <span class="n">X_Cols</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># The x value of the vector from A to B</span>
+
+        <span class="c1"># Make rows of repeated copies of second column of P</span>
+        <span class="n">Y_Cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">Y_diff</span> <span class="o">=</span> <span class="n">Y_Cols</span> <span class="o">-</span> <span class="n">Y_Cols</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># Convert to float to allow NaN assignment</span>
+        <span class="n">X_diff</span> <span class="o">=</span> <span class="n">X_diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">Y_diff</span> <span class="o">=</span> <span class="n">Y_diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1"># Set diagonals to nan</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">X_diff</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">Y_diff</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+        <span class="n">angle_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">X_diff</span><span class="p">,</span> <span class="o">-</span><span class="n">Y_diff</span><span class="p">)</span>
+        <span class="c1"># Puts all entries between 0 and 2pi</span>
+        <span class="n">angle_matrix</span> <span class="o">=</span> <span class="n">angle_matrix</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_rounding_digits</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">angle_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">angle_matrix</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">angle_matrix</span><span class="p">,</span> <span class="n">labels</span></div>
+
+
+<div class="viewcode-block" id="EmbeddedGraph.get_normals_dict">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.get_normals_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_normals_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                         <span class="n">num_rounding_digits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">edges_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">opposites</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to get all angles of normals to any line between vertices in the graph, returned as a dictionary of angles with ``dict[theta]`` returning the list of pairs of vertices with vector normal to :math:`\\overrightarrow{AB}` at angle ``theta``. Note this includes both adjacent vertices and non-adjacent unless ``edges_only`` is set to ``True``. This function is useful for knowing the angle of the circle where two vertices switch in order, especially when we want to sort the events around the circle. All angles are rounded to the number of digits given by ``num_rounding_digits``, and are returned in the range :math:`[0, 2\\pi]` .</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            num_rounding_digits (int):</span>
+<span class="sd">                The number of digits to round the angles in the dictionary. If None, no rounding is done.</span>
+<span class="sd">            edges_only (bool):</span>
+<span class="sd">                If True, the dictionary version only returns the angle of the normals to the lines between vertices sharing an edge. The matrix version is unchanged.</span>
+<span class="sd">            opposites (bool):</span>
+<span class="sd">                If True, will also include both :math:`\\theta` and :math:`\\theta + \\pi` in the dictionary keys.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary of angles with `dict[theta]` returning the list of pairs of vertices with vector normal to :math:`\\overrightarrow\\{AB\\}` at angle `theta`, e.g. ``dict[theta] = [(&#39;A&#39;,&#39;B&#39;), (&#39;C&#39;, &#39;D&#39;)]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">angle_matrix</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_normals_matrix</span><span class="p">(</span>
+            <span class="n">num_rounding_digits</span><span class="o">=</span><span class="n">num_rounding_digits</span><span class="p">)</span>
+
+        <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
+                <span class="c1"># Skip this edge if edges_only is True and the vertices are not connected</span>
+                <span class="k">if</span> <span class="n">edges_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">angle_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">angle_dict</span><span class="p">[</span><span class="n">angle_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="n">angle_matrix</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">angle_dict</span><span class="p">[</span><span class="n">angle_matrix</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">angle_dict</span><span class="p">[</span><span class="n">angle_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">])]</span>
+
+        <span class="k">if</span> <span class="n">opposites</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">angle_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">other_key</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">num_rounding_digits</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">other_key</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">other_key</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="p">)</span>
+                <span class="n">angle_dict</span><span class="p">[</span><span class="n">other_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="c1"># Make sure all keys are in the range [0, 2pi]</span>
+        <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span>
+                      <span class="n">value</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="c1"># Make sure all keys are rounded to the correct number of digits</span>
+        <span class="k">if</span> <span class="n">num_rounding_digits</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">angle_dict</span> <span class="o">=</span> <span class="p">{</span><span class="nb">round</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="p">)</span>                          <span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">angle_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="k">return</span> <span class="n">angle_dict</span></div>
+
+
+    <span class="c1"># ================</span>
+    <span class="c1"># Plotting functions</span>
+    <span class="c1"># ================</span>
 <div class="viewcode-block" id="EmbeddedGraph.plot">
 <a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.plot">[docs]</a>
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
              <span class="n">bounding_circle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">bounding_center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span>
              <span class="n">color_nodes_theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -655,12 +806,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to plot the graph with the embedded coordinates.</span>
 
-<span class="sd">        If ``bounding_circle`` is True, a bounding circle is drawn around the graph. This is centered at the center type defined by ``bounding_center_type``.</span>
+<span class="sd">        If ``bounding_circle`` is True, a bounding circle is drawn around the graph.</span>
 
-<span class="sd">        If ``color_nodes_theta`` is not None, it should be given as a theta in :math:`[0,2\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of theta.</span>
+<span class="sd">        If ``color_nodes_theta`` is not ``None``, it should be given as a :math:`theta` in :math:`[0,2\\pi]`. Then the nodes are colored according to the :math:`g(v)` values in the direction of :math:`\\theta`.</span>
 
-<span class="sd">        If with_labels is True, the nodes are labeled with their names.</span>
+<span class="sd">        If ``with_labels`` is ``True``, the nodes are labeled with their names.</span>
 
+<span class="sd">        If ``ax`` is not ``None``, the plot is drawn on the given axis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -688,58 +840,101 @@
                        <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">bounding_circle</span><span class="p">:</span>
-            <span class="n">circle_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">bounding_center_type</span><span class="p">)</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">bounding_center_type</span><span class="p">)</span>
-            <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">circle_center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_bounding_circle</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
-            <span class="c1"># Always adjust the plot limits to show the full graph</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="s1">&#39;box&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ax</span></div>
 
 
-<div class="viewcode-block" id="EmbeddedGraph.rescale_to_unit_disk">
-<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.rescale_to_unit_disk">[docs]</a>
-    <span class="k">def</span> <span class="nf">rescale_to_unit_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preserve_center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="EmbeddedGraph.plot_bounding_circle">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.plot_bounding_circle">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_bounding_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bounding_center_type</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Rescales the graph coordinates to fit within a radius 1 disk.</span>
+<span class="sd">        Function to plot the bounding circle of the graph. </span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            preserve_center (bool): If True, maintains the current center point of type ``center_type``.</span>
-<span class="sd">                                    If False, centers the graph at (0, 0).</span>
+<span class="sd">        If ``ax`` is not None, the plot is drawn on the given axis.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            self: Returns the instance for method chaining.</span>
+<span class="sd">        If ``bounding_center_type`` is &#39;origin&#39;, the bounding circle is centered at the origin. If it is ``min_max``, the bounding circle is centered at the mean of the min and max values of the :math:`x` and :math`y` coordinates.</span>
 
-<span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If the graph has no coordinates or all coordinates are identical.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Graph has no coordinates to rescale.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
 
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">center_type</span><span class="p">)</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">circle_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="n">bounding_center_type</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">bounding_center_type</span><span class="p">)</span>
+        <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">circle_center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
 
-        <span class="n">coords_centered</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">center</span>
+        <span class="c1"># Always adjust the plot limits to show the full graph</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span></div>
 
-        <span class="n">max_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coords_centered</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">max_distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All coordinates are identical. Cannot rescale.&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="EmbeddedGraph.plot_angle_circle">
+<a class="viewcode-back" href="../../embed_graph.html#ect.embed_graph.EmbeddedGraph.plot_angle_circle">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_angle_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to plot the circle of angles for the graph. </span>
 
-        <span class="n">scale_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">max_distance</span>
+<span class="sd">        Example Usage: </span>
 
-        <span class="n">new_coords</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords_centered</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">)</span> <span class="o">+</span> \
-            <span class="p">(</span><span class="n">center</span> <span class="k">if</span> <span class="n">preserve_center</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="sd">        .. code-block:: python</span>
 
-        <span class="k">for</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">new_coord</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">new_coords</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_coord</span><span class="p">)</span>
+<span class="sd">            fig, ax = plt.subplots()</span>
+<span class="sd">            G.plot(ax = ax)</span>
+<span class="sd">            G.plot_angle_circle(ax = ax)</span>
 
-        <span class="k">return</span> <span class="bp">self</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+
+        <span class="n">circle_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_center</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mf">1.3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;min_max&#39;</span><span class="p">)</span>
+        <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">circle_center</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+
+        <span class="c1"># Get all the angles with the labels to be drawn</span>
+        <span class="n">angles_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_normals_dict</span><span class="p">(</span>
+            <span class="n">edges_only</span><span class="o">=</span><span class="n">edges_only</span><span class="p">,</span> <span class="n">opposites</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">angles_dict_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}{</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">value</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">angles_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="c1"># Draw hash marks on the circle</span>
+        <span class="n">hash_length</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">r</span>  <span class="c1"># Length of the hash marks</span>
+        <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angles_dict_labels</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">x_start</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">y_start</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">x_end</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">y_end</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">],</span> <span class="p">[</span><span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Add labels near the hash marks</span>
+            <span class="n">scaling</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">label_x</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">scaling</span> <span class="o">*</span> <span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">label_y</span> <span class="o">=</span> <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">scaling</span> <span class="o">*</span> <span class="n">hash_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+            <span class="n">text_angle</span> <span class="o">=</span> <span class="n">angle</span> <span class="k">if</span> <span class="n">angle</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span> <span class="ow">or</span> <span class="n">angle</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span> <span class="k">else</span> <span class="n">angle</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">label_x</span><span class="p">,</span> <span class="n">label_y</span><span class="p">,</span>
+                    <span class="n">angles_dict_labels</span><span class="p">[</span><span class="n">angle</span><span class="p">],</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">text_angle</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        <span class="c1"># Always adjust the plot limits to show the full graph</span>
+        <span class="n">scale_factor</span> <span class="o">=</span> <span class="mf">1.5</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">scale_factor</span><span class="o">*</span><span class="n">r</span><span class="p">,</span>
+                    <span class="n">circle_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">scale_factor</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">scale_factor</span><span class="o">*</span><span class="n">r</span><span class="p">,</span>
+                    <span class="n">circle_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">scale_factor</span><span class="o">*</span><span class="n">r</span><span class="p">)</span></div>
 </div>
 
 
