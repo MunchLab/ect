@@ -71,7 +71,6 @@ class Directions:
     def from_vectors(cls, vectors: Sequence[tuple]) -> 'Directions':
         """Create instance from custom direction vectors"""
         vectors = np.array(vectors)
-        # Normalize vectors
         norms = np.linalg.norm(vectors, axis=1, keepdims=True)
         normalized = vectors / norms
 

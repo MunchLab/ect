@@ -191,29 +191,16 @@ class EmbeddedGraph(nx.Graph):
         x_coords, y_coords = zip(*self.coordinates.values())
         return [(min(x_coords), max(x_coords)), (min(y_coords), max(y_coords))]
 
-    def get_center(self, type='origin'):
-        """
-        Calculate and return the center of the graph. This can be done by either returning the average of the coordiantes (`mean`), the center of the bounding box (`min_max`), or the origin (`origin`).
-
-        Parameters:
-            type (str): The type of center to calculate. Options are 'mean', 'min_max', or 'origin'.
-
-        Returns:
-            numpy.ndarray: The (x, y) coordinates of the center.
-        """
-        if not self.coordinates:
-            return np.array([0.0, 0.0])
-
-        if type == 'origin':
-            return np.array([0.0, 0.0])
-        elif type == 'mean':
-            coords = np.array(list(self.coordinates.values()))
+    def get_center(self, method: str = 'mean') -> np.ndarray:
+        """Calculate center of coordinates"""
+        coords = self.get_coords_array()
+        if method == 'mean':
             return np.mean(coords, axis=0)
-        elif type == 'min_max':
-            x_coords, y_coords = zip(*self.coordinates.values())
-            min_x, max_x = min(x_coords), max(x_coords)
-            min_y, max_y = min(y_coords), max(y_coords)
-            return np.array([(max_x+min_x)/2, (max_y+min_y)/2])
+        elif method == 'min_max':
+            return (np.max(coords, axis=0) + np.min(coords, axis=0)) / 2
+        elif method == 'origin':
+            return np.zeros(self.dim)
+        raise ValueError(f"Unknown center method: {method}")
 
     def get_bounding_radius(self, type='origin'):
         """
@@ -329,138 +316,135 @@ class EmbeddedGraph(nx.Graph):
         if scale_radius:
             self.set_scaled_coordinates(radius=scale_radius)
 
-    def g_omega(self, theta):
-        """
-        Function to compute the function :math:`g_\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \in [0,2\pi]` . This function is defined by :math:`g_\omega(v) = \langle \\texttt{pos}(v), \omega \\rangle` .
+    # def g_omega(self, theta):
+    #     """
+    #     Function to compute the function :math:`g_\omega(v)` for all vertices :math:`v` in the graph in the direction of :math:`\\theta \in [0,2\pi]` . This function is defined by :math:`g_\omega(v) = \langle \\texttt{pos}(v), \omega \\rangle` .
 
-        Parameters:
+    #     Parameters:
 
-            theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to compute the :math:`g(v)` values.
+    #         theta (float):
+    #             The angle in :math:`[0,2\pi]` for the direction to compute the :math:`g(v)` values.
 
-        Returns:
+    #     Returns:
 
-            dict: A dictionary mapping vertices to their :math:`g(v)` values.
+    #         dict: A dictionary mapping vertices to their :math:`g(v)` values.
 
-        """
+    #     """
 
-        vertices = list(self.nodes())
-        coords = np.array([self.coordinates[v] for v in vertices])
+    #     vertices = list(self.nodes())
+    #     coords = np.array([self.coordinates[v] for v in vertices])
 
-        # Create direction vectors for all angles
-        directions = np.stack(
-            [np.cos(theta), np.sin(theta)], axis=1)  # [num_dirs, 2]
+    #     directions = np.stack(
+    #         [np.cos(theta), np.sin(theta)], axis=1)  # [num_dirs, 2]
 
-        # Project all points onto all directions at once
-        projections = np.matmul(coords, directions.T)  # [num_points, num_dirs]
+    #     projections = np.matmul(coords, directions.T)  # [num_points, num_dirs]
 
-        # Create dictionary mapping vertex indices to their projection arrays
-        g_values = {v: projections[i] for i, v in enumerate(vertices)}
+    #     g_values = {v: projections[i] for i, v in enumerate(vertices)}
 
-        return g_values
+    #     return g_values
 
-    def g_omega_edges(self, theta):
-        """
-        Calculates the function value of the edges of the graph by making the value equal to the max vertex value 
+    # def g_omega_edges(self, theta):
+    #     """
+    #     Calculates the function value of the edges of the graph by making the value equal to the max vertex value
 
-        Parameters:
+    #     Parameters:
 
-            theta (float): 
-                The direction of the function to be calculated.
+    #         theta (float):
+    #             The direction of the function to be calculated.
 
-        Returns:
-            dict
-                A dictionary of the function values of the edges.
-        """
-        vertex_g_values = self.g_omega(theta)
+    #     Returns:
+    #         dict
+    #             A dictionary of the function values of the edges.
+    #     """
+    #     vertex_g_values = self.g_omega(theta)
 
-        edge_g_values = {}
-        for u, v in self.edges():
-            u_proj = vertex_g_values[u]
-            v_proj = vertex_g_values[v]
+    #     edge_g_values = {}
+    #     for u, v in self.edges():
+    #         u_proj = vertex_g_values[u]
+    #         v_proj = vertex_g_values[v]
 
-            edge_g_values[(u, v)] = np.maximum(u_proj, v_proj)
-            edge_g_values[(v, u)] = edge_g_values[(u, v)]  # symmetric
+    #         edge_g_values[(u, v)] = np.maximum(u_proj, v_proj)
+    #         edge_g_values[(v, u)] = edge_g_values[(u, v)]  # symmetric
 
-        return edge_g_values
+    #     return edge_g_values
 
-    def sort_vertices(self, theta, return_g=False):
-        """
-        Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
+    # def sort_vertices(self, theta, return_g=False):
+    #     """
+    #     Function to sort the vertices of the graph according to the function g_omega(v) in the direction of theta \in [0,2*np.pi].
 
-        TODO: eventually, do we want this to return a sorted list of g values as well? Since we're already doing the sorting work, it might be helpful.
+    #     TODO: eventually, do we want this to return a sorted list of g values as well? Since we're already doing the sorting work, it might be helpful.
 
-        Parameters:
-            theta (float):
-                The angle in [0,2*np.pi] for the direction to sort the vertices.
-            return_g (bool):
-                Whether to return the g(v) values along with the sorted vertices.
+    #     Parameters:
+    #         theta (float):
+    #             The angle in [0,2*np.pi] for the direction to sort the vertices.
+    #         return_g (bool):
+    #             Whether to return the g(v) values along with the sorted vertices.
 
-        Returns:
-            list
-                A list of vertices sorted in increasing order of the :math:`g(v)` values. 
-                If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
+    #     Returns:
+    #         list
+    #             A list of vertices sorted in increasing order of the :math:`g(v)` values.
+    #             If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``.
 
-        """
-        g = self.g_omega(theta)
+    #     """
+    #     g = self.g_omega(theta)
 
-        v_list = sorted(self.nodes, key=lambda v: g[v])
+    #     v_list = sorted(self.nodes, key=lambda v: g[v])
 
-        if return_g:
-            # g_sorted = [g[v] for v in v_list]
-            return v_list, g
-        else:
-            return v_list
+    #     if return_g:
+    #         # g_sorted = [g[v] for v in v_list]
+    #         return v_list, g
+    #     else:
+    #         return v_list
 
-    def sort_edges(self, theta, return_g=False):
-        """
-        Function to sort the edges of the graph according to the function
+    # def sort_edges(self, theta, return_g=False):
+    #     """
+    #     Function to sort the edges of the graph according to the function
 
-        .. math ::
+    #     .. math ::
 
-            g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
+    #         g_\omega(e) = \max \{ g_\omega(v) \mid  v \in e \}
 
-        in the direction of :math:`\\theta \in [0,2\pi]` .
+    #     in the direction of :math:`\\theta \in [0,2\pi]` .
 
-        Parameters:
-            theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
-            return_g (bool):
-                Whether to return the :math:`g(v)` values along with the sorted edges.
+    #     Parameters:
+    #         theta (float):
+    #             The angle in :math:`[0,2\pi]` for the direction to sort the edges.
+    #         return_g (bool):
+    #             Whether to return the :math:`g(v)` values along with the sorted edges.
 
-        Returns:
-            A list of edges sorted in increasing order of the :math:`g(v)` values. 
-            If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
+    #     Returns:
+    #         A list of edges sorted in increasing order of the :math:`g(v)` values.
+    #         If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``.
 
-        """
-        g_e = self.g_omega_edges(theta)
+    #     """
+    #     g_e = self.g_omega_edges(theta)
 
-        e_list = sorted(self.edges, key=lambda e: g_e[e])
+    #     e_list = sorted(self.edges, key=lambda e: g_e[e])
 
-        if return_g:
-            # g_sorted = [g[v] for v in v_list]
-            return e_list, g_e
-        else:
-            return e_list
+    #     if return_g:
+    #         # g_sorted = [g[v] for v in v_list]
+    #         return e_list, g_e
+    #     else:
+    #         return e_list
 
-    def lower_edges(self, v, omega):
-        """
-        Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).
+    # def lower_edges(self, v, omega):
+    #     """
+    #     Function to compute the number of lower edges of a vertex v for a specific direction (included by the use of sorted v_list).
 
-        Parameters:
-            v (str):
-                The vertex to compute the number of lower edges for.
-            omega (tuple): 
-                The direction vector to consider given as an angle in [0, 2pi].
+    #     Parameters:
+    #         v (str):
+    #             The vertex to compute the number of lower edges for.
+    #         omega (tuple):
+    #             The direction vector to consider given as an angle in [0, 2pi].
 
-        Returns:
-            int: The number of lower edges of the vertex v.
+    #     Returns:
+    #         int: The number of lower edges of the vertex v.
 
-        """
-        L = [n for n in self.neighbors(v)]
-        gv = np.dot(self.coordinates[v], omega)
-        Lg = [np.dot(self.coordinates[v], omega) for v in L]
-        return sum(n >= gv for n in Lg)  # includes possible duplicate counts
+    #     """
+    #     L = [n for n in self.neighbors(v)]
+    #     gv = np.dot(self.coordinates[v], omega)
+    #     Lg = [np.dot(self.coordinates[v], omega) for v in L]
+    #     return sum(n >= gv for n in Lg)  # includes possible duplicate counts
 
     def plot(self,
              bounding_circle=False,
@@ -554,62 +538,3 @@ class EmbeddedGraph(nx.Graph):
             self.coordinates[vertex] = tuple(new_coord)
 
         return self
-
-
-def create_example_graph(centered=True, center_type='min_max'):
-    """
-    Function to create an example ``EmbeddedGraph`` object. Helpful for testing. If ``centered`` is True, the coordinates are centered using the center type given by ``center_type``, either ``mean`` or ``min_max``.
-
-    Returns:
-        EmbeddedGraph: An example ``EmbeddedGraph`` object.
-
-    """
-    graph = EmbeddedGraph()
-
-    graph.add_node('A', 1, 2)
-    graph.add_node('B', 3, 4)
-    graph.add_node('C', 5, 7)
-    graph.add_node('D', 3, 6)
-    graph.add_node('E', 4, 3)
-    graph.add_node('F', 4, 5)
-
-    graph.add_edge('A', 'B')
-    graph.add_edge('B', 'C')
-    graph.add_edge('B', 'D')
-    graph.add_edge('B', 'E')
-    graph.add_edge('C', 'D')
-    graph.add_edge('E', 'F')
-
-    if centered:
-        graph.set_centered_coordinates(center_type)
-
-    return graph
-
-
-if __name__ == "__main__":
-    # Example usage of the EmbeddedGraph class
-
-    # Create an instance of the EmbeddedGraph class
-    graph = EmbeddedGraph()
-
-    # Add vertices with their coordinates
-    graph.add_node('A', 1, 2)
-    graph.add_node('B', 3, 4)
-    graph.add_node('C', 5, 6)
-
-    # Add edges between vertices
-    graph.add_edge('A', 'B')
-    graph.add_edge('B', 'C')
-
-    # Get coordinates of a vertex
-    coords = graph.get_coordinates('A')
-    print(f'Coordinates of A: {coords}')
-
-    # Set new coordinates for a vertex
-    graph.set_coordinates('A', 7, 8)
-    coords = graph.get_coordinates('A')
-    print(f'New coordinates of A: {coords}')
-
-    # Get the bounding box of the vertex coordinates
-    bbox = graph.get_bounding_box()
-    print(f'Bounding box: {bbox}')
