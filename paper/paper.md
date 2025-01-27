@@ -50,10 +50,9 @@ We direct the reader to [@Munch2025] for a full survey article on the subject.
 
 To start, we assume our input is an undirected graph $G$ with an embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as seen in \autoref{fig:example_graph}. 
 
-![(Left and middle) An example of an embedded graph with two choices of function $f_\omega$ drawn as the coloring on the nodes. (Right) The ECT matrix of the graph shown.\label{fig:example_graph}](figures/CombineGraphExample.png)
 
 
-![Testing scaling](figures/CombineGraphExample.png){ width=20% }
+<!-- ![Testing scaling](figures/CombineGraphExample.png){ width=20% } -->
 
 
 For a choice of direction $\theta \in [0,2\pi]$, we can induce a function on the vertex set. 
@@ -62,11 +61,7 @@ $$
 g_\omega(v) = \langle f(v), \omega\rangle.
 $$
 <!-- This is done in the code using the `g_omega` method as shown.  -->
-
-Some examples are shown below. 
-
-![Example 1](figures/example_graph_pi_over_2.png)
-![Example 2](figures/example_graph_pi_over_2.png)
+Some examples are shown in \autoref{fig:example_graph}. 
 
 Now we can set up the ECT for the embedded graph. The ECT is defined as 
 $$
@@ -79,14 +74,14 @@ Perhaps a better way of looking at this same function for visualization purposes
 $$
 \begin{matrix}
 \text{ECT}(G): & \mathbb{S}^1 \times \mathbb{R} & \to &  \mathbb{Z}\\
-& (\omega,a) & \mapsto & \chi(g_\omega^{-1}(-\infty,a]) 
+& (\omega,a) & \mapsto & \chi(g_\omega^{-1}(-\infty,a]).
 \end{matrix}
 $$
-After discretizing, the example embedded graph has an ECT matrix as shown below. 
-![Example ECT](figures/example_ect.png)
+After discretizing, the example embedded graph has an ECT matrix as shown in the bottom row of \autoref{fig:example_graph}.
+The main functionality of the `ECT` package is to be able to compute the ECT matrix for graphs embedded in $\mathbb{R}^d$ for $d \in \{2,3\}$.
 
-The main functionality of the package is to be able to compute the ECT matrix for graphs embedded in $\mathbb{R}^d$ for $d \in \{2,3\}$.
-Additional functionality is given for embedded CW complexes, such as the example shown below.  
+![(Top row) An example of an embedded graph with two choices of function $f_\omega$ drawn as the coloring on the nodes. (Bottom) The ECT matrix of the graph shown.\label{fig:example_graph}](figures/CombineGraphExample.png)
+
 
 ## Extension to higher dimensional embedding
 
