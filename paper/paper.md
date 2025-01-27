@@ -42,13 +42,19 @@ The *ECT* package for Python presented here provides a fast and well-documented 
 
 # The ECT
 
-**TODO: Get permission for the Matisse example image**
 
-We start by defining the Euler Characteristic Transform, and direct the reader to [@Munch2025] for a full survey article on the subject. 
+We start by defining the Euler Characteristic Transform. 
+This construction came to the attention of the TDA community beginning with a proof of injectivity of the representation for simplicial complexes embedded in dimension up to 3 by Turner *et al.* [@Turner2014]. 
+Subsequently, using the machinery of Euler calculus @Schapira1995, this theorem was extended concurrently by [@Ghrist2018] and [@Curry2022] to nice enough subsets in any ambient dimension.
+We direct the reader to [@Munch2025] for a full survey article on the subject. 
 
-To start, we assume our input is an undirected graph $G$ with an embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as follows. 
+To start, we assume our input is an undirected graph $G$ with an embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as seen in \autoref{fig:example_graph}. 
 
-![An example of an embedded graph](figures/example_graph.png)
+![(Left and middle) An example of an embedded graph with two choices of function $f_\omega$ drawn as the coloring on the nodes. (Right) The ECT matrix of the graph shown.\label{fig:example_graph}](figures/CombineGraphExample.png)
+
+
+![Testing scaling](figures/CombineGraphExample.png){ width=20% }
+
 
 For a choice of direction $\theta \in [0,2\pi]$, we can induce a function on the vertex set. 
 Thinking of  this as $\omega \in \mathbb{S}^1$ by defining the unit vector $\omega = (\cos(\theta), \sin(\theta))$, the function $g_\omega$ is defined on the vertices of $G$ by taking the dot product of the embedding coordinates with the unit vector, specifically
