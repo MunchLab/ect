@@ -85,7 +85,7 @@ The main functionality of the `ECT` package is to be able to compute the ECT mat
 
 ## Extension to higher dimensional embedding
 
-In theory, the ECT can be defined for a space embedded in $\R^d$ for any $d$. 
+In theory, the ECT can be defined for a space embedded in $\mathbb{R}^d$ for any $d$. 
 In practice, for applications geared toward encoding shapes seen in the physical world, this is largely limited to the cases $d=2$ or $d=3$. 
 Still, issues arise in applications in the case of $d=3$ where the choice for discretizing the directions chosen on the sphere $\mathbb{S}^2$ is not canonical like the case of $d=2$ and the circle $\mathbb{S}^1$ [@Mardia1999]. 
 
