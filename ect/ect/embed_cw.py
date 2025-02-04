@@ -174,31 +174,3 @@ class EmbeddedCW(EmbeddedGraph):
         ax = super().plot(bounding_circle=bounding_circle,
                           color_nodes_theta=color_nodes_theta, ax=ax)
         return ax
-
-
-def create_example_cw(centered=True, center_type='min_max'):
-    """
-    Creates an example EmbeddedCW object with a simple CW complex. If centered is True, the coordinates are centered around the center type, which could be ``mean``, ``min_max`` or ``origin``.
-
-
-    Returns:
-        EmbeddedCW
-            The example EmbeddedCW object.
-    """
-    G = create_example_graph(centered=False)
-    K = EmbeddedCW()
-    K.add_from_embedded_graph(G)
-    K.add_node('G', 2, 4)
-    K.add_node('H', 1, 5)
-    K.add_node('I', 5, 4)
-    K.add_node('J', 2, 2)
-    K.add_node('K', 2, 7)
-    K.add_edges_from([('G', 'A'), ('G', 'H'), ('H', 'D'), ('I', 'E'),
-                     ('I', 'C'), ('J', 'E'), ('K', 'D'), ('K', 'C')])
-    K.add_face(['B', 'A', 'G', 'H', 'D'])
-    K.add_face(['K', 'D', 'C'])
-
-    if centered:
-        K.set_centered_coordinates(type=center_type)
-
-    return K
