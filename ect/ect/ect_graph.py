@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from numba import jit, prange
+from typing import Optional
 
 from ect.embed_cw import EmbeddedCW
 
@@ -25,28 +26,33 @@ class ECT:
 
     """
 
-    def __init__(self, num_dirs, num_thresh, bound_radius=None):
+    def __init__(self,
+                 num_dirs: Optional[int] = None,
+                 num_thresh: int = 100,
+                 directions: Optional[Directions] = None,
+                 bound_radius: Optional[float] = None):
         """
-        Constructs all the necessary attributes for the ECT object.
+        Initialize ECT calculator.
 
-        Parameters:
-            num_dirs (int):
-                The number of directions to consider in the matrix.
-            num_thresh (int):
-                The number of thresholds to consider in the matrix.
-            bound_radius (int):
-                Either None, or a positive radius of the bounding circle.
+        Args:
+            num_dirs: Number of uniformly sampled directions (ignored if directions provided)
+            num_thresh: Number of threshold values
+            directions: Optional Directions object for custom sampling
+            bound_radius: Optional radius for bounding circle
         """
-        self.num_dirs = num_dirs
-
-        # Note: This version doesn't include 2pi since its the same as the 0 direction.
-        self.thetas = np.linspace(0, 2*np.pi, self.num_dirs, endpoint=False)
+        # Set up directions
+        if directions is not None:
+            self.directions = directions
+            self.num_dirs = len(directions)
+        else:
+            if num_dirs is None:
+                num_dirs = 360
+            self.num_dirs = num_dirs
+            self.directions = Directions(num_dirs)
 
         self.num_thresh = num_thresh
         self.set_bounding_radius(bound_radius)
-
-        self.ECT_matrix = np.zeros((num_dirs, num_thresh))
-        self.SECT_matrix = np.zeros((num_dirs, num_thresh))
+        self.ect_matrix = np.zeros((self.num_dirs, self.num_thresh))
 
     def set_bounding_radius(self, bound_radius):
         """
@@ -102,18 +108,6 @@ class ECT:
 
         return r, r_threshes
 
-    def get_ect(self):
-        """
-        Returns the ECT matrix.
-        """
-        return self.ect_matrix
-
-    def get_sect(self):
-        """
-        Returns the SECT matrix.
-        """
-        return self.sect_matrix
-
     def calculate_ecc(self, G, theta, bound_radius=None, return_counts=False):
         """
         Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
@@ -162,7 +156,7 @@ class ECT:
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def fast_threshold_comp(projections, edge_maxes, thresholds):
+    def calculate_euler_chars(projections, edge_maxes, thresholds):
         """Calculate the euler characteristic for each direction in parallel
 
         Parameters:
@@ -189,7 +183,6 @@ class ECT:
                 vert_count = 0
                 edge_count = 0
 
-                # Use SIMD-friendly loops
                 for v in range(num_vertices):
                     if projections[v, i] <= thresh:
                         vert_count += 1
@@ -201,7 +194,7 @@ class ECT:
 
         return result
 
-    def calculate_ect(self, graph, bound_radius=None,):
+    def calculate_ect(self, graph: EmbeddedGraph, bound_radius=None,):
         """Vectorized ECT calculation using optimized numpy operations
 
         Parameters:
@@ -216,29 +209,17 @@ class ECT:
         """
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
 
-        coords = np.array([graph.coordinates[v] for v in graph.nodes()])
+        coords = graph.coord_matrix
+        edges = graph.edge_index
 
-        # create vertex index mapping and convert edges
-        vertex_to_idx = {v: i for i, v in enumerate(graph.nodes())}
-        edges = np.array([[vertex_to_idx[u], vertex_to_idx[v]]
-                         for u, v in graph.edges()])
+        projections = np.matmul(coords, self.directions.vectors.T)
+        edge_maxes = np.maximum(projections[edges[:, 0]],
+                                projections[edges[:, 1]])
 
-        directions = np.empty((self.num_dirs, 2), order='F')
-        np.stack([np.cos(self.thetas), np.sin(self.thetas)],
-                 axis=1, out=directions)
-
-        projections = np.empty((len(coords), self.num_dirs), order='F')
-        np.matmul(coords, directions.T, out=projections)
-
-        edge_maxes = np.maximum(
-            projections[edges[:, 0]], projections[edges[:, 1]])
-
-        # use numba-optimized threshold computation
-        ect_matrix = self.fast_threshold_comp(
+        # Calculate ECT
+        ect_matrix = self.calculate_euler_chars(
             projections, edge_maxes, r_threshes)
-
         self.ect_matrix = ect_matrix
-
         return ect_matrix
 
     def calculate_sect(self):
@@ -251,7 +232,7 @@ class ECT:
         """
 
         # Calculate the SECT
-        M = self.ECT_matrix
+        M = self.ect_matrix
 
         # Get average of each row, corresponds to each direction
         A = np.average(M, axis=1)
@@ -315,33 +296,22 @@ class ECT:
         X, Y = np.meshgrid(thetas, self.threshes)
         M = np.zeros_like(X)
 
-        # Transpose to get the correct orientation
         M[:, :-1] = self.ECT_matrix.T
-        M[:, -1] = M[:, 0]  # Add the 2pi direction to the 0 direction
+        M[:, -1] = M[:, 0]  # Add 2pi direction
 
         plt.pcolormesh(X, Y, M, cmap='viridis')
         plt.colorbar()
 
         ax = plt.gca()
         ax.set_xticks(np.linspace(0, 2*np.pi, 9))
-
-        labels = [
-            r'$0$',
-            r'$\frac{\pi}{4}$',
-            r'$\frac{\pi}{2}$',
-            r'$\frac{3\pi}{4}$',
-            r'$\pi$',
-            r'$\frac{5\pi}{4}$',
-            r'$\frac{3\pi}{2}$',
-            r'$\frac{7\pi}{4}$',
-            r'$2\pi$',
-        ]
-
-        ax.set_xticklabels(labels)
+        ax.set_xticklabels([
+            r'$0$', r'$\frac{\pi}{4}$', r'$\frac{\pi}{2}$',
+            r'$\frac{3\pi}{4}$', r'$\pi$', r'$\frac{5\pi}{4}$',
+            r'$\frac{3\pi}{2}$', r'$\frac{7\pi}{4}$', r'$2\pi$'
+        ])
 
         plt.xlabel(r'$\omega$')
         plt.ylabel(r'$a$')
-
         plt.title(r'ECT of Input Graph')
 
     def plot_sect(self):
@@ -353,7 +323,7 @@ class ECT:
 
         # Make meshgrid.
         # Add back the 2pi to thetas for the pcolormesh
-        thetas = np.concatenate((self.thetas, [2*np.pi]))
+        thetas = np.concatenate((self.directions.thetas, [2*np.pi]))
         X, Y = np.meshgrid(thetas, self.threshes)
         M = np.zeros_like(X)
 

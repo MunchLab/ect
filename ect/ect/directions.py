@@ -3,10 +3,10 @@ from typing import Union, Optional, List, Sequence
 from enum import Enum
 
 
-class SamplingStrategy(Enum):
-    UNIFORM = "uniform"  # Evenly spaced angles
-    RANDOM = "random"    # Random angles
-    CUSTOM = "custom"    # User-provided angles
+class Sampling(Enum):
+    UNIFORM = "uniform"
+    RANDOM = "random"
+    CUSTOM = "custom"
 
 
 class Directions:
@@ -30,12 +30,12 @@ class Directions:
 
     def __init__(self,
                  num_dirs: int = 360,
-                 strategy: SamplingStrategy = SamplingStrategy.UNIFORM,
+                 sampling: Sampling = Sampling.UNIFORM,
                  endpoint: bool = False,
                  seed: Optional[int] = None):
 
         self.num_dirs = num_dirs
-        self.strategy = strategy
+        self.sampling = sampling
         self.endpoint = endpoint
 
         if seed is not None:
@@ -47,23 +47,23 @@ class Directions:
 
     def _initialize_directions(self):
         """Initialize direction angles based on strategy"""
-        if self.strategy == SamplingStrategy.UNIFORM:
+        if self.sampling == Sampling.UNIFORM:
             self._thetas = np.linspace(0, 2*np.pi,
                                        self.num_dirs,
                                        endpoint=self.endpoint)
-        elif self.strategy == SamplingStrategy.RANDOM:
+        elif self.sampling == Sampling.RANDOM:
             self._thetas = np.random.uniform(0, 2*np.pi, self.num_dirs)
             self._thetas.sort()  # Sort for consistency
 
     @classmethod
     def random(cls, num_dirs: int = 360, seed: Optional[int] = None) -> 'Directions':
         """Create instance with random direction sampling"""
-        return cls(num_dirs, SamplingStrategy.RANDOM, seed=seed)
+        return cls(num_dirs, Sampling.RANDOM, seed=seed)
 
     @classmethod
     def from_angles(cls, angles: Sequence[float]) -> 'Directions':
         """Create instance from custom angles"""
-        instance = cls(len(angles), SamplingStrategy.CUSTOM)
+        instance = cls(len(angles), Sampling.CUSTOM)
         instance._thetas = np.array(angles)
         return instance
 
@@ -74,7 +74,7 @@ class Directions:
         norms = np.linalg.norm(vectors, axis=1, keepdims=True)
         normalized = vectors / norms
 
-        instance = cls(len(vectors), SamplingStrategy.CUSTOM)
+        instance = cls(len(vectors), Sampling.CUSTOM)
         instance._vectors = normalized
         instance._thetas = np.arctan2(normalized[:, 1], normalized[:, 0])
         return instance
