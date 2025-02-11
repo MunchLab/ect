@@ -53,7 +53,7 @@ class Directions:
                                        endpoint=self.endpoint)
         elif self.sampling == Sampling.RANDOM:
             self._thetas = np.random.uniform(0, 2*np.pi, self.num_dirs)
-            self._thetas.sort()  # Sort for consistency
+            self._thetas.sort()  # sort for consistency
 
     @classmethod
     def random(cls, num_dirs: int = 360, seed: Optional[int] = None) -> 'Directions':

@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from numba import jit, prange
-from typing import Optional
+from typing import Optional, Union
 
 from ect.embed_cw import EmbeddedCW
+from ect.embed_graph import EmbeddedGraph
+from ect.directions import Directions
 
 
 class ECT:
@@ -28,7 +30,7 @@ class ECT:
 
     def __init__(self,
                  num_dirs: Optional[int] = None,
-                 num_thresh: int = 100,
+                 num_thresh: int = 360,
                  directions: Optional[Directions] = None,
                  bound_radius: Optional[float] = None):
         """
@@ -40,7 +42,6 @@ class ECT:
             directions: Optional Directions object for custom sampling
             bound_radius: Optional radius for bounding circle
         """
-        # Set up directions
         if directions is not None:
             self.directions = directions
             self.num_dirs = len(directions)
@@ -52,7 +53,6 @@ class ECT:
 
         self.num_thresh = num_thresh
         self.set_bounding_radius(bound_radius)
-        self.ect_matrix = np.zeros((self.num_dirs, self.num_thresh))
 
     def set_bounding_radius(self, bound_radius):
         """
@@ -156,7 +156,7 @@ class ECT:
 
     @staticmethod
     @jit(nopython=True, parallel=True)
-    def calculate_euler_chars(projections, edge_maxes, thresholds):
+    def calculate_euler_chars(projections, edge_maxes, face_maxes, thresholds):
         """Calculate the euler characteristic for each direction in parallel
 
         Parameters:
@@ -194,7 +194,7 @@ class ECT:
 
         return result
 
-    def calculate_ect(self, graph: EmbeddedGraph, bound_radius=None,):
+    def calculate(self, graph: Union[EmbeddedGraph, EmbeddedCW], theta: Optional[float] = None, bound_radius=None, return_counts=False):
         """Vectorized ECT calculation using optimized numpy operations
 
         Parameters:
@@ -208,21 +208,35 @@ class ECT:
                 The ECT matrix of size (num_dirs, num_thresh).
         """
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
-
         coords = graph.coord_matrix
-        edges = graph.edge_index
+        edges = graph.edge_indices
 
-        projections = np.matmul(coords, self.directions.vectors.T)
-        edge_maxes = np.maximum(projections[edges[:, 0]],
-                                projections[edges[:, 1]])
+        if theta is None:
+            vertex_projections = np.matmul(coords, self.directions.vectors.T)
+        else:
+            vertex_projections = np.matmul(
+                coords, Directions.from_angles([theta]).vectors.T)
 
-        # Calculate ECT
-        ect_matrix = self.calculate_euler_chars(
-            projections, edge_maxes, r_threshes)
-        self.ect_matrix = ect_matrix
-        return ect_matrix
+        edge_maxes = np.maximum(
+            vertex_projections[edges[:, 0]], vertex_projections[edges[:, 1]])
 
-    def calculate_sect(self):
+        face_maxes = np.empty((0, self.num_dirs))
+        if isinstance(graph, EmbeddedCW) and len(graph.faces) > 0:
+            node_to_index = {n: i for i, n in enumerate(graph.node_list)}
+            face_indices = [
+                [node_to_index[v] for v in face]
+                for face in graph.faces
+            ]
+            face_maxes = np.array([
+                np.max(vertex_projections[face, :], axis=0)
+                for face in face_indices
+            ])
+
+        return self.calculate_euler_chars(
+            vertex_projections, edge_maxes, face_maxes, r_threshes
+        )
+
+    def calculate_sect(self, ect_matrix=None):
         """
         Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix. 
 
@@ -232,7 +246,10 @@ class ECT:
         """
 
         # Calculate the SECT
-        M = self.ect_matrix
+        if ect_matrix is None:
+            M = self.calculate_ect()
+        else:
+            M = ect_matrix
 
         # Get average of each row, corresponds to each direction
         A = np.average(M, axis=1)

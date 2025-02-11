@@ -1,9 +1,8 @@
 import numpy as np
-from itertools import compress, combinations
 import matplotlib.pyplot as plt
 import networkx as nx
-from ect.embed_graph import EmbeddedGraph, create_example_graph
-from scipy.optimize import linprog
+from ect.embed_graph import EmbeddedGraph
+from ect.utils.face_check import point_in_polygon
 
 
 class EmbeddedCW(EmbeddedGraph):
@@ -46,36 +45,22 @@ class EmbeddedCW(EmbeddedGraph):
             check (bool):
                 Whether to check that the face is a valid addition to the cw complex.
         """
+
         if check:
-
-            # Make sure all edges are in the graph
+            # Edge existence check
             edges = list(zip(face, face[1:] + [face[0]]))
-            for edge in edges:
-                if edge not in self.edges:
-                    raise ValueError(f"Edge {edge} not in graph.")
+            for u, v in edges:
+                if not self.has_edge(u, v):
+                    raise ValueError(f"Edge ({u},{v}) missing")
 
-            # TODO: The goal here is to check that none of the other vertices are in the polygon defined by the face.
-            # Problem is that the face could be concave, so we can't just check if the point is in the convex hull of the face.
-            # This is a bit of a tricky problem, so I'm going to leave it for now.
+            # Point-in-polygon check for other vertices
+            polygon = np.array([self.coordinates[v] for v in face])
+            for node in self.nodes:
+                if node in face:
+                    continue
+                if point_in_polygon(self.coordinates[node], polygon):
+                    raise ValueError(f"Node {node} inside face {face}")
 
-            # def in_hull(points, x):
-            #     # Solution for checking if a point is in a convex hull
-            #     # from Nils answer here:
-            #     # https://stackoverflow.com/questions/16750618/whats-an-efficient-way-to-find-if-a-point-lies-in-the-convex-hull-of-a-point-cl
-            #     n_points = len(points)
-            #     n_dim = len(x)
-            #     c = np.zeros(n_points)
-            #     A = np.r_[points.T,np.ones((1,n_points))]
-            #     b = np.r_[x, np.ones(1)]
-            #     lp = linprog(c, A_eq=A, b_eq=b)
-            #     return lp.success
-
-            # points = np.array([self.coordinates[v] for v in face])
-            # if not in_hull(points.T, self.coordinates[face[0]]):
-            #     raise ValueError(f"Face {face} does not bound an empty region in the plane.")
-
-        # Note: faces need to be tuples to make
-        # the face hashable so it can be used as a key in a dictionary
         self.faces.append(tuple(face))
 
     def g_omega_faces(self, theta):
