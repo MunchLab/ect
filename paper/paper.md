@@ -88,12 +88,18 @@ The main functionality of the `ECT` package is to be able to compute the ECT mat
 In theory, the ECT can be defined for a space embedded in $\mathbb{R}^d$ for any $d$. 
 In practice, for applications geared toward encoding shapes seen in the physical world, this is largely limited to the cases $d=2$ or $d=3$. 
 Still, issues arise in applications in the case of $d=3$ where the choice for discretizing the directions chosen on the sphere $\mathbb{S}^2$ is not canonical like the case of $d=2$ and the circle $\mathbb{S}^1$ [@Mardia1999]. 
-
-
+To this end we have implemented **Make sure this is true** the 3D ECT for graph inputs. 
+In order to handle issues with choices of direction discretiziations, we have implemented multiple options for sampling, **Which ones? **
+- Uniform in $\theta$ and $\rho$? 
+- Whatever other sampling methods I can find in that directions book. 
+- From wikipedia: 
+  - [Kent distribution](https://en.wikipedia.org/wiki/Kent_distribution) 
+  - [von Mises-Fisher](https://en.wikipedia.org/wiki/Von_Mises%E2%80%93Fisher_distribution#Matrix_Von_Mises-Fisher)
 
 ## Extension to higher dimensional cells
 
 **TODO: add in stuff about the CW complex inputs**
+- CW Complexes might be too broad a term. Perhaps "[polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)" is better. 
 
 ## Distances 
 
