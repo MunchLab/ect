@@ -2,7 +2,7 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-from utils import next_vert_name
+from ect.utils.naming import next_vert_name
 from typing import Dict, List, Tuple, Optional
 
 
@@ -32,17 +32,21 @@ class EmbeddedGraph(nx.Graph):
         super().__init__()
         self._node_list = []
         self._node_to_index = {}
-        self._coord_matrix = np.empty((0, 0))
+        self._coord_matrix = None
 
     @property
     def coord_matrix(self):
-        """Return the N x D coordinate matrix."""
+        """Return the N x D coordinate matrix"""
+        if self._coord_matrix is None:
+            return np.empty((0, 0))
         return self._coord_matrix
 
     @property
     def dim(self):
         """Return the dimension of the embedded coordinates"""
-        return self._coord_matrix.shape[1] if self._coord_matrix.size > 0 else 0
+        if self._coord_matrix is None:
+            return 0
+        return self._coord_matrix.shape[1]
 
     @property
     def node_list(self):
@@ -60,6 +64,13 @@ class EmbeddedGraph(nx.Graph):
         return {node: self._coord_matrix[i]
                 for i, node in enumerate(self._node_list)}
 
+    @property
+    def edge_indices(self):
+        """Return edges as array of index pairs"""
+        edges = np.array([(self._node_to_index[u], self._node_to_index[v])
+                          for u, v in self.edges()], dtype=int)
+        return edges if len(edges) > 0 else np.empty((0, 2), dtype=int)
+
     # ======================================
     # Node Management
     # ======================================
@@ -70,15 +81,15 @@ class EmbeddedGraph(nx.Graph):
             coords = next((arg for arg in args if isinstance(
                 arg, (list, np.ndarray))), None)
             if coords is not None:
-                coords = np.array(coords, dtype=float)
+                coords = np.asarray(coords, dtype=float)
                 if coords.ndim != 1:
                     raise ValueError("Coordinates must be a 1D array")
 
-                if len(self._node_list) == 0:
-                    self._coord_matrix = np.empty((0, coords.size))
-                elif coords.size != self.dim:
-                    raise ValueError(
-                        f"Coordinates must have dimension {self.dim}")
+                # Skip dimension check for first node
+                if len(self._node_list) > 0:
+                    if coords.size != self._coord_matrix.shape[1]:
+                        raise ValueError(
+                            f"Coordinates must have dimension {self._coord_matrix.shape[1]}")
 
             return func(self, *args, **kwargs)
         return wrapper
@@ -86,29 +97,44 @@ class EmbeddedGraph(nx.Graph):
     def _validate_node(exists=True):
         """Validates if a node exists or not already"""
         def decorator(func):
-            def wrapper(self, node_id, *args, **kwargs):
+            def wrapper(self, *args, **kwargs):
+                # Handle both positional and keyword arguments
+                if args:
+                    node_id = args[0]
+                else:
+                    node_id = kwargs.get('node_id') or kwargs.get('node_id1')
+
                 node_exists = node_id in self._node_to_index
                 if exists and not node_exists:
                     raise ValueError(f"Node {node_id} does not exist")
                 if not exists and node_exists:
                     raise ValueError(f"Node {node_id} already exists")
-                return func(self, node_id, *args, **kwargs)
+                return func(self, *args, **kwargs)
             return wrapper
         return decorator
 
     @_validate_coords
     @_validate_node(exists=False)
     def add_node(self, node_id, coord):
-        """Add a vertex to the graph. 
-        If the vertex name is given as None, it will be assigned via the next_vert_name method.
+        """Add a vertex to the graph."""
+        coord = np.asarray(coord, dtype=float)
+        # Debug
+        print(f"Adding node {node_id} with coord shape: {coord.shape}")
 
-        Parameters:
-            node_id (hashable like int or str, or None) : The name of the vertex to add.
-            coordinates (array-like) : The coordinates of the vertex being added.
-        """
+        if len(self._node_list) == 0:
+            print("First node, initializing matrix")  # Debug
+            self._coord_matrix = coord.reshape(1, -1)
+            # Debug
+            print(f"Matrix shape after init: {self._coord_matrix.shape}")
+        else:
+            print(f"Current matrix shape: {self._coord_matrix.shape}")  # Debug
+            coord_reshaped = coord.reshape(1, -1)
+            print(f"New coord shape: {coord_reshaped.shape}")  # Debug
+            self._coord_matrix = np.vstack(
+                [self._coord_matrix, coord_reshaped])
+
         self._node_list.append(node_id)
         self._node_to_index[node_id] = len(self._node_list) - 1
-        self._coord_matrix = np.vstack([self._coord_matrix, coord])
         super().add_node(node_id)
 
     def add_nodes_from(self, nodes_with_coords):
@@ -315,18 +341,15 @@ class EmbeddedGraph(nx.Graph):
         self._coord_matrix = pca.fit_transform(self._coord_matrix)
         self.dim = target_dim
 
-    @_validate_node(exists=True)
+    def _validate_node_exists(self, node_id):
+        """Check if a node exists in the graph"""
+        if node_id not in self._node_to_index:
+            raise ValueError(f"Node {node_id} does not exist")
+
     def add_edge(self, node_id1, node_id2):
-        """
-        Adds an edge between the vertices node_id1 and node_id2 if they exist.
-
-        Parameters:
-            node_id1 (str):
-                The first vertex of the edge.
-            node_id2 (str):
-                The second vertex of the edge.
-
-        """
+        """Add an edge between two nodes"""
+        self._validate_node_exists(node_id1)
+        self._validate_node_exists(node_id2)
         super().add_edge(node_id1, node_id2)
 
     # ===================

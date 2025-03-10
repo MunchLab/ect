@@ -6,6 +6,8 @@ from typing import Optional, Union
 from ect.embed_cw import EmbeddedCW
 from ect.embed_graph import EmbeddedGraph
 from ect.directions import Directions
+from ect.results import ECTResult
+from functools import wraps
 
 
 class ECT:
@@ -37,7 +39,7 @@ class ECT:
         Initialize ECT calculator.
 
         Args:
-            num_dirs: Number of uniformly sampled directions (ignored if directions provided)
+            num_dirs: Number of directions for uniform sampling (ignored if directions provided)
             num_thresh: Number of threshold values
             directions: Optional Directions object for custom sampling
             bound_radius: Optional radius for bounding circle
@@ -46,13 +48,28 @@ class ECT:
             self.directions = directions
             self.num_dirs = len(directions)
         else:
-            if num_dirs is None:
-                num_dirs = 360
-            self.num_dirs = num_dirs
-            self.directions = Directions(num_dirs)
+            self.num_dirs = num_dirs or 360
+            self.directions = None
 
         self.num_thresh = num_thresh
         self.set_bounding_radius(bound_radius)
+
+    def _ensure_valid_directions(calculation_method):
+        """
+        Decorator to ensure directions match graph dimension.
+        Reinitializes directions if dimensions don't match.
+        """
+        @wraps(calculation_method)
+        def wrapper(ect_instance, graph, *args, **kwargs):
+            if ect_instance.directions is None:
+                ect_instance.directions = Directions.uniform(
+                    ect_instance.num_dirs, dim=graph.dim)
+            elif ect_instance.directions.dim != graph.dim:
+                ect_instance.directions = Directions.uniform(
+                    ect_instance.num_dirs, dim=graph.dim)
+
+            return calculation_method(ect_instance, graph, *args, **kwargs)
+        return wrapper
 
     def set_bounding_radius(self, bound_radius):
         """
@@ -108,105 +125,14 @@ class ECT:
 
         return r, r_threshes
 
-    def calculate_ecc(self, G, theta, bound_radius=None, return_counts=False):
-        """
-        Function to compute the Euler Characteristic Curve (ECC) of an `EmbeddedGraph`.
+    @_ensure_valid_directions
+    def calculate(self, graph, theta=None, bound_radius=None, return_counts=False):
+        """Calculate ECT - directions are validated by decorator"""
+        # Initialize directions if needed
+        if self.directions is None:
+            self.directions = Directions.uniform(
+                self.num_dirs, dim=graph.dim)
 
-        Parameters:
-            G (nx.Graph): The graph to compute the ECC for.
-            theta (float): The angle (in radians) for the direction function.
-            bound_radius (float, optional): Radius for threshold range. Default is None.
-            return_counts (bool, optional): Whether to return vertex, edge, and face counts. Default is False.
-
-        Returns:
-            numpy.ndarray: ECC values at each threshold.
-            (Optional) Tuple of counts: (ecc, vertex_count, edge_count, face_count)
-        """
-        r, r_threshes = self.get_radius_and_thresh(G, bound_radius)
-
-        r_threshes = np.array(r_threshes)
-
-        # Sort vertices and edges based on projection
-        v_list, g = G.sort_vertices(theta, return_g=True)
-        g_list = np.array([g[v] for v in v_list])
-        sorted_g_list = np.sort(g_list)
-
-        e_list, g_e = G.sort_edges(theta, return_g=True)
-        g_e_list = np.array([g_e[e] for e in e_list])
-        sorted_g_e_list = np.sort(g_e_list)
-
-        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='right')
-        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='right')
-
-        if isinstance(G, EmbeddedCW):
-            f_list, g_f = G.sort_faces(theta, return_g=True)
-            g_f_list = np.array([g_f[f] for f in f_list])
-            sorted_g_f_list = np.sort(g_f_list)
-            face_count = np.searchsorted(
-                sorted_g_f_list, r_threshes, side='right')
-        else:
-            face_count = np.zeros_like(r_threshes, dtype=np.int32)
-
-        ecc = vertex_count - edge_count + face_count
-
-        if return_counts:
-            return ecc, vertex_count, edge_count, face_count
-        else:
-            return ecc
-
-    @staticmethod
-    @jit(nopython=True, parallel=True)
-    def calculate_euler_chars(projections, edge_maxes, face_maxes, thresholds):
-        """Calculate the euler characteristic for each direction in parallel
-
-        Parameters:
-            projections (np.array):
-                The projections of the vertices.
-            edge_maxes (np.array):
-                The projections of the edges.
-            thresholds (np.array):
-                The thresholds to compute the ECT at.
-
-        Returns:
-            np.array:
-                The ECT matrix of size (num_dirs, num_thresh).
-        """
-        num_vertices, num_dir = projections.shape
-        num_edges = edge_maxes.shape[0]
-        num_thresh = len(thresholds)
-        result = np.empty((num_dir, num_thresh), dtype=np.int32)
-
-        # parallelize over directions
-        for i in prange(num_dir):
-            for j in range(num_thresh):
-                thresh = thresholds[j]
-                vert_count = 0
-                edge_count = 0
-
-                for v in range(num_vertices):
-                    if projections[v, i] <= thresh:
-                        vert_count += 1
-                for e in range(num_edges):
-                    if edge_maxes[e, i] <= thresh:
-                        edge_count += 1
-
-                result[i, j] = vert_count - edge_count
-
-        return result
-
-    def calculate(self, graph: Union[EmbeddedGraph, EmbeddedCW], theta: Optional[float] = None, bound_radius=None, return_counts=False):
-        """Vectorized ECT calculation using optimized numpy operations
-
-        Parameters:
-            graph (EmbeddedGraph/EmbeddedCW):
-                The input graph or CW complex.
-            bound_radius (float):
-                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
-
-        Returns:
-            np.array:
-                The ECT matrix of size (num_dirs, num_thresh).
-        """
         r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
         coords = graph.coord_matrix
         edges = graph.edge_indices
@@ -235,6 +161,75 @@ class ECT:
         return self.calculate_euler_chars(
             vertex_projections, edge_maxes, face_maxes, r_threshes
         )
+
+    @_ensure_valid_directions
+    def calculate_ecc(self, graph, theta, bound_radius=None, return_counts=False):
+        """Calculate ECC - directions are validated by decorator"""
+        r, r_threshes = self.get_radius_and_thresh(graph, bound_radius)
+
+        r_threshes = np.array(r_threshes)
+
+        # Sort vertices and edges based on projection
+        v_list, g = graph.sort_vertices(theta, return_g=True)
+        g_list = np.array([g[v] for v in v_list])
+        sorted_g_list = np.sort(g_list)
+
+        e_list, g_e = graph.sort_edges(theta, return_g=True)
+        g_e_list = np.array([g_e[e] for e in e_list])
+        sorted_g_e_list = np.sort(g_e_list)
+
+        vertex_count = np.searchsorted(sorted_g_list, r_threshes, side='right')
+        edge_count = np.searchsorted(sorted_g_e_list, r_threshes, side='right')
+
+        if isinstance(graph, EmbeddedCW):
+            f_list, g_f = graph.sort_faces(theta, return_g=True)
+            g_f_list = np.array([g_f[f] for f in f_list])
+            sorted_g_f_list = np.sort(g_f_list)
+            face_count = np.searchsorted(
+                sorted_g_f_list, r_threshes, side='right')
+        else:
+            face_count = np.zeros_like(r_threshes, dtype=np.int32)
+
+        ecc = vertex_count - edge_count + face_count
+
+        if return_counts:
+            return ecc, vertex_count, edge_count, face_count
+        else:
+            return ecc
+
+    @staticmethod
+    @jit(nopython=True, parallel=True, fastmath=True)
+    def _calculate_euler_chars_numba(projections, edge_maxes, face_maxes, thresholds):
+        """Pure numerical computation of Euler characteristics"""
+        num_dir = projections.shape[1]
+        num_thresh = thresholds.shape[0]
+        result = np.empty((num_dir, num_thresh), dtype=np.int32)
+
+        sorted_projections = np.empty_like(projections)
+        sorted_edge_maxes = np.empty_like(edge_maxes)
+
+        for i in prange(num_dir):
+            sorted_projections[:, i] = np.sort(projections[:, i])
+            sorted_edge_maxes[:, i] = np.sort(edge_maxes[:, i])
+
+        for j in prange(num_thresh):
+            thresh = thresholds[j]
+            for i in range(num_dir):
+                v = np.searchsorted(
+                    sorted_projections[:, i], thresh, side='right')
+                e = np.searchsorted(
+                    sorted_edge_maxes[:, i], thresh, side='right')
+                f = np.searchsorted(
+                    face_maxes[:, i], thresh, side='right') if face_maxes.shape[0] > 0 else 0
+                result[i, j] = v - e + f
+
+        return result
+
+    def calculate_euler_chars(self, projections, edge_maxes, face_maxes, thresholds):
+        """Calculate Euler characteristics and wrap in ECTResult"""
+        result = ECT._calculate_euler_chars_numba(
+            projections, edge_maxes, face_maxes, thresholds)
+        return ECTResult(result, self.directions, self.threshes)
 
     def calculate_sect(self, ect_matrix=None):
         """
@@ -300,37 +295,6 @@ class ECT:
         plt.xlabel('$a$')
         plt.ylabel(r'$\chi(K_a)$')
 
-    def plot_ect(self):
-        """
-        Function to plot the Euler Characteristic Transform (ECT) matrix. Note that the ECT matrix must be calculated before calling this function.
-
-        The resulting plot will have the angle on the x-axis and the threshold on the y-axis.
-        """
-
-        # Make meshgrid.
-        # Add back the 2pi to thetas for the pcolormesh
-        thetas = np.concatenate((self.thetas, [2*np.pi]))
-        X, Y = np.meshgrid(thetas, self.threshes)
-        M = np.zeros_like(X)
-
-        M[:, :-1] = self.ECT_matrix.T
-        M[:, -1] = M[:, 0]  # Add 2pi direction
-
-        plt.pcolormesh(X, Y, M, cmap='viridis')
-        plt.colorbar()
-
-        ax = plt.gca()
-        ax.set_xticks(np.linspace(0, 2*np.pi, 9))
-        ax.set_xticklabels([
-            r'$0$', r'$\frac{\pi}{4}$', r'$\frac{\pi}{2}$',
-            r'$\frac{3\pi}{4}$', r'$\pi$', r'$\frac{5\pi}{4}$',
-            r'$\frac{3\pi}{2}$', r'$\frac{7\pi}{4}$', r'$2\pi$'
-        ])
-
-        plt.xlabel(r'$\omega$')
-        plt.ylabel(r'$a$')
-        plt.title(r'ECT of Input Graph')
-
     def plot_sect(self):
         """
         Function to plot the Smooth Euler Characteristic Transform (SECT) matrix. Note that the SECT matrix must be calculated before calling this function.
@@ -371,19 +335,3 @@ class ECT:
         plt.ylabel(r'$t$')
 
         plt.title(r'SECT of Input Graph')
-
-    def plot(self, plot_type):
-        """
-        Function to plot the ECT or SECT matrix. The type parameter should be either 'ECT' or 'SECT'.
-
-        Parameters:
-            plot_type : str
-                The type of plot to make. Either 'ECT' or 'SECT'.
-        """
-
-        if plot_type == 'ECT':
-            self.plot_ect()
-        elif plot_type == 'SECT':
-            self.plot_sect()
-        else:
-            raise ValueError('plot_type must be either "ECT" or "SECT".')
