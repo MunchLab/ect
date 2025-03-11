@@ -27,6 +27,9 @@ class ECTResult(np.ndarray):
         if self.thresholds is None:
             self.thresholds = np.linspace(-1, 1, self.shape[1])
 
+        if len(self.directions) == 1:
+            self.plot_ecc(self, self.directions[0])
+
         if self.directions.dim == 2:
             # 2D case - use angle representation
             if self.directions.sampling == Sampling.UNIFORM and not self.directions.endpoint:
@@ -36,7 +39,6 @@ class ECTResult(np.ndarray):
                 ect_data = np.hstack([self.T, self.T[:, [0]]])
             else:
                 plot_thetas = self.directions.thetas
-                ect_data = self.T
 
             X = plot_thetas
             Y = self.thresholds
@@ -83,3 +85,30 @@ class ECTResult(np.ndarray):
         
         # Return as ECTResult to maintain plotting capability
         return ECTResult(sect, self.directions, self.thresholds)
+    
+    def plot_ecc(self, theta):
+        """
+        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
+
+        Parameters:
+            graph (EmbeddedGraph/EmbeddedCW):
+                The input graph or CW complex.
+            theta (float):
+                The angle in :math:`[0,2\pi]` for the direction to plot the ECC.
+            bound_radius (float):
+                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None. 
+            draw_counts (bool):
+                Whether to draw the counts of vertices, edges, and faces varying across thresholds. Default is False.
+        """
+
+        
+
+        # if self.threshes is None:
+        #     self.set_bounding_radius(graph.get_bounding_radius())
+
+        plt.step(self.thresholds, self.T, label='ECC')
+
+        theta_round = str(np.round(theta, 2))
+        plt.title(r'ECC for $\omega = ' + theta_round + '$')
+        plt.xlabel('$a$')
+        plt.ylabel(r'$\chi(K_a)$')

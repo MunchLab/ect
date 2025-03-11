@@ -1,9 +1,13 @@
+from collections import defaultdict
+from typing import Dict, List, Tuple, Optional
+
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
+
 from ect.utils.naming import next_vert_name
-from typing import Dict, List, Tuple, Optional
+
 
 
 CENTER_TYPES = ["mean", "bounding_box", "origin"]
@@ -12,7 +16,7 @@ TRANSFORM_TYPES = ["pca"]
 
 class EmbeddedGraph(nx.Graph):
     """
-    A class to represent a graph with embedded coordinates for each vertex.
+    A class to represent a graph with embedded coordinates for each vertex with simple geometric graph operations.
 
     Attributes
         graph : nx.Graph
@@ -74,7 +78,7 @@ class EmbeddedGraph(nx.Graph):
     # ======================================
     # Node Management
     # ======================================
-    def _validate_coords(func):
+    def _validate_coords(self,func):
         """Validates if coordinates are nonempty and have valid dimension"""
 
         def wrapper(self, *args, **kwargs):
@@ -94,7 +98,7 @@ class EmbeddedGraph(nx.Graph):
             return func(self, *args, **kwargs)
         return wrapper
 
-    def _validate_node(exists=True):
+    def _validate_node(self, exists=True):
         """Validates if a node exists or not already"""
         def decorator(func):
             def wrapper(self, *args, **kwargs):
@@ -118,18 +122,11 @@ class EmbeddedGraph(nx.Graph):
     def add_node(self, node_id, coord):
         """Add a vertex to the graph."""
         coord = np.asarray(coord, dtype=float)
-        # Debug
-        print(f"Adding node {node_id} with coord shape: {coord.shape}")
 
         if len(self._node_list) == 0:
-            print("First node, initializing matrix")  # Debug
             self._coord_matrix = coord.reshape(1, -1)
-            # Debug
-            print(f"Matrix shape after init: {self._coord_matrix.shape}")
         else:
-            print(f"Current matrix shape: {self._coord_matrix.shape}")  # Debug
             coord_reshaped = coord.reshape(1, -1)
-            print(f"New coord shape: {coord_reshaped.shape}")  # Debug
             self._coord_matrix = np.vstack(
                 [self._coord_matrix, coord_reshaped])
 

@@ -1,7 +1,7 @@
-import numpy as np
 from typing import Optional, Sequence
 from enum import Enum
 
+import numpy as np
 
 class Sampling(Enum):
     UNIFORM = "uniform"
@@ -58,6 +58,7 @@ class Directions:
                 self._thetas = np.linspace(
                     0, 2*np.pi, self.num_dirs, endpoint=self.endpoint)
             else:
+                # generate random normal samples and normalize to lie on the unit sphere
                 self._vectors = self._rng.randn(self.num_dirs, self.dim)
                 self._vectors /= np.linalg.norm(self._vectors,
                                                 axis=1, keepdims=True)
