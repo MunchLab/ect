@@ -26,7 +26,9 @@ class EmbeddedGraph(nx.Graph):
         node_list : list
             a list of node names
         node_to_index : dict
-            a dictionary mapping node ids to their index in the coord_matrix  
+            a dictionary mapping node ids to their index in the coord_matrix
+        simplices : dict
+            A dictionary mapping dimension k to a list of k-simplices represented as vertex index tuples
         dim : int
             the dimension of the embedded coordinates
 
@@ -37,6 +39,7 @@ class EmbeddedGraph(nx.Graph):
         self._node_list = []
         self._node_to_index = {}
         self._coord_matrix = None
+        self._simplices = defaultdict(list)
 
     @property
     def coord_matrix(self):
@@ -75,6 +78,20 @@ class EmbeddedGraph(nx.Graph):
                           for u, v in self.edges()], dtype=int)
         return edges if len(edges) > 0 else np.empty((0, 2), dtype=int)
 
+    @property
+    def simplices(self):
+        """Return the simplices as a dictionary"""
+        return self._simplices
+    @property
+    def simplex_dim(self):
+        """Return the maximum dimension of the simplices"""
+        return max(self._simplices.keys())
+    
+    @property
+    def k_simplices(self, k):
+        """Return the k-simplices"""
+        return self._simplices[k]
+    
     # ======================================
     # Node Management
     # ======================================
@@ -89,7 +106,6 @@ class EmbeddedGraph(nx.Graph):
                 if coords.ndim != 1:
                     raise ValueError("Coordinates must be a 1D array")
 
-                # Skip dimension check for first node
                 if len(self._node_list) > 0:
                     if coords.size != self._coord_matrix.shape[1]:
                         raise ValueError(
@@ -102,7 +118,6 @@ class EmbeddedGraph(nx.Graph):
         """Validates if a node exists or not already"""
         def decorator(func):
             def wrapper(self, *args, **kwargs):
-                # Handle both positional and keyword arguments
                 if args:
                     node_id = args[0]
                 else:
@@ -259,7 +274,7 @@ class EmbeddedGraph(nx.Graph):
                           decimals: int = 6
                           ) -> Dict[float, List[Tuple[str, str]]]:
         """
-        Optimized angle dictionary construction using NumPy grouping.
+        Calculate normal angles between all pairs of vertices using NumPy grouping.
 
         Args:
             edges_only: Only include edge-connected pairs
@@ -271,7 +286,6 @@ class EmbeddedGraph(nx.Graph):
         angle_matrix, vertices = self.get_angle_matrix(edges_only, decimals)
         n = len(vertices)
 
-        # Extract upper triangle indices
         rows, cols = np.triu_indices(n, k=1)
         angles = angle_matrix[rows, cols]
         valid_mask = ~np.isnan(angles)
@@ -279,12 +293,10 @@ class EmbeddedGraph(nx.Graph):
         if not valid_mask.any():
             return defaultdict(list)
 
-        # Filter valid pairs
         valid_rows = rows[valid_mask]
         valid_cols = cols[valid_mask]
         valid_angles = angles[valid_mask]
 
-        # Group pairs by rounded angle
         angle_dict = defaultdict(list)
         unique_angles, inverse = np.unique(valid_angles, return_inverse=True)
 
@@ -347,7 +359,20 @@ class EmbeddedGraph(nx.Graph):
         """Add an edge between two nodes"""
         self._validate_node_exists(node_id1)
         self._validate_node_exists(node_id2)
+        self._simplices[1].append((node_id1, node_id2))
         super().add_edge(node_id1, node_id2)
+
+    def add_simplex(self, simplex):
+        """Add a simplex to the graph"""
+        if len(simplex) == 0:
+            raise ValueError("Simplex must have at least one vertex")
+        if len(simplex) == 1:
+            self._simplices[0].append(simplex[0])
+        else:
+            for i in range(len(simplex)):
+                for j in range(i+1, len(simplex)):
+                    self.add_edge(simplex[i], simplex[j])
+            self._simplices[len(simplex)].append(simplex)
 
     # ===================
     # Visualization
@@ -388,7 +413,6 @@ class EmbeddedGraph(nx.Graph):
         Visualize the embedded graph in 2D or 3D
         """
         ax = self._create_axes(ax, self.dim)
-        original_dim = self.dim
 
         pos = {node: self._coord_matrix[i]
                for i, node in enumerate(self._node_list)}
