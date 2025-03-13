@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numba import jit, prange
 from typing import Optional, Union
+from sklearn.base import BaseEstimator, TransformerMixin
 
 from .embed_cw import EmbeddedCW
 from .embed_graph import EmbeddedGraph
@@ -12,7 +13,7 @@ from .results import ECTResult
 
 
 
-class ECT:
+class ECT(BaseEstimator, TransformerMixin):
     """
     A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedGraph` or :any:`EmbeddedCW`.
 
@@ -31,10 +32,10 @@ class ECT:
 
     def __init__(self,
                  directions: Optional[Directions] = None,
-                 *,
                  num_dirs: Optional[int] = None,
                  num_thresh: Optional[int] = None,
-                 bound_radius: Optional[float] = None):
+                 bound_radius: Optional[float] = None,
+                 dtype=np.int32):
         """Initialize ECT calculator with either a Directions object or sampling parameters
         
         Args:
@@ -42,7 +43,10 @@ class ECT:
             num_dirs: Number of directions to sample (ignored if directions provided)
             num_thresh: Number of threshold values (required if directions not provided)
             bound_radius: Optional radius for bounding circle
+            dtype: numpy dtype for output (default: np.int32 to save memory)
         """
+        super().__init__()
+        self.dtype = dtype
         if directions is not None:
             self.directions = directions
             self.num_dirs = len(directions)
@@ -57,6 +61,21 @@ class ECT:
         self.thresholds = None
         if bound_radius is not None:
             self.set_bounding_radius(bound_radius)
+
+    def fit(self, X, y=None):
+        if not all(isinstance(x, (EmbeddedGraph, EmbeddedCW)) for x in X):
+            raise ValueError("All elements must be EmbeddedGraph or EmbeddedCW instances")
+        return self
+
+    def transform(self, X):
+        results = []
+        for graph in X:
+            ect_result = self.calculate(graph)
+            results.append(ect_result)
+        return np.array(results)
+
+    def fit_transform(self, X, y=None):
+        return self.fit(X, y).transform(X)
 
     @staticmethod
     def _ensure_valid_directions(calculation_method):
@@ -118,7 +137,7 @@ class ECT:
 
         ect = self._compute_directional_transform(simplex_projections, thresholds)
 
-        return ECTResult(ect, directions, thresholds)
+        return ECTResult(ect.astype(self.dtype), directions, thresholds)
 
     def _compute_node_projections(self, coords, directions):
         """Compute inner products of coordinates with directions"""
@@ -159,7 +178,7 @@ class ECT:
         """
         num_dir = simplex_projections_list[0].shape[1]
         num_thresh = thresholds.shape[0]
-        result = np.empty((num_dir, num_thresh), dtype=np.int32)
+        result = np.empty((num_dir, num_thresh))
 
         sorted_projections = []
         for proj in simplex_projections_list:
