@@ -1,6 +1,6 @@
 [project]
 name = "ect"
-version = "0.1.9"
+version = "1.0.0"
 authors = [
   { name="Liz Munch", email="muncheli@msu.edu" },
 ]
@@ -20,8 +20,12 @@ dependencies = ["numpy",
             "scikit-learn"
             ]
 
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools.packages.find]
-where = ["ect"]
+where = ["src"]
 
 
 [project.urls]

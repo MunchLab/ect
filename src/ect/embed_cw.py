@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
-from ect.embed_graph import EmbeddedGraph
-from ect.utils.face_check import point_in_polygon
+from .embed_graph import EmbeddedGraph
+from .utils.face_check import point_in_polygon
 
 
 class EmbeddedCW(EmbeddedGraph):
@@ -18,7 +18,6 @@ class EmbeddedCW(EmbeddedGraph):
         Initializes an empty EmbeddedCW object.
         """
 
-        # The super class initializes the graph and the coordinates dictionary.
         super().__init__()
         self.faces = []
 
@@ -27,17 +26,18 @@ class EmbeddedCW(EmbeddedGraph):
         Adds the edges and coordinates from an EmbeddedGraph object to the EmbeddedCW object.
 
         Parameters:
-            embedded_graph (EmbeddedGraph):
+            G (EmbeddedGraph):
                 The EmbeddedGraph object to add from.
         """
-        self.add_nodes_from(G.nodes(), G.coordinates)
+        nodes_with_coords = [(node, G.coord_matrix[G.node_to_index[node]]) 
+                            for node in G.nodes()]
+        self.add_nodes_from(nodes_with_coords)
         self.add_edges_from(G.edges())
 
+    @EmbeddedGraph._validate_node(exists=True)
     def add_face(self, face, check=True):
         """
         Adds a face to the list of faces.
-
-        TODO: Do we want a check to make sure the face is legit? (i.e. is a cycle in the graph, and bounds a region in the plane)
 
         Parameters:
             face (list):
@@ -45,75 +45,23 @@ class EmbeddedCW(EmbeddedGraph):
             check (bool):
                 Whether to check that the face is a valid addition to the cw complex.
         """
+        if len(face) < 3:
+            raise ValueError("Face must have at least 3 vertices")
 
         if check:
-            # Edge existence check
             edges = list(zip(face, face[1:] + [face[0]]))
             for u, v in edges:
                 if not self.has_edge(u, v):
                     raise ValueError(f"Edge ({u},{v}) missing")
 
-            # Point-in-polygon check for other vertices
-            polygon = np.array([self.coordinates[v] for v in face])
+            polygon = np.array([self.coord_matrix[self._node_to_index[v]] for v in face])
             for node in self.nodes:
                 if node in face:
                     continue
-                if point_in_polygon(self.coordinates[node], polygon):
+                if point_in_polygon(self.coord_matrix[self._node_to_index[node]], polygon):
                     raise ValueError(f"Node {node} inside face {face}")
 
         self.faces.append(tuple(face))
-
-    def g_omega_faces(self, theta):
-        """
-        Calculates the function value of the faces of the graph by making the value equal to the max vertex value 
-
-        Parameters:
-
-            theta (float): 
-                The direction of the function to be calculated.
-
-        Returns:
-            dict
-                A dictionary of the function values of the faces.
-        """
-        g = super().g_omega(theta)
-
-        g_faces = {}
-        for face in self.faces:
-            g_faces[tuple(face)] = max([g[v] for v in face])
-
-        return g_faces
-
-    def sort_faces(self, theta, return_g=False):
-        """
-        Function to sort the faces of the graph according to the function
-
-        .. math ::
-
-            g_\omega(\sigma) = \max \{ g_\omega(v) \mid  v \in \sigma \}
-
-        in the direction of :math:`\\theta \in [0,2\pi]` .
-
-        Parameters:
-            theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to sort the edges.
-            return_g (bool):
-                Whether to return the :math:`g(v)` values along with the sorted edges.
-
-        Returns:
-            A list of edges sorted in increasing order of the :math:`g(v)` values. 
-            If ``return_g`` is True, also returns the ``g`` dictionary with the function values ``g[vertex_name]=func_value``. 
-
-        """
-        g_f = self.g_omega_faces(theta)
-
-        f_list = sorted(self.faces, key=lambda face: g_f[face])
-
-        if return_g:
-            # g_sorted = [g[v] for v in v_list]
-            return f_list, g_f
-        else:
-            return f_list
 
     def plot_faces(self, theta=None, ax=None, **kwargs):
         """
@@ -137,7 +85,7 @@ class EmbeddedCW(EmbeddedGraph):
             fig = ax.get_figure()
 
         for face in self.faces:
-            face_coords = np.array([self.coordinates[v] for v in face])
+            face_coords = np.array([self.coord_matrix[self.node_to_index[v]] for v in face])
             ax.fill(face_coords[:, 0], face_coords[:, 1], **kwargs)
 
         return ax

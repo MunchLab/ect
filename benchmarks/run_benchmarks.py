@@ -3,7 +3,7 @@ import numpy as np
 import time
 from pathlib import Path
 import json
-from benchmark_graph import benchmark_graph_ect, benchmark_g_omega
+from benchmark_graph import benchmark_graph_ect
 from benchmark_cw import benchmark_cw_ect
 import platform
 
@@ -26,8 +26,7 @@ def run_all_benchmarks(num_runs=5):
     print("\nRunning CW complex benchmarks...")
     results['benchmarks']['cw_ect'] = benchmark_cw_ect(num_runs=num_runs)
 
-    print("\nRunning g_omega benchmarks...")
-    results['benchmarks']['g_omega'] = benchmark_g_omega(num_runs=num_runs)
+
 
     return results
 

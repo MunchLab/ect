@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-from ect.utils.naming import next_vert_name
+from .utils.naming import next_vert_name
 
 
 
@@ -78,9 +78,9 @@ class EmbeddedGraph(nx.Graph):
     # ======================================
     # Node Management
     # ======================================
-    def _validate_coords(self,func):
+    @staticmethod
+    def _validate_coords(func):
         """Validates if coordinates are nonempty and have valid dimension"""
-
         def wrapper(self, *args, **kwargs):
             coords = next((arg for arg in args if isinstance(
                 arg, (list, np.ndarray))), None)
@@ -98,21 +98,24 @@ class EmbeddedGraph(nx.Graph):
             return func(self, *args, **kwargs)
         return wrapper
 
-    def _validate_node(self, exists=True):
-        """Validates if a node exists or not already"""
+    @staticmethod
+    def _validate_node(exists=True):
+        """Validates if nodes exist or not already"""
         def decorator(func):
             def wrapper(self, *args, **kwargs):
                 # Handle both positional and keyword arguments
                 if args:
-                    node_id = args[0]
+                    nodes = args[0] if isinstance(args[0], (list, tuple)) else [args[0]]
                 else:
                     node_id = kwargs.get('node_id') or kwargs.get('node_id1')
+                    nodes = [node_id] if node_id else []
 
-                node_exists = node_id in self._node_to_index
-                if exists and not node_exists:
-                    raise ValueError(f"Node {node_id} does not exist")
-                if not exists and node_exists:
-                    raise ValueError(f"Node {node_id} already exists")
+                for node_id in nodes:
+                    node_exists = node_id in self._node_to_index
+                    if exists and not node_exists:
+                        raise ValueError(f"Node {node_id} does not exist")
+                    if not exists and node_exists:
+                        raise ValueError(f"Node {node_id} already exists")
                 return func(self, *args, **kwargs)
             return wrapper
         return decorator
@@ -120,7 +123,12 @@ class EmbeddedGraph(nx.Graph):
     @_validate_coords
     @_validate_node(exists=False)
     def add_node(self, node_id, coord):
-        """Add a vertex to the graph."""
+        """Add a vertex to the graph.
+        
+        Args:
+            node_id: Identifier for the node
+            coord: Array-like coordinates for the node
+        """
         coord = np.asarray(coord, dtype=float)
 
         if len(self._node_list) == 0:
@@ -142,6 +150,7 @@ class EmbeddedGraph(nx.Graph):
     # Coordinate Access
     # ======================================
 
+    @_validate_node(exists=True)
     def get_coord(self, node_id):
         """Return the coordinates of a node"""
         return self._coord_matrix[self._node_to_index[node_id]].copy()
@@ -338,15 +347,9 @@ class EmbeddedGraph(nx.Graph):
         self._coord_matrix = pca.fit_transform(self._coord_matrix)
         self.dim = target_dim
 
-    def _validate_node_exists(self, node_id):
-        """Check if a node exists in the graph"""
-        if node_id not in self._node_to_index:
-            raise ValueError(f"Node {node_id} does not exist")
-
+    @_validate_node(exists=True)
     def add_edge(self, node_id1, node_id2):
         """Add an edge between two nodes"""
-        self._validate_node_exists(node_id1)
-        self._validate_node_exists(node_id2)
         super().add_edge(node_id1, node_id2)
 
     # ===================

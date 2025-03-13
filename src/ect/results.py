@@ -9,7 +9,11 @@ class ECTResult(np.ndarray):
     Acts like a regular matrix but with added visualization methods
     """
     def __new__(cls, matrix, directions, thresholds):
-        obj = np.asarray(matrix).view(cls)
+        # allow float arrays for smooth transform
+        if np.issubdtype(matrix.dtype, np.floating):
+            obj = np.asarray(matrix, dtype=np.float64).view(cls)
+        else:
+            obj = np.asarray(matrix, dtype=np.int32).view(cls)
         obj.directions = directions
         obj.thresholds = thresholds
         return obj
@@ -28,14 +32,14 @@ class ECTResult(np.ndarray):
             self.thresholds = np.linspace(-1, 1, self.shape[1])
 
         if len(self.directions) == 1:
-            self.plot_ecc(self, self.directions[0])
+            self._plot_ecc(self.directions[0])
+            return ax
 
         if self.directions.dim == 2:
             # 2D case - use angle representation
             if self.directions.sampling == Sampling.UNIFORM and not self.directions.endpoint:
                 plot_thetas = np.concatenate(
                     [self.directions.thetas, [2*np.pi]])
-                # Circular closure
                 ect_data = np.hstack([self.T, self.T[:, [0]]])
             else:
                 plot_thetas = self.directions.thetas
@@ -69,45 +73,25 @@ class ECTResult(np.ndarray):
     
 
     def smooth(self):
-        """
-        Function to calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix. 
-
-        Returns:
-            ECTResult: The SECT matrix with same directions and thresholds
-        """
-        avg = np.average(self, axis=1)
-
-        #subtract the average from each row
-        centered_ect = self - avg[:, np.newaxis]
+        """Calculate the Smooth Euler Characteristic Transform"""
+        # convert to float for calculations
+        data = self.astype(np.float64)
         
-        # take the cumulative sum of each row to get the SECT
-        sect = np.cumsum(centered_ect, axis=1)
+        # get average for each direction
+        direction_avgs = np.average(data, axis=1)
         
-        # Return as ECTResult to maintain plotting capability
-        return ECTResult(sect, self.directions, self.thresholds)
+        # center each direction's values
+        centered = data - direction_avgs[:, np.newaxis]
+        
+        # compute cumulative sum to get SECT
+        sect = np.cumsum(centered, axis=1)
+        
+        # create new ECTResult with float type
+        return ECTResult(sect.astype(np.float64), self.directions, self.thresholds)
     
-    def plot_ecc(self, theta):
-        """
-        Function to plot the Euler Characteristic Curve (ECC) for a specific direction theta. Note that this calculates the ECC for the input graph and then plots it.
-
-        Parameters:
-            graph (EmbeddedGraph/EmbeddedCW):
-                The input graph or CW complex.
-            theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to plot the ECC.
-            bound_radius (float):
-                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None. 
-            draw_counts (bool):
-                Whether to draw the counts of vertices, edges, and faces varying across thresholds. Default is False.
-        """
-
-        
-
-        # if self.threshes is None:
-        #     self.set_bounding_radius(graph.get_bounding_radius())
-
+    def _plot_ecc(self, theta):
+        """Plot the Euler Characteristic Curve for a specific direction"""
         plt.step(self.thresholds, self.T, label='ECC')
-
         theta_round = str(np.round(theta, 2))
         plt.title(r'ECC for $\omega = ' + theta_round + '$')
         plt.xlabel('$a$')
