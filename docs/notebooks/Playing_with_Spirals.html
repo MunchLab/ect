@@ -1,0 +1,1189 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modified version breaking the spiral &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+    <link rel="shortcut icon" href="../_static/ECT_Logo_128x128.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ect
+              <img src="../_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../embed_graph.html">2.1. Embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.create_example_graph"><code class="docutils literal notranslate"><span class="pre">create_example_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../embed_cw.html">2.2. Embedded CW complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.create_example_cw"><code class="docutils literal notranslate"><span class="pre">create_example_cw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ect_on_graphs.html">2.3. ECT on graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Constructing-the-embedded-graph">3.1.1. Constructing the embedded graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Computing-the-ECT-of-G">3.1.2. Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#SECT">3.1.3. SECT</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_CW_Complexes.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#conclusion">4.3. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Modified version breaking the spiral</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/notebooks/Playing_with_Spirals.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span><span class="n">create_example_graph</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Circle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recreating the sprial example from Arya</span>
+
+<span class="c1"># Create the graph</span>
+<span class="n">Spiral</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">.5</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Spiral</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">nodelist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Spiral</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+<span class="n">nodelist</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodelist</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">Spiral</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">nodelist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodelist</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">Spiral</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle_labels_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Playing_with_Spirals_1_1.png" src="../_images/notebooks_Playing_with_Spirals_1_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Spiral</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle_labels_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Playing_with_Spirals_2_1.png" src="../_images/notebooks_Playing_with_Spirals_2_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">All_Angles</span> <span class="o">=</span> <span class="n">Spiral</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opposites</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">All_Angles</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">keys</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">pd_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Angle&#39;</span><span class="p">,</span> <span class="s1">&#39;Swapped Verts&#39;</span><span class="p">,</span> <span class="s1">&#39;Sorted list&#39;</span><span class="p">])</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keys</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Swapped Verts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">All_Angles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+
+
+
+<span class="n">pd_table</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Angle&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Sorted list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Spiral</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+<span class="n">pd_table</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Angle</th>
+      <th>Swapped Verts</th>
+      <th>Sorted list</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00</td>
+      <td>[(c, f)]</td>
+      <td>gcfabed</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.32</td>
+      <td>[(d, e)]</td>
+      <td>gcfabed</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.52</td>
+      <td>[(b, d)]</td>
+      <td>gcfadbe</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.79</td>
+      <td>[(a, d), (f, a), (f, d)]</td>
+      <td>gcdafbe</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.15</td>
+      <td>[(c, d)]</td>
+      <td>gcdafbe</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.19</td>
+      <td>[(b, f)]</td>
+      <td>gdcafbe</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.57</td>
+      <td>[(e, f)]</td>
+      <td>gdcabfe</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.65</td>
+      <td>[(d, g)]</td>
+      <td>gdcabef</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.82</td>
+      <td>[(a, c)]</td>
+      <td>dgacbef</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2.11</td>
+      <td>[(b, c)]</td>
+      <td>dgacbef</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2.27</td>
+      <td>[(c, e)]</td>
+      <td>dgabecf</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.28</td>
+      <td>[(a, g)]</td>
+      <td>dagbecf</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.36</td>
+      <td>[(b, g)]</td>
+      <td>dabgecf</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.41</td>
+      <td>[(e, g)]</td>
+      <td>dabegcf</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2.60</td>
+      <td>[(c, g)]</td>
+      <td>dabegcf</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2.68</td>
+      <td>[(a, b), (a, e), (b, e)]</td>
+      <td>debacgf</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2.85</td>
+      <td>[(f, g)]</td>
+      <td>debacgf</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>3.14</td>
+      <td>[(c, f)]</td>
+      <td>debacfg</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>3.46</td>
+      <td>[(d, e)]</td>
+      <td>debafcg</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>3.66</td>
+      <td>[(b, d)]</td>
+      <td>edbafcg</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3.93</td>
+      <td>[(a, d), (f, a), (f, d)]</td>
+      <td>ebfadcg</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>4.29</td>
+      <td>[(c, d)]</td>
+      <td>ebfadcg</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>4.33</td>
+      <td>[(b, f)]</td>
+      <td>ebfacdg</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>4.71</td>
+      <td>[(e, f)]</td>
+      <td>efbacdg</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>4.79</td>
+      <td>[(d, g)]</td>
+      <td>febacdg</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>4.96</td>
+      <td>[(a, c)]</td>
+      <td>febcagd</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>5.25</td>
+      <td>[(b, c)]</td>
+      <td>febcagd</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>5.41</td>
+      <td>[(c, e)]</td>
+      <td>fcebagd</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>5.42</td>
+      <td>[(a, g)]</td>
+      <td>fcebagd</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>5.50</td>
+      <td>[(b, g)]</td>
+      <td>fcegbad</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>5.55</td>
+      <td>[(e, g)]</td>
+      <td>fcegbad</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>5.74</td>
+      <td>[(c, g)]</td>
+      <td>fcgebad</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>5.82</td>
+      <td>[(a, b), (a, e), (b, e)]</td>
+      <td>fgcabed</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>5.99</td>
+      <td>[(f, g)]</td>
+      <td>fgcabed</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">All_Angles</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([5.82, 1.82, 3.93, 2.28, 2.11, 3.66, 1.19, 2.36, 4.29, 5.41, 0.0, 2.6, 0.32, 1.65, 1.57, 2.41, 2.85, 2.68, 4.96, 0.79, 5.42, 5.25, 0.52, 4.33, 5.5, 1.15, 2.27, 3.14, 5.74, 3.46, 4.79, 4.71, 5.55, 5.99])
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">All_Angles</span> <span class="o">=</span> <span class="n">Spiral</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># add pi + angle for all angles</span>
+<span class="n">All_Angles_2pi</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">All_Angles</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">All_Angles_2pi</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">All_Angles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">other_key</span> <span class="o">=</span> <span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">other_key</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">other_key</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">All_Angles_2pi</span><span class="p">[</span><span class="n">other_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">All_Angles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">All_Angles_2pi</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">keys</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">pd_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="s1">&#39;vertex_pair(s)_swapped&#39;</span><span class="p">,</span> <span class="s1">&#39;sorted_order_at_next_midpoint&#39;</span><span class="p">])</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keys</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;vertex_pair(s)_swapped&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">All_Angles_2pi</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+
+<span class="c1"># sort the vertex pairs at the midpoint</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">([</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">sorted_order</span> <span class="o">=</span> <span class="n">Spiral</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">pd_table</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;sorted_order_at_next_midpoint&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_order</span>
+
+<span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">([</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
+<span class="n">sorted_order</span> <span class="o">=</span> <span class="n">Spiral</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+<span class="n">pd_table</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sorted_order_at_next_midpoint&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_order</span>
+
+<span class="n">pd_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>angle</th>
+      <th>vertex_pair(s)_swapped</th>
+      <th>sorted_order_at_next_midpoint</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00</td>
+      <td>[(c, f)]</td>
+      <td>[g, c, f, a, b, e, d]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.32</td>
+      <td>[(d, e)]</td>
+      <td>[g, c, f, a, d, b, e]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.04</td>
+      <td>[(b, f)]</td>
+      <td>[g, c, d, a, f, b, e]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.19</td>
+      <td>[(b, f)]</td>
+      <td>[g, d, c, a, b, f, e]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.57</td>
+      <td>[(e, f)]</td>
+      <td>[g, d, c, a, b, e, f]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.65</td>
+      <td>[(d, g)]</td>
+      <td>[d, g, c, a, b, e, f]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.73</td>
+      <td>[(c, e)]</td>
+      <td>[d, g, c, a, b, e, f]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.82</td>
+      <td>[(a, c)]</td>
+      <td>[d, g, a, c, b, e, f]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2.11</td>
+      <td>[(b, c)]</td>
+      <td>[d, g, a, b, c, e, f]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2.24</td>
+      <td>[(e, f)]</td>
+      <td>[d, g, a, b, c, e, f]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2.28</td>
+      <td>[(a, g)]</td>
+      <td>[d, a, g, b, e, c, f]</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.36</td>
+      <td>[(b, g)]</td>
+      <td>[d, a, b, g, e, c, f]</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.41</td>
+      <td>[(e, g)]</td>
+      <td>[d, a, b, e, g, c, f]</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.49</td>
+      <td>[(d, g)]</td>
+      <td>[d, a, b, e, g, c, f]</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2.52</td>
+      <td>[(b, d)]</td>
+      <td>[d, a, b, e, g, c, f]</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2.60</td>
+      <td>[(c, g)]</td>
+      <td>[d, e, b, a, c, g, f]</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2.85</td>
+      <td>[(f, g)]</td>
+      <td>[d, e, b, a, c, f, g]</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>3.02</td>
+      <td>[(a, c)]</td>
+      <td>[d, e, b, a, f, c, g]</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>3.37</td>
+      <td>[(a, d), (f, a), (f, d)]</td>
+      <td>[e, d, b, a, f, c, g]</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>3.59</td>
+      <td>[(c, f)]</td>
+      <td>[e, d, b, a, f, c, g]</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3.66</td>
+      <td>[(b, d)]</td>
+      <td>[e, b, d, a, f, c, g]</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>3.93</td>
+      <td>[(b, c)]</td>
+      <td>[e, b, f, a, d, c, g]</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>4.29</td>
+      <td>[(c, d)]</td>
+      <td>[e, f, b, a, c, d, g]</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>4.47</td>
+      <td>[(a, g)]</td>
+      <td>[e, f, b, a, c, d, g]</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>4.50</td>
+      <td>[(c, d)]</td>
+      <td>[e, f, b, a, c, d, g]</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>4.59</td>
+      <td>[(d, e)]</td>
+      <td>[e, f, b, a, c, d, g]</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>4.72</td>
+      <td>[(b, g)]</td>
+      <td>[f, e, b, a, c, d, g]</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>4.87</td>
+      <td>[(e, g)]</td>
+      <td>[f, e, b, c, a, g, d]</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>5.41</td>
+      <td>[(c, e)]</td>
+      <td>[f, c, e, b, g, a, d]</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>5.47</td>
+      <td>[(c, g)]</td>
+      <td>[f, c, g, e, b, a, d]</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>5.82</td>
+      <td>[(a, b), (a, e), (b, e)]</td>
+      <td>[g, f, c, a, b, e, d]</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>6.26</td>
+      <td>[(f, g)]</td>
+      <td>[g, f, c, a, b, e, d]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nodelist</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;]
+</pre></div></div>
+</div>
+<section id="Modified-version-breaking-the-spiral">
+<h1>Modified version breaking the spiral<a class="headerlink" href="#Modified-version-breaking-the-spiral" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Modified version with vertex added between C and D</span>
+
+<span class="c1"># Create the graph</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">.5</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">nodelist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span>  <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodelist</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">nodelist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodelist</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle_labels_circle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
+<span class="c1"># remove axes</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Playing_with_Spirals_11_0.png" src="../_images/notebooks_Playing_with_Spirals_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.colorbar.Colorbar at 0x30be90c90&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_Playing_with_Spirals_12_1.png" src="../_images/notebooks_Playing_with_Spirals_12_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">All_Angles</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_all_angles</span><span class="p">(</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="n">num_rounding_digits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opposites</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">All_Angles</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">keys</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">pd_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Angle&#39;</span><span class="p">,</span> <span class="s1">&#39;Swapped Verts&#39;</span><span class="p">,</span> <span class="s1">&#39;Sorted list&#39;</span><span class="p">])</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keys</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Swapped Verts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">All_Angles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+
+
+
+<span class="n">pd_table</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Angle&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pd_table</span><span class="p">[</span><span class="s1">&#39;Sorted list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">sort_vertices</span><span class="p">(</span><span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+<span class="n">pd_table</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Angle</th>
+      <th>Swapped Verts</th>
+      <th>Sorted list</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.00</td>
+      <td>[(c, f), (X, e)]</td>
+      <td>gcfabXed</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.25</td>
+      <td>[(b, X)]</td>
+      <td>gcfaXbed</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.32</td>
+      <td>[(d, e)]</td>
+      <td>gcfaXbed</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.52</td>
+      <td>[(b, d)]</td>
+      <td>gcfaXdbe</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.79</td>
+      <td>[(a, X), (a, d), (f, a), (X, d), (f, X), (f, d)]</td>
+      <td>gcdXafbe</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.15</td>
+      <td>[(c, d)]</td>
+      <td>gcdXafbe</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.19</td>
+      <td>[(b, f)]</td>
+      <td>gdcXafbe</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.41</td>
+      <td>[(c, X)]</td>
+      <td>gdXcabfe</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.57</td>
+      <td>[(e, f)]</td>
+      <td>gdXcabfe</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.65</td>
+      <td>[(d, g)]</td>
+      <td>gdXcabef</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.82</td>
+      <td>[(a, c)]</td>
+      <td>dgXacbef</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1.99</td>
+      <td>[(X, g)]</td>
+      <td>dXgacbef</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.11</td>
+      <td>[(b, c)]</td>
+      <td>dXgacbef</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.27</td>
+      <td>[(c, e)]</td>
+      <td>dXgabecf</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2.28</td>
+      <td>[(a, g)]</td>
+      <td>dXagbecf</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2.36</td>
+      <td>[(b, g)]</td>
+      <td>dXabgecf</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2.41</td>
+      <td>[(e, g)]</td>
+      <td>dXabegcf</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2.60</td>
+      <td>[(c, g)]</td>
+      <td>dXabegcf</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2.68</td>
+      <td>[(a, b), (a, e), (b, e)]</td>
+      <td>dXebacgf</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2.85</td>
+      <td>[(f, g)]</td>
+      <td>dXebacgf</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3.14</td>
+      <td>[(c, f), (X, e)]</td>
+      <td>dXebacfg</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>3.39</td>
+      <td>[(b, X)]</td>
+      <td>debXafcg</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>3.46</td>
+      <td>[(d, e)]</td>
+      <td>debXafcg</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>3.66</td>
+      <td>[(b, d)]</td>
+      <td>edbXafcg</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>3.93</td>
+      <td>[(a, X), (a, d), (f, a), (X, d), (f, X), (f, d)]</td>
+      <td>ebfaXdcg</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>4.29</td>
+      <td>[(c, d)]</td>
+      <td>ebfaXdcg</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>4.33</td>
+      <td>[(b, f)]</td>
+      <td>ebfaXcdg</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>4.55</td>
+      <td>[(c, X)]</td>
+      <td>efbacXdg</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>4.71</td>
+      <td>[(e, f)]</td>
+      <td>efbacXdg</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>4.79</td>
+      <td>[(d, g)]</td>
+      <td>febacXdg</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>4.96</td>
+      <td>[(a, c)]</td>
+      <td>febcaXgd</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>5.13</td>
+      <td>[(X, g)]</td>
+      <td>febcaXgd</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>5.25</td>
+      <td>[(b, c)]</td>
+      <td>febcagXd</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>5.41</td>
+      <td>[(c, e)]</td>
+      <td>fcebagXd</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>5.42</td>
+      <td>[(a, g)]</td>
+      <td>fcebagXd</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>5.50</td>
+      <td>[(b, g)]</td>
+      <td>fcegbaXd</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>5.55</td>
+      <td>[(e, g)]</td>
+      <td>fcegbaXd</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>5.74</td>
+      <td>[(c, g)]</td>
+      <td>fcgebaXd</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>5.82</td>
+      <td>[(a, b), (a, e), (b, e)]</td>
+      <td>fgcabeXd</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>5.99</td>
+      <td>[(f, g)]</td>
+      <td>fgcabeXd</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -40,7 +40,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [
     {
@@ -49,7 +49,7 @@
        "<Axes: >"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 2,
      "metadata": {},
      "output_type": "execute_result"
     },
@@ -76,7 +76,7 @@
     "\n",
     "K.add_face(['A', 'B', 'C', 'D'])\n",
     "\n",
-    "K.set_centered_coordinates(type = 'min_max')\n",
+    "K.set_centered_coordinates()\n",
     "K.plot()"
    ]
   },
@@ -89,7 +89,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [
     {
@@ -98,7 +98,7 @@
        "<Axes: >"
       ]
      },
-     "execution_count": 10,
+     "execution_count": 3,
      "metadata": {},
      "output_type": "execute_result"
     },
@@ -114,7 +114,7 @@
     }
    ],
    "source": [
-    "K = create_example_cw()\n",
+    "K = create_example_cw(centered = True)\n",
     "K.plot(bounding_circle=True)"
    ]
   },
@@ -127,7 +127,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
@@ -136,7 +136,7 @@
        "<Axes: >"
       ]
      },
-     "execution_count": 11,
+     "execution_count": 4,
      "metadata": {},
      "output_type": "execute_result"
     },
@@ -165,7 +165,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [
     {
@@ -206,7 +206,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -222,7 +222,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -235,7 +235,7 @@
        "       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])"
       ]
      },
-     "execution_count": 14,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -254,7 +254,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
@@ -281,7 +281,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [
     {
@@ -296,7 +296,7 @@
        "       [ 0.,  0.,  0., ..., -1., -1., -1.]])"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 9,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -315,7 +315,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
@@ -350,7 +350,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
