@@ -70,7 +70,8 @@ class EmbeddedGraph(nx.Graph):
     def edge_indices(self):
         """Return edges as array of index pairs"""
         edges = np.array(
-            [(self._node_to_index[u], self._node_to_index[v]) for u, v in self.edges()],
+            [(self._node_to_index[u], self._node_to_index[v])
+             for u, v in self.edges()],
             dtype=int,
         )
         return edges if len(edges) > 0 else np.empty((0, 2), dtype=int)
@@ -110,7 +111,8 @@ class EmbeddedGraph(nx.Graph):
             def wrapper(self, *args, **kwargs):
                 # Handle both positional and keyword arguments
                 if args:
-                    nodes = args[0] if isinstance(args[0], (list, tuple)) else [args[0]]
+                    nodes = args[0] if isinstance(
+                        args[0], (list, tuple)) else [args[0]]
                 else:
                     node_id = kwargs.get("node_id") or kwargs.get("node_id1")
                     nodes = [node_id] if node_id else []
@@ -142,7 +144,8 @@ class EmbeddedGraph(nx.Graph):
             self._coord_matrix = coord.reshape(1, -1)
         else:
             coord_reshaped = coord.reshape(1, -1)
-            self._coord_matrix = np.vstack([self._coord_matrix, coord_reshaped])
+            self._coord_matrix = np.vstack(
+                [self._coord_matrix, coord_reshaped])
 
         self._node_list.append(node_id)
         self._node_to_index[node_id] = len(self._node_list) - 1
@@ -181,9 +184,11 @@ class EmbeddedGraph(nx.Graph):
     def add_cycle(self, coord_matrix):
         """Add nodes in a cyclic pattern from coordinate matrix"""
         n = coord_matrix.shape[0]
-        new_names = next_vert_name(self._node_list[-1] if self._node_list else 0, n)
+        new_names = next_vert_name(
+            self._node_list[-1] if self._node_list else 0, n)
         self.add_nodes_from(zip(new_names, coord_matrix))
-        self.add_edges_from([(new_names[i], new_names[(i + 1) % n]) for i in range(n)])
+        self.add_edges_from(
+            [(new_names[i], new_names[(i + 1) % n]) for i in range(n)])
 
     # ======================================
     # Geometric Calculations
@@ -369,10 +374,12 @@ class EmbeddedGraph(nx.Graph):
         """Decorator to validate plot method parameters"""
 
         def wrapper(self, *args, **kwargs):
-            bounding_center_type = kwargs.get("bounding_center_type", "bounding_box")
+            bounding_center_type = kwargs.get(
+                "bounding_center_type", "bounding_box")
 
             if self.dim not in [2, 3]:
-                raise ValueError("At least 2D or 3D coordinates required for plotting")
+                raise ValueError(
+                    "At least 2D or 3D coordinates required for plotting")
 
             if bounding_center_type not in CENTER_TYPES:
                 raise ValueError(
@@ -403,10 +410,12 @@ class EmbeddedGraph(nx.Graph):
         """
         ax = self._create_axes(ax, self.dim)
 
-        pos = {node: self._coord_matrix[i] for i, node in enumerate(self._node_list)}
+        pos = {node: self._coord_matrix[i]
+               for i, node in enumerate(self._node_list)}
 
         if self.dim == 2:
-            self._draw_2d(ax, pos, with_labels, node_size, edge_color, **kwargs)
+            self._draw_2d(ax, pos, with_labels,
+                          node_size, edge_color, **kwargs)
         else:
             self._draw_3d(ax, pos, node_size, edge_color, elev, azim, **kwargs)
 
@@ -417,7 +426,8 @@ class EmbeddedGraph(nx.Graph):
             )
             node_colors = np.dot(self._coord_matrix, direction)
 
-            self._add_node_coloring(ax, pos, node_colors, node_size, self.dim, **kwargs)
+            self._add_node_coloring(
+                ax, pos, node_colors, node_size, self.dim, **kwargs)
 
         if bounding_circle:
             self._add_bounding_shape(ax, bounding_center_type, self.dim)
@@ -572,8 +582,10 @@ class EmbeddedGraph(nx.Graph):
             )
             ax.add_patch(circle)
             padding = radius * 0.1
-            ax.set_xlim(center[0] - radius - padding, center[0] + radius + padding)
-            ax.set_ylim(center[1] - radius - padding, center[1] + radius + padding)
+            ax.set_xlim(center[0] - radius - padding,
+                        center[0] + radius + padding)
+            ax.set_ylim(center[1] - radius - padding,
+                        center[1] + radius + padding)
         else:
             # sphere wireframe
             u = np.linspace(0, 2 * np.pi, 30)
@@ -586,9 +598,12 @@ class EmbeddedGraph(nx.Graph):
                 x, y, z, color="darkred", linewidth=0.5, alpha=0.3, rstride=2, cstride=2
             )
             padding = radius * 0.1
-            ax.set_xlim3d(center[0] - radius - padding, center[0] + radius + padding)
-            ax.set_ylim3d(center[1] - radius - padding, center[1] + radius + padding)
-            ax.set_zlim3d(center[2] - radius - padding, center[2] + radius + padding)
+            ax.set_xlim3d(center[0] - radius - padding,
+                          center[0] + radius + padding)
+            ax.set_ylim3d(center[1] - radius - padding,
+                          center[1] + radius + padding)
+            ax.set_zlim3d(center[2] - radius - padding,
+                          center[2] + radius + padding)
 
     def _configure_axes(self, ax):
         """Finalize plot appearance"""

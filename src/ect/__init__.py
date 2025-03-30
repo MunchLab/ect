@@ -16,8 +16,8 @@ from .utils import examples
 
 __all__ = [
     'ECT',
-    'EmbeddedGraph', 
+    'EmbeddedGraph',
     'EmbeddedCW',
     'Directions',
     'examples',
-] 
+]

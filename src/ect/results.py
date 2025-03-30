@@ -70,25 +70,24 @@ class ECTResult(np.ndarray):
 
         ax.set_ylabel(r'Threshold $a$')
         return ax
-    
 
     def smooth(self):
         """Calculate the Smooth Euler Characteristic Transform"""
         # convert to float for calculations
         data = self.astype(np.float64)
-        
+
         # get average for each direction
         direction_avgs = np.average(data, axis=1)
-        
+
         # center each direction's values
         centered = data - direction_avgs[:, np.newaxis]
-        
+
         # compute cumulative sum to get SECT
         sect = np.cumsum(centered, axis=1)
-        
+
         # create new ECTResult with float type
         return ECTResult(sect.astype(np.float64), self.directions, self.thresholds)
-    
+
     def _plot_ecc(self, theta):
         """Plot the Euler Characteristic Curve for a specific direction"""
         plt.step(self.thresholds, self.T, label='ECC')

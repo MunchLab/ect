@@ -3,6 +3,7 @@ from enum import Enum
 
 import numpy as np
 
+
 class Sampling(Enum):
     UNIFORM = "uniform"
     RANDOM = "random"
