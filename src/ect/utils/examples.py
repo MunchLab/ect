@@ -75,3 +75,27 @@ def create_example_graph(centered=True, center_type='mean'):
         graph.center_coordinates(center_type)
 
     return graph
+
+def create_random_graph(n_nodes=100, n_edges=200, dim=2):
+    """Creates a random graph with random node positions in [0,1]^dim
+    
+    Args:
+        n_nodes: Number of nodes
+        n_edges: Number of random edges to add
+        dim: Dimension of embedding space
+    """
+    G = EmbeddedGraph()
+    
+    coords = np.random.random((n_nodes, dim))
+    nodes_with_coords = [(i, coords[i]) for i in range(n_nodes)]
+    G.add_nodes_from(nodes_with_coords)
+    
+    edges = set()
+    while len(edges) < n_edges:
+        u = np.random.randint(0, n_nodes)
+        v = np.random.randint(0, n_nodes)
+        if u != v:
+            edges.add(tuple(sorted([u, v])))
+    
+    G.add_edges_from(edges)
+    return G

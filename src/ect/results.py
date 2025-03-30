@@ -9,7 +9,7 @@ class ECTResult(np.ndarray):
     Acts like a regular matrix but with added visualization methods
     """
     def __new__(cls, matrix, directions, thresholds):
-        # allow float arrays for smooth transform
+        # allow float arrays for smooth transform otherwise int
         if np.issubdtype(matrix.dtype, np.floating):
             obj = np.asarray(matrix, dtype=np.float64).view(cls)
         else:
