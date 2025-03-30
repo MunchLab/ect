@@ -256,15 +256,12 @@
         <span class="n">radius</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_thresholds</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">bound_radius</span><span class="p">)</span>
 
         <span class="n">directions</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_angles</span><span class="p">([</span>
-                                                                         <span class="n">theta</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_angles</span><span class="p">([</span><span class="n">theta</span><span class="p">])</span>
         <span class="p">)</span>
 
-        <span class="n">simplex_projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_simplex_projections</span><span class="p">(</span>
-            <span class="n">graph</span><span class="p">,</span> <span class="n">directions</span><span class="p">)</span>
+        <span class="n">simplex_projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_simplex_projections</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">directions</span><span class="p">)</span>
 
-        <span class="n">ect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_directional_transform</span><span class="p">(</span>
-            <span class="n">simplex_projections</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+        <span class="n">ect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_directional_transform</span><span class="p">(</span><span class="n">simplex_projections</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ECTResult</span><span class="p">(</span><span class="n">ect</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span></div>
 
@@ -291,11 +288,9 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">node_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">node_list</span><span class="p">)}</span>
-            <span class="n">face_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">node_to_index</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">face</span><span class="p">]</span>
-                            <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">]</span>
+            <span class="n">face_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">node_to_index</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">face</span><span class="p">]</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">]</span>
             <span class="n">face_maxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">node_projections</span><span class="p">[</span><span class="n">face</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">face_indices</span><span class="p">]</span>
+                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">node_projections</span><span class="p">[</span><span class="n">face</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">face_indices</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="n">simplex_projections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face_maxes</span><span class="p">)</span>
 
