@@ -42,7 +42,8 @@ class ECTResult(np.ndarray):
                 self.directions.sampling == Sampling.UNIFORM
                 and not self.directions.endpoint
             ):
-                plot_thetas = np.concatenate([self.directions.thetas, [2 * np.pi]])
+                plot_thetas = np.concatenate(
+                    [self.directions.thetas, [2 * np.pi]])
                 ect_data = np.hstack([self.T, self.T[:, [0]]])
             else:
                 plot_thetas = self.directions.thetas

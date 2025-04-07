@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import networkx as nx
 from .embed_graph import EmbeddedGraph
 from .utils.face_check import point_in_polygon
 

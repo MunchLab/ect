@@ -1,5 +1,5 @@
 import numpy as np
-from numba import jit, prange, njit
+from numba import prange, njit
 from typing import Optional, Union
 
 from .embed_cw import EmbeddedCW
