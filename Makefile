@@ -23,12 +23,10 @@ release:
 	python setup.py sdist bdist_wheel
 
 html:
-	# Running sphinx-build to build html files in build folder.
-	rm -r docs
+	# Running sphinx-build to build html files in docs folder
+	rm -rf docs
 	mkdir docs
-	sphinx-build -M html doc_source docs
-	rsync -a docs/html/ docs/
-	rm -r docs/html
+	sphinx-build -b html doc_source docs
 
 benchmark:
 	python benchmarks/run_benchmarks.py
