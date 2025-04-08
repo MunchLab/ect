@@ -13,7 +13,7 @@ reqs:
 
 clean:
 	# Running autopep8
-	@autopep8 -r --in-place ect/
+	@autopep8 -r --in-place src/ect/
 
 tests:
 	# Running unittests
@@ -42,3 +42,8 @@ all:
 	
 	# Running unittests
 	@make tests
+
+
+
+develop:
+	pip install -e .

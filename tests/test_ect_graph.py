@@ -1,57 +1,82 @@
 import unittest
-from ect import embed_graph, ect_graph
-
+import numpy as np
+from ect.utils.examples import create_example_graph, create_example_cw
+from ect import ECT, Directions
 
 
 class TestECT(unittest.TestCase):
-    def test_example_graph_ect(self):
-        G = embed_graph.create_example_graph()
-        num_dirs = 8
-        num_thresh = 10
-        myect = ect_graph.ECT(num_dirs, num_thresh)
-        self.assertEqual( myect.ECT_matrix.shape, (8,10))
+    def setUp(self):
+        self.graph = create_example_graph()
+        self.num_dirs = 8
+        self.num_thresh = 10
+        self.bound_radius = 2.0
+        self.ect = ECT(
+            num_dirs=self.num_dirs,
+            num_thresh=self.num_thresh,
+            bound_radius=self.bound_radius,
+        )
 
-        r = G.get_bounding_radius()
-        myect.set_bounding_radius(1.2*r)
-        ecc = myect.calculateECC(G, 0)
-        self.assertEqual( len(ecc), num_thresh)
+    def test_initialization(self):
+        self.assertEqual(self.ect.bound_radius, self.bound_radius)
+        self.assertEqual(self.ect.num_dirs, self.num_dirs)
+        self.assertEqual(self.ect.num_thresh, self.num_thresh)
+        self.assertIsNone(self.ect.directions)
 
-    def test_check_bounding_radius(self):
-        
-        # make an example graph 
-        G = embed_graph.create_example_graph()
-        num_dirs = 8
-        num_thresh = 10
+    def test_calculate_basic(self):
+        result = self.ect.calculate(self.graph)
+        self.assertEqual(result.shape, (self.num_dirs, self.num_thresh))
+        self.assertTrue(isinstance(result.directions, Directions))
+        self.assertIsNotNone(result.thresholds)
 
-        myect = ect_graph.ECT(num_dirs, num_thresh)
+    def test_calculate_single_direction(self):
+        result = self.ect.calculate(self.graph, theta=0)
+        self.assertEqual(result.shape, (1, self.num_thresh))
+        self.assertEqual(len(result.directions), 1)
 
-        # At this point, there shouldn't be a radius set 
-        self.assertIs( myect.bound_radius, None)
+    def test_threshold_priority(self):
+        graph_radius = self.graph.get_bounding_radius()
+        override_bound_radius = 3 * graph_radius
 
-        # Try to calculate the ECC without a radius set
-        myect.calculateECC(G, 0, bound_radius=None)
+        no_radius_ect = ECT(num_dirs=self.num_dirs, num_thresh=self.num_thresh)
+        # test graph radius is used when no other radius specified
+        result1 = no_radius_ect.calculate(self.graph)
+        self.assertAlmostEqual(abs(result1.thresholds).max(), graph_radius)
 
-        # Try to calculate the ECC with a negative radius.
-        # It should throw an error.
-        with self.assertRaises(ValueError):  
-            myect.calculateECC(G, 0, bound_radius= -1)
+        # test override radius takes precedence over both
+        result2 = self.ect.calculate(
+            self.graph, override_bound_radius=override_bound_radius
+        )
+        self.assertAlmostEqual(abs(result2.thresholds).max(), override_bound_radius)
 
-        # Try to calculate the ECC with tightbbox set to True 
-        # This should  work fine 
-        ecc = myect.calculateECC(G, 0, bound_radius=None)
-        self.assertEqual( len(ecc), num_thresh)
+    def test_different_graph_types(self):
+        cw = create_example_cw()
+        result_graph = self.ect.calculate(self.graph)
+        result_cw = self.ect.calculate(cw)
 
-        # Now set the bounding radius 
-        r = G.get_bounding_radius()
-        myect.set_bounding_radius(1.2*r)
-        ecc = myect.calculateECC(G, 0, bound_radius=None)
-        self.assertEqual( len(ecc), num_thresh)
+        self.assertEqual(result_graph.shape, result_cw.shape)
+        self.assertEqual(len(result_graph.directions), len(result_cw.directions))
 
-        # TODO: write a test where we check that if None is passed and the radius is set internally, it will use that one.
+    def test_directions_matching(self):
+        # test that ect raises error when dimensions don't match
+        G2d = create_example_graph()
+        directions_3d = Directions.uniform(self.num_dirs, dim=3)
+        ect = ECT(directions=directions_3d)
+
+        with self.assertRaises(ValueError):
+            ect.calculate(G2d)
+
+    def test_result_properties(self):
+        result = self.ect.calculate(self.graph)
+
+        # test smooth transform
+        smooth = result.smooth()
+        self.assertEqual(smooth.shape, result.shape)
+        self.assertEqual(smooth.directions, result.directions)
+        self.assertEqual(smooth.thresholds.tolist(), result.thresholds.tolist())
+
+        # verify result is integer-valued
+        self.assertTrue(np.issubdtype(result.dtype, np.integer))
 
 
-    
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
