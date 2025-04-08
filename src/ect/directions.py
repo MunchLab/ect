@@ -32,12 +32,14 @@ class Directions:
         dirs = Directions.from_vectors([(1,0,0), (0,1,0), (0,0,1)])
     """
 
-    def __init__(self,
-                 num_dirs: int = 360,
-                 sampling: Sampling = Sampling.UNIFORM,
-                 dim: int = 2,
-                 endpoint: bool = False,
-                 seed: Optional[int] = None):
+    def __init__(
+        self,
+        num_dirs: int = 360,
+        sampling: Sampling = Sampling.UNIFORM,
+        dim: int = 2,
+        endpoint: bool = False,
+        seed: Optional[int] = None,
+    ):
         self.num_dirs = num_dirs
         self.sampling = sampling
         self.dim = dim
@@ -57,7 +59,8 @@ class Directions:
         if self.sampling == Sampling.UNIFORM:
             if self.dim == 2:
                 self._thetas = np.linspace(
-                    0, 2*np.pi, self.num_dirs, endpoint=self.endpoint)
+                    0, 2 * np.pi, self.num_dirs, endpoint=self.endpoint
+                )
             else:
                 # generate random normal samples and normalize to lie on the unit sphere
                 self._vectors = self._rng.randn(self.num_dirs, self.dim)
@@ -65,7 +68,7 @@ class Directions:
                                                 axis=1, keepdims=True)
         elif self.sampling == Sampling.RANDOM:
             if self.dim == 2:
-                self._thetas = self._rng.uniform(0, 2*np.pi, self.num_dirs)
+                self._thetas = self._rng.uniform(0, 2 * np.pi, self.num_dirs)
                 self._thetas.sort()
             else:
                 self._vectors = self._rng.randn(self.num_dirs, self.dim)
@@ -73,8 +76,13 @@ class Directions:
                                                 axis=1, keepdims=True)
 
     @classmethod
-    def uniform(cls, num_dirs: int = 360, dim: int = 2,
-                endpoint: bool = False, seed: Optional[int] = None) -> 'Directions':
+    def uniform(
+        cls,
+        num_dirs: int = 360,
+        dim: int = 2,
+        endpoint: bool = False,
+        seed: Optional[int] = None,
+    ) -> "Directions":
         """
         Factory method for uniform sampling.
 
@@ -87,8 +95,9 @@ class Directions:
         return cls(num_dirs, Sampling.UNIFORM, dim, endpoint, seed)
 
     @classmethod
-    def random(cls, num_dirs: int = 360, dim: int = 2,
-               seed: Optional[int] = None) -> 'Directions':
+    def random(
+        cls, num_dirs: int = 360, dim: int = 2, seed: Optional[int] = None
+    ) -> "Directions":
         """
         Factory method for random sampling.
 
@@ -100,7 +109,7 @@ class Directions:
         return cls(num_dirs, Sampling.RANDOM, dim, seed=seed)
 
     @classmethod
-    def from_angles(cls, angles: Sequence[float]) -> 'Directions':
+    def from_angles(cls, angles: Sequence[float]) -> "Directions":
         """
         Create an instance for custom angles (2D only).
         """
@@ -109,7 +118,7 @@ class Directions:
         return instance
 
     @classmethod
-    def from_vectors(cls, vectors: Sequence[tuple]) -> 'Directions':
+    def from_vectors(cls, vectors: Sequence[tuple]) -> "Directions":
         """
         Create an instance from custom direction vectors.
         Works in any number of dimensions.
@@ -130,7 +139,8 @@ class Directions:
         """Get the angles for 2D directions. Raises an error if dim > 2."""
         if self.dim != 2:
             raise ValueError(
-                "Angle representation is only available for 2D directions.")
+                "Angle representation is only available for 2D directions."
+            )
         if self._thetas is None:
             # Compute the angles from the vectors.
             self._thetas = np.arctan2(self.vectors[:, 1], self.vectors[:, 0])
@@ -145,10 +155,12 @@ class Directions:
         if self._vectors is None:
             if self.dim == 2:
                 self._vectors = np.column_stack(
-                    (np.cos(self._thetas), np.sin(self._thetas)))
+                    (np.cos(self._thetas), np.sin(self._thetas))
+                )
             else:
                 raise ValueError(
-                    "Direction vectors for dimensions >2 should be generated during initialization.")
+                    "Direction vectors for dimensions >2 should be generated during initialization."
+                )
         return self._vectors
 
     def __len__(self) -> int:

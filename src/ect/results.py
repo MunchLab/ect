@@ -33,7 +33,12 @@ class ECTResult(np.ndarray):
             self.thresholds = np.linspace(-1, 1, self.shape[1])
 
         if len(self.directions) == 1:
-            self._plot_ecc(self.directions[0])
+            directions = (
+                self.directions.thetas
+                if self.directions.dim == 2
+                else self.directions.vectors
+            )
+            self._plot_ecc(directions)
             return ax
 
         if self.directions.dim == 2:
@@ -42,7 +47,8 @@ class ECTResult(np.ndarray):
                 self.directions.sampling == Sampling.UNIFORM
                 and not self.directions.endpoint
             ):
-                plot_thetas = np.concatenate([self.directions.thetas, [2 * np.pi]])
+                plot_thetas = np.concatenate(
+                    [self.directions.thetas, [2 * np.pi]])
                 ect_data = np.hstack([self.T, self.T[:, [0]]])
             else:
                 plot_thetas = self.directions.thetas

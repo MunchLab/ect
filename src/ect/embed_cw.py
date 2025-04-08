@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import networkx as nx
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from .embed_graph import EmbeddedGraph
 from .utils.face_check import point_in_polygon
+from typing import Optional
 
 
 class EmbeddedCW(EmbeddedGraph):
@@ -36,7 +37,7 @@ class EmbeddedCW(EmbeddedGraph):
         self.add_edges_from(G.edges())
 
     @EmbeddedGraph._validate_node(exists=True)
-    def add_face(self, face, check=True):
+    def add_face(self, face, check=False):
         """
         Adds a face to the list of faces.
 
@@ -68,6 +69,17 @@ class EmbeddedCW(EmbeddedGraph):
 
         self.faces.append(tuple(face))
 
+    def add_faces_from(self, faces):
+        """
+        Adds a list of faces to the graph.
+
+        Parameters:
+            faces (list):
+                A list of faces to add.
+        """
+        for face in faces:
+            self.add_face(face)
+
     def plot_faces(self, theta=None, ax=None, **kwargs):
         """
         Plots the faces of the graph in the direction of theta.
@@ -93,39 +105,47 @@ class EmbeddedCW(EmbeddedGraph):
             face_coords = np.array(
                 [self.coord_matrix[self.node_to_index[v]] for v in face]
             )
-            ax.fill(face_coords[:, 0], face_coords[:, 1], **kwargs)
+
+            if self.dim == 2:
+                ax.fill(face_coords[:, 0], face_coords[:, 1], **kwargs)
+            else:  # 3D case
+                verts = [face_coords]
+                collection = Poly3DCollection(verts, **kwargs)
+                ax.add_collection3d(collection)
 
         return ax
 
-    def plot(self, bounding_circle=False, color_nodes_theta=None, ax=None, **kwargs):
+    def plot(
+        self,
+        bounding_circle: bool = False,
+        bounding_center_type: str = "bounding_box",
+        color_nodes_theta: Optional[float] = None,
+        ax: Optional[plt.Axes] = None,
+        with_labels: bool = True,
+        node_size: int = 300,
+        edge_color: str = "gray",
+        elev: float = 25,
+        azim: float = -60,
+        face_color: str = "lightblue",
+        face_alpha: float = 0.3,
+        **kwargs,
+    ) -> plt.Axes:
         """
-        Plots the graph with the faces filled in.
-
-        Parameters:
-            bounding_circle (bool):
-                Whether to plot the bounding circle
-            color_nodes_theta (float, optional):
-                Angle to use for coloring nodes
-            ax (matplotlib.axes.Axes, optional):
-                The axes to plot on. If None, creates new axes
-            **kwargs:
-                Additional keyword arguments passed to plotting functions
-
-        Returns:
-            matplotlib.axes.Axes:
-                The axes object with the plot
+        Visualize the embedded CW complex in 2D or 3D, including faces
         """
-        if ax is None:
-            fig, ax = plt.subplots()
-        else:
-            fig = ax.get_figure()
+        # plot faces then use parent class
+        ax = self._create_axes(ax, self.dim)
+        self.plot_faces(ax=ax, facecolor=face_color, alpha=face_alpha)
 
-        ax = self.plot_faces(ax=ax, facecolor="lightblue")
-
-        ax = super().plot(
+        return super().plot(
             bounding_circle=bounding_circle,
+            bounding_center_type=bounding_center_type,
             color_nodes_theta=color_nodes_theta,
             ax=ax,
+            with_labels=with_labels,
+            node_size=node_size,
+            edge_color=edge_color,
+            elev=elev,
+            azim=azim,
             **kwargs,
         )
-        return ax

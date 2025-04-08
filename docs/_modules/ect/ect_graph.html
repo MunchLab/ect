@@ -69,18 +69,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials.html">3. Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../notebooks/Tutorial-ECT_for_embedded_graphs.html#Constructing-the-embedded-graph">3.1.1. Constructing the embedded graph</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../notebooks/Tutorial-ECT_for_embedded_graphs.html#Computing-the-ECT-of-G">3.1.2. Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../notebooks/Tutorial-ECT_for_embedded_graphs.html#SECT">3.1.3. SECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/tutorial_graph.html">3.1. Tutorial: ECT for Embedded Graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../notebooks/tutorial_graph.html#Basic-Usage">3.1.1. Basic Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Tutorial-ECT_for_CW_Complexes.html">3.2. Tutorial: ECT for CW complexes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../notebooks/Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/tutorial_cw.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Matisse/example_matisse.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../notebooks/Matisse/example_matisse.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">4. Contributing</a><ul>
@@ -124,11 +121,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ect.ect_graph</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">prange</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">prange</span><span class="p">,</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">.embed_cw</span> <span class="kn">import</span> <span class="n">EmbeddedCW</span>
@@ -152,7 +146,7 @@
 <span class="sd">            The number of thresholds to consider in the matrix.</span>
 <span class="sd">        directions (Directions):</span>
 <span class="sd">            The directions to consider for projection.</span>
-<span class="sd">        bound_radius (int):</span>
+<span class="sd">        bound_radius (float):</span>
 <span class="sd">            Either ``None``, or a positive radius of the bounding circle.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -161,9 +155,11 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">directions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Directions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">num_dirs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">360</span><span class="p">,</span>
+        <span class="n">num_dirs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">num_thresh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">bound_radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">thresholds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize ECT calculator with either a Directions object or sampling parameters</span>
 
@@ -172,76 +168,79 @@
 <span class="sd">            num_dirs: Number of directions to sample (ignored if directions provided)</span>
 <span class="sd">            num_thresh: Number of threshold values (required if directions not provided)</span>
 <span class="sd">            bound_radius: Optional radius for bounding circle</span>
+<span class="sd">            thresholds: Optional array of thresholds</span>
+<span class="sd">            dtype: Data type for output array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">directions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span> <span class="k">if</span> <span class="n">directions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">num_dirs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="n">num_thresh</span> <span class="ow">or</span> <span class="n">num_dirs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="o">=</span> <span class="n">bound_radius</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span> <span class="o">=</span> <span class="n">num_dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span> <span class="o">=</span> <span class="n">num_thresh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="o">=</span> <span class="n">bound_radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="o">=</span> <span class="n">thresholds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span></div>
 
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_ensure_valid_directions</span><span class="p">(</span><span class="n">calculation_method</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Decorator to ensure directions match graph dimension.</span>
-<span class="sd">        Reinitializes directions if dimensions don&#39;t match.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">calculation_method</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">ect_instance</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">ect_instance</span><span class="o">.</span><span class="n">directions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ect_instance</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
-                    <span class="n">ect_instance</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">dim</span>
-                <span class="p">)</span>
-            <span class="k">elif</span> <span class="n">ect_instance</span><span class="o">.</span><span class="n">directions</span><span class="o">.</span><span class="n">dim</span> <span class="o">!=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dim</span><span class="p">:</span>
-                <span class="n">ect_instance</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
-                    <span class="n">ect_instance</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">dim</span>
-                <span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">calculation_method</span><span class="p">(</span><span class="n">ect_instance</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">wrapper</span>
-
-<div class="viewcode-block" id="ECT.set_bounding_radius">
-<a class="viewcode-back" href="../../ect_on_graphs.html#ect.ect_graph.ECT.set_bounding_radius">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_bounding_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the bounding radius and updates thresholds&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bounding radius must be positive, got </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="o">=</span> <span class="n">radius</span>
-        <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="ECT.get_thresholds">
-<a class="viewcode-back" href="../../ect_on_graphs.html#ect.ect_graph.ECT.get_thresholds">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_thresholds</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">graph</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">],</span>
-        <span class="n">override_radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets thresholds based on priority: override_radius &gt; instance radius &gt; graph radius&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">override_radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">override_radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_ensure_directions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_dim</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures directions is a valid Directions object of correct dimension&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Bounding radius must be positive, got </span><span class="si">{</span><span class="n">override_radius</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
-            <span class="k">return</span> <span class="n">override_radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
-                <span class="o">-</span><span class="n">override_radius</span><span class="p">,</span> <span class="n">override_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span>
+                    <span class="s2">&quot;Either &#39;directions&#39; or &#39;num_dirs&#39; must be provided.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_dirs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">graph_dim</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="c1"># if list of vectors, convert to Directions object</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directions</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_vectors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directions</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directions</span><span class="p">,</span> <span class="n">Directions</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;directions must be a Directions object, ndarray, or list of vectors.&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span>
+        <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">graph_dim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Theta must be provided for 2D graphs. &quot;</span>
+                <span class="s2">&quot;Use &#39;directions&#39; or &#39;num_dirs&#39; to specify directions.&quot;</span>
+            <span class="p">)</span>
 
-        <span class="n">graph_radius</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">graph_radius</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">graph_radius</span><span class="p">,</span> <span class="n">graph_radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">directions</span><span class="o">.</span><span class="n">dim</span> <span class="o">!=</span> <span class="n">graph_dim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Dimension mismatch: directions dimension does not match graph dimension.&quot;</span>
+            <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_ensure_thresholds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">override_bound_radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures thresholds is a valid 1-dimensional ndarray.&quot;&quot;&quot;</span>
+
+        <span class="c1"># determine if we need to generate thresholds</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">override_bound_radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Either &#39;thresholds&#39; or &#39;num_thresh&#39; must be provided.&quot;</span>
+                <span class="p">)</span>
+            <span class="c1"># determine the radius based on priority</span>
+            <span class="k">if</span> <span class="n">override_bound_radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">radius</span> <span class="o">=</span> <span class="n">override_bound_radius</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_radius</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">radius</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_thresh</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># validate existing thresholds are valid</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;thresholds must be a numpy ndarray&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;thresholds must be a 1-dimensional array&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ECT.calculate">
 <a class="viewcode-back" href="../../ect_on_graphs.html#ect.ect_graph.ECT.calculate">[docs]</a>
-    <span class="nd">@_ensure_valid_directions</span>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">],</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bound_radius</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">graph</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">],</span>
+        <span class="n">theta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">override_bound_radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate Euler Characteristic Transform (ECT) for a given graph and direction theta</span>
 
@@ -250,20 +249,26 @@
 <span class="sd">                The input graph to calculate the ECT for.</span>
 <span class="sd">            theta (float):</span>
 <span class="sd">                The angle in :math:`[0,2\pi]` for the direction to calculate the ECT.</span>
-<span class="sd">            bound_radius (float):</span>
-<span class="sd">                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a postive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.</span>
+<span class="sd">            override_bound_radius (float):</span>
+<span class="sd">                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a positive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">radius</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_thresholds</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">bound_radius</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_directions</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_thresholds</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">override_bound_radius</span><span class="p">)</span>
 
+        <span class="c1"># override with theta if provided</span>
         <span class="n">directions</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_angles</span><span class="p">([</span><span class="n">theta</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directions</span> <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_angles</span><span class="p">([</span>
+                                                                         <span class="n">theta</span><span class="p">])</span>
         <span class="p">)</span>
 
-        <span class="n">simplex_projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_simplex_projections</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">directions</span><span class="p">)</span>
+        <span class="n">simplex_projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_simplex_projections</span><span class="p">(</span>
+            <span class="n">graph</span><span class="p">,</span> <span class="n">directions</span><span class="p">)</span>
 
-        <span class="n">ect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_directional_transform</span><span class="p">(</span><span class="n">simplex_projections</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+        <span class="n">ect_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_directional_transform</span><span class="p">(</span>
+            <span class="n">simplex_projections</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_descriptor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ECTResult</span><span class="p">(</span><span class="n">ect</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ECTResult</span><span class="p">(</span><span class="n">ect_matrix</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">)</span></div>
 
 
     <span class="k">def</span> <span class="nf">_compute_node_projections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">directions</span><span class="p">):</span>
@@ -273,7 +278,7 @@
     <span class="k">def</span> <span class="nf">_compute_simplex_projections</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">],</span> <span class="n">directions</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute max projections of each simplex (vertices, edges, faces)&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute projections of each simplex (vertices, edges, faces)&quot;&quot;&quot;</span>
         <span class="n">simplex_projections</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">node_projections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_node_projections</span><span class="p">(</span>
             <span class="n">graph</span><span class="o">.</span><span class="n">coord_matrix</span><span class="p">,</span> <span class="n">directions</span>
@@ -288,30 +293,35 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">node_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">node_list</span><span class="p">)}</span>
-            <span class="n">face_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">node_to_index</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">face</span><span class="p">]</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">]</span>
+            <span class="n">face_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">node_to_index</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">face</span><span class="p">]</span>
+                            <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">faces</span><span class="p">]</span>
             <span class="n">face_maxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">node_projections</span><span class="p">[</span><span class="n">face</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">face_indices</span><span class="p">]</span>
+                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">node_projections</span><span class="p">[</span><span class="n">face</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">face_indices</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="n">simplex_projections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face_maxes</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">simplex_projections</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fastmath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_compute_directional_transform</span><span class="p">(</span><span class="n">simplex_projections_list</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">):</span>
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fastmath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_compute_directional_transform</span><span class="p">(</span>
+        <span class="n">simplex_projections_list</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">,</span> <span class="n">shape_descriptor</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute ECT by counting simplices below each threshold</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            simplex_projections_list: List of arrays containing projections for each simplex type</span>
 <span class="sd">                [vertex_projections, edge_projections, face_projections]</span>
 <span class="sd">            thresholds: Array of threshold values to compute ECT at</span>
+<span class="sd">            dtype: Data type for output array (default: np.int32)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Array of shape (num_directions, num_thresholds) containing Euler characteristics</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">num_dir</span> <span class="o">=</span> <span class="n">simplex_projections_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">num_thresh</span> <span class="o">=</span> <span class="n">thresholds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_dir</span><span class="p">,</span> <span class="n">num_thresh</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_dir</span><span class="p">,</span> <span class="n">num_thresh</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
 
         <span class="n">sorted_projections</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">proj</span> <span class="ow">in</span> <span class="n">simplex_projections_list</span><span class="p">:</span>
@@ -319,13 +329,6 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">num_dir</span><span class="p">):</span>
                 <span class="n">sorted_proj</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">proj</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
             <span class="n">sorted_projections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sorted_proj</span><span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">compute_shape_descriptor</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Calculate shape descriptor from simplex counts (Euler characteristic)&quot;&quot;&quot;</span>
-            <span class="n">chi</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">)):</span>
-                <span class="n">chi</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">k</span> <span class="o">*</span> <span class="n">simplex_counts_list</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">chi</span>
 
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">num_thresh</span><span class="p">):</span>
             <span class="n">thresh</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
@@ -336,8 +339,20 @@
                     <span class="n">simplex_counts_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                         <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">projs</span><span class="p">,</span> <span class="n">thresh</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
                     <span class="p">)</span>
-                <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_shape_descriptor</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+                <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">shape_descriptor</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="ECT.shape_descriptor">
+<a class="viewcode-back" href="../../ect_on_graphs.html#ect.ect_graph.ECT.shape_descriptor">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@njit</span><span class="p">(</span><span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fastmath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">shape_descriptor</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate shape descriptor from simplex counts (Euler characteristic)&quot;&quot;&quot;</span>
+        <span class="n">chi</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">simplex_counts_list</span><span class="p">)):</span>
+            <span class="n">chi</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">k</span> <span class="o">*</span> <span class="n">simplex_counts_list</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">chi</span></div>
+</div>
 
 </pre></div>
 

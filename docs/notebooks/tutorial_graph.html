@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; ect 0.1.5 documentation</title>
+  <title>3.1. Tutorial: ECT for Embedded Graphs &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -26,7 +26,9 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.2. Tutorial: ECT for CW complexes" href="tutorial_cw.html" />
+    <link rel="prev" title="3. Tutorials" href="../tutorials.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,7 +52,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
@@ -72,19 +74,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html">3.1. Tutorial : ECT for embedded graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Constructing-the-embedded-graph">3.1.1. Constructing the embedded graph</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#Computing-the-ECT-of-G">3.1.2. Computing the ECT of <span class="math notranslate nohighlight">\(G\)</span></a></li>
-<li class="toctree-l3"><a class="reference internal" href="Tutorial-ECT_for_embedded_graphs.html#SECT">3.1.3. SECT</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1. Tutorial: ECT for Embedded Graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Basic-Usage">3.1.1. Basic Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial-ECT_for_CW_Complexes.html">3.2. Tutorial: ECT for CW complexes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_cw.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matisse/example_matisse.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Matisse/example_matisse.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial-ExactECT.html">3.4. Tutorial for exact ECT computation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
@@ -117,7 +116,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+          <li class="breadcrumb-item"><a href="../tutorials.html"><span class="section-number">3. </span>Tutorials</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.1. </span>Tutorial: ECT for Embedded Graphs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/tutorial_graph.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -127,25 +127,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p># Tutorial : ECT for embedded graphs</p>
-<p>This jupyter notebook will walk you through using the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package to compute the Euler characteristic transform of a 2D embedded graph. This tutorial assumes you already know what an ECT is; see <a class="reference external" href="https://arxiv.org/abs/2310.10395">this paper</a> for a more thorough treatment of details.</p>
+  <section id="Tutorial:-ECT-for-Embedded-Graphs">
+<h1><span class="section-number">3.1. </span>Tutorial: ECT for Embedded Graphs<a class="headerlink" href="#Tutorial:-ECT-for-Embedded-Graphs" title="Link to this heading"></a></h1>
+<p>This tutorial demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package…</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span>
-<span class="kn">from</span> <span class="nn">ect.utils.examples</span> <span class="kn">import</span> <span class="n">create_example_graph</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <br/></pre></div>
 </div>
 </div>
-<p>## Constructing the embedded graph</p>
-<p>We assume our input is an undirected graph <span class="math notranslate nohighlight">\(G\)</span> with an embedding in 2D given by a map on the vertices <span class="math notranslate nohighlight">\(f: V(G) \to \mathbb{R}^2\)</span>. A graph can be constructed as follows.</p>
+<section id="Basic-Usage">
+<h2><span class="section-number">3.1.1. </span>Basic Usage<a class="headerlink" href="#Basic-Usage" title="Link to this heading"></a></h2>
+<p>First, let’s create a simple graph”””</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[121]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct an example graph</span>
@@ -169,11 +168,11 @@
 <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
 <span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<br/><br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[121]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -188,9 +187,10 @@
 <img alt="../_images/notebooks_tutorial_graph_3_1.png" src="../_images/notebooks_tutorial_graph_3_1.png" />
 </div>
 </div>
-<p>The coordinates of all vertices, given as a dictionary, can be accessed using the <code class="docutils literal notranslate"><span class="pre">coord_matrix</span></code> attribute.</p>
+<p>The embedded graph class inherits from the networkx graph class with the additional attributes <code class="docutils literal notranslate"><span class="pre">coord_matrix</span></code> and <code class="docutils literal notranslate"><span class="pre">coord_dict</span></code>.</p>
+<p>The coordinates of all vertices can be accessed using the <code class="docutils literal notranslate"><span class="pre">coord_matrix</span></code> attribute.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">coord_matrix</span>
@@ -198,7 +198,7 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[122]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -211,15 +211,15 @@ array([[1., 2.],
        [4., 5.]])
 </pre></div></div>
 </div>
-<p>Because of the rotational aspect of the ECT, we often want our graph to be centered, so you can use the <code class="docutils literal notranslate"><span class="pre">center_coordinates</span></code> method shift the graph to have the average of the vertex coordinates be 0. Note that this does overwrite the coordinates of the points.</p>
+<p>It’s often useful to center the graph, so you can use the <code class="docutils literal notranslate"><span class="pre">center_coordinates</span></code> method shift the graph to have the average of the vertex coordinates be 0. Note that this does overwrite the coordinates of the points.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[123]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">center_coordinates</span><span class="p">(</span><span class="n">center_type</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">coord_matrix</span><span class="p">)</span>
 <span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -236,7 +236,7 @@ array([[1., 2.],
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[123]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -253,7 +253,7 @@ array([[1., 2.],
 </div>
 <p>To get a bounding radius we can use the <code class="docutils literal notranslate"><span class="pre">get_bounding_radius</span></code> method.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[124]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is actually getting the radius</span>
@@ -270,11 +270,11 @@ array([[1., 2.],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The radius of bounding circle centered at the origin is 3.4197140881138655
+The radius of bounding circle centered at the origin is 3.2015621187164243
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[124]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -291,7 +291,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 <p>We can also rescale our graph to have unit radius using <code class="docutils literal notranslate"><span class="pre">scale_coordinates</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[125]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">scale_coordinates</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -307,7 +307,7 @@ The radius of bounding circle centered at the origin is 3.4197140881138655
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The radius of bounding circle centered at the origin is 0.9999999999999998
+The radius of bounding circle centered at the origin is 0.9362075413977773
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -318,7 +318,7 @@ The radius of bounding circle centered at the origin is 0.9999999999999998
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[126]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">num_thresh</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -338,14 +338,14 @@ Number of directions: 16
 Number of thresholds: 20
 </pre></div></div>
 </div>
-<p>We can set the bounding radius as follows. Note that some methods will automatically use the bounding radius of the input <code class="docutils literal notranslate"><span class="pre">G</span></code> if not already set. I’m choosing the radius to be a bit bigger than the bounding radius of <code class="docutils literal notranslate"><span class="pre">G</span></code> to make some better pictures.</p>
+<p>We can override the bounding radius as follows. Note that some methods will automatically use the bounding radius of the input <code class="docutils literal notranslate"><span class="pre">G</span></code> if not already set. I’m choosing the radius to be a bit bigger than the bounding radius of <code class="docutils literal notranslate"><span class="pre">G</span></code> to make some better pictures.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[127]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myect</span><span class="o">.</span><span class="n">set_bounding_radius</span><span class="p">(</span><span class="mf">1.2</span> <span class="o">*</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">custom_bound_radius</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">G</span><span class="o">.</span><span class="n">get_bounding_radius</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">override_bound_radius</span><span class="o">=</span><span class="n">custom_bound_radius</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Internally set radius is: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">bound_radius</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Thresholds chosen are: </span><span class="si">{</span><span class="n">myect</span><span class="o">.</span><span class="n">thresholds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <br/></pre></div>
 </div>
@@ -355,16 +355,15 @@ Number of thresholds: 20
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Internally set radius is: 1.1999999999999997
-Thresholds chosen are: [-1.2        -1.07368421 -0.94736842 -0.82105263 -0.69473684 -0.56842105
- -0.44210526 -0.31578947 -0.18947368 -0.06315789  0.06315789  0.18947368
-  0.31578947  0.44210526  0.56842105  0.69473684  0.82105263  0.94736842
-  1.07368421  1.2       ]
+Thresholds chosen are: [-1.12344905 -1.00519125 -0.88693346 -0.76867567 -0.65041787 -0.53216008
+ -0.41390228 -0.29564449 -0.17738669 -0.0591289   0.0591289   0.17738669
+  0.29564449  0.41390228  0.53216008  0.65041787  0.76867567  0.88693346
+  1.00519125  1.12344905]
 </pre></div></div>
 </div>
 <p>If we want the Euler characteristic curve for a fixed direction, we use the <code class="docutils literal notranslate"><span class="pre">calculate</span></code> function with a specific angle. This returns an ECTResult object containing the computed values.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[128]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
@@ -372,25 +371,17 @@ Thresholds chosen are: [-1.2        -1.07368421 -0.94736842 -0.82105263 -0.69473
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-ECT values for direction pi/2: [0 0 0 0 1 1 1 2 2 1 1 1 1 1 1 1 0 0 0 0]
+ECT values for direction pi/2: [0 0 0 0 1 1 2 2 2 1 1 1 1 1 1 1 0 0 0 0]
 </pre></div></div>
 </div>
 <p>To calculate the full ECT, we call the <code class="docutils literal notranslate"><span class="pre">calculate</span></code> method without specifying theta. The result returns the ECT matrix and associated metadata.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">myect</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
@@ -401,7 +392,7 @@ ECT values for direction pi/2: [0 0 0 0 1 1 1 2 2 1 1 1 1 1 1 1 0 0 0 0]
 
 <span class="c1"># We can plot the result matrix</span>
 <span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -415,7 +406,7 @@ Number of thresholds: 20
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -439,17 +430,17 @@ Number of thresholds: 20
 <p>$$</p>
 <p>The SECT can be computed from the ECT result:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[130]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sect</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">smooth</span><span class="p">()</span>
 
 <span class="n">sect</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<br/></pre></div>
+<br/><br/></pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[130]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -464,11 +455,261 @@ Number of thresholds: 20
 <img alt="../_images/notebooks_tutorial_graph_21_1.png" src="../_images/notebooks_tutorial_graph_21_1.png" />
 </div>
 </div>
+<p>## ECT for higher dimensions</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ECT</span></code> class can also be used for higher dimensional graphs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[131]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="c1"># generate a 3d graph</span>
+<span class="n">list_3d</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+<span class="p">]</span>
+<span class="n">graph_3d</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">list_3d</span><span class="p">)</span>
+
+<span class="c1"># add edges</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+<span class="c1"># plot the graph</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<br/><br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[131]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes3D: xlabel=&#39;X&#39;, ylabel=&#39;Y&#39;, zlabel=&#39;Z&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_tutorial_graph_23_1.png" src="../_images/notebooks_tutorial_graph_23_1.png" />
+</div>
+</div>
+<p>lets center the graph</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[132]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">graph_3d</span><span class="o">.</span><span class="n">center_coordinates</span><span class="p">(</span><span class="n">center_type</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+<span class="n">graph_3d</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[132]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes3D: xlabel=&#39;X&#39;, ylabel=&#39;Y&#39;, zlabel=&#39;Z&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_tutorial_graph_25_1.png" src="../_images/notebooks_tutorial_graph_25_1.png" />
+</div>
+</div>
+<p>Now we can compute the ECT of the 3d graph.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[133]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ect_3d</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">num_dirs</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">num_thresh</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">result_3d</span> <span class="o">=</span> <span class="n">ect_3d</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">graph_3d</span><span class="p">)</span>
+<span class="n">result_3d</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[133]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Direction Index&#39;, ylabel=&#39;Threshold $a$&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_tutorial_graph_27_1.png" src="../_images/notebooks_tutorial_graph_27_1.png" />
+</div>
+</div>
+<p>Note that the each of the directions are appended in a list for the ECT result, so we won’t see the same periodic behavior as in the 2d case.</p>
+<p>ECT results inherit from ndarrays but they store the associated directions and thresholds.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[134]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_3d</span><span class="o">.</span><span class="n">directions</span><span class="o">.</span><span class="n">vectors</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[134]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[ 0.48609512, -0.71244342, -0.50609872],
+       [ 0.00364975, -0.82190818,  0.56960831],
+       [-0.77710663, -0.23260984,  0.5848059 ],
+       [ 0.75362655, -0.61431121, -0.23381352],
+       [-0.18133219, -0.98270096, -0.03764916],
+       [-0.92728701,  0.26549447,  0.26391569],
+       [-0.81397529,  0.14802792,  0.56172232],
+       [ 0.54073592, -0.29337918,  0.78837385],
+       [ 0.48363696,  0.74722911, -0.45578937],
+       [ 0.99631892,  0.01735462,  0.08394891],
+       [ 0.74179171, -0.62822234, -0.23469503],
+       [ 0.09906268, -0.01998319, -0.99488052],
+       [ 0.57301878,  0.71110718, -0.40740159],
+       [ 0.93645869, -0.11437729, -0.33160663],
+       [-0.19170715,  0.53609831, -0.82209913],
+       [ 0.69801901,  0.38101835, -0.6062957 ]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[135]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_3d</span><span class="o">.</span><span class="n">thresholds</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[135]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-0.8660254 , -0.77486483, -0.68370427, -0.5925437 , -0.50138313,
+       -0.41022256, -0.31906199, -0.22790142, -0.13674085, -0.04558028,
+        0.04558028,  0.13674085,  0.22790142,  0.31906199,  0.41022256,
+        0.50138313,  0.5925437 ,  0.68370427,  0.77486483,  0.8660254 ])
+</pre></div></div>
+</div>
+<p>We can also define custom directions and thresholds for the ECT in case we need finer control. We use random sampling from the unit sphere for the directions and cosine sampling for the thresholds.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[136]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">Directions</span>
+
+<span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">ect_3d</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">directions</span><span class="o">=</span><span class="n">directions</span><span class="p">,</span> <span class="n">thresholds</span><span class="o">=</span><span class="n">thresholds</span><span class="p">)</span>
+<span class="n">result_3d</span> <span class="o">=</span> <span class="n">ect_3d</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">graph_3d</span><span class="p">)</span>
+<span class="n">result_3d</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[136]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Direction Index&#39;, ylabel=&#39;Threshold $a$&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_tutorial_graph_32_1.png" src="../_images/notebooks_tutorial_graph_32_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[137]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># another example sampling from the half sphere</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>  <span class="c1"># Only go up to pi/2 for half sphere</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+
+<span class="c1"># Flatten the meshgrid arrays and create vectors</span>
+<span class="n">half_sphere_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Normalize the vectors</span>
+<span class="n">half_sphere_vectors</span> <span class="o">=</span> <span class="n">half_sphere_vectors</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+    <span class="n">half_sphere_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">directions</span> <span class="o">=</span> <span class="n">Directions</span><span class="o">.</span><span class="n">from_vectors</span><span class="p">(</span><span class="n">half_sphere_vectors</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of direction vectors: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ect_3d</span> <span class="o">=</span> <span class="n">ECT</span><span class="p">(</span><span class="n">directions</span><span class="o">=</span><span class="n">directions</span><span class="p">,</span> <span class="n">num_thresh</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># Reduced number of thresholds</span>
+<span class="n">result_3d</span> <span class="o">=</span> <span class="n">ect_3d</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">graph_3d</span><span class="p">)</span>
+<span class="n">result_3d</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of direction vectors: 10000
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[137]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: xlabel=&#39;Direction Index&#39;, ylabel=&#39;Threshold $a$&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_tutorial_graph_33_2.png" src="../_images/notebooks_tutorial_graph_33_2.png" />
+</div>
+</div>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials.html" class="btn btn-neutral float-left" title="3. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial_cw.html" class="btn btn-neutral float-right" title="3.2. Tutorial: ECT for CW complexes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
