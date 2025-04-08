@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial: ECT for Embedded Graphs &mdash; ect 0.1.5 documentation</title>
+  <title>3.1. Tutorial: ECT for Embedded Graphs &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -26,7 +26,9 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.2. Tutorial: ECT for CW complexes" href="tutorial_cw.html" />
+    <link rel="prev" title="3. Tutorials" href="../tutorials.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,7 +52,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
@@ -72,12 +74,16 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Matisse/Matisse_ECT.html">3.1. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Matisse/Matisse_ECT.html#Acknowledgements">3.1.1. Acknowledgements</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1. Tutorial: ECT for Embedded Graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Basic-Usage">3.1.1. Basic Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Tutorial-ExactECT.html">3.2. Tutorial for exact ECT computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_cw.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matisse/example_matisse.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Matisse/example_matisse.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">4. Contributing</a><ul>
@@ -110,7 +116,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial: ECT for Embedded Graphs</li>
+          <li class="breadcrumb-item"><a href="../tutorials.html"><span class="section-number">3. </span>Tutorials</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.1. </span>Tutorial: ECT for Embedded Graphs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/tutorial_graph.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,7 +128,7 @@
            <div itemprop="articleBody">
              
   <section id="Tutorial:-ECT-for-Embedded-Graphs">
-<h1>Tutorial: ECT for Embedded Graphs<a class="headerlink" href="#Tutorial:-ECT-for-Embedded-Graphs" title="Link to this heading"></a></h1>
+<h1><span class="section-number">3.1. </span>Tutorial: ECT for Embedded Graphs<a class="headerlink" href="#Tutorial:-ECT-for-Embedded-Graphs" title="Link to this heading"></a></h1>
 <p>This tutorial demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">ect</span></code> package…</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[120]:
@@ -134,7 +141,7 @@
 </div>
 </div>
 <section id="Basic-Usage">
-<h2>Basic Usage<a class="headerlink" href="#Basic-Usage" title="Link to this heading"></a></h2>
+<h2><span class="section-number">3.1.1. </span>Basic Usage<a class="headerlink" href="#Basic-Usage" title="Link to this heading"></a></h2>
 <p>First, let’s create a simple graph”””</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[121]:
@@ -699,7 +706,10 @@ Number of direction vectors: 10000
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials.html" class="btn btn-neutral float-left" title="3. Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial_cw.html" class="btn btn-neutral float-right" title="3.2. Tutorial: ECT for CW complexes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
