@@ -12,12 +12,14 @@ from .ect_graph import ECT
 from .embed_graph import EmbeddedGraph
 from .embed_cw import EmbeddedCW
 from .directions import Directions
+from .sect import SECT
 from .utils import examples
 
 __all__ = [
-    'ECT',
-    'EmbeddedGraph',
-    'EmbeddedCW',
-    'Directions',
-    'examples',
+    "ECT",
+    "SECT",
+    "EmbeddedGraph",
+    "EmbeddedCW",
+    "Directions",
+    "examples",
 ]
