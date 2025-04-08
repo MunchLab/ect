@@ -34,7 +34,7 @@ jobs:
           python benchmarks/run_benchmarks.py
         
       - name: Store benchmark results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: benchmark-results
           path: benchmark_results/
