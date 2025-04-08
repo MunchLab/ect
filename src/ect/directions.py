@@ -64,14 +64,16 @@ class Directions:
             else:
                 # generate random normal samples and normalize to lie on the unit sphere
                 self._vectors = self._rng.randn(self.num_dirs, self.dim)
-                self._vectors /= np.linalg.norm(self._vectors, axis=1, keepdims=True)
+                self._vectors /= np.linalg.norm(self._vectors,
+                                                axis=1, keepdims=True)
         elif self.sampling == Sampling.RANDOM:
             if self.dim == 2:
                 self._thetas = self._rng.uniform(0, 2 * np.pi, self.num_dirs)
                 self._thetas.sort()
             else:
                 self._vectors = self._rng.randn(self.num_dirs, self.dim)
-                self._vectors /= np.linalg.norm(self._vectors, axis=1, keepdims=True)
+                self._vectors /= np.linalg.norm(self._vectors,
+                                                axis=1, keepdims=True)
 
     @classmethod
     def uniform(
