@@ -5,6 +5,11 @@ on:
     paths:
       - 'doc_source/**'
       - 'src/ect/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'doc_source/**'
+      - 'src/ect/**'
 
 jobs:
   docs:
@@ -14,8 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
-
+          fetch-depth: 0
+          
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         
@@ -23,6 +28,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version-file: "pyproject.toml"
+          
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -40,17 +46,10 @@ jobs:
           source .venv/bin/activate
           make html
           
-      - name: Configure Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
-      - name: Commit and push if changed
-        run: |
-          if [[ -n "$(git status --porcelain docs/)" ]]; then
-            git add docs/
-            git commit -m "docs: auto-generate documentation"
-            git push origin HEAD:main
-          else
-            echo "No changes to commit"
-          fi 
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          force_orphan: true 
