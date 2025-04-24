@@ -55,8 +55,7 @@ class ECT:
         """Ensures directions is a valid Directions object of correct dimension"""
         if self.directions is None:
             if self.num_dirs is None:
-                raise ValueError(
-                    "Either 'directions' or 'num_dirs' must be provided.")
+                raise ValueError("Either 'directions' or 'num_dirs' must be provided.")
             self.directions = Directions.uniform(self.num_dirs, dim=graph_dim)
         elif isinstance(self.directions, list):
             # if list of vectors, convert to Directions object
@@ -127,12 +126,10 @@ class ECT:
 
         # override with theta if provided
         directions = (
-            self.directions if theta is None else Directions.from_angles([
-                                                                         theta])
+            self.directions if theta is None else Directions.from_angles([theta])
         )
 
-        simplex_projections = self._compute_simplex_projections(
-            graph, directions)
+        simplex_projections = self._compute_simplex_projections(graph, directions)
 
         ect_matrix = self._compute_directional_transform(
             simplex_projections, self.thresholds, self.shape_descriptor, self.dtype
@@ -162,11 +159,9 @@ class ECT:
 
         if isinstance(graph, EmbeddedCW) and len(graph.faces) > 0:
             node_to_index = {n: i for i, n in enumerate(graph.node_list)}
-            face_indices = [[node_to_index[v] for v in face]
-                            for face in graph.faces]
+            face_indices = [[node_to_index[v] for v in face] for face in graph.faces]
             face_maxes = np.array(
-                [np.max(node_projections[face, :], axis=0)
-                 for face in face_indices]
+                [np.max(node_projections[face, :], axis=0) for face in face_indices]
             )
             simplex_projections.append(face_maxes)
 
@@ -212,7 +207,7 @@ class ECT:
         return result
 
     @staticmethod
-    @njit(parallel=True, fastmath=True)
+    @njit(fastmath=True)
     def shape_descriptor(simplex_counts_list):
         """Calculate shape descriptor from simplex counts (Euler characteristic)"""
         chi = 0
