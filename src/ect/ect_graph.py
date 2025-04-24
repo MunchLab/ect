@@ -1,5 +1,6 @@
 import numpy as np
 from numba import prange, njit
+from numba.typed import List
 from typing import Optional, Union
 
 from .embed_cw import EmbeddedCW
@@ -145,7 +146,7 @@ class ECT:
         self, graph: Union[EmbeddedGraph, EmbeddedCW], directions
     ):
         """Compute projections of each simplex (vertices, edges, faces)"""
-        simplex_projections = []
+        simplex_projections = List()
         node_projections = self._compute_node_projections(
             graph.coord_matrix, directions
         )
@@ -187,7 +188,7 @@ class ECT:
         num_thresh = thresholds.shape[0]
         result = np.empty((num_dir, num_thresh), dtype=dtype)
 
-        sorted_projections = []
+        sorted_projections = List()
         for proj in simplex_projections_list:
             sorted_proj = np.empty_like(proj)
             for i in prange(num_dir):
@@ -197,7 +198,7 @@ class ECT:
         for j in prange(num_thresh):
             thresh = thresholds[j]
             for i in range(num_dir):
-                simplex_counts_list = []
+                simplex_counts_list = List()
                 for k in range(len(sorted_projections)):
                     projs = sorted_projections[k][:, i]
                     simplex_counts_list.append(
