@@ -1,5 +1,6 @@
 import numpy as np
 from numba import prange, njit
+from numba.typed import List
 from typing import Optional, Union
 
 from .embed_cw import EmbeddedCW
@@ -55,8 +56,7 @@ class ECT:
         """Ensures directions is a valid Directions object of correct dimension"""
         if self.directions is None:
             if self.num_dirs is None:
-                raise ValueError(
-                    "Either 'directions' or 'num_dirs' must be provided.")
+                raise ValueError("Either 'directions' or 'num_dirs' must be provided.")
             self.directions = Directions.uniform(self.num_dirs, dim=graph_dim)
         elif isinstance(self.directions, list):
             # if list of vectors, convert to Directions object
@@ -127,12 +127,10 @@ class ECT:
 
         # override with theta if provided
         directions = (
-            self.directions if theta is None else Directions.from_angles([
-                                                                         theta])
+            self.directions if theta is None else Directions.from_angles([theta])
         )
 
-        simplex_projections = self._compute_simplex_projections(
-            graph, directions)
+        simplex_projections = self._compute_simplex_projections(graph, directions)
 
         ect_matrix = self._compute_directional_transform(
             simplex_projections, self.thresholds, self.shape_descriptor, self.dtype
@@ -148,7 +146,7 @@ class ECT:
         self, graph: Union[EmbeddedGraph, EmbeddedCW], directions
     ):
         """Compute projections of each simplex (vertices, edges, faces)"""
-        simplex_projections = []
+        simplex_projections = List()
         node_projections = self._compute_node_projections(
             graph.coord_matrix, directions
         )
@@ -162,11 +160,9 @@ class ECT:
 
         if isinstance(graph, EmbeddedCW) and len(graph.faces) > 0:
             node_to_index = {n: i for i, n in enumerate(graph.node_list)}
-            face_indices = [[node_to_index[v] for v in face]
-                            for face in graph.faces]
+            face_indices = [[node_to_index[v] for v in face] for face in graph.faces]
             face_maxes = np.array(
-                [np.max(node_projections[face, :], axis=0)
-                 for face in face_indices]
+                [np.max(node_projections[face, :], axis=0) for face in face_indices]
             )
             simplex_projections.append(face_maxes)
 
@@ -192,7 +188,7 @@ class ECT:
         num_thresh = thresholds.shape[0]
         result = np.empty((num_dir, num_thresh), dtype=dtype)
 
-        sorted_projections = []
+        sorted_projections = List()
         for proj in simplex_projections_list:
             sorted_proj = np.empty_like(proj)
             for i in prange(num_dir):
@@ -202,7 +198,7 @@ class ECT:
         for j in prange(num_thresh):
             thresh = thresholds[j]
             for i in range(num_dir):
-                simplex_counts_list = []
+                simplex_counts_list = List()
                 for k in range(len(sorted_projections)):
                     projs = sorted_projections[k][:, i]
                     simplex_counts_list.append(
@@ -212,7 +208,7 @@ class ECT:
         return result
 
     @staticmethod
-    @njit(parallel=True, fastmath=True)
+    @njit(fastmath=True)
     def shape_descriptor(simplex_counts_list):
         """Calculate shape descriptor from simplex counts (Euler characteristic)"""
         chi = 0
