@@ -5,7 +5,8 @@ Tutorials
    :maxdepth: 2
    :caption: Contents:
 
-   notebooks/Tutorial-ECT_for_embedded_graphs
-   notebooks/Tutorial-ECT_for_CW_Complexes
-   notebooks/Matisse/Matisse_ECT
+   notebooks/tutorial_graph
+   notebooks/tutorial_cw
+   notebooks/Matisse/example_matisse
+   .. notebooks/Tutorial-ExactECT
 
