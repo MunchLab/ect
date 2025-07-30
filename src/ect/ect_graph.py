@@ -1,17 +1,16 @@
 import numpy as np
 from numba import prange, njit
 from numba.typed import List
-from typing import Optional, Union
+from typing import Optional
 
-from .embed_cw import EmbeddedCW
-from .embed_graph import EmbeddedGraph
+from .embed_complex import EmbeddedComplex
 from .directions import Directions
 from .results import ECTResult
 
 
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedGraph` or :any:`EmbeddedCW`.
+    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`.
 
     The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
 
@@ -108,15 +107,15 @@ class ECT:
 
     def calculate(
         self,
-        graph: Union[EmbeddedGraph, EmbeddedCW],
+        graph: EmbeddedComplex,
         theta: Optional[float] = None,
         override_bound_radius: Optional[float] = None,
     ):
         """Calculate Euler Characteristic Transform (ECT) for a given graph and direction theta
 
         Args:
-            graph (EmbeddedGraph/EmbeddedCW):
-                The input graph to calculate the ECT for.
+            graph (EmbeddedComplex):
+                The input complex to calculate the ECT for.
             theta (float):
                 The angle in :math:`[0,2\pi]` for the direction to calculate the ECT.
             override_bound_radius (float):
@@ -142,31 +141,48 @@ class ECT:
         """Compute inner products of coordinates with directions"""
         return np.matmul(coords, directions.vectors.T)
 
-    def _compute_simplex_projections(
-        self, graph: Union[EmbeddedGraph, EmbeddedCW], directions
-    ):
-        """Compute projections of each simplex (vertices, edges, faces)"""
+    def _compute_simplex_projections(self, graph: EmbeddedComplex, directions):
+        """Compute projections of each k-cell for all dimensions"""
         simplex_projections = List()
         node_projections = self._compute_node_projections(
             graph.coord_matrix, directions
         )
-        edge_maxes = np.maximum(
-            node_projections[graph.edge_indices[:, 0]],
-            node_projections[graph.edge_indices[:, 1]],
-        )
+        num_dirs = node_projections.shape[1]
 
+        # 0-cells (vertices) - always present (but may be empty)
         simplex_projections.append(node_projections)
-        simplex_projections.append(edge_maxes)
 
-        if isinstance(graph, EmbeddedCW) and len(graph.faces) > 0:
-            node_to_index = {n: i for i, n in enumerate(graph.node_list)}
-            face_indices = [[node_to_index[v] for v in face] for face in graph.faces]
-            face_maxes = np.array(
-                [np.max(node_projections[face, :], axis=0) for face in face_indices]
+        # Build cells dictionary including 1-cells from edges
+        all_cells = {0: [(i,) for i in range(len(graph.node_list))]}
+        
+        # Add 1-cells from edge_indices
+        if graph.edge_indices.shape[0] > 0:
+            all_cells[1] = [tuple(edge) for edge in graph.edge_indices]
+        else:
+            all_cells[1] = []
+            
+        # Add higher dimensional cells
+        all_cells.update(graph.cells)
+        
+        # Process all cell dimensions > 0 uniformly
+        max_dim = max(all_cells.keys()) if all_cells else 0
+        for dim in range(1, max_dim + 1):
+            cell_projections = self._compute_cell_projections(
+                all_cells.get(dim, []), node_projections, num_dirs
             )
-            simplex_projections.append(face_maxes)
+            simplex_projections.append(cell_projections)
 
         return simplex_projections
+    
+    def _compute_cell_projections(self, cells, node_projections, num_dirs):
+        """Compute projections for k-cells of any dimension k >= 1"""
+        if len(cells) > 0:
+            return np.array([
+                np.max(node_projections[list(cell_indices), :], axis=0) 
+                for cell_indices in cells
+            ])
+        else:
+            return np.empty((0, num_dirs))
 
     @staticmethod
     @njit(parallel=True, fastmath=True)
