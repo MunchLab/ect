@@ -149,22 +149,17 @@ class ECT:
         )
         num_dirs = node_projections.shape[1]
 
-        # 0-cells (vertices) - always present (but may be empty)
         simplex_projections.append(node_projections)
 
-        # Build cells dictionary including 1-cells from edges
         all_cells = {0: [(i,) for i in range(len(graph.node_list))]}
-        
-        # Add 1-cells from edge_indices
+
         if graph.edge_indices.shape[0] > 0:
             all_cells[1] = [tuple(edge) for edge in graph.edge_indices]
         else:
             all_cells[1] = []
-            
-        # Add higher dimensional cells
+
         all_cells.update(graph.cells)
-        
-        # Process all cell dimensions > 0 uniformly
+
         max_dim = max(all_cells.keys()) if all_cells else 0
         for dim in range(1, max_dim + 1):
             cell_projections = self._compute_cell_projections(
@@ -173,14 +168,16 @@ class ECT:
             simplex_projections.append(cell_projections)
 
         return simplex_projections
-    
+
     def _compute_cell_projections(self, cells, node_projections, num_dirs):
         """Compute projections for k-cells of any dimension k >= 1"""
         if len(cells) > 0:
-            return np.array([
-                np.max(node_projections[list(cell_indices), :], axis=0) 
-                for cell_indices in cells
-            ])
+            return np.array(
+                [
+                    np.max(node_projections[list(cell_indices), :], axis=0)
+                    for cell_indices in cells
+                ]
+            )
         else:
             return np.empty((0, num_dirs))
 
