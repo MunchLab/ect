@@ -10,7 +10,7 @@ Main classes:
     SECT: Smooth Euler Characteristic Transform calculator
 """
 
-from .ect_graph import ECT
+from .ect import ECT
 from .embed_complex import EmbeddedComplex, EmbeddedGraph, EmbeddedCW
 from .directions import Directions
 from .sect import SECT
