@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial for exact ECT computation &mdash; ect 0.1.5 documentation</title>
+  <title>3.2. Tutorial for exact ECT computation &mdash; ect 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -26,7 +26,9 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.3. ECT on Matisse’s “The Parakeet and the Mermaid”" href="Matisse/example_matisse.html" />
+    <link rel="prev" title="3.1. Tutorial: ECT for Embedded Cell Complexes" href="Tutorial-EmbeddedComplex.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,7 +52,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">1.1. Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
@@ -58,26 +60,44 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">2. Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../embed_graph.html">2.1. Embedded graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../embed_graph.html#ect.embed_graph.EmbeddedGraph"><code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../embed_complex.html">2.1. Embedded Complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../embed_complex.html#overview">2.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_complex.html#key-features">2.1.2. Key Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_complex.html#basic-usage">2.1.3. Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_complex.html#module-ect.embed_complex">2.1.4. API Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../embed_cw.html">2.2. Embedded CW complex</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../embed_cw.html#ect.embed_cw.EmbeddedCW"><code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../validation.html">2.2. Validation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#overview">2.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#architecture">2.2.2. Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#validation-rules">2.2.3. Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#usage">2.2.4. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#custom-validation-rules">2.2.5. Custom Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html#api-reference">2.2.6. API Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../ect_on_graphs.html">2.3. ECT on graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.ect_graph.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.ect.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ect_on_graphs.html#ect.sect.SECT"><code class="docutils literal notranslate"><span class="pre">SECT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../directions.html">2.4. Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../directions.html#ect.directions.Sampling"><code class="docutils literal notranslate"><span class="pre">Sampling</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../directions.html#ect.directions.Directions"><code class="docutils literal notranslate"><span class="pre">Directions</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_graph.html">3.1. Tutorial: ECT for Embedded Graphs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_graph.html#Basic-Usage">3.1.1. Basic Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">3. Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Tutorial-EmbeddedComplex.html">3.1. Tutorial: ECT for Embedded Cell Complexes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-EmbeddedComplex.html#Basic-Usage:-Creating-Simple-Complexes">3.1.1. Basic Usage: Creating Simple Complexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-EmbeddedComplex.html#Adding-Cells-of-Arbitrary-Dimension">3.1.2. Adding Cells of Arbitrary Dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-EmbeddedComplex.html#ECT-Computation-with-Higher-Dimensional-Cells">3.1.3. ECT Computation with Higher-Dimensional Cells</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-EmbeddedComplex.html#Understanding-ECT-with-Projection-Visualization">3.1.4. Understanding ECT with Projection Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial-EmbeddedComplex.html#Comparing-Graph-vs.-Complex-ECT">3.1.5. Comparing Graph vs. Complex ECT</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_cw.html">3.2. Tutorial: ECT for CW complexes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Tutorial for exact ECT computation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Matisse/example_matisse.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Matisse/example_matisse.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
 </ul>
@@ -114,7 +134,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Tutorial for exact ECT computation</li>
+          <li class="breadcrumb-item"><a href="../tutorials.html"><span class="section-number">3. </span>Tutorials</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3.2. </span>Tutorial for exact ECT computation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/Tutorial-ExactECT.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -125,29 +146,33 @@
            <div itemprop="articleBody">
              
   <section id="Tutorial-for-exact-ECT-computation">
-<h1>Tutorial for exact ECT computation<a class="headerlink" href="#Tutorial-for-exact-ECT-computation" title="Link to this heading"></a></h1>
+<h1><span class="section-number">3.2. </span>Tutorial for exact ECT computation<a class="headerlink" href="#Tutorial-for-exact-ECT-computation" title="Link to this heading"></a></h1>
 <p><em>Warning: This is a work in progress. Proceed at your own risk.</em></p>
 <p>The goal of this section is so show available tools for exact computation of the ECT.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedGraph</span><span class="p">,</span> <span class="n">EmbeddedCW</span><span class="p">,</span><span class="n">create_example_graph</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">ECT</span><span class="p">,</span> <span class="n">EmbeddedComplex</span><span class="p">,</span> <span class="n">create_example_graph</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Circle</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="c1"># Note: EmbeddedGraph and EmbeddedCW are now unified into EmbeddedComplex</span>
+<span class="c1"># For backward compatibility, you can still use:</span>
+<span class="c1"># from ect import EmbeddedGraph, EmbeddedCW</span>
 </pre></div>
 </div>
 </div>
-<p>We can use the <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> class to find the angle normal to any pair of vertices in the graph, whether or not there is a connecting edge. Setting <code class="docutils literal notranslate"><span class="pre">angle_labels_circle=True</span></code> in the plotting command will try to draw these on the circle. Note that this doesn’t tend to do well for large inputs, but can be helpful for small examples.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code> class (which unifies the old <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> and <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> classes) to find the angle normal to any pair of vertices in the graph, whether or not there is a connecting edge. Setting <code class="docutils literal notranslate"><span class="pre">angle_labels_circle=True</span></code> in the plotting command will try to draw these on the circle. Note that this doesn’t tend to do well for large inputs, but can be helpful for small examples.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Super simple graph</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">EmbeddedGraph</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Super simple graph using the unified EmbeddedComplex class</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">EmbeddedComplex</span><span class="p">()</span>
 <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -159,14 +184,7 @@
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
 <span class="n">G</span><span class="o">.</span><span class="n">plot_angle_circle</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ExactECT_3_0.png" src="../_images/notebooks_Tutorial-ExactECT_3_0.png" />
+</pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -191,12 +209,12 @@
 </div>
 </div>
 <p>We can extract the information directly for use in computation.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If return type is `matrix`, the function returns the matrix of angles and the labels of the angles in the order of the rows/columns in the matrix</span>
-<span class="n">M</span><span class="p">,</span><span class="n">Labels</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_all_normals_matrix</span><span class="p">()</span>
+<span class="n">M</span><span class="p">,</span><span class="n">Labels</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">get_normal_angle_matrix</span><span class="p">()</span>  <span class="c1"># Updated method name</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
@@ -204,35 +222,6 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Labels</span><span class="p">)),</span> <span class="n">Labels</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 </pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[[       nan 5.49778714 5.60844436 5.8195377  5.03413953 5.49778714]
- [2.35619449        nan 5.6951827  0.         3.92699082 5.49778714]
- [2.46685171 2.55359005        nan 2.03444394 2.89661399 2.67794504]
- [2.67794504 3.14159265 5.17603659        nan 3.46334321 3.92699082]
- [1.89254688 0.78539816 6.03820664 0.32175055        nan 0.        ]
- [2.35619449 2.35619449 5.8195377  0.78539816 3.14159265        nan]]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;matplotlib.colorbar.Colorbar at 0x16b198290&gt;
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_Tutorial-ExactECT_6_2.png" src="../_images/notebooks_Tutorial-ExactECT_6_2.png" />
 </div>
 </div>
 <p>This can also be returned as a dictionary, with keys given by angles (note the negative angle is not repeated), and value a list of the pairs of vertices associated. Note that in the case of more than one pair of vertices having the same normal angle, it is given as a list of all pairs.</p>
@@ -306,7 +295,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Tutorial-EmbeddedComplex.html" class="btn btn-neutral float-left" title="3.1. Tutorial: ECT for Embedded Cell Complexes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Matisse/example_matisse.html" class="btn btn-neutral float-right" title="3.3. ECT on Matisse’s “The Parakeet and the Mermaid”" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

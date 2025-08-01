@@ -5,8 +5,7 @@ Tutorials
    :maxdepth: 2
    :caption: Contents:
 
-   notebooks/tutorial_graph
-   notebooks/tutorial_cw
+   notebooks/Tutorial-EmbeddedComplex
+   notebooks/Tutorial-ExactECT
    notebooks/Matisse/example_matisse
-   .. notebooks/Tutorial-ExactECT
 

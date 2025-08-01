@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. Embedded Complex &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+    <link rel="shortcut icon" href="_static/ECT_Logo_128x128.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=59fadc99"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.2. Validation System" href="validation.html" />
+    <link rel="prev" title="2. Table of Contents" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ect
+              <img src="_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Embedded Complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">2.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-features">2.1.2. Key Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">2.1.3. Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ect.embed_complex">2.1.4. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">2.2. Validation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#overview">2.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#architecture">2.2.2. Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#validation-rules">2.2.3. Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#usage">2.2.4. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#custom-validation-rules">2.2.5. Custom Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#api-reference">2.2.6. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ect_on_graphs.html">2.3. ECT on graphs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ect_on_graphs.html#ect.ect.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect_on_graphs.html#ect.sect.SECT"><code class="docutils literal notranslate"><span class="pre">SECT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="directions.html">2.4. Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Sampling"><code class="docutils literal notranslate"><span class="pre">Sampling</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Directions"><code class="docutils literal notranslate"><span class="pre">Directions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html">3.1. Tutorial: ECT for Embedded Cell Complexes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Basic-Usage:-Creating-Simple-Complexes">3.1.1. Basic Usage: Creating Simple Complexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Adding-Cells-of-Arbitrary-Dimension">3.1.2. Adding Cells of Arbitrary Dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#ECT-Computation-with-Higher-Dimensional-Cells">3.1.3. ECT Computation with Higher-Dimensional Cells</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Understanding-ECT-with-Projection-Visualization">3.1.4. Understanding ECT with Projection Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Comparing-Graph-vs.-Complex-ECT">3.1.5. Comparing Graph vs. Complex ECT</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-ExactECT.html">3.2. Tutorial for exact ECT computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Matisse/example_matisse.html">3.3. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Matisse/example_matisse.html#Acknowledgements">3.3.1. Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#conclusion">4.3. Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html"><span class="section-number">2. </span>Table of Contents</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.1. </span>Embedded Complex</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/embed_complex.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="embedded-complex">
+<h1><span class="section-number">2.1. </span>Embedded Complex<a class="headerlink" href="#embedded-complex" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code> class is a unified representation for embedded cell complexes supporting arbitrary dimensional cells.</p>
+<section id="overview">
+<h2><span class="section-number">2.1.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code> combines and extends the functionality of the previous <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> and <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> classes into a single, more powerful interface. It supports:</p>
+<ul class="simple">
+<li><p><strong>0-cells (vertices)</strong>: Points embedded in Euclidean space</p></li>
+<li><p><strong>1-cells (edges)</strong>: Line segments between vertices</p></li>
+<li><p><strong>k-cells for k ≥ 2</strong>: Higher dimensional cells (faces, volumes, etc.)</p></li>
+</ul>
+</section>
+<section id="key-features">
+<h2><span class="section-number">2.1.2. </span>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Unified Interface</strong>: Single class for all cell complex operations</p></li>
+<li><p><strong>Arbitrary Dimensions</strong>: Support for k-cells of any dimension k ≥ 0</p></li>
+<li><p><strong>Modular Validation</strong>: Pluggable validation system for embedding properties</p></li>
+<li><p><strong>Backward Compatible</strong>: <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> and <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> remain as aliases</p></li>
+</ul>
+</section>
+<section id="basic-usage">
+<h2><span class="section-number">2.1.3. </span>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ect</span> <span class="kn">import</span> <span class="n">EmbeddedComplex</span>
+
+<span class="c1"># Create a complex</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedComplex</span><span class="p">()</span>
+
+<span class="c1"># Add vertices</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Add edges</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add a 2-cell (face)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
+
+<span class="c1"># Or use the general method for any dimension</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_cell</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-ect.embed_complex">
+<span id="api-reference"></span><h2><span class="section-number">2.1.4. </span>API Reference<a class="headerlink" href="#module-ect.embed_complex" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedComplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validate_embedding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Graph</span></code></p>
+<p>A unified class to represent an embedded cell complex with cells of arbitrary dimension.</p>
+<p>This combines the functionality of EmbeddedGraph and EmbeddedCW, supporting:
+- 0-cells (vertices) with embedded coordinates
+- 1-cells (edges)
+- k-cells for k &gt;= 2 (faces, volumes, etc.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validate_embedding</strong> (<em>bool</em>) – If True, automatically validate embedding properties
+when adding cells. Default: False</p></li>
+<li><p><strong>embedding_tol</strong> (<em>float</em>) – Tolerance for geometric validation. Default: 1e-10</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.coord_matrix">
+<span class="sig-name descname"><span class="pre">coord_matrix</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.coord_matrix" title="Link to this definition"></a></dt>
+<dd><p>np.ndarray
+A matrix of embedded coordinates for each vertex</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.node_list">
+<span class="sig-name descname"><span class="pre">node_list</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.node_list" title="Link to this definition"></a></dt>
+<dd><p>list
+A list of node names</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.node_to_index">
+<span class="sig-name descname"><span class="pre">node_to_index</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.node_to_index" title="Link to this definition"></a></dt>
+<dd><p>dict
+A dictionary mapping node ids to their index in the coord_matrix</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.dim" title="Link to this definition"></a></dt>
+<dd><p>int
+The dimension of the embedded coordinates</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.cells">
+<span class="sig-name descname"><span class="pre">cells</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.cells" title="Link to this definition"></a></dt>
+<dd><p>dict
+Dictionary mapping dimension k to list of k-cells, where each k-cell
+is represented as a tuple of vertex indices</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.validate_embedding">
+<span class="sig-name descname"><span class="pre">validate_embedding</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.validate_embedding" title="Link to this definition"></a></dt>
+<dd><p>bool
+Whether to automatically validate embedding properties</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.embedding_tol">
+<span class="sig-name descname"><span class="pre">embedding_tol</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.embedding_tol" title="Link to this definition"></a></dt>
+<dd><p>float
+Tolerance for geometric validation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validate_embedding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize a graph with edges, name, or graph attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>incoming_graph_data</strong> (<em>input graph</em><em> (</em><em>optional</em><em>, </em><em>default: None</em><em>)</em>) – Data to initialize graph. If None (default) an empty
+graph is created.  The data can be an edge list, or any
+NetworkX graph object.  If the corresponding optional Python
+packages are installed the data can also be a 2D NumPy array, a
+SciPy sparse array, or a PyGraphviz graph.</p></li>
+<li><p><strong>attr</strong> (<em>keyword arguments</em><em>, </em><em>optional</em><em> (</em><em>default= no attributes</em><em>)</em>) – Attributes to add to graph as key=value pairs.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>  <span class="c1"># or DiGraph, MultiGraph, MultiDiGraph, etc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;my graph&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>  <span class="c1"># list of edges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Arbitrary graph attribute pairs (key=value) may be assigned</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="s2">&quot;Friday&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">graph</span>
+<span class="go">{&#39;day&#39;: &#39;Friday&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coord_matrix</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Return the N x D coordinate matrix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Return the dimension of the embedded coordinates</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">node_list</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Return ordered list of node names.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">node_to_index</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary mapping node ids to their index in the coord_matrix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.position_dict">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position_dict</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.position_dict" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary mapping node ids to their coordinates</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.edge_indices">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edge_indices</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.edge_indices" title="Link to this definition"></a></dt>
+<dd><p>Return edges as array of index pairs</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.faces">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">faces</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.faces" title="Link to this definition"></a></dt>
+<dd><p>Return list of 2-cells (faces) for backward compatibility</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_node" title="Link to this definition"></a></dt>
+<dd><p>Add a vertex to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_id</strong> – Identifier for the node</p></li>
+<li><p><strong>coord</strong> – Array-like coordinates for the node</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_nodes_from_dict">
+<span class="sig-name descname"><span class="pre">add_nodes_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_with_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_nodes_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_nodes_from_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_nodes_from">
+<span class="sig-name descname"><span class="pre">add_nodes_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_with_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_nodes_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_nodes_from" title="Link to this definition"></a></dt>
+<dd><p>Add multiple nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes_for_adding</strong> (<em>iterable container</em>) – A container of nodes (list, dict, set, etc.).
+OR
+A container of (node, attribute dict) tuples.
+Node attributes are updated using the attribute dict.</p></li>
+<li><p><strong>attr</strong> (<em>keyword arguments</em><em>, </em><em>optional</em><em> (</em><em>default= no attributes</em><em>)</em>) – Update attributes for all nodes in nodes.
+Node attributes specified in nodes as a tuple take
+precedence over attributes specified via keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#ect.embed_complex.EmbeddedComplex.add_node" title="ect.embed_complex.EmbeddedComplex.add_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_node</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>When adding nodes from an iterator over the graph you are changing,
+a <cite>RuntimeError</cite> can be raised with message:
+<cite>RuntimeError: dictionary changed size during iteration</cite>. This
+happens when the graph’s underlying dictionary is modified during
+iteration. To avoid this error, evaluate the iterator into a separate
+object, e.g. by using <cite>list(iterator_of_nodes)</cite>, and pass this
+object to <cite>G.add_nodes_from</cite>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>  <span class="c1"># or DiGraph, MultiGraph, MultiDiGraph, etc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">K3</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">K3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="go">[0, 1, 2, &#39;H&#39;, &#39;e&#39;, &#39;l&#39;, &#39;o&#39;]</span>
+</pre></div>
+</div>
+<p>Use keywords to update specific node attributes for every node.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use (node, attrdict) tuples to update attributes for specific nodes.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">11</span><span class="p">)),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">})])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+<span class="go">11</span>
+</pre></div>
+</div>
+<p>Evaluate an iterator over a graph if using it to modify the same graph</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># wrong way - will raise RuntimeError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># G.add_nodes_from(n + 1 for n in G.nodes)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># correct way</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_id2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_edge" title="Link to this definition"></a></dt>
+<dd><p>Add an edge (1-cell) between two nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_cell">
+<span class="sig-name descname"><span class="pre">add_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_cell" title="Link to this definition"></a></dt>
+<dd><p>Add a k-cell to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_vertices</strong> – List of vertex identifiers that form the cell</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell. If None, inferred as len(cell_vertices) - 1</p></li>
+<li><p><strong>check</strong> – Whether to validate the cell embedding. If None, uses self.validate_embedding</p></li>
+<li><p><strong>embedding_tol</strong> – Tolerance for geometric validation. If None, uses self.embedding_tol</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.enable_embedding_validation">
+<span class="sig-name descname"><span class="pre">enable_embedding_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.enable_embedding_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.enable_embedding_validation" title="Link to this definition"></a></dt>
+<dd><p>Enable automatic embedding validation for all subsequent cell additions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tol</strong> – Tolerance for geometric validation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.disable_embedding_validation">
+<span class="sig-name descname"><span class="pre">disable_embedding_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.disable_embedding_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.disable_embedding_validation" title="Link to this definition"></a></dt>
+<dd><p>Disable automatic embedding validation for all subsequent cell additions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_validator">
+<span class="sig-name descname"><span class="pre">get_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_validator" title="Link to this definition"></a></dt>
+<dd><p>Get the embedding validator instance for advanced configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The EmbeddingValidator instance used by this complex</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.set_validation_rules">
+<span class="sig-name descname"><span class="pre">set_validation_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.set_validation_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.set_validation_rules" title="Link to this definition"></a></dt>
+<dd><p>Set custom validation rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rules</strong> – List of ValidationRule instances</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_face">
+<span class="sig-name descname"><span class="pre">add_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_face" title="Link to this definition"></a></dt>
+<dd><p>Add a 2-cell (face) to the complex. Provided for backward compatibility.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_faces_from">
+<span class="sig-name descname"><span class="pre">add_faces_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_faces_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_faces_from" title="Link to this definition"></a></dt>
+<dd><p>Add multiple 2-cells (faces) to the complex.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_coord">
+<span class="sig-name descname"><span class="pre">get_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_coord" title="Link to this definition"></a></dt>
+<dd><p>Return the coordinates of a node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.set_coord">
+<span class="sig-name descname"><span class="pre">set_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.set_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.set_coord" title="Link to this definition"></a></dt>
+<dd><p>Set the coordinates of a node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.add_cycle">
+<span class="sig-name descname"><span class="pre">add_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.add_cycle" title="Link to this definition"></a></dt>
+<dd><p>Add nodes in a cyclic pattern from coordinate matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_center">
+<span class="sig-name descname"><span class="pre">get_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_center"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_center" title="Link to this definition"></a></dt>
+<dd><p>Calculate center of coordinates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_bounding_box">
+<span class="sig-name descname"><span class="pre">get_bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_bounding_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_bounding_box" title="Link to this definition"></a></dt>
+<dd><p>Get (min, max) for each dimension</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_bounding_radius">
+<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_bounding_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_bounding_radius" title="Link to this definition"></a></dt>
+<dd><p>Get radius of minimal bounding sphere</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_normal_angle_matrix">
+<span class="sig-name descname"><span class="pre">get_normal_angle_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_normal_angle_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_normal_angle_matrix" title="Link to this definition"></a></dt>
+<dd><p>Optimized angle matrix computation using vectorized operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edges_only</strong> – Only compute angles between connected vertices</p></li>
+<li><p><strong>decimals</strong> – Round angles to specified decimal places</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NaN-filled matrix with pair angles
+vertex_labels: Ordered node identifiers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>angle_matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.get_normal_angles">
+<span class="sig-name descname"><span class="pre">get_normal_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_normal_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.get_normal_angles" title="Link to this definition"></a></dt>
+<dd><p>Optimized angle dictionary construction using NumPy grouping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edges_only</strong> – Only include edge-connected pairs</p></li>
+<li><p><strong>decimals</strong> – Round angles to specified decimal places</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping rounded angles to vertex pairs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.transform_coordinates">
+<span class="sig-name descname"><span class="pre">transform_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.transform_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.transform_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Transform coordinates center and orientation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.center_coordinates">
+<span class="sig-name descname"><span class="pre">center_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.center_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.center_coordinates" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.scale_coordinates">
+<span class="sig-name descname"><span class="pre">scale_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.scale_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.scale_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Scale coordinates to fit within given radius</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.project_coordinates">
+<span class="sig-name descname"><span class="pre">project_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.project_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.project_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Project coordinates using a function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.pca_projection">
+<span class="sig-name descname"><span class="pre">pca_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.pca_projection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.pca_projection" title="Link to this definition"></a></dt>
+<dd><p>Dimensionality reduction using PCA</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.validate_plot_parameters">
+<span class="sig-name descname"><span class="pre">validate_plot_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.validate_plot_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.validate_plot_parameters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.plot_faces">
+<span class="sig-name descname"><span class="pre">plot_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.plot_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.plot_faces" title="Link to this definition"></a></dt>
+<dd><p>Plots the 2-cells (faces) of the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axes to plot the graph on. If None, a new figure is created.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the ax.fill function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>matplotlib.axes.Axes</dt><dd><p>The axes object with the plot.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedComplex.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.embed_complex.EmbeddedComplex.plot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedGraph">
+<span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedGraph</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedGraph" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#ect.embed_complex.EmbeddedComplex" title="ect.embed_complex.EmbeddedComplex"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.embed_complex.EmbeddedCW">
+<span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedCW</span></span><a class="headerlink" href="#ect.embed_complex.EmbeddedCW" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#ect.embed_complex.EmbeddedComplex" title="ect.embed_complex.EmbeddedComplex"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code></a></p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="2. Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="validation.html" class="btn btn-neutral float-right" title="2.2. Validation System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
