@@ -186,7 +186,7 @@ class ECT:
     def _compute_directional_transform(
         simplex_projections_list, thresholds, shape_descriptor, dtype=np.int32
     ):
-        """Compute ECT by counting simplices below each threshold
+        """Compute ECT by counting simplices below each threshold - VECTORIZED VERSION
 
         Args:
             simplex_projections_list: List of arrays containing projections for each simplex type
@@ -208,23 +208,14 @@ class ECT:
                 sorted_proj[:, i] = np.sort(proj[:, i])
             sorted_projections.append(sorted_proj)
 
-        for j in prange(num_thresh):
-            thresh = thresholds[j]
-            for i in range(num_dir):
-                simplex_counts_list = List()
-                for k in range(len(sorted_projections)):
-                    projs = sorted_projections[k][:, i]
-                    simplex_counts_list.append(
-                        np.searchsorted(projs, thresh, side="right")
-                    )
-                result[i, j] = shape_descriptor(simplex_counts_list)
-        return result
+        for i in prange(num_dir):
+            chi = np.zeros(num_thresh, dtype=dtype)
+            for k in range(len(sorted_projections)):
+                projs = sorted_projections[k][:, i]
 
-    @staticmethod
-    @njit(fastmath=True)
-    def shape_descriptor(simplex_counts_list):
-        """Calculate shape descriptor from simplex counts (Euler characteristic)"""
-        chi = 0
-        for k in range(len(simplex_counts_list)):
-            chi += (-1) ** k * simplex_counts_list[k]
-        return chi
+                count = np.searchsorted(projs, thresholds, side="right")
+
+                sign = -1 if k % 2 else 1
+                chi += sign * count
+            result[i] = chi
+        return result
