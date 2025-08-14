@@ -132,7 +132,7 @@ class ECT:
         simplex_projections = self._compute_simplex_projections(graph, directions)
 
         ect_matrix = self._compute_directional_transform(
-            simplex_projections, self.thresholds, self.shape_descriptor, self.dtype
+            simplex_projections, self.thresholds, self.dtype
         )
 
         return ECTResult(ect_matrix, directions, self.thresholds)
@@ -184,7 +184,7 @@ class ECT:
     @staticmethod
     @njit(parallel=True, fastmath=True)
     def _compute_directional_transform(
-        simplex_projections_list, thresholds, shape_descriptor, dtype=np.int32
+        simplex_projections_list, thresholds, dtype=np.int32
     ):
         """Compute ECT by counting simplices below each threshold - VECTORIZED VERSION
 
