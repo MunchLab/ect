@@ -120,7 +120,7 @@ class TestECT(unittest.TestCase):
         self.assertEqual(result.shape, (1, 5))
         
         # Verify the internal projection computation works
-        node_projections = ect._compute_node_projections(complex_3d.coord_matrix, directions)
+        node_projections = np.matmul(complex_3d.coord_matrix, directions.vectors.T)
         simplex_projections = ect._compute_simplex_projections(complex_3d, directions)
         
         # Should have projections for all cell dimensions present
@@ -174,7 +174,7 @@ class TestECT(unittest.TestCase):
         ect = ECT(directions=directions, num_thresh=3)
         
         # Test internal projection computation
-        node_projections = ect._compute_node_projections(K.coord_matrix, directions)
+        node_projections = np.matmul(K.coord_matrix, directions.vectors.T)
         simplex_projections = ect._compute_simplex_projections(K, directions)
         
         # Verify 2-cell projection is max of its vertices
