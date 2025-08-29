@@ -44,7 +44,8 @@ class DECT(ECT):
                 for t, thresh in enumerate(thresholds):
                     diff = scale * (simplex_heights[:, d] - thresh)
                     sigmoid = 1 / (1 + np.exp(-diff))
-                    output[d, t] += (-1) ** (i + 1) * np.sum(sigmoid)
+                    sign = -1 if i % 2 == 0 else 1
+                    output[d, t] += sign * np.sum(sigmoid)
 
         return output
 
@@ -72,14 +73,3 @@ class DECT(ECT):
         )
 
         return ECTResult(ect_matrix, directions, self.thresholds)
-
-    def shape_descriptor(self, simplex_counts_list, threshold):
-        """Calculate shape descriptor using sigmoid for smooth transitions"""
-        chi = 0
-
-        for i, heights in enumerate(simplex_counts_list):
-            smooth_counts = 1 / (1 + np.exp(-self.scale * heights))
-            sign = -1 if i % 2 == 0 else 1
-            chi += sign * np.sum(smooth_counts)
-
-        return chi
