@@ -56,7 +56,7 @@ To start, we assume our input is an undirected graph $G$ with an embedding in 2D
 
 
 For a choice of direction $\theta \in [0,2\pi]$, we can induce a function on the vertex set. 
-Thinking of  this as $\omega \in \mathbb{S}^1$ by defining the unit vector $\omega = (\cos(\theta), \sin(\theta))$, the function $g_\omega$ is defined on the vertices of $G$ by taking the dot product of the embedding coordinates with the unit vector, specifically
+Thinking of this as $\omega \in \mathbb{S}^1$ by defining the unit vector $\omega = (\cos(\theta), \sin(\theta))$, the function $g_\omega$ is defined on the vertices of $G$ by taking the dot product of the embedding coordinates with the unit vector, specifically
 $$
 g_\omega(v) = \langle f(v), \omega\rangle.
 $$
@@ -96,7 +96,7 @@ In order to handle issues with choices of direction discretiziations, we have im
   - [Kent distribution](https://en.wikipedia.org/wiki/Kent_distribution) 
   - [von Mises-Fisher](https://en.wikipedia.org/wiki/Von_Mises%E2%80%93Fisher_distribution#Matrix_Von_Mises-Fisher)
 
-## Extension to higher dimensional cells
+
 
 **TODO: add in stuff about the CW complex inputs**
 - CW Complexes might be too broad a term. Perhaps "[polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)" is better. 
@@ -109,11 +109,11 @@ Additional code is included for computing distances between the resulting ECT ma
 
 ## Generalized versions of ECT
 
-SECT, DECT, whatever else? 
+The ECT package provides implementations for both the Smooth Euler Characteristic Transform and the Differentiable Euler Characteristic Transform. This allows for users to quickly examine their dataset under the lense of various topological transforms to find what best suits their problem.
 
-# Statement of need
+# Statement of Need
 
-**TODO: Are there any existing ECT packages?**
+Despite the ECT's mathematical elegances, there has been a notable absense of efficient, user-friendly Python implementations that can handle the computational demands of modern research datasets. The ECT package addressed this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complimented by the many utility functions for visualizing and comparing different Euler Characteristic Tranforms such as the ECT, SECT, and the DECT.
 
 Yemeen is going to find any needed references.
 
