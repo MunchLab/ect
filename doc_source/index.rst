@@ -14,7 +14,6 @@ Table of Contents
    Getting Started <installation.rst>
    Modules <modules.rst>
    Tutorials <tutorials.rst>
-   Migration Guide <migration.md>
    Contributing <contributing.rst>
    License <license.md>
    Citing <citing.rst>
@@ -22,9 +21,7 @@ Table of Contents
 Description
 -----------
 
-The package now supports ECT computation on embedded cell complexes with arbitrary dimensional cells through the unified `EmbeddedComplex` class. This includes graphs (1-dimensional), CW complexes with faces (2-dimensional), and higher dimensional cell complexes.
-
-**Note**: The previous `EmbeddedGraph` and `EmbeddedCW` classes are now aliases for the unified `EmbeddedComplex` class. All existing code will continue to work, but new code should use `EmbeddedComplex` directly.
+This package provides tools for computing the Euler Characteristic Transform (ECT) of embedded cell complexes efficienctly and provides many useful utilities for visualizing and comparing different ECTs.
 
 For more information on the ECT, see:
 

@@ -4,18 +4,12 @@ The `EmbeddedComplex` class is a unified representation for embedded cell comple
 
 ## Overview
 
-`EmbeddedComplex` combines and extends the functionality of the previous `EmbeddedGraph` and `EmbeddedCW` classes into a single, more powerful interface. It supports:
+`EmbeddedComplex` combines and extends the functionality of the previous `EmbeddedGraph` and `EmbeddedCW` classes into a single interface. It supports:
 
 - **0-cells (vertices)**: Points embedded in Euclidean space
 - **1-cells (edges)**: Line segments between vertices
 - **k-cells for k ≥ 2**: Higher dimensional cells (faces, volumes, etc.)
 
-## Key Features
-
-- **Unified Interface**: Single class for all cell complex operations
-- **Arbitrary Dimensions**: Support for k-cells of any dimension k ≥ 0
-- **Modular Validation**: Pluggable validation system for embedding properties
-- **Backward Compatible**: `EmbeddedGraph` and `EmbeddedCW` remain as aliases
 
 ## Basic Usage
 

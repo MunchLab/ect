@@ -1,6 +1,6 @@
 # Validation System
 
-The validation system provides modular, extensible validation for embedded cell complexes to ensure they represent proper embeddings in Euclidean space.
+We often require our cell complexes to satisfy geometric constraints. The validation system provides modular, extensible validation for embedded cell complexes to ensure they represent proper embeddings in Euclidean space.
 
 ## Overview
 
