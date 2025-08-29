@@ -205,7 +205,6 @@ class EmbeddedComplex(nx.Graph):
         # convert vertex names to indices for storage
         cell_indices = tuple(self._node_to_index[v] for v in cell_vertices)
 
-        # always validate structural requirements
         cell_coords = (
             self._coord_matrix[list(cell_indices)]
             if self._coord_matrix is not None
@@ -214,24 +213,33 @@ class EmbeddedComplex(nx.Graph):
         all_coords = self._coord_matrix
         all_indices = list(range(len(self._node_list)))
 
-        # Always check structural rules (vertex count, dimension validity)
+        # check structural rules (vertex count, dimension validity)
         structural_result = self._validator.validate_cell(
-            cell_coords, all_coords, list(cell_indices), all_indices, dim, check_geometric=False
+            cell_coords,
+            all_coords,
+            list(cell_indices),
+            all_indices,
+            dim,
+            check_geometric=False,
         )
         if not structural_result.is_valid:
             raise ValueError(structural_result.message)
 
-        # Optionally check geometric rules (embedding properties)
+        # check geometric rules (embedding properties)
         if check:
             geometric_result = self._validator.validate_cell(
-                cell_coords, all_coords, list(cell_indices), all_indices, dim, check_geometric=True
+                cell_coords,
+                all_coords,
+                list(cell_indices),
+                all_indices,
+                dim,
+                check_geometric=True,
             )
             if not geometric_result.is_valid:
                 raise ValueError(geometric_result.message)
 
-        # update graph structure and store cell
+        # update graph structure
         if dim == 1:
-            # also add to networkx graph structure
             self.add_edge(cell_vertices[0], cell_vertices[1])
 
         self.cells[dim].append(cell_indices)
