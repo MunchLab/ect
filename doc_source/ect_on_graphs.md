@@ -9,3 +9,8 @@
 .. automodule:: ect.sect
    :members:
 ```
+
+```{eval-rst}
+.. automodule:: ect.dect
+   :members:
+```
