@@ -14,11 +14,13 @@ from .ect import ECT
 from .embed_complex import EmbeddedComplex, EmbeddedGraph, EmbeddedCW
 from .directions import Directions
 from .sect import SECT
+from .dect import DECT
 from .utils import examples
 
 __all__ = [
     "ECT",
     "SECT",
+    "DECT",
     "EmbeddedComplex",
     "EmbeddedGraph",
     "EmbeddedCW",
