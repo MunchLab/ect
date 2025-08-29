@@ -57,14 +57,15 @@ class ECT:
             if self.num_dirs is None:
                 raise ValueError("Either 'directions' or 'num_dirs' must be provided.")
             self.directions = Directions.uniform(self.num_dirs, dim=graph_dim)
-        elif isinstance(self.directions, list):
-            # if list of vectors, convert to Directions object
-            self.directions = np.array(self.directions)
-            self.directions = Directions.from_vectors(self.directions)
         elif not isinstance(self.directions, Directions):
-            raise TypeError(
-                "directions must be a Directions object, ndarray, or list of vectors."
-            )
+            # convert any array-like to Directions object
+            try:
+                self.directions = Directions.from_vectors(np.asarray(self.directions))
+            except ValueError:
+                raise ValueError(
+                    "Invalid directions provided. "
+                    "Must be a numpy array or a Directions object."
+                )
 
         if theta is not None and graph_dim != 2:
             raise ValueError(
@@ -79,31 +80,23 @@ class ECT:
 
     def _ensure_thresholds(self, graph, override_bound_radius=None):
         """Ensures thresholds is a valid 1-dimensional ndarray."""
-
-        # determine if we need to generate thresholds
         if self.thresholds is None or override_bound_radius is not None:
             if self.num_thresh is None:
                 raise ValueError(
                     "Either 'thresholds' or 'num_thresh' must be provided."
                 )
-            # determine the radius based on priority
-            if override_bound_radius is not None:
-                radius = override_bound_radius
-            elif self.bound_radius is not None:
-                radius = self.bound_radius
-            else:
-                radius = graph.get_bounding_radius()
-
-            self.thresholds = np.linspace(-radius, radius, self.num_thresh)
+            # priority: override > bound_radius > graph radius
+            radius = (
+                override_bound_radius
+                or self.bound_radius
+                or graph.get_bounding_radius()
+            )
+            self.thresholds = np.linspace(-radius, radius, self.num_thresh, dtype=float)
         else:
-            # validate existing thresholds are valid
-            if not isinstance(self.thresholds, np.ndarray):
-                raise TypeError("thresholds must be a numpy ndarray")
-
+            # validate and convert existing thresholds
+            self.thresholds = np.asarray(self.thresholds, dtype=float)
             if self.thresholds.ndim != 1:
                 raise ValueError("thresholds must be a 1-dimensional array")
-
-            self.thresholds = self.thresholds.astype(float)
 
     def calculate(
         self,
@@ -137,49 +130,35 @@ class ECT:
 
         return ECTResult(ect_matrix, directions, self.thresholds)
 
-    def _compute_node_projections(self, coords, directions):
-        """Compute inner products of coordinates with directions"""
-        return np.matmul(coords, directions.vectors.T)
-
     def _compute_simplex_projections(self, graph: EmbeddedComplex, directions):
         """Compute projections of each k-cell for all dimensions"""
         simplex_projections = List()
-        node_projections = self._compute_node_projections(
-            graph.coord_matrix, directions
-        )
+        node_projections = np.matmul(graph.coord_matrix, directions.vectors.T)
         num_dirs = node_projections.shape[1]
 
         simplex_projections.append(node_projections)
 
-        all_cells = {0: [(i,) for i in range(len(graph.node_list))]}
-
-        if graph.edge_indices.shape[0] > 0:
-            all_cells[1] = [tuple(edge) for edge in graph.edge_indices]
-        else:
-            all_cells[1] = []
-
-        all_cells.update(graph.cells)
+        all_cells = {
+            0: [(i,) for i in range(len(graph.node_list))],
+            1: [tuple(edge) for edge in graph.edge_indices]
+            if graph.edge_indices.size
+            else [],
+            **graph.cells,
+        }
 
         max_dim = max(all_cells.keys()) if all_cells else 0
         for dim in range(1, max_dim + 1):
-            cell_projections = self._compute_cell_projections(
-                all_cells.get(dim, []), node_projections, num_dirs
+            cells = all_cells.get(dim, [])
+            cell_projections = (
+                np.array(
+                    [np.max(node_projections[list(cell), :], axis=0) for cell in cells]
+                )
+                if cells
+                else np.empty((0, num_dirs))
             )
             simplex_projections.append(cell_projections)
 
         return simplex_projections
-
-    def _compute_cell_projections(self, cells, node_projections, num_dirs):
-        """Compute projections for k-cells of any dimension k >= 1"""
-        if len(cells) > 0:
-            return np.array(
-                [
-                    np.max(node_projections[list(cell_indices), :], axis=0)
-                    for cell_indices in cells
-                ]
-            )
-        else:
-            return np.empty((0, num_dirs))
 
     @staticmethod
     @njit(parallel=True, fastmath=True)
