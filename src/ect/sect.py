@@ -1,6 +1,5 @@
 from ect import ECT
-from .embed_graph import EmbeddedGraph
-from .embed_cw import EmbeddedCW
+from .embed_complex import EmbeddedComplex
 from .directions import Directions
 from .results import ECTResult
 from typing import Optional, Union
@@ -38,7 +37,7 @@ class SECT(ECT):
 
     def calculate(
         self,
-        graph: Union[EmbeddedGraph, EmbeddedCW],
+        graph: EmbeddedComplex,
         theta: Optional[float] = None,
         override_bound_radius: Optional[float] = None,
     ) -> ECTResult:
