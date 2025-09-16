@@ -78,6 +78,135 @@ class TestECTResult(unittest.TestCase):
         self.assertEqual(sliced.directions, self.result.directions)
         self.assertTrue(np.array_equal(sliced.thresholds, self.result.thresholds))
 
+    def test_dist_single_ectresult(self):
+        """Test distance computation between two ECTResults"""
+        # Create a second ECTResult with same shape
+        result2 = self.ect.calculate(self.graph)
+        # Modify it slightly
+        result2_modified = result2 + 1
+        result2_modified.directions = result2.directions
+        result2_modified.thresholds = result2.thresholds
+        
+        # Test L1 distance (default)
+        dist_l1 = self.result.dist(result2_modified)
+        expected_l1 = np.abs(self.result - result2_modified).sum()
+        self.assertAlmostEqual(dist_l1, expected_l1)
+        self.assertIsInstance(dist_l1, (float, np.floating))
+        
+        # Test L2 distance
+        dist_l2 = self.result.dist(result2_modified, metric='euclidean')
+        expected_l2 = np.sqrt(((self.result - result2_modified) ** 2).sum())
+        self.assertAlmostEqual(dist_l2, expected_l2)
+        
+        # Test L-inf distance
+        dist_linf = self.result.dist(result2_modified, metric='chebyshev')
+        expected_linf = np.abs(self.result - result2_modified).max()
+        self.assertAlmostEqual(dist_linf, expected_linf)
+
+    def test_dist_list_of_ectresults(self):
+        """Test batch distance computation with list of ECTResults"""
+        # Create multiple ECTResults
+        result2 = self.result + 1
+        result3 = self.result + 2
+        result4 = self.result + 3
+        
+        # Preserve metadata
+        for r, val in [(result2, 1), (result3, 2), (result4, 3)]:
+            r.directions = self.result.directions
+            r.thresholds = self.result.thresholds
+        
+        # Test batch distances
+        distances = self.result.dist([result2, result3, result4])
+        
+        # Check return type is array
+        self.assertIsInstance(distances, np.ndarray)
+        self.assertEqual(len(distances), 3)
+        
+        # Check individual distances are correct
+        expected_dists = [
+            np.abs(self.result - result2).sum(),
+            np.abs(self.result - result3).sum(),
+            np.abs(self.result - result4).sum()
+        ]
+        np.testing.assert_array_almost_equal(distances, expected_dists)
+
+    def test_dist_custom_metric(self):
+        """Test distance with custom metric function"""
+        result2 = self.result + 1
+        result2.directions = self.result.directions
+        result2.thresholds = self.result.thresholds
+        
+        # Define custom metric - L0.5 norm
+        def custom_metric(u, v):
+            return np.sum(np.abs(u - v) ** 0.5)
+        
+        # Test with custom metric
+        dist_custom = self.result.dist(result2, metric=custom_metric)
+        expected = custom_metric(self.result.ravel(), result2.ravel())
+        self.assertAlmostEqual(dist_custom, expected)
+        
+        # Test custom metric with batch
+        result3 = self.result + 2
+        result3.directions = self.result.directions
+        result3.thresholds = self.result.thresholds
+        
+        distances = self.result.dist([result2, result3], metric=custom_metric)
+        expected_batch = [
+            custom_metric(self.result.ravel(), result2.ravel()),
+            custom_metric(self.result.ravel(), result3.ravel())
+        ]
+        np.testing.assert_array_almost_equal(distances, expected_batch)
+
+    def test_dist_additional_kwargs(self):
+        """Test passing additional kwargs to metric functions"""
+        result2 = self.result + 1
+        result2.directions = self.result.directions
+        result2.thresholds = self.result.thresholds
+        
+        # Test minkowski with different p values
+        dist_p3 = self.result.dist(result2, metric='minkowski', p=3)
+        expected_p3 = np.sum(np.abs(self.result - result2) ** 3) ** (1/3)
+        self.assertAlmostEqual(dist_p3, expected_p3, places=5)
+        
+        dist_p5 = self.result.dist(result2, metric='minkowski', p=5)
+        expected_p5 = np.sum(np.abs(self.result - result2) ** 5) ** (1/5)
+        self.assertAlmostEqual(dist_p5, expected_p5, places=5)
+
+    def test_dist_empty_list(self):
+        """Test that empty list returns empty array"""
+        distances = self.result.dist([])
+        self.assertIsInstance(distances, np.ndarray)
+        self.assertEqual(len(distances), 0)
+
+    def test_dist_shape_mismatch(self):
+        """Test that shape mismatch raises ValueError"""
+        # Create ECTResult with different shape
+        ect_different = ECT(num_dirs=5, num_thresh=7)
+        result_different = ect_different.calculate(self.graph)
+        
+        # Single ECTResult with wrong shape
+        with self.assertRaises(ValueError) as cm:
+            self.result.dist(result_different)
+        self.assertIn("Shape mismatch", str(cm.exception))
+        
+        # List with one wrong shape
+        result2 = self.result + 1
+        result2.directions = self.result.directions
+        result2.thresholds = self.result.thresholds
+        
+        with self.assertRaises(ValueError) as cm:
+            self.result.dist([result2, result_different])
+        self.assertIn("Shape mismatch at index 1", str(cm.exception))
+
+    def test_dist_self(self):
+        """Test distance to self is zero"""
+        dist_self = self.result.dist(self.result)
+        self.assertEqual(dist_self, 0.0)
+        
+        # Also test with different metrics
+        self.assertEqual(self.result.dist(self.result, metric='euclidean'), 0.0)
+        self.assertEqual(self.result.dist(self.result, metric='chebyshev'), 0.0)
+
 
 if __name__ == '__main__':
     unittest.main() 

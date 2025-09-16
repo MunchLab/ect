@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from ect.directions import Sampling
+from scipy.spatial.distance import cdist
+from typing import Union, List, Callable
 
 
 class ECTResult(np.ndarray):
@@ -47,8 +49,7 @@ class ECTResult(np.ndarray):
                 self.directions.sampling == Sampling.UNIFORM
                 and not self.directions.endpoint
             ):
-                plot_thetas = np.concatenate(
-                    [self.directions.thetas, [2 * np.pi]])
+                plot_thetas = np.concatenate([self.directions.thetas, [2 * np.pi]])
                 ect_data = np.hstack([self.T, self.T[:, [0]]])
             else:
                 plot_thetas = self.directions.thetas
@@ -113,3 +114,66 @@ class ECTResult(np.ndarray):
         plt.title(r"ECC for $\omega = " + theta_round + "$")
         plt.xlabel("$a$")
         plt.ylabel(r"$\chi(K_a)$")
+
+    def dist(
+        self,
+        other: Union["ECTResult", List["ECTResult"]],
+        metric: Union[str, Callable] = "cityblock",
+        **kwargs,
+    ):
+        """
+        Compute distance to another ECTResult or list of ECTResults.
+
+        Args:
+            other: Another ECTResult object or list of ECTResult objects
+            metric: Distance metric to use. Can be:
+                   - String: any metric supported by scipy.spatial.distance
+                     (e.g., 'euclidean', 'cityblock', 'chebyshev', 'cosine', etc.)
+                   - Callable: a custom distance function that takes two 1D arrays
+                     and returns a scalar distance. The function should have signature:
+                     func(u, v) -> float
+            **kwargs: Additional keyword arguments passed to the metric function
+                     (e.g., p=3 for minkowski distance, w=weights for weighted metrics)
+
+        Returns:
+            float or np.ndarray: Single distance if other is an ECTResult,
+                                 array of distances if other is a list
+
+        Raises:
+            ValueError: If the shapes of the ECTResults don't match
+
+        Examples:
+            >>> # Built-in metrics
+            >>> dist1 = ect1.dist(ect2, metric='euclidean')
+            >>> dist2 = ect1.dist(ect2, metric='minkowski', p=3)
+            >>>
+            >>> # Custom distance function
+            >>> def my_distance(u, v):
+            ...     return np.sum(np.abs(u - v) ** 0.5)
+            >>> dist3 = ect1.dist(ect2, metric=my_distance)
+            >>>
+            >>> # Batch distances with custom function
+            >>> dists = ect1.dist([ect2, ect3, ect4], metric=my_distance)
+        """
+        # normalize input to list
+        single = isinstance(other, ECTResult)
+        others = [other] if single else other
+
+        if not others:
+            return np.array([])
+
+        for i, ect in enumerate(others):
+            if ect.shape != self.shape:
+                raise ValueError(
+                    f"Shape mismatch at index {i}: {self.shape} vs {ect.shape}"
+                )
+
+        # use ravel to avoid copying the data and compute distances
+        distances = cdist(
+            self.ravel()[np.newaxis, :],
+            np.vstack([ect.ravel() for ect in others]),
+            metric=metric,
+            **kwargs,
+        )[0]
+
+        return distances[0] if single else distances
