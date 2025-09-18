@@ -1,7 +1,7 @@
 ect: Euler Characteristic Transform in Python
 =============================================
 
-Python computation tools for computing the Euler Characteristic Transform of embedded graphs. 
+Python computation tools for computing the Euler Characteristic Transform of embedded cell complexes with arbitrary dimensional cells. 
 
 Table of Contents
 -----------------
@@ -13,7 +13,7 @@ Table of Contents
 
    Getting Started <installation.rst>
    Modules <modules.rst>
-   Tutorials <tutorials.md>
+   Tutorials <tutorials.rst>
    Contributing <contributing.rst>
    License <license.md>
    Citing <citing.rst>
@@ -21,7 +21,7 @@ Table of Contents
 Description
 -----------
 
-Right now, the content includes stuff for doing ECT on graphs embedded in 2D. Eventually the goal is to get voxel versions, higher dimensional simplicial complexes, etc in here.
+This package provides tools for computing the Euler Characteristic Transform (ECT) of embedded cell complexes efficienctly and provides many useful utilities for visualizing and comparing different ECTs.
 
 For more information on the ECT, see:
 
@@ -34,7 +34,7 @@ Documentation and tutorials
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * The documentation is available at: `munchlab.github.io/ect <https://munchlab.github.io/ect/>`_
-* A tutorial jupyter notebook can be found `here <https://munchlab.github.io/ect/notebooks/Tutorial-ECT_for_embedded_graphs.html>`_
+* A comprehensive tutorial for the unified `EmbeddedComplex` class can be found `here <https://munchlab.github.io/ect/notebooks/Tutorial-EmbeddedComplex.html>`_
 * The source code can be found at: `github.com/MunchLab/ect  <https://github.com/MunchLab/ect>`_
 
 Dependencies

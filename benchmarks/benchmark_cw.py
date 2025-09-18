@@ -1,7 +1,8 @@
 """Benchmarks for CW complex computations"""
 import numpy as np
 import time
-from ect import ECT, EmbeddedCW, create_example_cw
+from ect import ECT
+from ect.utils.examples import create_example_cw
 import json
 from pathlib import Path
 
@@ -11,9 +12,9 @@ def benchmark_cw_ect(num_runs=5):
     results = {}
 
     configs = [
-        (8, 10),    # Small
-        (36, 36),   # Medium
-        (360, 360),  # Large
+        (8, 10),    
+        (36, 36),   
+        (360, 360),  
     ]
 
     for num_dir, num_thresh in configs:
@@ -26,7 +27,7 @@ def benchmark_cw_ect(num_runs=5):
             start_time = time.time()
 
             myect = ECT(num_dirs=num_dir, num_thresh=num_thresh)
-            myect.calculateECT(K)
+            myect.calculate(K)
 
             execution_time = time.time() - start_time
             times.append(execution_time)
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     print("Running CW complex benchmarks...")
     results = benchmark_cw_ect()
 
-    # Save results
+    
     output_dir = Path("benchmark_results")
     output_dir.mkdir(exist_ok=True)
 
