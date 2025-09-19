@@ -101,34 +101,42 @@ class ECT:
     def calculate(
         self,
         graph: EmbeddedComplex,
-        theta: Optional[float] = None,
-        override_bound_radius: Optional[float] = None,
+        theta: float = None,
+        override_bound_radius: float = None,
     ):
-        """Calculate Euler Characteristic Transform (ECT) for a given graph and direction theta
-
-        Args:
-            graph (EmbeddedComplex):
-                The input complex to calculate the ECT for.
-            theta (float):
-                The angle in :math:`[0,2\pi]` for the direction to calculate the ECT.
-            override_bound_radius (float):
-                If None, uses the following in order: (i) the bounding radius stored in the class; or if not available (ii) the bounding radius of the given graph. Otherwise, should be a positive float :math:`R` where the ECC will be computed at thresholds in :math:`[-R,R]`. Default is None.
-        """
         self._ensure_directions(graph.dim, theta)
         self._ensure_thresholds(graph, override_bound_radius)
-
-        # override with theta if provided
         directions = (
             self.directions if theta is None else Directions.from_angles([theta])
         )
-
-        simplex_projections = self._compute_simplex_projections(graph, directions)
-
-        ect_matrix = self._compute_directional_transform(
-            simplex_projections, self.thresholds, self.dtype
-        )
+        ect_matrix = self._compute_ect(graph, directions, self.thresholds, self.dtype)
 
         return ECTResult(ect_matrix, directions, self.thresholds)
+
+    def _compute_ect(
+        self, graph, directions, thresholds: np.ndarray, dtype=np.int32
+    ) -> np.ndarray:
+        cell_vertex_pointers, cell_vertex_indices_flat, cell_euler_signs, N = (
+            graph._build_incidence_csr()
+        )
+        thresholds = np.asarray(thresholds, dtype=np.float64)
+
+        V = directions.vectors
+        X = graph.coord_matrix
+        H = X @ V if V.shape[0] == X.shape[1] else X @ V.T  # (N, m)
+        H_T = np.ascontiguousarray(H.T)  # (m, N) for contiguous per-direction rows
+
+        out64 = _ect_all_dirs(
+            H_T,
+            cell_vertex_pointers,
+            cell_vertex_indices_flat,
+            cell_euler_signs,
+            thresholds,
+            N,
+        )
+        if dtype == np.int32:
+            return out64.astype(np.int32)
+        return out64
 
     def _compute_simplex_projections(self, graph: EmbeddedComplex, directions):
         """Compute projections of each k-cell for all dimensions"""
@@ -160,41 +168,79 @@ class ECT:
 
         return simplex_projections
 
-    @staticmethod
-    @njit(parallel=True, fastmath=True)
-    def _compute_directional_transform(
-        simplex_projections_list, thresholds, dtype=np.int32
-    ):
-        """Compute ECT by counting simplices below each threshold - VECTORIZED VERSION
 
-        Args:
-            simplex_projections_list: List of arrays containing projections for each simplex type
-                [vertex_projections, edge_projections, face_projections]
-            thresholds: Array of threshold values to compute ECT at
-            dtype: Data type for output array (default: np.int32)
+@njit(cache=True, parallel=True)
+def _ect_all_dirs(
+    heights_by_direction,  # shape (num_directions, num_vertices)
+    cell_vertex_pointers,  # shape (num_cells + 1,)
+    cell_vertex_indices_flat,  # concatenated vertex indices for all cells
+    cell_euler_signs,  # per-cell sign: (+1) for even-dim, (-1) for odd-dim
+    threshold_values,  # shape (num_thresholds,), assumed nondecreasing
+    num_vertices,
+):
+    """
+    Calculate the Euler Characteristic Transform (ECT) for a given direction and thresholds.
 
-        Returns:
-            Array of shape (num_directions, num_thresholds) containing Euler characteristics
-        """
-        num_dir = simplex_projections_list[0].shape[1]
-        num_thresh = thresholds.shape[0]
-        result = np.empty((num_dir, num_thresh), dtype=dtype)
+    Args:
+        heights_by_direction: The heights of the vertices for each direction
+        cell_vertex_pointers: The pointers to the vertices for each cell
+        cell_vertex_indices_flat: The indices of the vertices for each cell
+        cell_euler_signs: The signs of the cells
+        threshold_values: The thresholds to calculate the ECT for
+        num_vertices: The number of vertices in the graph
+    """
+    num_directions = heights_by_direction.shape[0]
+    num_thresholds = threshold_values.shape[0]
+    ect_values = np.empty((num_directions, num_thresholds), dtype=np.int64)
 
-        sorted_projections = List()
-        for proj in simplex_projections_list:
-            sorted_proj = np.empty_like(proj)
-            for i in prange(num_dir):
-                sorted_proj[:, i] = np.sort(proj[:, i])
-            sorted_projections.append(sorted_proj)
+    for dir_idx in prange(num_directions):
+        heights = heights_by_direction[dir_idx]
 
-        for i in prange(num_dir):
-            chi = np.zeros(num_thresh, dtype=dtype)
-            for k in range(len(sorted_projections)):
-                projs = sorted_projections[k][:, i]
+        sort_order = np.argsort(heights)
 
-                count = np.searchsorted(projs, thresholds, side="right")
+        # calculate what position each vertex is in the sorted heights starting from 1 (the rank)
+        vertex_rank_1based = np.empty(num_vertices, dtype=np.int32)
+        for rnk in range(num_vertices):
+            vertex_index = sort_order[rnk]
+            vertex_rank_1based[vertex_index] = rnk + 1
 
-                sign = -1 if k % 2 else 1
-                chi += sign * count
-            result[i] = chi
-        return result
+        # euler char can only jump at each vertex value
+        jump_amount = np.zeros(num_vertices + 1, dtype=np.int64)
+
+        # 0-cells add +1 at their entrance ranks
+        for v in range(num_vertices):
+            rank_v = vertex_rank_1based[v]
+            jump_amount[rank_v] += 1
+
+        # each pair of pointers defines a cell, so we iterate over them
+        num_cells = cell_vertex_pointers.shape[0] - 1
+        for cell_idx in range(num_cells):
+            start = cell_vertex_pointers[cell_idx]
+            end = cell_vertex_pointers[cell_idx + 1]
+            # cells come in when the highest vertex enters
+            entrance_rank = 0
+            for k in range(start, end):
+                v = cell_vertex_indices_flat[k]
+                rnk = vertex_rank_1based[v]
+                if rnk > entrance_rank:
+                    entrance_rank = rnk
+            # record at what rank the cell enters and how much the euler char changes
+            jump_amount[entrance_rank] += cell_euler_signs[cell_idx]
+
+        # calculate euler char at the moment each vertex enters
+        euler_prefix = np.empty(num_vertices + 1, dtype=np.int64)
+        running_sum = 0
+        for r in range(num_vertices + 1):
+            running_sum += jump_amount[r]
+            euler_prefix[r] = running_sum
+
+        # now find euler char at each threshold wrt the sorted heights
+        sorted_heights = heights[sort_order]
+        rank_cursor = 0  # equals r(t) = # { i : h_i <= t }
+        for thresh_idx in range(num_thresholds):
+            t = threshold_values[thresh_idx]
+            while rank_cursor < num_vertices and sorted_heights[rank_cursor] <= t:
+                rank_cursor += 1
+            ect_values[dir_idx, thresh_idx] = euler_prefix[rank_cursor]
+
+    return ect_values
