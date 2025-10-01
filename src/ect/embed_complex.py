@@ -782,6 +782,62 @@ class EmbeddedComplex(nx.Graph):
 
         return nice_interval * magnitude
 
+    def _build_incidence_csr(self) -> tuple:
+        """
+        Build column sparse representation of the cell-to-vertex incidence excluding 0-cells. Format is (cell_vertex_pointers, cell_vertex_indices_flat, cell_euler_signs, n_vertices).
+        Example: takes the complex [(1,3),(2,4),(1,2,3)] and returns [(0,2,4,7),(1,3,2,4,1,2,3),(-1,-1,1),4]
+
+        """
+        n_vertices = len(self.node_list)
+
+        cells_by_dimension = {}
+
+        if hasattr(self, "edge_indices") and self.edge_indices is not None:
+            edge_indices_array = np.asarray(self.edge_indices)
+            if edge_indices_array.size:
+                cells_by_dimension[1] = [
+                    tuple(map(int, row)) for row in edge_indices_array
+                ]
+
+        if hasattr(self, "cells") and self.cells:
+            for dim, cells_of_dim in self.cells.items():
+                if dim == 0:
+                    continue
+                if dim == 1 and 1 in cells_by_dimension:
+                    continue
+                if isinstance(cells_of_dim, np.ndarray):
+                    cell_list = [tuple(map(int, row)) for row in cells_of_dim]
+                else:
+                    cell_list = [tuple(map(int, c)) for c in cells_of_dim]
+                if len(cell_list) > 0:
+                    cells_by_dimension[dim] = cell_list
+
+        dimensions = sorted(cells_by_dimension.keys())
+        n_cells = sum(len(cells_by_dimension[d]) for d in dimensions)
+
+        cell_vertex_pointers = np.empty(n_cells + 1, dtype=np.int64)
+        cell_euler_signs = np.empty(n_cells, dtype=np.int32)
+        cell_vertex_indices_flat = []
+
+        cell_vertex_pointers[0] = 0
+        cell_index = 0
+        for dim in dimensions:
+            cells_in_dim = cells_by_dimension[dim]
+            euler_sign = 1 if (dim % 2 == 0) else -1
+            for cell_vertices in cells_in_dim:
+                cell_vertex_indices_flat.extend(cell_vertices)
+                cell_euler_signs[cell_index] = euler_sign
+                cell_index += 1
+                cell_vertex_pointers[cell_index] = len(cell_vertex_indices_flat)
+
+        cell_vertex_indices_flat = np.asarray(cell_vertex_indices_flat, dtype=np.int32)
+        return (
+            cell_vertex_pointers,
+            cell_vertex_indices_flat,
+            cell_euler_signs,
+            n_vertices,
+        )
+
 
 EmbeddedGraph = EmbeddedComplex
 EmbeddedCW = EmbeddedComplex
