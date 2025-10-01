@@ -40,9 +40,9 @@ The `ect` Python package offers a fast and well-documented implementation of ECT
 
 ## The Euler Characteristic Transform
 
-We give a high level introduction of the ECT here. We direct the reader to [@Munch2025] for a full survey article on the subject. 
+We give a high level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025] for a full survey article specifically on the subject. Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs.
 
-To start, we assume our input is an undirected graph $G$ with an embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as seen in \autoref{fig:example_graph}. 
+To start, we assume our input is an undirected graph $G$ with a straight-line embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as seen in \autoref{fig:example_graph}.
 
 
 
