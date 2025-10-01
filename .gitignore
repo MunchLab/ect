@@ -8,6 +8,8 @@ benchmarks/results/*
 src/ect/embed_graph.py
 src/ect/embed_cw.py
 
+.conda*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
