@@ -48,9 +48,7 @@ We give a high level introduction of the ECT here as defined in [@Turner2014], a
 
 To start, we have input `ect.EmbeddedComplex`, which is a polyhedral complex $K$ (See [@Goodman2018] Ch. 17.4) which is a collection of convex polytopes in $\mathbb{R}^n$ closed under the face relation. While we note the code can handle shapes in any dimension, we will give an exposition focusing on the case of a straight-line graph embedding like the example given in \autoref{fig:example_graph} embedded in $\mathbb{R}^2$.
 
-For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $
-g_\omega(v) = \langle f(v), \omega\rangle.
-$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$. 
+For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $g_\omega(v) = \langle f(v), \omega\rangle$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$. 
 Some examples are shown for the embedded graph in \autoref{fig:example_graph}. 
 The ECT for the embedded graph is given by
 $$
