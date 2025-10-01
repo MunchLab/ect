@@ -1,5 +1,5 @@
 ---
-title: 'ECT: A Python Package for the Euler Characteristic Transform'
+title: '`ect`: A Python Package for the Euler Characteristic Transform'
 tags:
   - Python
   - Topological Data Analysis
@@ -40,32 +40,19 @@ The `ect` Python package offers a fast and well-documented implementation of ECT
 
 ## The Euler Characteristic Transform
 
-We give a high level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025] for a full survey article specifically on the subject. Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs.
+The Euler characteristic is a standard construction from algebraic topology (See e.g. [@Hatcher]). 
+In its simplest form, for a given polyhedron $K$, it is defined as the alternating sum $\chi(K) = v_K-e_K+f_K$ where $v_K$, $e_K$, and $f_K$ stand for the counts of the numbers of vertices, edges, and faces in $K$, respectively.
+The Euler Characteristic Transform (ECT) extends this idea to encode the changing Euler characteristic for sublevelsets of an input space in different directions.
+We give a high level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025] for a full survey article specifically on the subject. 
+<!-- Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs. -->
 
-To start, we assume our input is an undirected graph $G$ with a straight-line embedding in 2D given by a map on the vertices $f: V(G) \to \mathbb{R}^2$. A graph can be constructed as seen in \autoref{fig:example_graph}.
+To start, we have input `ect.EmbeddedComplex`, which is a polyhedral complex $K$ (See [@Goodman2018] Ch. 17.4) which is a collection of convex polytopes in $\mathbb{R}^n$ closed under the face relation. While we note the code can handle shapes in any dimension, we will give an exposition focusing on the case of a straight-line graph embedding like the example given in \autoref{fig:example_graph} embedded in $\mathbb{R}^2$.
 
-
-![A filtration of a graph showing the sublevel sets of $g_\omega$ for a fixed direction $\omega$. The vertices and edges are added to the filtration as the height increases.\label{fig:filtration}](figures/filtration.png)
-
-<!-- ![Testing scaling](figures/CombineGraphExample.png){ width=20% } -->
-
-
-For a choice of direction $\theta \in [0,2\pi]$, we can induce a function on the vertex set. 
-Thinking of this as $\omega \in \mathbb{S}^1$ by defining the unit vector $\omega = (\cos(\theta), \sin(\theta))$, the function $g_\omega$ is defined on the vertices of $G$ by taking the dot product of the embedding coordinates with the unit vector, specifically
-$$
+For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $
 g_\omega(v) = \langle f(v), \omega\rangle.
-$$
-<!-- This is done in the code using the `g_omega` method as shown.  -->
-Some examples are shown in \autoref{fig:example_graph}. 
-
-Now we can set up the ECT for the embedded graph. The ECT is defined as 
-$$
-\begin{matrix}
-\text{ECT}(G): & \mathbb{S}^1 & \to & \text{Func}(\mathbb{R}, \mathbb{Z})\\
-& \omega & \mapsto & \{ a \mapsto \chi(g_\omega^{-1}(-\infty,a]) \}
-\end{matrix}
-$$
-Perhaps a better way of looking at this same function for visualization purposes is to treat this function as defined on a cylinder,
+$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$. 
+Some examples are shown for the embedded graph in \autoref{fig:example_graph}. 
+The ECT for the embedded graph is given by
 $$
 \begin{matrix}
 \text{ECT}(G): & \mathbb{S}^1 \times \mathbb{R} & \to &  \mathbb{Z}\\
@@ -73,12 +60,12 @@ $$
 \end{matrix}
 $$
 After discretizing, the example embedded graph has an ECT matrix as shown in the bottom row of \autoref{fig:example_graph}.
-The main functionality of the `ECT` package is to be able to compute the ECT matrix for graphs embedded in $\mathbb{R}^d$ for $d \in \{2,3\}$.
 
 ![(Top row) An example of an embedded graph with two choices of function $f_\omega$ drawn as the coloring on the nodes. (Bottom) The ECT matrix of the graph shown.\label{fig:example_graph}](figures/CombineGraphExample.png)
 
+<!-- ![A filtration of a graph showing the sublevel sets of $g_\omega$ for a fixed direction $\omega$. The vertices and edges are added to the filtration as the height increases.\label{fig:filtration}](figures/filtration.png) -->
 
-## Extension to higher dimensional embedding
+<!-- ## Extension to higher dimensional embedding
 
 In theory, the ECT can be defined for a space embedded in $\mathbb{R}^d$ for any $d$. 
 In practice, for applications geared toward encoding shapes seen in the physical world, this is largely limited to the cases $d=2$ or $d=3$. 
@@ -94,25 +81,25 @@ In order to handle issues with choices of direction discretiziations, we have im
 
 
 **TODO: add in stuff about the CW complex inputs**
-- CW Complexes might be too broad a term. Perhaps "[polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)" is better. 
+- CW Complexes might be too broad a term. Perhaps "[polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)" is better.  -->
 
-## Distances 
+## Capabilities of the `ect` package 
 
-Additional code is included for computing distances between the resulting ECT matrices. 
+The main functionality of the `ect` package is to compute the ECT using the class `ect.ect.ECT`, including for higher dimensional structures than described in the previous section.
+This can be modified to accept different choices of subsets of directions of the sphere $\mathbb{S}^{n-1}$, including uniform and random sampling methods.
+Variants of the ECT are also implemented including the Smooth Euler Characteristic Transform (SECT) [ADD CITATION]; and the Differentiable Euler Characteristic Transform (DECT) [ADD CITATION]. 
+The ECT output is also capable of easily returning distances between transforms, generally defined as the $L_p$ distance between two functions $ECT(K_1), ECT(K_2):\mathbb{S}^{n-1} \times \mathbb{R} \to \mathbb{Z}$.
 
-![MDS of Matisse](figures/Matisse_MDS.png)
+<!-- ![MDS of Matisse](figures/Matisse_MDS.png) -->
 
-## Generalized versions of ECT
-
-The ECT package provides implementations for both the Smooth Euler Characteristic Transform and the Differentiable Euler Characteristic Transform. This allows for users to quickly examine their dataset under the lense of various topological transforms to find what best suits their problem.
 
 # Statement of Need
 
-Despite the ECT's mathematical elegances, there has been a notable absense of efficient, user-friendly Python implementations that can handle the computational demands of modern research datasets. The ECT package addressed this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complimented by the many utility functions for visualizing and comparing different Euler Characteristic Tranforms such as the ECT, SECT, and the DECT.
+Despite the ECT's mathematical elegances, there has been a notable absence of efficient, user-friendly, continuously maintained Python implementations that can handle the computational demands of modern research datasets. The ECT package addressed this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complimented by the many utility functions for visualizing and comparing different Euler Characteristic Tranforms such as the ECT, SECT, and the DECT.
 
-# Representative Publications Using ECT
+<!-- # Representative Publications Using ECT
 
-Have we actually used it yet? 
+Have we actually used it yet?  -->
 
 # Acknowledgements
 
