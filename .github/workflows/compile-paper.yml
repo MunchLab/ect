@@ -1,4 +1,7 @@
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [JOSS-Paper]
+  workflow_dispatch:
 
 jobs:
   paper:
