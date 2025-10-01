@@ -109,12 +109,6 @@ The ECT package provides implementations for both the Smooth Euler Characteristi
 
 Despite the ECT's mathematical elegances, there has been a notable absense of efficient, user-friendly Python implementations that can handle the computational demands of modern research datasets. The ECT package addressed this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complimented by the many utility functions for visualizing and comparing different Euler Characteristic Tranforms such as the ECT, SECT, and the DECT.
 
-Yemeen is going to find any needed references.
-
-- DECT 
-- Demeter 
-- 
-
 # Representative Publications Using ECT
 
 Have we actually used it yet? 
