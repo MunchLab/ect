@@ -23,6 +23,17 @@ class ECT:
             The directions to consider for projection.
         bound_radius (float):
             Either ``None``, or a positive radius of the bounding circle.
+
+    Example:
+        >>> from ect import ECT, EmbeddedGraph
+        >>> from ect import EmbeddedGraph
+        >>> graph = EmbeddedGraph()
+        >>> graph.add_node(0, [0, 0])
+        >>> graph.add_node(1, [1, 0])
+        >>> graph.add_edge(0, 1)
+        >>> ect = ECT(num_dirs=10, num_thresh=10)
+        >>> result = ect.calculate(graph)
+        >>> result.plot()
     """
 
     def __init__(
