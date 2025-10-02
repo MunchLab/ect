@@ -10,29 +10,32 @@ from .results import ECTResult
 
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`.
+    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`,
+    using a set of directions to project the complex onto and thresholds to filter the projections.
 
-    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
+    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j`
+    where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the jth entry in ``self.directions``.
 
     Attributes
-        num_dirs (int):
-            The number of directions to consider in the matrix.
-        num_thresh (int):
-            The number of thresholds to consider in the matrix.
-        directions (Directions):
-            The directions to consider for projection.
-        bound_radius (float):
-            Either ``None``, or a positive radius of the bounding circle.
+    ----------
+    num_dirs : int
+        The number of directions to consider in the matrix.
+    num_thresh : int
+        The number of thresholds to consider in the matrix.
+    directions : Directions
+        The directions to consider for projection.
+    bound_radius : float
+        Either ``None``, or a positive radius of the bounding circle.
 
     Example:
-        >>> from ect import ECT, EmbeddedGraph
+        >>> from ect import ECT, EmbeddedComplex
         >>> from ect import EmbeddedGraph
-        >>> graph = EmbeddedGraph()
-        >>> graph.add_node(0, [0, 0])
-        >>> graph.add_node(1, [1, 0])
-        >>> graph.add_edge(0, 1)
-        >>> ect = ECT(num_dirs=10, num_thresh=10)
-        >>> result = ect.calculate(graph)
+        >>> complex = EmbeddedComplex()
+        >>> complex.add_node(0, [0, 0])
+        >>> complex.add_node(1, [1, 0])
+        >>> complex.add_edge(0, 1)
+        >>> ect = ECT(num_dirs=10, num_thresh=10) # chooses 10 uniform directions and 10 thresholds
+        >>> result = ect.calculate(complex)
         >>> result.plot()
     """
 
