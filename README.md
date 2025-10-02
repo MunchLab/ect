@@ -15,7 +15,7 @@ For more information on the ECT, see:
 ### Documentation and tutorials
 
 - The documentation is available at: [munchlab.github.io/ect](https://munchlab.github.io/ect/)
-- A tutorial jupyter notebook can be found [here](https://munchlab.github.io/ect/notebooks/Tutorial-ECT_for_embedded_graphs.html)
+- A tutorial jupyter notebook can be found [here](https://munchlab.github.io/ect/notebooks/Tutorial-EmbeddedComplex.html)
 
 ### Dependencies
 

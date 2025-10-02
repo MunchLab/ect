@@ -6,7 +6,7 @@ Prerequisites
 
 Before installing `ect`, make sure you have the following prerequisites:
 
-- Python (version 3.7 or higher)
+- Python (version 3.10 or higher)
 - Pip (Python package installer)
 
 Installing `ect`
