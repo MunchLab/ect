@@ -11,13 +11,13 @@ authors:
     orcid: 0000-0002-9459-9493
   - name: Yemeen Ayub
     affiliation: 1
-    orcid: 0000-0000-0000-0000
-  - name: Dan Chitwood 
+    orcid: 0009-0009-6667-0991
+  - name: Daniel H. Chitwood 
     affiliation: 1
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0003-4875-1447
   - name: Sarah McGuire
     affiliation: 2
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0003-4020-0536
 affiliations:
  - name: Michigan State University, East Lansing, MI, USA
    index: 1
@@ -34,7 +34,7 @@ bibliography: paper.bib
 
 # Summary
 
-The field of Topological Data Analysis [@Dey2021;@Wasserman2018;@Ghrist2014;@Munch2017] encodes the shape of data in quantifiable representations of the information, sometimes called "topological signatures" or "topological summaries". The goal is to ensure that these summaries are robust to noise and useful in practice. In many methods, richer representations bring higher computation cost, creating a tension between robustness and speed. The Euler Characteristic Transform (ECT) [@Turner2014;@Munch2025;@Rieck2024] has gained popularity for encoding the information of embedded shapes in $\mathbb{R}^d$---such as graphs, simplicial complexes, and meshes--because it strikes this balance by providing a complete topological summary, yet is typically much faster to compute than its widely used cousin, the Persistent Homology Transform [@Turner2014].
+The field of Topological Data Analysis [@Dey2021;@Wasserman2018;@Ghrist2014;@Munch2017] encodes the shape of data in quantifiable representations of the information, sometimes called "topological signatures" or "topological summaries". The goal is to ensure that these summaries are robust to noise and useful in practice. In many methods, richer representations bring higher computation cost, creating a tension between robustness and speed. The Euler Characteristic Transform (ECT) [@Turner2014;@Munch2025;@Rieck2024] has gained popularity for encoding the information of embedded shapes in $\mathbb{R}^d$--such as graphs, simplicial complexes, and meshes--because it strikes this balance by providing a complete topological summary, yet is typically much faster to compute than its widely used cousin, the Persistent Homology Transform [@Turner2014].
 
 The `ect` Python package offers a fast and well-documented implementation of ECT for inputs in any embedding dimension and with a wide range of complex types. With a few lines of code, users can generate ECT features by sampling directions, computing Euler characteristic curves, and vectorizing them for downstream tasks such as classification or regression. The package includes practical options for direction sampling, normalization, and visualizing various versions of the ECT. These options allow for smooth integration into other scientific package such as `Numpy`, `Scipy`, and `PyTorch`. By lowering the barrier to computing the ECT on embedded complexes, `ect` makes these topological summaries accessible to a wider range of practitioners and domain scientists.
 
@@ -42,7 +42,7 @@ The `ect` Python package offers a fast and well-documented implementation of ECT
 
 The Euler characteristic is a standard construction from algebraic topology (See e.g. [@Hatcher]). 
 In its simplest form, for a given polyhedron $K$, it is defined as the alternating sum $\chi(K) = v_K-e_K+f_K$ where $v_K$, $e_K$, and $f_K$ stand for the counts of the numbers of vertices, edges, and faces in $K$, respectively.
-The Euler Characteristic Transform (ECT) extends this idea to encode the changing Euler characteristic for sublevelsets of an input space in different directions.
+The ECT extends this idea to encode the changing Euler characteristic for sublevel sets of an input space in different directions.
 We give a high level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025;@Rieck2024] for full survey articles specifically on the subject. 
 <!-- Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs. -->
 
@@ -78,8 +78,6 @@ In order to handle issues with choices of direction discretiziations, we have im
 
 
 
-**TODO: add in stuff about the CW complex inputs**
-- CW Complexes might be too broad a term. Perhaps "[polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)" is better.  -->
 
 ## Capabilities of the `ect` package 
 
@@ -95,9 +93,7 @@ The ECT output is also capable of easily returning distances between transforms,
 
 Despite the ECT's mathematical power, there has been a notable absence of efficient, user-friendly, continuously maintained Python implementations that can handle the computational demands of modern research datasets. The ECT package addressed this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complimented by the many utility functions for visualizing and comparing different Euler Characteristic Tranforms such as the ECT, SECT, and the DECT.
 
-<!-- # Representative Publications Using ECT
 
-Have we actually used it yet?  -->
 
 # Acknowledgements
 
@@ -105,6 +101,6 @@ This material is based in part upon work supported in part by the National Scien
 CCF-1907591,
 CCF-2106578,
 and CCF-2142713.
-**Get the rest?**
+This work was also supported by US National Science Foundation Plant Genome Research Program awards (IOS-2310355, IOS-2310356, and IOS-2310357).
 
 # References
