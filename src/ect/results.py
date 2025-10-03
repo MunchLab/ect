@@ -5,6 +5,63 @@ from scipy.spatial.distance import cdist
 from typing import Union, List, Callable
 
 
+# ---------- CSR <-> Dense helpers (prefix-difference over thresholds) ----------
+def _csr_prefix_to_dense(row_ptr, col_idx, data, num_dirs, num_thresh):
+    """Reconstruct dense matrix from CSR of per-row prefix jumps.
+
+    Each row j accumulates jumps at threshold bins given by
+    col_idx[row_ptr[j]:row_ptr[j+1]] with magnitudes data[...]. The output is
+    the cumulative sum across thresholds [0..num_thresh-1]. Any entries at bin
+    num_thresh are interpreted as past the last output index and ignored.
+    """
+    T = int(num_thresh)
+    D = int(num_dirs)
+    out = np.zeros((D, T), dtype=np.int64)
+    for j in range(D):
+        start = int(row_ptr[j])
+        end = int(row_ptr[j + 1])
+        s = 0
+        ptr = start
+        for t in range(T):
+            while ptr < end and int(col_idx[ptr]) == t:
+                s += int(data[ptr])
+                ptr += 1
+            out[j, t] = s
+        # any jumps at bin T are past the last output index by convention
+    return out
+
+
+def _dense_to_csr_prefix(dense64: np.ndarray):
+    """Build CSR of per-row prefix jumps from a dense ECT matrix.
+
+    For each row, store non-zero differences of consecutive thresholds:
+      jump(0) = dense[0]
+      jump(t) = dense[t] - dense[t-1] for t >= 1
+    """
+    if dense64.ndim != 2:
+        raise ValueError("dense matrix must be 2D")
+    D, T = dense64.shape
+    # collect per-row jumps then trim to actual size
+    row_ptr = np.zeros(D + 1, dtype=np.int64)
+    jumps_col = []
+    jumps_val = []
+    nnz = 0
+    for j in range(D):
+        prev = 0
+        for t in range(T):
+            cur = int(dense64[j, t])
+            delta = cur - prev
+            if delta != 0:
+                jumps_col.append(t)
+                jumps_val.append(delta)
+                nnz += 1
+            prev = cur
+        row_ptr[j + 1] = nnz
+    col_idx = np.asarray(jumps_col, dtype=np.int32)
+    data = np.asarray(jumps_val, dtype=np.int64)
+    return row_ptr, col_idx, data
+
+
 class ECTResult(np.ndarray):
     """
     A numpy ndarray subclass that carries ECT metadata and plotting capabilities
@@ -19,6 +76,9 @@ class ECTResult(np.ndarray):
             obj = np.asarray(matrix, dtype=np.int32).view(cls)
         obj.directions = directions
         obj.thresholds = thresholds
+        obj.csr_row_ptr = None
+        obj.csr_col_idx = None
+        obj.csr_data = None
         return obj
 
     def __array_finalize__(self, obj):
@@ -26,6 +86,65 @@ class ECTResult(np.ndarray):
             return
         self.directions = getattr(obj, "directions", None)
         self.thresholds = getattr(obj, "thresholds", None)
+        self.csr_row_ptr = getattr(obj, "csr_row_ptr", None)
+        self.csr_col_idx = getattr(obj, "csr_col_idx", None)
+        self.csr_data = getattr(obj, "csr_data", None)
+
+    @property
+    def has_csr(self):
+        return (
+            getattr(self, "csr_row_ptr", None) is not None
+            and getattr(self, "csr_col_idx", None) is not None
+            and getattr(self, "csr_data", None) is not None
+        )
+
+    @classmethod
+    def from_csr(cls, row_ptr, col_idx, data, directions, thresholds, dtype=np.int32):
+        num_dirs = len(directions)
+        num_thresh = len(thresholds)
+        dense64 = _csr_prefix_to_dense(row_ptr, col_idx, data, num_dirs, num_thresh)
+        dense = dense64.astype(dtype, copy=False) if dtype == np.int32 else dense64
+        obj = cls(dense, directions, thresholds)
+        obj.csr_row_ptr = row_ptr
+        obj.csr_col_idx = col_idx
+        obj.csr_data = data
+        return obj
+
+    def to_dense(self):
+        if not self.has_csr:
+            return self
+        num_dirs = self.shape[0]
+        num_thresh = self.shape[1]
+        dense64 = _csr_prefix_to_dense(
+            self.csr_row_ptr, self.csr_col_idx, self.csr_data, num_dirs, num_thresh
+        )
+        return dense64.astype(self.dtype, copy=False)
+
+    def save_npz(self, path):
+        if not self.has_csr:
+            row_ptr, col_idx, data = _dense_to_csr_prefix(
+                self.astype(np.int64, copy=False)
+            )
+        else:
+            row_ptr, col_idx, data = self.csr_row_ptr, self.csr_col_idx, self.csr_data
+        np.savez_compressed(
+            path,
+            row_ptr=row_ptr,
+            col_idx=col_idx,
+            data=data,
+            thresholds=np.asarray(self.thresholds, dtype=np.float64),
+            dtype=str(self.dtype),
+        )
+
+    @classmethod
+    def load_npz(cls, path, directions):
+        z = np.load(path, allow_pickle=False)
+        row_ptr = z["row_ptr"]
+        col_idx = z["col_idx"]
+        data = z["data"]
+        thresholds = z["thresholds"]
+        dtype = np.dtype(str(z["dtype"]))
+        return cls.from_csr(row_ptr, col_idx, data, directions, thresholds, dtype=dtype)
 
     def plot(self, ax=None, *, radial=False, **kwargs):
         """Plot ECT matrix with proper handling for both 2D and 3D.
