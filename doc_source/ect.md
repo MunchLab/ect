@@ -1,4 +1,4 @@
-# ECT on Graphs
+# ECT
 
 ```{eval-rst}
 .. automodule:: ect.ect

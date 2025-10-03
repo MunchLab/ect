@@ -7,5 +7,6 @@ Table of Contents
    
    Embedded Complex <embed_complex.md>
    Validation System <validation.md>
-   ECT on graphs <ect_on_graphs.md>
+   ECT <ect.md>
+   ECTResult <ECTResult.md>
    Directions <directions.md>
