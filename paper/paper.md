@@ -1,5 +1,5 @@
 ---
-title: '`ect`: A Python Package for the Euler Characteristic Transform'
+title: 'ect: A Python Package for the Euler Characteristic Transform'
 tags:
   - Python
   - Topological Data Analysis
