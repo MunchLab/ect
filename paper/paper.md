@@ -6,7 +6,7 @@ tags:
   - Euler Characteristic 
 authors:
   - name: Yemeen Ayub
-  - corresponding: true
+    corresponding: true
     affiliation: 1
     orcid: 0009-0009-6667-0991
   - name: Elizabeth Munch
