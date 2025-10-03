@@ -5,25 +5,26 @@ tags:
   - Topological Data Analysis
   - Euler Characteristic 
 authors:
-  - name: Elizabeth Munch
-    corresponding: true # (This is how to denote the corresponding author)
-    affiliation: 1
-    orcid: 0000-0002-9459-9493
   - name: Yemeen Ayub
+  - corresponding: true
     affiliation: 1
     orcid: 0009-0009-6667-0991
-  - name: Daniel H. Chitwood 
+  - name: Elizabeth Munch
     affiliation: 1
-    orcid: 0000-0003-4875-1447
+    orcid: 0000-0002-9459-9493
   - name: Sarah McGuire
     affiliation: 2
     orcid: 0000-0003-4020-0536
+  - name: Daniel H. Chitwood 
+    affiliation: 1
+    orcid: 0000-0003-4875-1447
+
 affiliations:
  - name: Michigan State University, East Lansing, MI, USA
    index: 1
  - name: Pacific Northwest National Lab (PNNL), USA
    index: 2
-date: Jan 2025
+date: Oct 2025
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
