@@ -219,12 +219,9 @@ def _ect_all_dirs(
             vertex_rank_1based[vertex_index] = rnk + 1
 
         # euler char can only jump at each vertex value
+        # we know vertices add +1 so wait until end to add
+        #
         jump_amount = np.zeros(num_vertices + 1, dtype=np.int64)
-
-        # 0-cells add +1 at their entrance ranks
-        for v in range(num_vertices):
-            rank_v = vertex_rank_1based[v]
-            jump_amount[rank_v] += 1
 
         # each pair of pointers defines a cell, so we iterate over them
         num_cells = cell_vertex_pointers.shape[0] - 1
@@ -246,7 +243,7 @@ def _ect_all_dirs(
         running_sum = 0
         for r in range(num_vertices + 1):
             running_sum += jump_amount[r]
-            euler_prefix[r] = running_sum
+            euler_prefix[r] = running_sum + r  # +r because vertices add +1
 
         # now find euler char at each threshold wrt the sorted heights
         sorted_heights = heights[sort_order]
