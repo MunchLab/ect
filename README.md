@@ -70,6 +70,7 @@ This code was written by [Liz Munch](https://elizabethmunch.com/) along with her
 
 - [Sarah McGuire](https://www.sarah-mcguire.com/)
 - [Yemeen Ayub](https://yemeen.com/)
+- [Dan Chitwood](https://github.com/DanChitwood)
 
 ## License
 
