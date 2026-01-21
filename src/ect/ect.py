@@ -137,7 +137,7 @@ class ECT:
 
         V = directions.vectors
         X = graph.coord_matrix
-        H = X @ V if V.shape[0] == X.shape[1] else X @ V.T  # (N, m)
+        H = X @ V.T  # (N, m)
         H_T = np.ascontiguousarray(H.T)  # (m, N) for contiguous per-direction rows
 
         out64 = _ect_all_dirs(
