@@ -1,5 +1,6 @@
 from collections import defaultdict
 from typing import Dict, List, Tuple, Optional, Union
+import functools
 
 import networkx as nx
 import numpy as np
@@ -22,9 +23,10 @@ TRANSFORM_TYPES = ["pca"]
 
 class EmbeddedComplex(nx.Graph):
     """
-    A unified class to represent an embedded cell complex with cells of arbitrary dimension. 
+    A unified class to represent an embedded cell complex with cells of arbitrary dimension.
 
-    This combines the functionality of EmbeddedGraph and EmbeddedCW, supporting:
+    This combines the functionality of :class:`EmbeddedGraph` and :class:`EmbeddedCW`, supporting:
+
     - 0-cells (vertices) with embedded coordinates
     - 1-cells (edges)
     - k-cells for k >= 2 (faces, volumes, etc.)
@@ -34,22 +36,6 @@ class EmbeddedComplex(nx.Graph):
             when adding cells. Default: False
         embedding_tol (float): Tolerance for geometric validation. Default: 1e-10
 
-    Attributes:
-        coord_matrix : np.ndarray
-            A matrix of embedded coordinates for each vertex
-        node_list : list
-            A list of node names
-        node_to_index : dict
-            A dictionary mapping node ids to their index in the coord_matrix
-        dim : int
-            The dimension of the embedded coordinates
-        cells : dict
-            Dictionary mapping dimension k to list of k-cells, where each k-cell
-            is represented as a tuple of vertex indices
-        validate_embedding : bool
-            Whether to automatically validate embedding properties
-        embedding_tol : float
-            Tolerance for geometric validation
     """
 
     def __init__(self, validate_embedding=False, embedding_tol=1e-10):
@@ -91,12 +77,12 @@ class EmbeddedComplex(nx.Graph):
         Returns:
             np.ndarray: A matrix of shape :math:`(N, D)` where :math:`N` is the number of nodes (vertices)
             and :math:`D` is the dimension of the embedding. Each row corresponds to the coordinates
-            of a node in the order given by `node_list`.
+            of a node in the order given by :attr:`node_list`.
 
         Notes:
             - If no nodes have been added, returns an empty array of shape :math:`(0, 0)`.
             - The coordinate matrix is updated automatically as nodes are added or modified.
-            - The order of rows matches the order of node identifiers in `node_list`.
+            - The order of rows matches the order of node identifiers in :attr:`node_list`.
         """
         if self._coord_matrix is None:
             return np.empty((0, 0))
@@ -105,7 +91,7 @@ class EmbeddedComplex(nx.Graph):
     @property
     def dim(self):
         """
-        Get the dimension of the embedded coordinates.
+        Get the dimension :math:`D` of the embedded coordinates.
 
         Returns:
             int: The number of dimensions (D) for the coordinates of each node. Returns 0 if no nodes exist.
@@ -120,14 +106,14 @@ class EmbeddedComplex(nx.Graph):
         Get the ordered list of node names in the complex.
 
         Returns:
-            list: List of node identifiers in the order corresponding to the rows of the coordinate matrix.
+            list: List of node identifiers in the order corresponding to the rows of the coordinate matrix :attr:`coord_matrix`.
         """
         return self._node_list
 
     @property
     def node_to_index(self):
         """
-        Get a mapping from node identifiers to their row index in the coordinate matrix.
+        Get a mapping from node identifiers to their row index in the coordinate matrix :attr:`coord_matrix`.
 
         Returns:
             dict: Dictionary mapping node ids to their index in the coordinate matrix.
@@ -140,7 +126,7 @@ class EmbeddedComplex(nx.Graph):
         Get a dictionary mapping node ids to their coordinates.
 
         Returns:
-            dict: Dictionary where keys are node ids and values are coordinate arrays for each node.
+            dict: Dictionary where keys are node ids and values are coordinate arrays for each node (from :attr:`coord_matrix`).
         """
         return {node: self._coord_matrix[i] for i, node in enumerate(self._node_list)}
 
@@ -208,17 +194,36 @@ class EmbeddedComplex(nx.Graph):
         super().add_node(node_id)
 
     def add_nodes_from_dict(self, nodes_with_coords: Dict[Union[str, int], np.ndarray]):
+        """Add multiple vertices to the complex.
+
+        Args:
+            nodes_with_coords (Dict[Union[str, int], np.ndarray]): Dictionary mapping node ids to coordinates
+        """
         for node_id, coordinates in nodes_with_coords.items():
             self.add_node(node_id, coordinates)
 
     def add_nodes_from(
         self, nodes_with_coords: List[Tuple[Union[str, int], np.ndarray]]
     ):
+        """Add multiple vertices to the complex.
+
+        Args:
+            nodes_with_coords (List[Tuple[Union[str, int], np.ndarray]]): List of (node_id, coordinates) tuples
+        """
         for node_id, coordinates in nodes_with_coords:
             self.add_node(node_id, coordinates)
 
     def add_edge(self, node_id1, node_id2):
-        """Add an edge (1-cell) between two nodes"""
+        """
+        Add an edge (1-cell) between two nodes in the complex.
+
+        Args:
+            node_id1: Identifier for the first node.
+            node_id2: Identifier for the second node.
+
+        Raises:
+            ValueError: If either node does not exist in the complex.
+        """
         # validate nodes exist
         node_result = self._validator.validate_nodes(
             [node_id1, node_id2], lambda n: n in self._node_to_index, expect_exists=True
@@ -240,9 +245,9 @@ class EmbeddedComplex(nx.Graph):
 
         Args:
             cell_vertices: List of vertex identifiers that form the cell
-            dim: Dimension of the cell. If None, inferred as len(cell_vertices) - 1
+            dim: Dimension of the cell. If None, inferred as `len(cell_vertices) - 1`
             check: Whether to validate the cell embedding. If None, uses self.validate_embedding
-            embedding_tol: Tolerance for geometric validation. If None, uses self.embedding_tol
+            embedding_tol: Tolerance for geometric validation. If None, uses :attr:`embedding_tol`.
         """
         if check is None:
             check = self.validate_embedding
@@ -655,8 +660,10 @@ class EmbeddedComplex(nx.Graph):
         pca = PCA(n_components=target_dim)
         self._coord_matrix = pca.fit_transform(self._coord_matrix)
 
+    
     def validate_plot_parameters(func):
         # decorator to check plotting requirements
+        @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             bounding_center_type = kwargs.get("bounding_center_type", "bounding_box")
 
@@ -704,6 +711,7 @@ class EmbeddedComplex(nx.Graph):
 
         return ax
 
+
     @validate_plot_parameters
     def plot(
         self,
@@ -719,9 +727,26 @@ class EmbeddedComplex(nx.Graph):
         face_color: str = "lightblue",
         face_alpha: float = 0.3,
         **kwargs,
-    ) -> plt.Axes:
+        ) -> plt.Axes:
         """
         Visualize the embedded complex in 2D or 3D
+
+        Args:
+            bounding_circle (bool): Whether to draw a bounding circle/sphere
+            bounding_center_type (str): Method for center calculation for bounding shape
+            color_nodes_theta (float, optional): Angle in radians to color nodes by projection
+            ax (matplotlib.axes.Axes, optional): Axes to plot on. If None, a new figure is created
+            with_labels (bool): Whether to display node labels
+            node_size (int): Size of nodes in the plot
+            edge_color (str): Color of edges in the plot
+            elev (float): Elevation angle for 3D plot
+            azim (float): Azimuth angle for 3D plot
+            face_color (str): Color for faces (2-cells)
+            face_alpha (float): Transparency for faces (2-cells)
+            **kwargs: Additional keyword arguments for plotting functions
+        
+        Returns:
+            matplotlib.axes.Axes: The axes object with the plot.
         """
         ax = self._create_axes(ax, self.dim)
 
