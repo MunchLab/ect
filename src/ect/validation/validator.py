@@ -92,7 +92,7 @@ class EmbeddingValidator:
     def set_edge_checker(self, edge_checker: Callable) -> "EmbeddingValidator":
         """
         Set the edge checker function for boundary validation.
-
+      
         Args:
             edge_checker: Function that takes two vertex indices and returns bool
 
