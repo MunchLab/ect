@@ -246,31 +246,27 @@ class ECTResult(np.ndarray):
         Args:
             other: Another ECTResult object or list of ECTResult objects
             metric: Distance metric to use. Can be:
-                   - String: any metric supported by scipy.spatial.distance
-                     (e.g., 'euclidean', 'cityblock', 'chebyshev', 'cosine', etc.)
-                   - Callable: a custom distance function that takes two 1D arrays
-                     and returns a scalar distance. The function should have signature:
-                     func(u, v) -> float
-            **kwargs: Additional keyword arguments passed to the metric function
-                     (e.g., p=3 for minkowski distance, w=weights for weighted metrics)
+                - String: any metric supported by scipy.spatial.distance (e.g., 'euclidean', 'cityblock', 'chebyshev', 'cosine', etc.)
+                - Callable: a custom distance function that takes two 1D arrays and returns a scalar distance. The function should have signature: func(u, v) -> float
+            **kwargs: Additional keyword arguments passed to the metric function (e.g., p=3 for minkowski distance, w=weights for weighted metrics)
 
         Returns:
-            float or np.ndarray: Single distance if other is an ECTResult,
-                                 array of distances if other is a list
+            float or np.ndarray: Single distance if other is an ECTResult, array of distances if other is a list.
 
         Raises:
-            ValueError: If the shapes of the ECTResults don't match
+            ValueError: If the shapes of the ECTResults don't match.
 
         Examples:
+
             >>> # Built-in metrics
             >>> dist1 = ect1.dist(ect2, metric='euclidean')
             >>> dist2 = ect1.dist(ect2, metric='minkowski', p=3)
-            >>>
+
             >>> # Custom distance function
             >>> def my_distance(u, v):
             ...     return np.sum(np.abs(u - v) ** 0.5)
             >>> dist3 = ect1.dist(ect2, metric=my_distance)
-            >>>
+
             >>> # Batch distances with custom function
             >>> dists = ect1.dist([ect2, ect3, ect4], metric=my_distance)
         """

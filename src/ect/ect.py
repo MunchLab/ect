@@ -10,7 +10,7 @@ from .results import ECTResult
 
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`,
+    A class to calculate the Euler Characteristic Transform (ECT) from an input :class:`ect.embed_complex.EmbeddedComplex`,
     using a set of directions to project the complex onto and thresholds to filter the projections.
 
     The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j`
