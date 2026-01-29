@@ -36,7 +36,7 @@ jobs:
           uv venv
           source .venv/bin/activate
           uv pip install -e .
-          uv pip install sphinx sphinx-rtd-theme nbsphinx autopep8 myst-parser ipykernel
+          uv pip install sphinx sphinx-rtd-theme nbsphinx autopep8 myst-parser ipykernel pandas
 
       - name: Install python3 Jupyter kernel
         run: |
