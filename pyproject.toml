@@ -1,6 +1,6 @@
 [project]
 name = "ect"
-version = "1.2.2"
+version = "1.2.3"
 authors = [
   { name="Liz Munch", email="muncheli@msu.edu" },
 ]
@@ -12,13 +12,14 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy",
-            "networkx",
-            "matplotlib",
-            "numba",
-            "scipy",
-            "scikit-learn"
-            ]
+dependencies = [
+    "numpy",
+    "networkx",
+    "matplotlib",
+    "numba",
+    "scipy",
+    "scikit-learn",
+]
 
 [build-system]
 requires = ["setuptools>=61.0"]
