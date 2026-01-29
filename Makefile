@@ -28,6 +28,12 @@ html:
 	mkdir docs
 	sphinx-build -b html doc_source docs
 
+html-local:
+	# Running sphinx-build to build html files in a local docs folder
+	rm -rf docs_local
+	mkdir docs_local
+	sphinx-build -b html doc_source docs_local 
+
 benchmark:
 	python benchmarks/run_benchmarks.py
 	
