@@ -37,17 +37,17 @@ bibliography: paper.bib
 
 The field of Topological Data Analysis [@Dey2021;@Wasserman2018;@Ghrist2014;@Munch2017] encodes the shape of data in quantifiable representations of the information, sometimes called "topological signatures" or "topological summaries". The goal is to ensure that these summaries are robust to noise and useful in practice. In many methods, richer representations bring higher computation cost, creating a tension between robustness and speed. The Euler Characteristic Transform (ECT) [@Turner2014;@Munch2025;@Rieck2024] has gained popularity for encoding the information of embedded shapes in $\mathbb{R}^d$--such as graphs, simplicial complexes, and meshes--because it strikes this balance by providing a complete topological summary, yet is typically much faster to compute than its widely used cousin, the Persistent Homology Transform [@Turner2014].
 
-The `ect` Python package offers a fast and well-documented implementation of ECT for inputs in any embedding dimension and with a wide range of complex types. With a few lines of code, users can generate ECT features by sampling directions, computing Euler characteristic curves, and vectorizing them for downstream tasks such as classification or regression. The package includes practical options for direction sampling, normalization, and visualizing various versions of the ECT. These options allow for smooth integration into other scientific package such as `Numpy`, `Scipy`, and `PyTorch`. By lowering the barrier to computing the ECT on embedded complexes, `ect` makes these topological summaries accessible to a wider range of practitioners and domain scientists.
+The `ect` Python package offers a fast and well-documented implementation of ECT for inputs in any embedding dimension and with a wide range of complex types. With a few lines of code, users can generate ECT features by sampling directions, computing Euler characteristic curves, and vectorizing them for downstream tasks such as classification or regression. The package includes practical options for direction sampling, normalization, and visualizing various versions of the ECT. These options allow for smooth integration into other scientific packages such as `Numpy`, `Scipy`, and `PyTorch`. By lowering the barrier to computing the ECT on embedded complexes, `ect` makes these topological summaries accessible to a wider range of practitioners and domain scientists.
 
 ## The Euler Characteristic Transform
 
-The Euler characteristic is a standard construction from algebraic topology (See e.g. [@Hatcher]). 
+The Euler characteristic is a standard construction from algebraic topology (see, e.g., @Hatcher). 
 In its simplest form, for a given polyhedron $K$, it is defined as the alternating sum $\chi(K) = v_K-e_K+f_K$ where $v_K$, $e_K$, and $f_K$ stand for the counts of the numbers of vertices, edges, and faces in $K$, respectively.
 The ECT extends this idea to encode the changing Euler characteristic for sublevel sets of an input space in different directions.
-We give a high level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025;@Rieck2024] for full survey articles specifically on the subject. 
+We give a high-level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025;@Rieck2024] for full survey articles specifically on the subject. 
 <!-- Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs. -->
 
-To start, we have input `ect.EmbeddedComplex`, which is a polyhedral complex $K$ (See [@Goodman2018] Ch. 17.4) which is a collection of convex polytopes in $\mathbb{R}^n$ closed under the face relation. While we note the code can handle shapes in any dimension, we will give an exposition focusing on the case of a straight-line graph embedding like the example given in \autoref{fig:example_graph} embedded in $\mathbb{R}^2$.
+To start, we have input `ect.EmbeddedComplex`, which is a polyhedral complex $K$ (see @Goodman2018, Ch. 17.4) that is a collection of convex polytopes in $\mathbb{R}^n$ closed under the face relation. While we note the code can handle shapes in any dimension, we will give an exposition focusing on the case of a straight-line graph embedding like the example given in \autoref{fig:example_graph} embedded in $\mathbb{R}^2$.
 
 For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $g_\omega(v) = \langle f(v), \omega\rangle$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$. 
 Some examples are shown for the embedded graph in \autoref{fig:example_graph}. 
@@ -82,10 +82,10 @@ In order to handle issues with choices of direction discretiziations, we have im
 
 ## Capabilities of the `ect` package 
 
-The main functionality of the `ect` package is to compute the ECT using the class `ect.ect.ECT`, including for higher dimensional structures than described in the previous section.
+The main functionality of the `ect` package is to compute the ECT using the class `ect.ect.ECT`, including for higher-dimensional structures than described in the previous section.
 This can be modified to accept different choices of subsets of directions of the sphere $\mathbb{S}^{n-1}$, including uniform and random sampling methods.
-Variants of the ECT are also implemented including the Smooth Euler Characteristic Transform (SECT) [@Crawford2019;@Meng2022]; and the Differentiable Euler Characteristic Transform (DECT) [@Roell2024]. 
-The ECT output is also capable of easily returning distances between transforms, generally defined as the $L_p$ distance between two functions $ECT(K_1), ECT(K_2):\mathbb{S}^{n-1} \times \mathbb{R} \to \mathbb{Z}$.
+Variants of the ECT are also implemented, including the Smooth Euler Characteristic Transform (SECT) [@Crawford2019;@Meng2022]; and the Differentiable Euler Characteristic Transform (DECT) [@Roell2024]. 
+The ECT output can also easily return distances between transforms, generally defined as the $L_p$ distance between two functions $ECT(K_1), ECT(K_2):\mathbb{S}^{n-1} \times \mathbb{R} \to \mathbb{Z}$.
 
 <!-- ![MDS of Matisse](figures/Matisse_MDS.png) -->
 
