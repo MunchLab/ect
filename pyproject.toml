@@ -19,8 +19,6 @@ dependencies = [
     "numba",
     "scipy",
     "scikit-learn",
-    "nbformat",
-    "nbclient",
 ]
 
 [build-system]
