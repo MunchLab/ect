@@ -1,0 +1,1546 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2. Validation System &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+    <link rel="shortcut icon" href="_static/ECT_Logo_128x128.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=59fadc99"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.3. ECT" href="ect.html" />
+    <link rel="prev" title="2.1. Embedded Complex" href="embed_complex.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ect
+              <img src="_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="embed_complex.html">2.1. Embedded Complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#overview">2.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#basic-usage">2.1.2. Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#api-reference">2.1.3. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Validation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">2.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#architecture">2.2.2. Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validation-rules">2.2.3. Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">2.2.4. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-validation-rules">2.2.5. Custom Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">2.2.6. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ect.html">2.3. ECT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.ect.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.sect.SECT"><code class="docutils literal notranslate"><span class="pre">SECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.dect.DECT"><code class="docutils literal notranslate"><span class="pre">DECT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ECTResult.html">2.4. ECTResult</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ECTResult.html#ect.results.ECTResult"><code class="docutils literal notranslate"><span class="pre">ECTResult</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="directions.html">2.5. Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Sampling"><code class="docutils literal notranslate"><span class="pre">Sampling</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Directions"><code class="docutils literal notranslate"><span class="pre">Directions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html">3.1. Tutorial: ECT for Embedded Cell Complexes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Basic-Usage:-Creating-Simple-Complexes">3.1.1. Basic Usage: Creating Simple Complexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Adding-Cells-of-Arbitrary-Dimension">3.1.2. Adding Cells of Arbitrary Dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#ECT-Computation-with-Higher-Dimensional-Cells">3.1.3. ECT Computation with Higher-Dimensional Cells</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Validation-System">3.1.4. Validation System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Matisse/example_matisse.html">3.2. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Matisse/example_matisse.html#Acknowledgements">3.2.1. Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html"><span class="section-number">2. </span>Table of Contents</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.2. </span>Validation System</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/validation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="validation-system">
+<h1><span class="section-number">2.2. </span>Validation System<a class="headerlink" href="#validation-system" title="Link to this heading"></a></h1>
+<p>We often require our cell complexes to satisfy geometric constraints. The validation system provides modular, extensible validation for embedded cell complexes to ensure they represent proper embeddings in Euclidean space.</p>
+<section id="overview">
+<h2><span class="section-number">2.2.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The validation system distinguishes between two types of rules:</p>
+<ul class="simple">
+<li><p><strong>Structural Rules</strong> (always checked): Basic requirements like vertex counts and dimension validity</p></li>
+<li><p><strong>Geometric Rules</strong> (optional): Embedding properties like non-intersecting edges and faces</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h2><span class="section-number">2.2.2. </span>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+<p>The validation system consists of several components:</p>
+<ol class="arabic simple">
+<li><p><strong>Base Classes</strong>: Abstract interfaces for validation rules and results</p></li>
+<li><p><strong>Validation Rules</strong>: Concrete implementations for specific validation checks</p></li>
+<li><p><strong>Validator</strong>: Main orchestrator that manages and applies rules</p></li>
+</ol>
+</section>
+<section id="validation-rules">
+<h2><span class="section-number">2.2.3. </span>Validation Rules<a class="headerlink" href="#validation-rules" title="Link to this heading"></a></h2>
+<section id="structural-rules-always-enforced">
+<h3><span class="section-number">2.2.3.1. </span>Structural Rules (Always Enforced)<a class="headerlink" href="#structural-rules-always-enforced" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>DimensionValidityRule</strong>: Ensures cell dimensions are non-negative</p></li>
+<li><p><strong>VertexCountRule</strong>: Validates correct vertex counts for cell dimensions</p>
+<ul>
+<li><p>0-cells must have exactly 1 vertex</p></li>
+<li><p>1-cells must have exactly 2 vertices</p></li>
+<li><p>k-cells (k ≥ 2) must have at least 3 vertices</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="geometric-rules-optional">
+<h3><span class="section-number">2.2.3.2. </span>Geometric Rules (Optional)<a class="headerlink" href="#geometric-rules-optional" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>EdgeInteriorRule</strong>: Ensures no vertices lie on edge interiors</p></li>
+<li><p><strong>FaceInteriorRule</strong>: Ensures no vertices lie inside face interiors</p></li>
+<li><p><strong>SelfIntersectionRule</strong>: Validates that face edges don’t self-intersect</p></li>
+<li><p><strong>BoundaryEdgeRule</strong>: Ensures required boundary edges exist for faces</p></li>
+</ul>
+</section>
+</section>
+<section id="usage">
+<h2><span class="section-number">2.2.4. </span>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ect</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedComplex</span>
+
+<span class="c1"># Enable validation during construction</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedComplex</span><span class="p">(</span><span class="n">validate_embedding</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Or enable/disable later</span>
+<span class="n">K</span><span class="o">.</span><span class="n">enable_embedding_validation</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">disable_embedding_validation</span><span class="p">()</span>
+
+<span class="c1"># Override per operation</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_cell</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-validation-rules">
+<h2><span class="section-number">2.2.5. </span>Custom Validation Rules<a class="headerlink" href="#custom-validation-rules" title="Link to this heading"></a></h2>
+<p>You can create custom validation rules by inheriting from <code class="docutils literal notranslate"><span class="pre">ValidationRule</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ect.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationRule</span><span class="p">,</span> <span class="n">ValidationResult</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomRule</span><span class="p">(</span><span class="n">ValidationRule</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;My Custom Rule&quot;</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_structural</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Geometric rule</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">applies_to_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># Only for 2-cells</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_coords</span><span class="p">,</span> <span class="n">all_coords</span><span class="p">,</span> <span class="n">cell_indices</span><span class="p">,</span> <span class="n">all_indices</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="c1"># Your validation logic here</span>
+        <span class="k">if</span> <span class="n">some_condition</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ValidationResult</span><span class="o">.</span><span class="n">valid</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ValidationResult</span><span class="o">.</span><span class="n">invalid</span><span class="p">(</span><span class="s2">&quot;Validation failed&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add to validator</span>
+<span class="n">K</span><span class="o">.</span><span class="n">get_validator</span><span class="p">()</span><span class="o">.</span><span class="n">add_rule</span><span class="p">(</span><span class="n">MyCustomRule</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="api-reference">
+<h2><span class="section-number">2.2.6. </span>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<section id="module-ect.validation">
+<span id="main-module"></span><h3><span class="section-number">2.2.6.1. </span>Main Module<a class="headerlink" href="#module-ect.validation" title="Link to this heading"></a></h3>
+<p>Embedding validation system for EmbeddedComplex.</p>
+<p>This module provides a flexible, extensible system for validating that
+cell complexes represent proper embeddings in Euclidean space.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">EmbeddingValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator" title="Link to this definition"></a></dt>
+<dd><p>Main validator that orchestrates multiple validation rules.</p>
+<p>This class manages a collection of validation rules and applies them
+to cells based on their dimension and the configured rule set.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the embedding validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerance</strong> – Default tolerance for geometric validation</p></li>
+<li><p><strong>edge_checker</strong> – Function to check if an edge exists between two vertex indices</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.add_rule">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.add_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.add_rule" title="Link to this definition"></a></dt>
+<dd><p>Add a custom validation rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> – ValidationRule to add</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.remove_rule">
+<span class="sig-name descname"><span class="pre">remove_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.remove_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.remove_rule" title="Link to this definition"></a></dt>
+<dd><p>Remove all rules of a specific type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_class</strong> – Class of rules to remove</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.set_tolerance">
+<span class="sig-name descname"><span class="pre">set_tolerance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.set_tolerance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.set_tolerance" title="Link to this definition"></a></dt>
+<dd><p>Set tolerance for all rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – New tolerance value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.set_edge_checker">
+<span class="sig-name descname"><span class="pre">set_edge_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.set_edge_checker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.set_edge_checker" title="Link to this definition"></a></dt>
+<dd><p>Set the edge checker function for boundary validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge_checker</strong> – Function that takes two vertex indices and returns bool</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.validate_cell">
+<span class="sig-name descname"><span class="pre">validate_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_geometric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.validate_cell" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell using applicable rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell</p></li>
+<li><p><strong>check_geometric</strong> – Whether to check geometric rules (structural rules always checked)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the cell</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If validation fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.validate_cell_safe">
+<span class="sig-name descname"><span class="pre">validate_cell_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_geometric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_cell_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.validate_cell_safe" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell, catching and wrapping any exceptions.</p>
+<p>Same as validate_cell but returns ValidationResult instead of raising.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell</p></li>
+<li><p><strong>check_geometric</strong> – Whether to check geometric rules (structural rules always checked)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the cell</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.get_rules_for_dimension">
+<span class="sig-name descname"><span class="pre">get_rules_for_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.get_rules_for_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.get_rules_for_dimension" title="Link to this definition"></a></dt>
+<dd><p>Get all rules that apply to a specific dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of applicable ValidationRules</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.get_rule_names">
+<span class="sig-name descname"><span class="pre">get_rule_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.get_rule_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.get_rule_names" title="Link to this definition"></a></dt>
+<dd><p>Get names of all registered rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of rule names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.disable_rule">
+<span class="sig-name descname"><span class="pre">disable_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.disable_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.disable_rule" title="Link to this definition"></a></dt>
+<dd><p>Temporarily disable a rule type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_class</strong> – Class of rule to disable</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.enable_strict_validation">
+<span class="sig-name descname"><span class="pre">enable_strict_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.enable_strict_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.enable_strict_validation" title="Link to this definition"></a></dt>
+<dd><p>Enable strict validation with tight tolerance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.enable_permissive_validation">
+<span class="sig-name descname"><span class="pre">enable_permissive_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.enable_permissive_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.enable_permissive_validation" title="Link to this definition"></a></dt>
+<dd><p>Enable permissive validation with loose tolerance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.validate_coordinates">
+<span class="sig-name descname"><span class="pre">validate_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.validate_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Validate coordinate array format and dimension consistency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> – Coordinate array to validate</p></li>
+<li><p><strong>expected_dim</strong> – Expected dimension, if known</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the coordinates</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EmbeddingValidator.validate_nodes">
+<span class="sig-name descname"><span class="pre">validate_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expect_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EmbeddingValidator.validate_nodes" title="Link to this definition"></a></dt>
+<dd><p>Validate node existence/non-existence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> – List of node identifiers to check</p></li>
+<li><p><strong>node_checker</strong> – Function that takes node_id and returns bool for existence</p></li>
+<li><p><strong>expect_exists</strong> – Whether nodes should exist (True) or not exist (False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">ValidationRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationRule" title="Link to this definition"></a></dt>
+<dd><p>Abstract base class for embedding validation rules.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationRule.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize validation rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – Numerical tolerance for geometric checks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.name">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.ValidationRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.ValidationRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.applies_to_dimension">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.validate">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell against this rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell being validated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult indicating if the cell is valid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationRule.set_tolerance">
+<span class="sig-name descname"><span class="pre">set_tolerance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.set_tolerance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationRule.set_tolerance" title="Link to this definition"></a></dt>
+<dd><p>Set the tolerance for this rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – New tolerance value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">ValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_valid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Result of a validation check.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><a class="headerlink" href="#ect.validation.ValidationResult.is_valid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#ect.validation.ValidationResult.message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.violating_indices">
+<span class="sig-name descname"><span class="pre">violating_indices</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#ect.validation.ValidationResult.violating_indices" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.valid">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult.valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationResult.valid" title="Link to this definition"></a></dt>
+<dd><p>Create a valid result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.invalid">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">invalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult.invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.ValidationResult.invalid" title="Link to this definition"></a></dt>
+<dd><p>Create an invalid result with error message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.ValidationResult.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_valid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect.validation.ValidationResult.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.EdgeInteriorRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">EdgeInteriorRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EdgeInteriorRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that no vertices lie on edge interiors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.EdgeInteriorRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.EdgeInteriorRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EdgeInteriorRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EdgeInteriorRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.EdgeInteriorRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.EdgeInteriorRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that no other vertices lie on this edge’s interior.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.FaceInteriorRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">FaceInteriorRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.FaceInteriorRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that no vertices lie inside face interiors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.FaceInteriorRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.FaceInteriorRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.FaceInteriorRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.FaceInteriorRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.FaceInteriorRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.FaceInteriorRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that no other vertices lie inside this face.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.SelfIntersectionRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">SelfIntersectionRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.SelfIntersectionRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that face edges don’t self-intersect.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.SelfIntersectionRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.SelfIntersectionRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.SelfIntersectionRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.SelfIntersectionRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.SelfIntersectionRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.SelfIntersectionRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that face edges don’t intersect each other</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.BoundaryEdgeRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">BoundaryEdgeRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.BoundaryEdgeRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that required boundary edges exist for faces.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.BoundaryEdgeRule.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.BoundaryEdgeRule.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize boundary edge rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerance</strong> – Numerical tolerance</p></li>
+<li><p><strong>edge_checker</strong> – Function to check if an edge exists (injected dependency)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.BoundaryEdgeRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.BoundaryEdgeRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.BoundaryEdgeRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.BoundaryEdgeRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.BoundaryEdgeRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.BoundaryEdgeRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that all boundary edges exist for this face.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.DimensionValidityRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">DimensionValidityRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.DimensionValidityRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that cell dimension is non-negative.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.DimensionValidityRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.DimensionValidityRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.DimensionValidityRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.DimensionValidityRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.DimensionValidityRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.DimensionValidityRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.DimensionValidityRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.DimensionValidityRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that dimension is non-negative.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.VertexCountRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">VertexCountRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.VertexCountRule" title="Link to this definition"></a></dt>
+<dd><p>Validates that cells have the correct number of vertices for their dimension.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.VertexCountRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.VertexCountRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.VertexCountRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.VertexCountRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.VertexCountRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.VertexCountRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.VertexCountRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.VertexCountRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate vertex count matches cell dimension requirements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ect.validation.validate_coordinate_array">
+<span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">validate_coordinate_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#validate_coordinate_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validate_coordinate_array" title="Link to this definition"></a></dt>
+<dd><p>Standalone function to validate coordinate array format.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ect.validation.validate_node_existence">
+<span class="sig-prename descclassname"><span class="pre">ect.validation.</span></span><span class="sig-name descname"><span class="pre">validate_node_existence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expect_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#validate_node_existence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validate_node_existence" title="Link to this definition"></a></dt>
+<dd><p>Standalone function to validate node existence.</p>
+</dd></dl>
+
+</section>
+<section id="module-ect.validation.base">
+<span id="base-classes"></span><h3><span class="section-number">2.2.6.2. </span>Base Classes<a class="headerlink" href="#module-ect.validation.base" title="Link to this heading"></a></h3>
+<p>Base classes for the embedding validation system.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.base.</span></span><span class="sig-name descname"><span class="pre">ValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_valid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Result of a validation check.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><a class="headerlink" href="#ect.validation.base.ValidationResult.is_valid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#ect.validation.base.ValidationResult.message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.violating_indices">
+<span class="sig-name descname"><span class="pre">violating_indices</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#ect.validation.base.ValidationResult.violating_indices" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.valid">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult.valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationResult.valid" title="Link to this definition"></a></dt>
+<dd><p>Create a valid result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.invalid">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">invalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationResult.invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationResult.invalid" title="Link to this definition"></a></dt>
+<dd><p>Create an invalid result with error message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationResult.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_valid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">violating_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ect.validation.base.ValidationResult.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.base.</span></span><span class="sig-name descname"><span class="pre">ValidationRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for embedding validation rules.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationRule.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize validation rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – Numerical tolerance for geometric checks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.name">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.base.ValidationRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.base.ValidationRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.applies_to_dimension">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.validate">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell against this rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell being validated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult indicating if the cell is valid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.base.ValidationRule.set_tolerance">
+<span class="sig-name descname"><span class="pre">set_tolerance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/base.html#ValidationRule.set_tolerance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.base.ValidationRule.set_tolerance" title="Link to this definition"></a></dt>
+<dd><p>Set the tolerance for this rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – New tolerance value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="id1">
+<h3><span class="section-number">2.2.6.3. </span>Validation Rules<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p id="module-ect.validation.rules">Unified validation rules for embedding validation system.</p>
+<p>This module contains all validation rules including both structural rules
+(which are always checked) and geometric rules (which are optional).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.DimensionValidityRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">DimensionValidityRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.DimensionValidityRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that cell dimension is non-negative.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.DimensionValidityRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.DimensionValidityRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.DimensionValidityRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.rules.DimensionValidityRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.DimensionValidityRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.DimensionValidityRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.DimensionValidityRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#DimensionValidityRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.DimensionValidityRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that dimension is non-negative.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.VertexCountRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">VertexCountRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.VertexCountRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that cells have the correct number of vertices for their dimension.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.VertexCountRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.VertexCountRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.VertexCountRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.rules.VertexCountRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.VertexCountRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.VertexCountRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.VertexCountRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#VertexCountRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.VertexCountRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate vertex count matches cell dimension requirements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">CoordinateDimensionRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#CoordinateDimensionRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that coordinates have consistent dimensions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#CoordinateDimensionRule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize validation rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – Numerical tolerance for geometric checks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule.is_structural">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structural</span></span><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule.is_structural" title="Link to this definition"></a></dt>
+<dd><p>Check if this is a structural rule that should always be validated.</p>
+<p>Structural rules check basic requirements like vertex counts and dimension validity.
+They should always be checked regardless of validation settings.
+Geometric rules check embedding properties and are optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if this rule should always be checked, False if optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#CoordinateDimensionRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.CoordinateDimensionRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#CoordinateDimensionRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.CoordinateDimensionRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate coordinate dimensions are consistent.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.EdgeInteriorRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">EdgeInteriorRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.EdgeInteriorRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that no vertices lie on edge interiors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.EdgeInteriorRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.EdgeInteriorRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.EdgeInteriorRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.EdgeInteriorRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.EdgeInteriorRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#EdgeInteriorRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.EdgeInteriorRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that no other vertices lie on this edge’s interior.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.FaceInteriorRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">FaceInteriorRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.FaceInteriorRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that no vertices lie inside face interiors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.FaceInteriorRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.FaceInteriorRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.FaceInteriorRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.FaceInteriorRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.FaceInteriorRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#FaceInteriorRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.FaceInteriorRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that no other vertices lie inside this face.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.SelfIntersectionRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">SelfIntersectionRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.SelfIntersectionRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that face edges don’t self-intersect.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.SelfIntersectionRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.SelfIntersectionRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.SelfIntersectionRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.SelfIntersectionRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.SelfIntersectionRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#SelfIntersectionRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.SelfIntersectionRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that face edges don’t intersect each other</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.rules.BoundaryEdgeRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">BoundaryEdgeRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.BoundaryEdgeRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ect.validation.base.ValidationRule" title="ect.validation.base.ValidationRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationRule</span></code></a></p>
+<p>Validates that required boundary edges exist for faces.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.BoundaryEdgeRule.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.BoundaryEdgeRule.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize boundary edge rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerance</strong> – Numerical tolerance</p></li>
+<li><p><strong>edge_checker</strong> – Function to check if an edge exists (injected dependency)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.validation.rules.BoundaryEdgeRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ect.validation.rules.BoundaryEdgeRule.name" title="Link to this definition"></a></dt>
+<dd><p>Human-readable name of this validation rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.BoundaryEdgeRule.applies_to_dimension">
+<span class="sig-name descname"><span class="pre">applies_to_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.applies_to_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.BoundaryEdgeRule.applies_to_dimension" title="Link to this definition"></a></dt>
+<dd><p>Check if this rule applies to cells of the given dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if this rule should validate cells of this dimension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.rules.BoundaryEdgeRule.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#BoundaryEdgeRule.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.BoundaryEdgeRule.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate that all boundary edges exist for this face.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ect.validation.rules.validate_coordinate_array">
+<span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">validate_coordinate_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#validate_coordinate_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.validate_coordinate_array" title="Link to this definition"></a></dt>
+<dd><p>Standalone function to validate coordinate array format.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ect.validation.rules.validate_node_existence">
+<span class="sig-prename descclassname"><span class="pre">ect.validation.rules.</span></span><span class="sig-name descname"><span class="pre">validate_node_existence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expect_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/rules.html#validate_node_existence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.rules.validate_node_existence" title="Link to this definition"></a></dt>
+<dd><p>Standalone function to validate node existence.</p>
+</dd></dl>
+
+</section>
+<section id="module-ect.validation.validator">
+<span id="validator"></span><h3><span class="section-number">2.2.6.4. </span>Validator<a class="headerlink" href="#module-ect.validation.validator" title="Link to this heading"></a></h3>
+<p>Main embedding validator class that orchestrates validation rules.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.validation.validator.</span></span><span class="sig-name descname"><span class="pre">EmbeddingValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main validator that orchestrates multiple validation rules.</p>
+<p>This class manages a collection of validation rules and applies them
+to cells based on their dimension and the configured rule set.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the embedding validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerance</strong> – Default tolerance for geometric validation</p></li>
+<li><p><strong>edge_checker</strong> – Function to check if an edge exists between two vertex indices</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.add_rule">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.add_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.add_rule" title="Link to this definition"></a></dt>
+<dd><p>Add a custom validation rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> – ValidationRule to add</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.remove_rule">
+<span class="sig-name descname"><span class="pre">remove_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.remove_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.remove_rule" title="Link to this definition"></a></dt>
+<dd><p>Remove all rules of a specific type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_class</strong> – Class of rules to remove</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.set_tolerance">
+<span class="sig-name descname"><span class="pre">set_tolerance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.set_tolerance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.set_tolerance" title="Link to this definition"></a></dt>
+<dd><p>Set tolerance for all rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tolerance</strong> – New tolerance value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.set_edge_checker">
+<span class="sig-name descname"><span class="pre">set_edge_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_checker</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.set_edge_checker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.set_edge_checker" title="Link to this definition"></a></dt>
+<dd><p>Set the edge checker function for boundary validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge_checker</strong> – Function that takes two vertex indices and returns bool</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.validate_cell">
+<span class="sig-name descname"><span class="pre">validate_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_geometric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.validate_cell" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell using applicable rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell</p></li>
+<li><p><strong>check_geometric</strong> – Whether to check geometric rules (structural rules always checked)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the cell</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If validation fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.validate_cell_safe">
+<span class="sig-name descname"><span class="pre">validate_cell_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_geometric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_cell_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.validate_cell_safe" title="Link to this definition"></a></dt>
+<dd><p>Validate a cell, catching and wrapping any exceptions.</p>
+<p>Same as validate_cell but returns ValidationResult instead of raising.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_coords</strong> – Coordinates of vertices forming the cell</p></li>
+<li><p><strong>all_coords</strong> – Coordinates of all vertices in the complex</p></li>
+<li><p><strong>cell_indices</strong> – Indices of vertices forming the cell</p></li>
+<li><p><strong>all_indices</strong> – Indices of all vertices in the complex</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell</p></li>
+<li><p><strong>check_geometric</strong> – Whether to check geometric rules (structural rules always checked)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the cell</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.get_rules_for_dimension">
+<span class="sig-name descname"><span class="pre">get_rules_for_dimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.get_rules_for_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.get_rules_for_dimension" title="Link to this definition"></a></dt>
+<dd><p>Get all rules that apply to a specific dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> – Cell dimension</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of applicable ValidationRules</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.get_rule_names">
+<span class="sig-name descname"><span class="pre">get_rule_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.get_rule_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.get_rule_names" title="Link to this definition"></a></dt>
+<dd><p>Get names of all registered rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of rule names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.disable_rule">
+<span class="sig-name descname"><span class="pre">disable_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.disable_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.disable_rule" title="Link to this definition"></a></dt>
+<dd><p>Temporarily disable a rule type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_class</strong> – Class of rule to disable</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.enable_strict_validation">
+<span class="sig-name descname"><span class="pre">enable_strict_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.enable_strict_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.enable_strict_validation" title="Link to this definition"></a></dt>
+<dd><p>Enable strict validation with tight tolerance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.enable_permissive_validation">
+<span class="sig-name descname"><span class="pre">enable_permissive_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.enable_permissive_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.enable_permissive_validation" title="Link to this definition"></a></dt>
+<dd><p>Enable permissive validation with loose tolerance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.validate_coordinates">
+<span class="sig-name descname"><span class="pre">validate_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.validate_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Validate coordinate array format and dimension consistency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> – Coordinate array to validate</p></li>
+<li><p><strong>expected_dim</strong> – Expected dimension, if known</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the coordinates</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.validation.validator.EmbeddingValidator.validate_nodes">
+<span class="sig-name descname"><span class="pre">validate_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expect_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/validation/validator.html#EmbeddingValidator.validate_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.validation.validator.EmbeddingValidator.validate_nodes" title="Link to this definition"></a></dt>
+<dd><p>Validate node existence/non-existence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> – List of node identifiers to check</p></li>
+<li><p><strong>node_checker</strong> – Function that takes node_id and returns bool for existence</p></li>
+<li><p><strong>expect_exists</strong> – Whether nodes should exist (True) or not exist (False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValidationResult for the nodes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="embed_complex.html" class="btn btn-neutral float-left" title="2.1. Embedded Complex" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ect.html" class="btn btn-neutral float-right" title="2.3. ECT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

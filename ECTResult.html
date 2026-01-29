@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.4. ECTResult &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+    <link rel="shortcut icon" href="_static/ECT_Logo_128x128.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=59fadc99"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.5. Directions" href="directions.html" />
+    <link rel="prev" title="2.3. ECT" href="ect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ect
+              <img src="_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="embed_complex.html">2.1. Embedded Complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#overview">2.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#basic-usage">2.1.2. Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed_complex.html#api-reference">2.1.3. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">2.2. Validation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#overview">2.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#architecture">2.2.2. Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#validation-rules">2.2.3. Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#usage">2.2.4. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#custom-validation-rules">2.2.5. Custom Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#api-reference">2.2.6. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ect.html">2.3. ECT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.ect.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.sect.SECT"><code class="docutils literal notranslate"><span class="pre">SECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.dect.DECT"><code class="docutils literal notranslate"><span class="pre">DECT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4. ECTResult</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ect.results.ECTResult"><code class="docutils literal notranslate"><span class="pre">ECTResult</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="directions.html">2.5. Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Sampling"><code class="docutils literal notranslate"><span class="pre">Sampling</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Directions"><code class="docutils literal notranslate"><span class="pre">Directions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html">3.1. Tutorial: ECT for Embedded Cell Complexes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Basic-Usage:-Creating-Simple-Complexes">3.1.1. Basic Usage: Creating Simple Complexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Adding-Cells-of-Arbitrary-Dimension">3.1.2. Adding Cells of Arbitrary Dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#ECT-Computation-with-Higher-Dimensional-Cells">3.1.3. ECT Computation with Higher-Dimensional Cells</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Validation-System">3.1.4. Validation System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Matisse/example_matisse.html">3.2. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Matisse/example_matisse.html#Acknowledgements">3.2.1. Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html"><span class="section-number">2. </span>Table of Contents</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.4. </span>ECTResult</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ECTResult.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ectresult">
+<h1><span class="section-number">2.4. </span>ECTResult<a class="headerlink" href="#ectresult" title="Link to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">ECTResult</span></code> class provides a fast way to manipulate ECT matrices while also maintaining properties of being a numpy array.</p>
+<dl class="py class" id="module-ect.results">
+<dt class="sig sig-object py" id="ect.results.ECTResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.results.</span></span><span class="sig-name descname"><span class="pre">ECTResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult" title="Link to this definition"></a></dt>
+<dd><p>A numpy ndarray subclass that carries Euler Characteristic Transform (ECT) metadata and plotting capabilities.</p>
+<p>This class acts like a regular matrix but includes:
+- Visualization methods for ECT and ECC plots
+- Metadata about directions and thresholds used in the transform
+- Support for both dense and compressed (CSR) representations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>np.ndarray</em>) – ECT matrix data.</p></li>
+<li><p><strong>directions</strong> – Direction metadata (angles or vectors).</p></li>
+<li><p><strong>thresholds</strong> – Threshold values used for the transform.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="#ect.results.ECTResult.plot" title="ect.results.ECTResult.plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">plot()</span></code></a> to visualize the ECT matrix.</p></li>
+<li><p>Use <a class="reference internal" href="#ect.results.ECTResult.dist" title="ect.results.ECTResult.dist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dist()</span></code></a> to compute distances between ECT results.</p></li>
+<li><p>Supports loading/saving in compressed format via <a class="reference internal" href="#ect.results.ECTResult.save_npz" title="ect.results.ECTResult.save_npz"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_npz()</span></code></a> and <a class="reference internal" href="#ect.results.ECTResult.load_npz" title="ect.results.ECTResult.load_npz"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_npz()</span></code></a>.</p></li>
+</ul>
+<dl class="py property">
+<dt class="sig sig-object py" id="ect.results.ECTResult.has_csr">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_csr</span></span><a class="headerlink" href="#ect.results.ECTResult.has_csr" title="Link to this definition"></a></dt>
+<dd><p>Check if the ECTResult instance has compressed sparse row (CSR) data attached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if CSR fields (row_ptr, col_idx, data) are present, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.from_csr">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_csr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row_ptr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'numpy.int32'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.from_csr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.from_csr" title="Link to this definition"></a></dt>
+<dd><p>Create an ECTResult instance from compressed sparse row (CSR) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row_ptr</strong> (<em>np.ndarray</em>) – CSR row pointer array.</p></li>
+<li><p><strong>col_idx</strong> (<em>np.ndarray</em>) – CSR column indices array.</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – CSR data array (jump values).</p></li>
+<li><p><strong>directions</strong> – Direction metadata (angles or vectors).</p></li>
+<li><p><strong>thresholds</strong> – Threshold values used for the transform.</p></li>
+<li><p><strong>dtype</strong> – Data type for the dense matrix (default: np.int32).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instance with dense matrix and attached CSR fields.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ect.results.ECTResult" title="ect.results.ECTResult">ECTResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.to_dense">
+<span class="sig-name descname"><span class="pre">to_dense</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.to_dense"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.to_dense" title="Link to this definition"></a></dt>
+<dd><p>Convert the ECTResult from CSR format to a dense matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dense matrix representation of the ECTResult.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.save_npz">
+<span class="sig-name descname"><span class="pre">save_npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.save_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.save_npz" title="Link to this definition"></a></dt>
+<dd><p>Save the ECTResult in compressed .npz format, including CSR data and metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – File path to save the .npz file.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If CSR data is not present, it is computed from the dense matrix.</p></li>
+<li><p>Metadata (thresholds, dtype) is included for reproducibility.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.load_npz">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.load_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.load_npz" title="Link to this definition"></a></dt>
+<dd><p>Load an ECTResult from a compressed .npz file, restoring CSR data and metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path to load the .npz file from.</p></li>
+<li><p><strong>directions</strong> – Direction metadata to attach to the result.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instance with dense matrix, CSR fields, and metadata.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ect.results.ECTResult" title="ect.results.ECTResult">ECTResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.plot" title="Link to this definition"></a></dt>
+<dd><p>Plot the ECT matrix, handling both 2D and 3D direction cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – Axes to plot on. If None, uses current axes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The axes object with the plot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>For 2D, directions are shown as angles; for 3D, as indices.</p></li>
+<li><p>Uses color mesh and labels for visualization.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.smooth">
+<span class="sig-name descname"><span class="pre">smooth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.smooth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.smooth" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Smooth Euler Characteristic Transform (SECT) from the ECT matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New instance containing the SECT matrix, directions, and thresholds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#ect.results.ECTResult" title="ect.results.ECTResult">ECTResult</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The SECT is computed by centering each direction’s values and taking the cumulative sum across thresholds.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ect.results.ECTResult.dist">
+<span class="sig-name descname"><span class="pre">dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cityblock'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/results.html#ECTResult.dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ect.results.ECTResult.dist" title="Link to this definition"></a></dt>
+<dd><p>Compute distance to another ECTResult or list of ECTResults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> – Another ECTResult object or list of ECTResult objects</p></li>
+<li><p><strong>metric</strong> – Distance metric to use. Can be:
+- String: any metric supported by scipy.spatial.distance (e.g., ‘euclidean’, ‘cityblock’, ‘chebyshev’, ‘cosine’, etc.)
+- Callable: a custom distance function that takes two 1D arrays and returns a scalar distance. The function should have signature: func(u, v) -&gt; float</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to the metric function (e.g., p=3 for minkowski distance, w=weights for weighted metrics)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Single distance if other is an ECTResult, array of distances if other is a list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the shapes of the ECTResults don’t match.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Built-in metrics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dist1</span> <span class="o">=</span> <span class="n">ect1</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">ect2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dist2</span> <span class="o">=</span> <span class="n">ect1</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">ect2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;minkowski&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Custom distance function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">my_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dist3</span> <span class="o">=</span> <span class="n">ect1</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">ect2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">my_distance</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Batch distances with custom function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dists</span> <span class="o">=</span> <span class="n">ect1</span><span class="o">.</span><span class="n">dist</span><span class="p">([</span><span class="n">ect2</span><span class="p">,</span> <span class="n">ect3</span><span class="p">,</span> <span class="n">ect4</span><span class="p">],</span> <span class="n">metric</span><span class="o">=</span><span class="n">my_distance</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ect.html" class="btn btn-neutral float-left" title="2.3. ECT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="directions.html" class="btn btn-neutral float-right" title="2.5. Directions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
