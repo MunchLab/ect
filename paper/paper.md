@@ -41,16 +41,16 @@ The `ect` Python package offers a fast and well-documented implementation of ECT
 
 ## The Euler Characteristic Transform
 
-The Euler characteristic is a standard construction from algebraic topology (see, e.g., @Hatcher). 
-In its simplest form, for a given polyhedron $K$, it is defined as the alternating sum $\chi(K) = v_K-e_K+f_K$ where $v_K$, $e_K$, and $f_K$ stand for the counts of the numbers of vertices, edges, and faces in $K$, respectively.
+The Euler characteristic is a standard construction from algebraic topology (see, e.g., @Hatcher).
+In its simplest form for a given polyhedron $K$, the ECT is defined as the alternating sum $\chi(K) = v_K-e_K+f_K$ where $v_K$, $e_K$, and $f_K$ stand for the counts of the numbers of vertices, edges, and faces in $K$, respectively.
 The ECT extends this idea to encode the changing Euler characteristic for sublevel sets of an input space in different directions.
-We give a high-level introduction of the ECT here as defined in [@Turner2014], and direct the reader to [@Munch2025;@Rieck2024] for full survey articles specifically on the subject. 
+We give a high-level introduction of the ECT here as defined in @Turner2014, and direct the reader to @Munch2025 and @Rieck2024 for survey articles specifically on the subject.
 <!-- Further, note that the code is built to handle embedded cell complexes of arbitrary dimension, but for ease of introduction, we explain the basics using embedded graphs. -->
 
 To start, we have input `ect.EmbeddedComplex`, which is a polyhedral complex $K$ (see @Goodman2018, Ch. 17.4) that is a collection of convex polytopes in $\mathbb{R}^n$ closed under the face relation. While we note the code can handle shapes in any dimension, we will give an exposition focusing on the case of a straight-line graph embedding like the example given in \autoref{fig:example_graph} embedded in $\mathbb{R}^2$.
 
-For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $g_\omega(v) = \langle f(v), \omega\rangle$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$. 
-Some examples are shown for the embedded graph in \autoref{fig:example_graph}. 
+For a choice of direction $\omega \in \mathbb{S}^{n-1}$, we induce a function on the vertex set given by $g_\omega(v) = \langle f(v), \omega\rangle$, the dot product of the embedding coordinates of the vertex with the unit vector $\omega \in \mathbb{R}^n$.
+Some examples are shown for the embedded graph in \autoref{fig:example_graph}.
 The ECT for the embedded graph is given by
 $$
 \begin{matrix}
@@ -77,9 +77,6 @@ In order to handle issues with choices of direction discretiziations, we have im
   - [Kent distribution](https://en.wikipedia.org/wiki/Kent_distribution) 
   - [von Mises-Fisher](https://en.wikipedia.org/wiki/Von_Mises%E2%80%93Fisher_distribution#Matrix_Von_Mises-Fisher)
 
-
-
-
 ## Capabilities of the `ect` package 
 
 The main functionality of the `ect` package is to compute the ECT using the class `ect.ect.ECT`, including for higher-dimensional structures than described in the previous section.
@@ -89,12 +86,27 @@ The ECT output can also easily return distances between transforms, generally de
 
 <!-- ![MDS of Matisse](figures/Matisse_MDS.png) -->
 
-
 # Statement of Need
 
-Despite the ECT's mathematical power, there has been a notable absence of efficient, user-friendly, continuously maintained Python packages that can handle the computational demands of modern research datasets. The primary target users of `ect` are researchers and practitioners in topological data analysis and related fields (such as computational geometry, network science, and biological shape analysis) who require scalable, Python-native tools for extracting and using topological features from embedded complexes. The `ect` package addresses this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complemented by the many utility functions for visualizing and comparing different Euler Characteristic Transforms such as the ECT, SECT [@Crawford2019;@Meng2022], and the DECT [@Roell2024].
+Despite the ECT's mathematical power, there has been a notable absence of efficient, user-friendly, continuously maintained Python packages that can handle the computational demands of modern research datasets. The primary target users of `ect` are researchers and practitioners in topological data analysis and related fields (such as computational geometry, network science, and biological shape analysis) who require scalable, Python-native tools for extracting and using topological features from embedded complexes.
 
+# Software Design
 
+The `ect` package addresses this by leveraging Numba's just-in-time compilation to achieve significant speedups over naive Python implementations, making it practical to compute ECTs for large-scale datasets. This performance is then complemented by the many utility functions for visualizing and comparing different Euler Characteristic Transforms such as the ECT, SECT [@Crawford2019;@Meng2022], and the DECT [@Roell2024].
+
+# Research Impact Statement
+
+This code has been developed in tandem with a plant morphology collaboration in order to ensure ease of use for domain scientists.
+To date, this has resulted in two posted preprints [@GarciaChavez2026;@Yahiaoui2026].
+In addition, the documentation is focused on clear communication of the method for the non-experts.
+For example, a tutorial notebook focused on using the ECT for classifying paper cutout shapes from Henri Matisse's 1952 "The Parakeet and the Mermaid" has been used by the authors extensively for tutorials and talks.
+Because of the ease of code use reported by the biologists, we expect that the code is in a state to be picked up for many applications in the near future.
+
+# AI Usage Disclosure
+
+The authors utilized Github Copilot for creating frameworks, templates, and first drafts of code with a particular focus on using the AI for improving documentation.
+All final versions of code are checked via the built-in automated tests as well as human testing.  
+The JOSS paper was written without the use of AI.
 
 # Acknowledgements
 
