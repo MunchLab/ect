@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [JOSS-Paper]
+    branches: [JOSS-Paper, reviewer-edits]
   workflow_dispatch:
 
 jobs:

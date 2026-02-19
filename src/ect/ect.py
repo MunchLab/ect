@@ -25,19 +25,24 @@ def _thresholds_are_uniform(thresholds: np.ndarray) -> bool:
 
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`.
+    A class to calculate the Euler Characteristic Transform (ECT) from an input :class:`ect.embed_complex.EmbeddedComplex`,
+    using a set of directions to project the complex onto and thresholds to filter the projections.
 
-    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
+    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j`
+    where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the jth entry in ``self.directions``.
 
-    Attributes
-        num_dirs (int):
-            The number of directions to consider in the matrix.
-        num_thresh (int):
-            The number of thresholds to consider in the matrix.
-        directions (Directions):
-            The directions to consider for projection.
-        bound_radius (float):
-            Either ``None``, or a positive radius of the bounding circle.
+    
+
+    Example:
+        >>> from ect import ECT, EmbeddedComplex
+        >>> from ect import EmbeddedGraph
+        >>> complex = EmbeddedComplex()
+        >>> complex.add_node(0, [0, 0])
+        >>> complex.add_node(1, [1, 0])
+        >>> complex.add_edge(0, 1)
+        >>> ect = ECT(num_dirs=10, num_thresh=10) # chooses 10 uniform directions and 10 thresholds
+        >>> result = ect.calculate(complex)
+        >>> result.plot()
     """
 
     def __init__(
@@ -159,7 +164,7 @@ class ECT:
 
         V = directions.vectors
         X = graph.coord_matrix
-        H = X @ V if V.shape[0] == X.shape[1] else X @ V.T  # (N, m)
+        H = X @ V.T  # (N, m)
         H_T = np.ascontiguousarray(H.T)  # (m, N) for contiguous per-direction rows
 
         is_uniform = bool(self.is_uniform) and thresholds[0] != thresholds[-1]
@@ -252,12 +257,9 @@ def _ect_all_dirs(
             vertex_rank_1based[vertex_index] = rnk + 1
 
         # euler char can only jump at each vertex value
+        # we know vertices add +1 so wait until end to add
+        #
         jump_amount = np.zeros(num_vertices + 1, dtype=np.int64)
-
-        # 0-cells add +1 at their entrance ranks
-        for v in range(num_vertices):
-            rank_v = vertex_rank_1based[v]
-            jump_amount[rank_v] += 1
 
         # each pair of pointers defines a cell, so we iterate over them
         num_cells = cell_vertex_pointers.shape[0] - 1
@@ -279,7 +281,7 @@ def _ect_all_dirs(
         running_sum = 0
         for r in range(num_vertices + 1):
             running_sum += jump_amount[r]
-            euler_prefix[r] = running_sum
+            euler_prefix[r] = running_sum + r  # +r because vertices add +1
 
         # now find euler char at each threshold wrt the sorted heights
         sorted_heights = heights[sort_order]

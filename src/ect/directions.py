@@ -15,7 +15,10 @@ class Directions:
     Manages direction vectors for ECT calculations.
     Supports uniform, random, or custom sampling of directions.
 
-    Examples:
+    **Examples:**
+    
+    .. code-block:: python
+
         # Uniform sampling in 2D (default)
         dirs = Directions.uniform(num_dirs=8)
 
@@ -40,6 +43,21 @@ class Directions:
         endpoint: bool = False,
         seed: Optional[int] = None,
     ):
+        """
+        Initialize a Directions instance for ECT calculations.
+
+        Args:
+            num_dirs (int): Number of direction vectors to generate (default: 360).
+            sampling (Sampling): Sampling strategy (UNIFORM, RANDOM, or CUSTOM).
+            dim (int): Dimension of the space (default: 2).
+            endpoint (bool): Whether to include the endpoint for 2D angles (default: False).
+            seed (Optional[int]): Random seed for reproducibility (default: None).
+
+        Notes:
+            - For 2D, directions are represented as angles; for higher dimensions, as unit vectors.
+            - Use factory methods :meth:`uniform`, :meth:`random`, :meth:`from_angles`, or :meth:`from_vectors` for convenience.
+        """
+        
         self.num_dirs = num_dirs
         self.sampling = sampling
         self.dim = dim
@@ -111,7 +129,17 @@ class Directions:
     @classmethod
     def from_angles(cls, angles: Sequence[float]) -> "Directions":
         """
-        Create an instance for custom angles (2D only).
+        Create a Directions instance for custom angles in 2D.
+
+        Args:
+            angles (Sequence[float]): List or array of angles (in radians) for each direction.
+
+        Returns:
+            Directions: Instance with direction angles set and corresponding unit vectors available via :attr:`vectors`.
+
+        Notes:
+            - Only valid for 2D directions; for higher dimensions use :meth:`from_vectors`.
+            - Angles are stored in :attr:`thetas` and unit vectors are computed as needed.
         """
         instance = cls(len(angles), Sampling.CUSTOM, dim=2)
         instance._thetas = np.array(angles)
@@ -120,8 +148,20 @@ class Directions:
     @classmethod
     def from_vectors(cls, vectors: Sequence[tuple]) -> "Directions":
         """
-        Create an instance from custom direction vectors.
-        Works in any number of dimensions.
+        Create a Directions instance from custom direction vectors in any dimension.
+
+        Args:
+            vectors (Sequence[tuple]): List or array of direction vectors (each must be nonzero).
+
+        Returns:
+            Directions: Instance with normalized direction vectors and associated angles (if 2D).
+
+        Raises:
+            ValueError: If any vector has zero magnitude.
+
+        Notes:
+            - Vectors are normalized to unit length.
+            - For 2D, angles are computed from the vectors and available via :attr:`thetas`.
         """
         vectors = np.array(vectors, dtype=float)
         norms = np.linalg.norm(vectors, axis=1, keepdims=True)
@@ -136,7 +176,19 @@ class Directions:
 
     @property
     def thetas(self) -> np.ndarray:
-        """Get the angles for 2D directions. Raises an error if dim > 2."""
+        """
+        Get the angles (in radians) for 2D direction vectors.
+
+        Returns:
+            np.ndarray: Array of angles corresponding to each direction vector (2D only).
+
+        Raises:
+            ValueError: If called for directions in dimension greater than 2.
+
+        Notes:
+            - For 2D, angles are computed from the direction vectors if not already set.
+            - For higher dimensions, use :attr:`vectors` for direction data.
+        """
         if self.dim != 2:
             raise ValueError(
                 "Angle representation is only available for 2D directions."
@@ -148,9 +200,18 @@ class Directions:
 
     @property
     def vectors(self) -> np.ndarray:
-        """Get unit direction vectors.
-        For 2D, they are computed from thetas if not already created.
-        For n-dim (n>2), they should be available.
+        """
+        Get the unit direction vectors for all directions.
+
+        Returns:
+            np.ndarray: Array of shape (num_dirs, dim) containing unit vectors for each direction.
+
+        Raises:
+            ValueError: If vectors are not available for dimensions >2 and were not generated during initialization.
+
+        Notes:
+            - For 2D, vectors are computed from :attr:`thetas` if not already set.
+            - For higher dimensions, vectors are generated during initialization or via :meth:`from_vectors`.
         """
         if self._vectors is None:
             if self.dim == 2:
