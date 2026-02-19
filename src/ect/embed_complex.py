@@ -9,11 +9,6 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from sklearn.decomposition import PCA
 
 from .utils.naming import next_vert_name
-from .utils.face_check import (
-    point_in_polygon,
-    validate_face_embedding,
-    validate_edge_embedding,
-)
 from .validation import EmbeddingValidator, ValidationRule
 
 
@@ -55,6 +50,7 @@ class EmbeddedComplex(nx.Graph):
         self._node_to_index = {}
         self._coord_matrix = None
         self.cells = defaultdict(list)
+        self._incidence_csr_cache = None
 
         self.validate_embedding = validate_embedding
         self.embedding_tol = embedding_tol
@@ -68,6 +64,12 @@ class EmbeddedComplex(nx.Graph):
             return self.has_edge(v1_name, v2_name)
 
         self._validator = EmbeddingValidator(embedding_tol, edge_checker)
+
+    def _invalidate_incidence_csr_cache(self) -> None:
+        self._incidence_csr_cache = None
+
+    def precompute_incidence_csr(self) -> tuple:
+        return self._build_incidence_csr()
 
     @property
     def coord_matrix(self):
@@ -192,6 +194,7 @@ class EmbeddedComplex(nx.Graph):
         self._node_list.append(node_id)
         self._node_to_index[node_id] = len(self._node_list) - 1
         super().add_node(node_id)
+        self._invalidate_incidence_csr_cache()
 
     def add_nodes_from_dict(self, nodes_with_coords: Dict[Union[str, int], np.ndarray]):
         """Add multiple vertices to the complex.
@@ -232,6 +235,7 @@ class EmbeddedComplex(nx.Graph):
             raise ValueError(node_result.message)
 
         super().add_edge(node_id1, node_id2)
+        self._invalidate_incidence_csr_cache()
 
     def add_cell(
         self,
@@ -302,6 +306,7 @@ class EmbeddedComplex(nx.Graph):
             self.add_edge(cell_vertices[0], cell_vertices[1])
 
         self.cells[dim].append(cell_indices)
+        self._invalidate_incidence_csr_cache()
 
     def enable_embedding_validation(self, tol: float = 1e-10):
         """
@@ -434,6 +439,7 @@ class EmbeddedComplex(nx.Graph):
         new_names = next_vert_name(self._node_list[-1] if self._node_list else 0, n)
         self.add_nodes_from(zip(new_names, coord_matrix))
         self.add_edges_from([(new_names[i], new_names[(i + 1) % n]) for i in range(n)])
+        self.precompute_incidence_csr()
 
     def get_center(self, method: str = "bounding_box") -> np.ndarray:
         """
@@ -967,6 +973,9 @@ class EmbeddedComplex(nx.Graph):
         Example: takes the complex [(1,3),(2,4),(1,2,3)] and returns [(0,2,4,7),(1,3,2,4,1,2,3),(-1,-1,1),4]
 
         """
+        if self._incidence_csr_cache is not None:
+            return self._incidence_csr_cache
+
         n_vertices = len(self.node_list)
 
         cells_by_dimension = {}
@@ -1010,12 +1019,14 @@ class EmbeddedComplex(nx.Graph):
                 cell_vertex_pointers[cell_index] = len(cell_vertex_indices_flat)
 
         cell_vertex_indices_flat = np.asarray(cell_vertex_indices_flat, dtype=np.int32)
-        return (
+        out = (
             cell_vertex_pointers,
             cell_vertex_indices_flat,
             cell_euler_signs,
             n_vertices,
         )
+        self._incidence_csr_cache = out
+        return out
 
 
 EmbeddedGraph = EmbeddedComplex
