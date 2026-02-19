@@ -41,6 +41,6 @@ K.add_cell(["A", "B", "C"], dim=2)
 ```{eval-rst}
 .. automodule:: ect.embed_complex
    :members:
-   :show-inheritance:
    :undoc-members:
+   :no-index:
 ```
