@@ -98,8 +98,8 @@ The package `demeter` ([github.com/amezqui3/demeter](https://github.com/amezqui3
 One of the first variations of the ECT is the Smooth ECT (SECT), [@Crawford2019;@Meng2022;@Tang2022].  The related papers come with specific code that are not packaged, are no longer maintained, or are application specific rather than a light-weight general ECT library ([github.com/lorinanthony/SECT](https://github.com/lorinanthony/SECT), [github.com/lcrawlab/SINATRA-Pro](https://github.com/lcrawlab/SINATRA-Pro) and [github.com/JinyuWang123/TDA](https://github.com/JinyuWang123/TDA)).  
 
 The Differentiable ECT (DECT) was developed to engage directly with deep learning through the use of neural nets [@Roell2024].
-The related code [github.com/aidos-lab/DECT](https://github.com/aidos-lab/DECT) is the most similar to `ect` but has more of a focus on connection to `pytorch`.
-A similar recently available package, `pyECT` [@CisewskiKehe2025], was written specifically for the Weighted ECT and focuses on an interface with `pytorch`.
+The related code ([github.com/aidos-lab/DECT](https://github.com/aidos-lab/DECT)) is the most similar to `ect` but has more of a focus on connection to `pytorch`.
+A similar recently available package, `pyECT` [@CisewskiKehe2025], was written specifically for the Weighted ECT and also focuses on an interface with `pytorch` ([github.com/compTAG/pyECT](https://github.com/compTAG/pyECT)).
 
 A comparison of the running times for a subset of these packages can be seen in BLAH BLAH BLAH ADD A FIGURE.
 
