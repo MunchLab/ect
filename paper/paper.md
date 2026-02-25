@@ -118,7 +118,8 @@ Additional speed is gained by leveraging Numba's just-in-time compilation to ach
 # Research Impact Statement
 
 This code has been developed in tandem with a plant morphology collaboration in order to ensure ease of use for domain scientists.
-To date, this has resulted in two posted preprints [@GarciaChavez2026;@Yahiaoui2026].
+One of the first iterations of the code was used in the *Plants and Python* course [@PlantsAndPython2022] developed for teaching coding and Python to plant biologists (see the 2024 semester here: [github.com/MunchLab/ECT-Leaf-CNN](https://github.com/MunchLab/ECT-Leaf-CNN)).
+To date, the updated package has resulted in two posted preprints [@GarciaChavez2026;@Yahiaoui2026].
 In addition, the documentation is focused on clear communication of the method for the non-experts.
 For example, a tutorial notebook focused on using the ECT for classifying paper cutout shapes from Henri Matisse's 1952 "The Parakeet and the Mermaid" has been used by the authors extensively for tutorials and talks.
 Because of the ease of code use reported by the biologists, we expect that the code is in a state to be picked up for many applications in the near future.
