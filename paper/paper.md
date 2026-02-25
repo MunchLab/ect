@@ -92,16 +92,18 @@ Despite the ECT's mathematical power, there has been a notable absence of effici
 
 # State of the Field
 
-Since it's popularity for use in TDA settings has risen in particular since @Turner2014, a large variety of code to compute the ECT and its variants have emerged.
+Since its popularity in topological data analysis has grown since @Turner2014, a range of software implementations for computing the ECT and its variants has emerged.
 
 The package `demeter` ([github.com/amezqui3/demeter](https://github.com/amezqui3/demeter)) was written specifically for 3D voxel data in order to calculate the ECT for barley seeds [@Amezquita2021].
 One of the first variations of the ECT is the Smooth ECT (SECT), [@Crawford2019;@Meng2022;@Tang2022].  The related papers come with specific code that are not packaged, are no longer maintained, or are application specific rather than a light-weight general ECT library ([github.com/lorinanthony/SECT](https://github.com/lorinanthony/SECT), [github.com/lcrawlab/SINATRA-Pro](https://github.com/lcrawlab/SINATRA-Pro) and [github.com/JinyuWang123/TDA](https://github.com/JinyuWang123/TDA)).  
 
-The Differentiable ECT (DECT) was developed to engage directly with deep learning through the use of neural nets [@Roell2024].
-The related code ([github.com/aidos-lab/DECT](https://github.com/aidos-lab/DECT)) is the most similar to `ect` but has more of a focus on connection to `pytorch`.
-A similar recently available package, `pyECT` [@CisewskiKehe2025], was written specifically for the Weighted ECT and also focuses on an interface with `pytorch` ([github.com/compTAG/pyECT](https://github.com/compTAG/pyECT)).
+The Differentiable ECT (DECT) [@Roell2024] makes the ECT differentiable so it can be used as an end-to-end trainable component in deep learning pipelines.
+The accompanying implementation (`dect`) is written in `PyTorch` and supports GPU acceleration ([github.com/aidos-lab/dect](https://github.com/aidos-lab/dect)).
+A similar recently available package, `pyECT` [@CisewskiKehe2025], provides an efficient implementation of the Weighted Euler Characteristic Transform (WECT) using `PyTorch` ([github.com/compTAG/pyECT](https://github.com/compTAG/pyECT)).
 
-A comparison of the running times for a subset of these packages can be seen in BLAH BLAH BLAH ADD A FIGURE.
+A comparison of the running times for a subset of these packages (CPU-only) can be seen in \autoref{fig:benchmark_ect_packages_resolutions}.
+
+![CPU-only runtime benchmarking comparison across discretization resolutions for a subset of available ECT software packages.\label{fig:benchmark_ect_packages_resolutions}](figures/benchmark_ect_packages_resolutions.png)
 
 # Software Design
 
@@ -123,9 +125,9 @@ Because of the ease of code use reported by the biologists, we expect that the c
 
 # AI Usage Disclosure
 
-The authors utilized Github Copilot for creating frameworks, templates, and first drafts of code with a particular focus on using the AI for improving documentation.
-All final versions of code are checked via the built-in automated tests as well as human testing.  
-The JOSS paper was written without the use of AI.
+The authors used GitHub Copilot to assist with code scaffolding, templates, and early documentation drafts.
+All final code was validated through automated tests and manual review by the authors.
+The final manuscript text and scientific claims were written and verified by the authors.
 
 # Acknowledgements
 
