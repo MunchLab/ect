@@ -1,4 +1,4 @@
-# ECT on Graphs
+# ECT
 
 ```{eval-rst}
 .. automodule:: ect.ect
@@ -7,5 +7,10 @@
 
 ```{eval-rst}
 .. automodule:: ect.sect
+   :members:
+```
+
+```{eval-rst}
+.. automodule:: ect.dect
    :members:
 ```

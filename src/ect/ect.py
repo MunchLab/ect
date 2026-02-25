@@ -8,21 +8,41 @@ from .directions import Directions
 from .results import ECTResult
 
 
+def _thresholds_are_uniform(thresholds: np.ndarray) -> bool:
+    thresholds = np.asarray(thresholds, dtype=float)
+    if thresholds.ndim != 1:
+        raise ValueError("thresholds must be a 1-dimensional array")
+    n = thresholds.size
+    if n <= 1:
+        return True
+    diffs = np.diff(thresholds)
+    first = diffs[0]
+    if first == 0.0:
+        return bool(np.all(diffs == 0.0))
+    tol = 1e-12 * max(1.0, abs(first))
+    return bool(np.all(np.abs(diffs - first) <= tol))
+
+
 class ECT:
     """
-    A class to calculate the Euler Characteristic Transform (ECT) from an input :any:`EmbeddedComplex`.
+    A class to calculate the Euler Characteristic Transform (ECT) from an input :class:`ect.embed_complex.EmbeddedComplex`,
+    using a set of directions to project the complex onto and thresholds to filter the projections.
 
-    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j` where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the ith entry in ``self.thetas``.
+    The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j`
+    where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the jth entry in ``self.directions``.
 
-    Attributes
-        num_dirs (int):
-            The number of directions to consider in the matrix.
-        num_thresh (int):
-            The number of thresholds to consider in the matrix.
-        directions (Directions):
-            The directions to consider for projection.
-        bound_radius (float):
-            Either ``None``, or a positive radius of the bounding circle.
+    
+
+    Example:
+        >>> from ect import ECT, EmbeddedComplex
+        >>> from ect import EmbeddedGraph
+        >>> complex = EmbeddedComplex()
+        >>> complex.add_node(0, [0, 0])
+        >>> complex.add_node(1, [1, 0])
+        >>> complex.add_edge(0, 1)
+        >>> ect = ECT(num_dirs=10, num_thresh=10) # chooses 10 uniform directions and 10 thresholds
+        >>> result = ect.calculate(complex)
+        >>> result.plot()
     """
 
     def __init__(
@@ -50,6 +70,24 @@ class ECT:
         self.bound_radius = bound_radius
         self.thresholds = thresholds
         self.dtype = dtype
+        self._thresholds_validated = False
+        if self.thresholds is not None:
+            self.thresholds = np.asarray(self.thresholds, dtype=float)
+            if self.thresholds.ndim != 1:
+                raise ValueError("thresholds must be a 1-dimensional array")
+            self._thresholds_validated = True
+        if num_thresh is not None:
+            self.is_uniform = True
+        else:
+            self.is_uniform = False
+            if self.thresholds is None:
+                raise ValueError(
+                    "thresholds must be provided if num_thresh is not provided"
+                )
+            if not _thresholds_are_uniform(self.thresholds):
+                raise ValueError(
+                    "thresholds must be uniform if num_thresh is not provided"
+                )
 
     def _ensure_directions(self, graph_dim, theta=None):
         """Ensures directions is a valid Directions object of correct dimension"""
@@ -92,11 +130,14 @@ class ECT:
                 or graph.get_bounding_radius()
             )
             self.thresholds = np.linspace(-radius, radius, self.num_thresh, dtype=float)
+            self.is_uniform = True
+            self._thresholds_validated = True
         else:
-            # validate and convert existing thresholds
-            self.thresholds = np.asarray(self.thresholds, dtype=float)
-            if self.thresholds.ndim != 1:
-                raise ValueError("thresholds must be a 1-dimensional array")
+            if not self._thresholds_validated:
+                self.thresholds = np.asarray(self.thresholds, dtype=float)
+                if self.thresholds.ndim != 1:
+                    raise ValueError("thresholds must be a 1-dimensional array")
+                self._thresholds_validated = True
 
     def calculate(
         self,
@@ -119,21 +160,32 @@ class ECT:
         cell_vertex_pointers, cell_vertex_indices_flat, cell_euler_signs, N = (
             graph._build_incidence_csr()
         )
-        thresholds = np.asarray(thresholds, dtype=np.float64)
+        thresholds = np.asarray(thresholds, dtype=np.float32)
 
         V = directions.vectors
         X = graph.coord_matrix
-        H = X @ V if V.shape[0] == X.shape[1] else X @ V.T  # (N, m)
+        H = X @ V.T  # (N, m)
         H_T = np.ascontiguousarray(H.T)  # (m, N) for contiguous per-direction rows
 
-        out64 = _ect_all_dirs(
-            H_T,
-            cell_vertex_pointers,
-            cell_vertex_indices_flat,
-            cell_euler_signs,
-            thresholds,
-            N,
-        )
+        is_uniform = bool(self.is_uniform) and thresholds[0] != thresholds[-1]
+        if is_uniform:
+            out64 = _ect_all_dirs_uniform(
+                H_T,
+                cell_vertex_pointers,
+                cell_vertex_indices_flat,
+                cell_euler_signs,
+                thresholds,
+                N,
+            )
+        else:
+            out64 = _ect_all_dirs_search(
+                H_T,
+                cell_vertex_pointers,
+                cell_vertex_indices_flat,
+                cell_euler_signs,
+                thresholds,
+                N,
+            )
         if dtype == np.int32:
             return out64.astype(np.int32)
         return out64
@@ -205,12 +257,9 @@ def _ect_all_dirs(
             vertex_rank_1based[vertex_index] = rnk + 1
 
         # euler char can only jump at each vertex value
+        # we know vertices add +1 so wait until end to add
+        #
         jump_amount = np.zeros(num_vertices + 1, dtype=np.int64)
-
-        # 0-cells add +1 at their entrance ranks
-        for v in range(num_vertices):
-            rank_v = vertex_rank_1based[v]
-            jump_amount[rank_v] += 1
 
         # each pair of pointers defines a cell, so we iterate over them
         num_cells = cell_vertex_pointers.shape[0] - 1
@@ -232,7 +281,7 @@ def _ect_all_dirs(
         running_sum = 0
         for r in range(num_vertices + 1):
             running_sum += jump_amount[r]
-            euler_prefix[r] = running_sum
+            euler_prefix[r] = running_sum + r  # +r because vertices add +1
 
         # now find euler char at each threshold wrt the sorted heights
         sorted_heights = heights[sort_order]
@@ -242,5 +291,128 @@ def _ect_all_dirs(
             while rank_cursor < num_vertices and sorted_heights[rank_cursor] <= t:
                 rank_cursor += 1
             ect_values[dir_idx, thresh_idx] = euler_prefix[rank_cursor]
+
+    return ect_values
+
+
+@njit(cache=True, parallel=True)
+def _ect_all_dirs_uniform(
+    heights_by_direction,
+    cell_vertex_pointers,
+    cell_vertex_indices_flat,
+    cell_euler_signs,
+    threshold_values,
+    num_vertices,
+):
+    num_directions = heights_by_direction.shape[0]
+    num_thresholds = threshold_values.shape[0]
+    t_min = threshold_values[0] if num_thresholds > 0 else 0.0
+    t_max = threshold_values[-1] if num_thresholds > 0 else 0.0
+    span = t_max - t_min
+    inv_span = 1.0 / span
+    n_minus_1 = num_thresholds - 1
+
+    ect_values = np.empty((num_directions, num_thresholds), dtype=np.int64)
+
+    for dir_idx in prange(num_directions):
+        heights = heights_by_direction[dir_idx]
+
+        diff = np.zeros(num_thresholds, dtype=np.int64)
+        vertex_thresh_index = np.empty(num_vertices, dtype=np.int64)
+
+        for v in range(num_vertices):
+            h = heights[v]
+            u = (h - t_min) * inv_span
+            idx = int(np.ceil(u * n_minus_1))
+            if idx < 0:
+                idx = 0
+            elif idx >= num_thresholds:
+                idx = num_thresholds
+
+            vertex_thresh_index[v] = idx
+            if idx < num_thresholds:
+                diff[idx] += 1
+
+        num_cells = cell_vertex_pointers.shape[0] - 1
+
+        for cell_idx in range(num_cells):
+            start = cell_vertex_pointers[cell_idx]
+            end = cell_vertex_pointers[cell_idx + 1]
+
+            entrance_idx = -1
+            for k in range(start, end):
+                v = cell_vertex_indices_flat[k]
+                t_idx = vertex_thresh_index[v]
+                if t_idx > entrance_idx:
+                    entrance_idx = t_idx
+
+            if 0 <= entrance_idx < num_thresholds:
+                diff[entrance_idx] += cell_euler_signs[cell_idx]
+
+        running = 0
+        for j in range(num_thresholds):
+            running += diff[j]
+            ect_values[dir_idx, j] = running
+
+    return ect_values
+
+
+@njit(cache=True, parallel=True)
+def _ect_all_dirs_search(
+    heights_by_direction,
+    cell_vertex_pointers,
+    cell_vertex_indices_flat,
+    cell_euler_signs,
+    threshold_values,
+    num_vertices,
+):
+    num_directions = heights_by_direction.shape[0]
+    num_thresholds = threshold_values.shape[0]
+
+    ect_values = np.empty((num_directions, num_thresholds), dtype=np.int64)
+
+    for dir_idx in prange(num_directions):
+        heights = heights_by_direction[dir_idx]
+
+        diff = np.zeros(num_thresholds, dtype=np.int64)
+        vertex_thresh_index = np.empty(num_vertices, dtype=np.int64)
+
+        for v in range(num_vertices):
+            h = heights[v]
+
+            left = 0
+            right = num_thresholds
+            while left < right:
+                mid = (left + right) // 2
+                if threshold_values[mid] >= h:
+                    right = mid
+                else:
+                    left = mid + 1
+            idx = left
+
+            vertex_thresh_index[v] = idx
+            if idx < num_thresholds:
+                diff[idx] += 1
+
+        num_cells = cell_vertex_pointers.shape[0] - 1
+
+        for cell_idx in range(num_cells):
+            start = cell_vertex_pointers[cell_idx]
+            end = cell_vertex_pointers[cell_idx + 1]
+
+            entrance_idx = -1
+            for k in range(start, end):
+                v = cell_vertex_indices_flat[k]
+                t_idx = vertex_thresh_index[v]
+                if t_idx > entrance_idx:
+                    entrance_idx = t_idx
+
+            if 0 <= entrance_idx < num_thresholds:
+                diff[entrance_idx] += cell_euler_signs[cell_idx]
+
+        running = 0
+        for j in range(num_thresholds):
+            running += diff[j]
+            ect_values[dir_idx, j] = running
 
     return ect_values

@@ -1,5 +1,6 @@
 from collections import defaultdict
 from typing import Dict, List, Tuple, Optional, Union
+import functools
 
 import networkx as nx
 import numpy as np
@@ -8,11 +9,6 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from sklearn.decomposition import PCA
 
 from .utils.naming import next_vert_name
-from .utils.face_check import (
-    point_in_polygon,
-    validate_face_embedding,
-    validate_edge_embedding,
-)
 from .validation import EmbeddingValidator, ValidationRule
 
 
@@ -24,7 +20,8 @@ class EmbeddedComplex(nx.Graph):
     """
     A unified class to represent an embedded cell complex with cells of arbitrary dimension.
 
-    This combines the functionality of EmbeddedGraph and EmbeddedCW, supporting:
+    This combines the functionality of :class:`EmbeddedGraph` and :class:`EmbeddedCW`, supporting:
+
     - 0-cells (vertices) with embedded coordinates
     - 1-cells (edges)
     - k-cells for k >= 2 (faces, volumes, etc.)
@@ -34,30 +31,26 @@ class EmbeddedComplex(nx.Graph):
             when adding cells. Default: False
         embedding_tol (float): Tolerance for geometric validation. Default: 1e-10
 
-    Attributes:
-        coord_matrix : np.ndarray
-            A matrix of embedded coordinates for each vertex
-        node_list : list
-            A list of node names
-        node_to_index : dict
-            A dictionary mapping node ids to their index in the coord_matrix
-        dim : int
-            The dimension of the embedded coordinates
-        cells : dict
-            Dictionary mapping dimension k to list of k-cells, where each k-cell
-            is represented as a tuple of vertex indices
-        validate_embedding : bool
-            Whether to automatically validate embedding properties
-        embedding_tol : float
-            Tolerance for geometric validation
     """
 
     def __init__(self, validate_embedding=False, embedding_tol=1e-10):
+        """
+        Initialize an EmbeddedComplex instance.
+
+        Args:
+            validate_embedding (bool, optional): If True, automatically validate embedding properties when adding cells. Defaults to False.
+            embedding_tol (float, optional): Tolerance for geometric validation. Defaults to 1e-10.
+
+        Notes:
+            - The complex supports arbitrary-dimensional cells (vertices, edges, faces, etc.).
+            - Embedding validation can be enabled or disabled at initialization or later.
+        """
         super().__init__()
         self._node_list = []
         self._node_to_index = {}
         self._coord_matrix = None
         self.cells = defaultdict(list)
+        self._incidence_csr_cache = None
 
         self.validate_embedding = validate_embedding
         self.embedding_tol = embedding_tol
@@ -72,38 +65,82 @@ class EmbeddedComplex(nx.Graph):
 
         self._validator = EmbeddingValidator(embedding_tol, edge_checker)
 
+    def _invalidate_incidence_csr_cache(self) -> None:
+        self._incidence_csr_cache = None
+
+    def precompute_incidence_csr(self) -> tuple:
+        return self._build_incidence_csr()
+
     @property
     def coord_matrix(self):
-        """Return the N x D coordinate matrix"""
+        """
+        Get the coordinate matrix of the embedded complex.
+
+        Returns:
+            np.ndarray: A matrix of shape :math:`(N, D)` where :math:`N` is the number of nodes (vertices)
+            and :math:`D` is the dimension of the embedding. Each row corresponds to the coordinates
+            of a node in the order given by :attr:`node_list`.
+
+        Notes:
+            - If no nodes have been added, returns an empty array of shape :math:`(0, 0)`.
+            - The coordinate matrix is updated automatically as nodes are added or modified.
+            - The order of rows matches the order of node identifiers in :attr:`node_list`.
+        """
         if self._coord_matrix is None:
             return np.empty((0, 0))
         return self._coord_matrix
 
     @property
     def dim(self):
-        """Return the dimension of the embedded coordinates"""
+        """
+        Get the dimension :math:`D` of the embedded coordinates.
+
+        Returns:
+            int: The number of dimensions (D) for the coordinates of each node. Returns 0 if no nodes exist.
+        """
         if self._coord_matrix is None:
             return 0
         return self._coord_matrix.shape[1]
 
     @property
     def node_list(self):
-        """Return ordered list of node names."""
+        """
+        Get the ordered list of node names in the complex.
+
+        Returns:
+            list: List of node identifiers in the order corresponding to the rows of the coordinate matrix :attr:`coord_matrix`.
+        """
         return self._node_list
 
     @property
     def node_to_index(self):
-        """Return a dictionary mapping node ids to their index in the coord_matrix"""
+        """
+        Get a mapping from node identifiers to their row index in the coordinate matrix :attr:`coord_matrix`.
+
+        Returns:
+            dict: Dictionary mapping node ids to their index in the coordinate matrix.
+        """
         return self._node_to_index
 
     @property
     def position_dict(self):
-        """Return a dictionary mapping node ids to their coordinates"""
+        """
+        Get a dictionary mapping node ids to their coordinates.
+
+        Returns:
+            dict: Dictionary where keys are node ids and values are coordinate arrays for each node (from :attr:`coord_matrix`).
+        """
         return {node: self._coord_matrix[i] for i, node in enumerate(self._node_list)}
 
     @property
     def edge_indices(self):
-        """Return edges as array of index pairs"""
+        """
+        Get the edges of the complex as an array of index pairs.
+
+        Returns:
+            np.ndarray: Array of shape (E, 2) where each row contains the indices of the two nodes forming an edge.
+            Returns an empty array if there are no edges.
+        """
         edges = np.array(
             [(self._node_to_index[u], self._node_to_index[v]) for u, v in self.edges()],
             dtype=int,
@@ -112,7 +149,12 @@ class EmbeddedComplex(nx.Graph):
 
     @property
     def faces(self):
-        """Return list of 2-cells (faces) for backward compatibility"""
+        """
+        Get the list of 2-cells (faces) in the complex.
+
+        Returns:
+            list: List of tuples, each representing a face as a sequence of node names. Provided for backward compatibility.
+        """
         return [
             tuple(self._node_list[i] for i in cell) for cell in self.cells.get(2, [])
         ]
@@ -152,19 +194,39 @@ class EmbeddedComplex(nx.Graph):
         self._node_list.append(node_id)
         self._node_to_index[node_id] = len(self._node_list) - 1
         super().add_node(node_id)
+        self._invalidate_incidence_csr_cache()
 
     def add_nodes_from_dict(self, nodes_with_coords: Dict[Union[str, int], np.ndarray]):
+        """Add multiple vertices to the complex.
+
+        Args:
+            nodes_with_coords (Dict[Union[str, int], np.ndarray]): Dictionary mapping node ids to coordinates
+        """
         for node_id, coordinates in nodes_with_coords.items():
             self.add_node(node_id, coordinates)
 
     def add_nodes_from(
         self, nodes_with_coords: List[Tuple[Union[str, int], np.ndarray]]
     ):
+        """Add multiple vertices to the complex.
+
+        Args:
+            nodes_with_coords (List[Tuple[Union[str, int], np.ndarray]]): List of (node_id, coordinates) tuples
+        """
         for node_id, coordinates in nodes_with_coords:
             self.add_node(node_id, coordinates)
 
     def add_edge(self, node_id1, node_id2):
-        """Add an edge (1-cell) between two nodes"""
+        """
+        Add an edge (1-cell) between two nodes in the complex.
+
+        Args:
+            node_id1: Identifier for the first node.
+            node_id2: Identifier for the second node.
+
+        Raises:
+            ValueError: If either node does not exist in the complex.
+        """
         # validate nodes exist
         node_result = self._validator.validate_nodes(
             [node_id1, node_id2], lambda n: n in self._node_to_index, expect_exists=True
@@ -173,6 +235,7 @@ class EmbeddedComplex(nx.Graph):
             raise ValueError(node_result.message)
 
         super().add_edge(node_id1, node_id2)
+        self._invalidate_incidence_csr_cache()
 
     def add_cell(
         self,
@@ -186,9 +249,9 @@ class EmbeddedComplex(nx.Graph):
 
         Args:
             cell_vertices: List of vertex identifiers that form the cell
-            dim: Dimension of the cell. If None, inferred as len(cell_vertices) - 1
+            dim: Dimension of the cell. If None, inferred as `len(cell_vertices) - 1`
             check: Whether to validate the cell embedding. If None, uses self.validate_embedding
-            embedding_tol: Tolerance for geometric validation. If None, uses self.embedding_tol
+            embedding_tol: Tolerance for geometric validation. If None, uses :attr:`embedding_tol`.
         """
         if check is None:
             check = self.validate_embedding
@@ -243,6 +306,7 @@ class EmbeddedComplex(nx.Graph):
             self.add_edge(cell_vertices[0], cell_vertices[1])
 
         self.cells[dim].append(cell_indices)
+        self._invalidate_incidence_csr_cache()
 
     def enable_embedding_validation(self, tol: float = 1e-10):
         """
@@ -256,7 +320,11 @@ class EmbeddedComplex(nx.Graph):
         self._validator.set_tolerance(tol)
 
     def disable_embedding_validation(self):
-        """Disable automatic embedding validation for all subsequent cell additions."""
+        """
+        Disable automatic embedding validation for all subsequent cell additions.
+
+        After calling this method, new cells will not be checked for geometric embedding validity.
+        """
         self.validate_embedding = False
 
     def get_validator(self) -> "EmbeddingValidator":
@@ -283,16 +351,41 @@ class EmbeddedComplex(nx.Graph):
         return self
 
     def add_face(self, face: List, check: Optional[bool] = None):
-        """Add a 2-cell (face) to the complex. Provided for backward compatibility."""
+        """
+        Add a 2-cell (face) to the complex.
+
+        Args:
+            face (list): List of node identifiers forming the face.
+            check (Optional[bool]): Whether to validate the embedding of the face. If None, uses the default setting.
+
+        Notes:
+            Provided for backward compatibility with previous interfaces.
+        """
         self.add_cell(face, dim=2, check=check)
 
     def add_faces_from(self, faces: List[List]):
-        """Add multiple 2-cells (faces) to the complex."""
+        """
+        Add multiple 2-cells (faces) to the complex.
+
+        Args:
+            faces (list of lists): Each sublist contains node identifiers forming a face.
+        """
         for face in faces:
             self.add_face(face)
 
     def get_coord(self, node_id):
-        """Return the coordinates of a node"""
+        """
+        Get the coordinates of a node.
+
+        Args:
+            node_id: Identifier of the node whose coordinates are requested.
+
+        Returns:
+            np.ndarray: Coordinate array for the specified node.
+
+        Raises:
+            ValueError: If the node does not exist in the complex.
+        """
         # validate node exists
         node_result = self._validator.validate_nodes(
             [node_id], lambda n: n in self._node_to_index, expect_exists=True
@@ -303,7 +396,16 @@ class EmbeddedComplex(nx.Graph):
         return self._coord_matrix[self._node_to_index[node_id]].copy()
 
     def set_coord(self, node_id, new_coords):
-        """Set the coordinates of a node"""
+        """
+        Set the coordinates of a node.
+
+        Args:
+            node_id: Identifier of the node to update.
+            new_coords: New coordinates to assign to the node.
+
+        Raises:
+            ValueError: If the coordinates are invalid or the node does not exist.
+        """
         # validate coordinates
         expected_dim = (
             self._coord_matrix.shape[1] if self._coord_matrix is not None else None
@@ -323,15 +425,35 @@ class EmbeddedComplex(nx.Graph):
         self._coord_matrix[idx] = new_coords
 
     def add_cycle(self, coord_matrix):
-        """Add nodes in a cyclic pattern from coordinate matrix"""
+        """
+        Add nodes in a cyclic pattern from a coordinate matrix.
+
+        Args:
+            coord_matrix (np.ndarray): Matrix of shape (N, D) where each row is the coordinates of a node.
+
+        Notes:
+            Nodes are named sequentially and connected in a cycle.
+        """
         # generate sequential node names and add cyclic edges
         n = coord_matrix.shape[0]
         new_names = next_vert_name(self._node_list[-1] if self._node_list else 0, n)
         self.add_nodes_from(zip(new_names, coord_matrix))
         self.add_edges_from([(new_names[i], new_names[(i + 1) % n]) for i in range(n)])
+        self.precompute_incidence_csr()
 
     def get_center(self, method: str = "bounding_box") -> np.ndarray:
-        """Calculate center of coordinates"""
+        """
+        Calculate the center of the coordinates of all nodes.
+
+        Args:
+            method (str): Method to use for center calculation. Options are "mean", "bounding_box", or "origin".
+
+        Returns:
+            np.ndarray: The center coordinates as determined by the specified method.
+
+        Raises:
+            ValueError: If an unknown method is specified.
+        """
 
         coords = self._coord_matrix
         if coords is None or coords.size == 0:
@@ -346,11 +468,24 @@ class EmbeddedComplex(nx.Graph):
         raise ValueError(f"Unknown center method: {method}")
 
     def get_bounding_box(self):
-        """Get (min, max) for each dimension"""
+        """
+        Get the minimum and maximum values for each coordinate dimension.
+
+        Returns:
+            list: List of (min, max) tuples for each dimension.
+        """
         return [(dim.min(), dim.max()) for dim in self._coord_matrix.T]
 
     def get_bounding_radius(self, center_type: str = "bounding_box") -> float:
-        """Get radius of minimal bounding sphere"""
+        """
+        Get the radius of the minimal bounding sphere containing all node coordinates.
+
+        Args:
+            center_type (str): Method to use for center calculation (see get_center).
+
+        Returns:
+            float: The radius of the minimal bounding sphere.
+        """
         coords = self._coord_matrix
         if coords is None or coords.size == 0:
             return 0.0
@@ -463,7 +598,16 @@ class EmbeddedComplex(nx.Graph):
         return angle_dict
 
     def transform_coordinates(self, center_type="bounding_box", projection_type="pca"):
-        """Transform coordinates center and orientation"""
+        """
+        Transform the coordinates by centering and projecting them.
+
+        Args:
+            center_type (str): Method for centering coordinates.
+            projection_type (str): Method for projecting coordinates (e.g., "pca").
+
+        Raises:
+            ValueError: If an unknown transform or center type is specified.
+        """
         if projection_type not in TRANSFORM_TYPES:
             raise ValueError(f"Unknown transform type: {projection_type}")
         self.project_coordinates(projection_type)
@@ -479,21 +623,42 @@ class EmbeddedComplex(nx.Graph):
         self._coord_matrix -= center
 
     def scale_coordinates(self, radius=1):
-        """Scale coordinates to fit within given radius"""
+        """
+        Scale the coordinates so that the largest distance from the origin equals the given radius.
+
+        Args:
+            radius (float): Target radius for scaling.
+        """
         # scale so largest distance from origin equals target radius
         current_max = np.linalg.norm(self._coord_matrix, axis=1).max()
         if current_max > 0:
             self._coord_matrix *= radius / current_max
 
     def project_coordinates(self, projection_type="pca"):
-        """Project coordinates using a function"""
+        """
+        Project the coordinates using the specified projection function.
+
+        Args:
+            projection_type (str): The type of projection to use (e.g., "pca").
+
+        Raises:
+            ValueError: If an unknown projection type is specified.
+        """
         if projection_type == "pca":
             self.pca_projection()
         else:
             raise ValueError(f"Unknown projection type: {projection_type}")
 
     def pca_projection(self, target_dim=2):
-        """Dimensionality reduction using PCA"""
+        """
+        Reduce the dimensionality of the coordinates using Principal Component Analysis (PCA).
+
+        Args:
+            target_dim (int): Target number of dimensions (default is 2).
+
+        Notes:
+            Only reduces dimension if current dimension is greater than target_dim.
+        """
         # only reduce dimension
         if self.dim <= target_dim:
             return
@@ -501,8 +666,10 @@ class EmbeddedComplex(nx.Graph):
         pca = PCA(n_components=target_dim)
         self._coord_matrix = pca.fit_transform(self._coord_matrix)
 
+    
     def validate_plot_parameters(func):
         # decorator to check plotting requirements
+        @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             bounding_center_type = kwargs.get("bounding_center_type", "bounding_box")
 
@@ -550,6 +717,7 @@ class EmbeddedComplex(nx.Graph):
 
         return ax
 
+
     @validate_plot_parameters
     def plot(
         self,
@@ -565,9 +733,26 @@ class EmbeddedComplex(nx.Graph):
         face_color: str = "lightblue",
         face_alpha: float = 0.3,
         **kwargs,
-    ) -> plt.Axes:
+        ) -> plt.Axes:
         """
         Visualize the embedded complex in 2D or 3D
+
+        Args:
+            bounding_circle (bool): Whether to draw a bounding circle/sphere
+            bounding_center_type (str): Method for center calculation for bounding shape
+            color_nodes_theta (float, optional): Angle in radians to color nodes by projection
+            ax (matplotlib.axes.Axes, optional): Axes to plot on. If None, a new figure is created
+            with_labels (bool): Whether to display node labels
+            node_size (int): Size of nodes in the plot
+            edge_color (str): Color of edges in the plot
+            elev (float): Elevation angle for 3D plot
+            azim (float): Azimuth angle for 3D plot
+            face_color (str): Color for faces (2-cells)
+            face_alpha (float): Transparency for faces (2-cells)
+            **kwargs: Additional keyword arguments for plotting functions
+        
+        Returns:
+            matplotlib.axes.Axes: The axes object with the plot.
         """
         ax = self._create_axes(ax, self.dim)
 
@@ -788,6 +973,9 @@ class EmbeddedComplex(nx.Graph):
         Example: takes the complex [(1,3),(2,4),(1,2,3)] and returns [(0,2,4,7),(1,3,2,4,1,2,3),(-1,-1,1),4]
 
         """
+        if self._incidence_csr_cache is not None:
+            return self._incidence_csr_cache
+
         n_vertices = len(self.node_list)
 
         cells_by_dimension = {}
@@ -831,12 +1019,14 @@ class EmbeddedComplex(nx.Graph):
                 cell_vertex_pointers[cell_index] = len(cell_vertex_indices_flat)
 
         cell_vertex_indices_flat = np.asarray(cell_vertex_indices_flat, dtype=np.int32)
-        return (
+        out = (
             cell_vertex_pointers,
             cell_vertex_indices_flat,
             cell_euler_signs,
             n_vertices,
         )
+        self._incidence_csr_cache = out
+        return out
 
 
 EmbeddedGraph = EmbeddedComplex
