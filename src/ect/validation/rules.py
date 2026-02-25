@@ -40,7 +40,7 @@ class DimensionValidityRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate that dimension is non-negative."""
         if dim is not None and dim < 0:
@@ -68,7 +68,7 @@ class VertexCountRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate vertex count matches cell dimension requirements."""
         if dim is None:
@@ -114,7 +114,7 @@ class CoordinateDimensionRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate coordinate dimensions are consistent."""
         if self.dimension_checker is None or cell_coords is None:
@@ -156,7 +156,7 @@ class EdgeInteriorRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate that no other vertices lie on this edge's interior."""
         is_valid, error_msg = validate_edge_embedding(
@@ -185,7 +185,7 @@ class FaceInteriorRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate that no other vertices lie inside this face."""
         is_valid, error_msg = validate_face_embedding(
@@ -214,7 +214,7 @@ class SelfIntersectionRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate that face edges don't intersect each other"""
 
@@ -275,7 +275,7 @@ class BoundaryEdgeRule(ValidationRule):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """Validate that all boundary edges exist for this face."""
         if self.edge_checker is None:
