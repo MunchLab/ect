@@ -12,7 +12,7 @@ authors:
   - name: Elizabeth Munch
     affiliation: 1
     orcid: 0000-0002-9459-9493
-  - name: Sarah McGuire
+  - name: Sarah McGuire Scullen
     affiliation: 2
     orcid: 0000-0003-4020-0536
   - name: Daniel H. Chitwood 
