@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from ect.directions import Sampling
-from scipy.spatial.distance import cdist
+from scipy.spatial.distance import cdist, pdist, squareform
 from typing import Union, List, Callable
 
 
@@ -319,7 +319,7 @@ class ECTResult(np.ndarray):
     def dist(
         self,
         other: Union["ECTResult", List["ECTResult"]],
-        metric: Union[str, Callable] = "cityblock",
+        metric: Union[str, Callable] = "frobenius",
         **kwargs,
     ):
         """
@@ -365,7 +365,15 @@ class ECTResult(np.ndarray):
                     f"Shape mismatch at index {i}: {self.shape} vs {ect.shape}"
                 )
 
-        # use ravel to avoid copying the data and compute distances
+        if isinstance(metric, str) and metric.lower() in ("frobenius", "fro"):
+            a = np.asarray(self, dtype=np.float64)
+            if single:
+                b = np.asarray(other, dtype=np.float64)
+                return float(np.sqrt(np.sum((a - b) ** 2)))
+            b = np.stack([np.asarray(ect, dtype=np.float64) for ect in others], axis=0)
+            diff = b - a
+            return np.sqrt(np.sum(diff * diff, axis=(1, 2)))
+
         distances = cdist(
             self.ravel()[np.newaxis, :],
             np.vstack([ect.ravel() for ect in others]),
@@ -374,3 +382,30 @@ class ECTResult(np.ndarray):
         )[0]
 
         return distances[0] if single else distances
+
+    @classmethod
+    def dist_matrix(
+        cls,
+        results: List["ECTResult"],
+        metric: Union[str, Callable] = "frobenius",
+        **kwargs,
+    ) -> np.ndarray:
+        if not results:
+            return np.empty((0, 0), dtype=np.float64)
+
+        shape0 = results[0].shape
+        for i, r in enumerate(results):
+            if r.shape != shape0:
+                raise ValueError(f"Shape mismatch at index {i}: {shape0} vs {r.shape}")
+
+        if isinstance(metric, str) and metric.lower() in ("frobenius", "fro"):
+            return np.vstack([results[i].dist(results, metric="frobenius") for i in range(len(results))])
+
+        if isinstance(metric, str):
+            X = np.stack([np.asarray(r, dtype=np.float64).ravel() for r in results], axis=0)
+            try:
+                return squareform(pdist(X, metric=metric, **kwargs))
+            except TypeError:
+                return cdist(X, X, metric=metric, **kwargs)
+
+        return np.vstack([results[i].dist(results, metric=metric, **kwargs) for i in range(len(results))])
