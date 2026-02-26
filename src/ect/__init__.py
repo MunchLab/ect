@@ -13,6 +13,7 @@ Main classes:
 from .ect import ECT
 from .embed_complex import EmbeddedComplex, EmbeddedGraph, EmbeddedCW
 from .directions import Directions
+from .results import ECTResult
 from .sect import SECT
 from .dect import DECT
 from .utils import examples
@@ -25,5 +26,6 @@ __all__ = [
     "EmbeddedGraph",
     "EmbeddedCW",
     "Directions",
+    "ECTResult",
     "examples",
 ]
