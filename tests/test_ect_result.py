@@ -90,11 +90,19 @@ class TestECTResult(unittest.TestCase):
         result2_modified.directions = result2.directions
         result2_modified.thresholds = result2.thresholds
 
-        # Test L1 distance (default)
-        dist_l1 = self.result.dist(result2_modified)
-        expected_l1 = np.abs(self.result - result2_modified).sum()
-        self.assertAlmostEqual(dist_l1, expected_l1)
-        self.assertIsInstance(dist_l1, (float, np.floating))
+        # Test frobenius distance (default)
+        dist_frobenius = self.result.dist(result2_modified)
+        expected_frobenius = np.sqrt(
+            np.sum(
+                (
+                    np.asarray(self.result, dtype=np.float64)
+                    - np.asarray(result2_modified, dtype=np.float64)
+                ).ravel()
+                ** 2
+            )
+        )
+        self.assertAlmostEqual(dist_frobenius, expected_frobenius)
+        self.assertIsInstance(dist_frobenius, (float, np.floating))
 
         # Test L2 distance
         dist_l2 = self.result.dist(result2_modified, metric="euclidean")
@@ -119,7 +127,7 @@ class TestECTResult(unittest.TestCase):
             r.thresholds = self.result.thresholds
 
         # Test batch distances
-        distances = self.result.dist([result2, result3, result4])
+        distances = self.result.dist([result2, result3, result4], metric="cityblock")
 
         # Check return type is array
         self.assertIsInstance(distances, np.ndarray)
