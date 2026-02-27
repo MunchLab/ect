@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. Embedded Complex &mdash; ect 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+    <link rel="shortcut icon" href="_static/ECT_Logo_128x128.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=59fadc99"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.2. Validation System" href="validation.html" />
+    <link rel="prev" title="2. Table of Contents" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #cececf" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ect
+              <img src="_static/ECT_Logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">1.1. Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-ect">1.2. Installing <cite>ect</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#uninstalling-ect">1.3. Uninstalling <cite>ect</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">2. Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Embedded Complex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">2.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">2.1.2. Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">2.1.3. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">2.2. Validation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#overview">2.2.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#architecture">2.2.2. Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#validation-rules">2.2.3. Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#usage">2.2.4. Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#custom-validation-rules">2.2.5. Custom Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#api-reference">2.2.6. API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ect.html">2.3. ECT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.ect.ECT"><code class="docutils literal notranslate"><span class="pre">ECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.sect.SECT"><code class="docutils literal notranslate"><span class="pre">SECT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ect.html#ect.dect.DECT"><code class="docutils literal notranslate"><span class="pre">DECT</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ECTResult.html">2.4. ECTResult</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ECTResult.html#ect.results.ECTResult"><code class="docutils literal notranslate"><span class="pre">ECTResult</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="directions.html">2.5. Directions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Sampling"><code class="docutils literal notranslate"><span class="pre">Sampling</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="directions.html#ect.directions.Directions"><code class="docutils literal notranslate"><span class="pre">Directions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">3. Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html">3.1. Tutorial: ECT for Embedded Cell Complexes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Basic-Usage:-Creating-Simple-Complexes">3.1.1. Basic Usage: Creating Simple Complexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Adding-Cells-of-Arbitrary-Dimension">3.1.2. Adding Cells of Arbitrary Dimension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#ECT-Computation-with-Higher-Dimensional-Cells">3.1.3. ECT Computation with Higher-Dimensional Cells</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Tutorial-EmbeddedComplex.html#Validation-System">3.1.4. Validation System</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Matisse/example_matisse.html">3.2. ECT on Matisse’s “The Parakeet and the Mermaid”</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Matisse/example_matisse.html#Acknowledgements">3.2.1. Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">4. Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">4.1. Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-guidelines">4.2. Contributing Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#code-style-and-formatting">4.2.1. Code style and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#documentation-guidelines">4.2.2. Documentation guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#testing-guidelines">4.2.3. Testing guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#issue-tracking-and-pull-requests">4.2.4. Issue tracking and pull requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">6. Citing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cececf" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ect</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html"><span class="section-number">2. </span>Table of Contents</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.1. </span>Embedded Complex</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/embed_complex.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="embedded-complex">
+<h1><span class="section-number">2.1. </span>Embedded Complex<a class="headerlink" href="#embedded-complex" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code> class is a unified representation for embedded cell complexes supporting arbitrary dimensional cells.</p>
+<section id="overview">
+<h2><span class="section-number">2.1.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code> combines and extends the functionality of the previous <code class="docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> and <code class="docutils literal notranslate"><span class="pre">EmbeddedCW</span></code> classes into a single interface. It supports:</p>
+<ul class="simple">
+<li><p><strong>0-cells (vertices)</strong>: Points embedded in Euclidean space</p></li>
+<li><p><strong>1-cells (edges)</strong>: Line segments between vertices</p></li>
+<li><p><strong>k-cells for k ≥ 2</strong>: Higher dimensional cells (faces, volumes, etc.)</p></li>
+</ul>
+</section>
+<section id="basic-usage">
+<h2><span class="section-number">2.1.2. </span>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ect</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedComplex</span>
+
+<span class="c1"># Create a complex</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">EmbeddedComplex</span><span class="p">()</span>
+
+<span class="c1"># Add vertices</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Add edges</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add a 2-cell (face)</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
+
+<span class="c1"># Or use the general method for any dimension</span>
+<span class="n">K</span><span class="o">.</span><span class="n">add_cell</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="api-reference">
+<h2><span class="section-number">2.1.3. </span>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedComplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>A unified class to represent an embedded cell complex with cells of arbitrary dimension.</p>
+<p>This combines the functionality of <code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedGraph</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedCW</span></code>, supporting:</p>
+<ul class="simple">
+<li><p>0-cells (vertices) with embedded coordinates</p></li>
+<li><p>1-cells (edges)</p></li>
+<li><p>k-cells for k &gt;= 2 (faces, volumes, etc.)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validate_embedding</strong> (<em>bool</em>) – If True, automatically validate embedding properties
+when adding cells. Default: False</p></li>
+<li><p><strong>embedding_tol</strong> (<em>float</em>) – Tolerance for geometric validation. Default: 1e-10</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validate_embedding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Initialize an EmbeddedComplex instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validate_embedding</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, automatically validate embedding properties when adding cells. Defaults to False.</p></li>
+<li><p><strong>embedding_tol</strong> (<em>float</em><em>, </em><em>optional</em>) – Tolerance for geometric validation. Defaults to 1e-10.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The complex supports arbitrary-dimensional cells (vertices, edges, faces, etc.).</p></li>
+<li><p>Embedding validation can be enabled or disabled at initialization or later.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">coord_matrix</span></span></dt>
+<dd><p>Get the coordinate matrix of the embedded complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A matrix of shape <span class="math notranslate nohighlight">\((N, D)\)</span> where <span class="math notranslate nohighlight">\(N\)</span> is the number of nodes (vertices)
+and <span class="math notranslate nohighlight">\(D\)</span> is the dimension of the embedding. Each row corresponds to the coordinates
+of a node in the order given by <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_list</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If no nodes have been added, returns an empty array of shape <span class="math notranslate nohighlight">\((0, 0)\)</span>.</p></li>
+<li><p>The coordinate matrix is updated automatically as nodes are added or modified.</p></li>
+<li><p>The order of rows matches the order of node identifiers in <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_list</span></code>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dim</span></span></dt>
+<dd><p>Get the dimension <span class="math notranslate nohighlight">\(D\)</span> of the embedded coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of dimensions (D) for the coordinates of each node. Returns 0 if no nodes exist.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">node_list</span></span></dt>
+<dd><p>Get the ordered list of node names in the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of node identifiers in the order corresponding to the rows of the coordinate matrix <code class="xref py py-attr docutils literal notranslate"><span class="pre">coord_matrix</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">node_to_index</span></span></dt>
+<dd><p>Get a mapping from node identifiers to their row index in the coordinate matrix <code class="xref py py-attr docutils literal notranslate"><span class="pre">coord_matrix</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping node ids to their index in the coordinate matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">position_dict</span></span></dt>
+<dd><p>Get a dictionary mapping node ids to their coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary where keys are node ids and values are coordinate arrays for each node (from <code class="xref py py-attr docutils literal notranslate"><span class="pre">coord_matrix</span></code>).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">edge_indices</span></span></dt>
+<dd><p>Get the edges of the complex as an array of index pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of shape (E, 2) where each row contains the indices of the two nodes forming an edge.
+Returns an empty array if there are no edges.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">faces</span></span></dt>
+<dd><p>Get the list of 2-cells (faces) in the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of tuples, each representing a face as a sequence of node names. Provided for backward compatibility.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add a vertex to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_id</strong> – Identifier for the node</p></li>
+<li><p><strong>coord</strong> – Array-like coordinates for the node</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_nodes_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_with_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_nodes_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add multiple vertices to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nodes_with_coords</strong> (<em>Dict</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>np.ndarray</em><em>]</em>) – Dictionary mapping node ids to coordinates</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_nodes_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_with_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_nodes_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add multiple vertices to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nodes_with_coords</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – List of (node_id, coordinates) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_id2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add an edge (1-cell) between two nodes in the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_id1</strong> – Identifier for the first node.</p></li>
+<li><p><strong>node_id2</strong> – Identifier for the second node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If either node does not exist in the complex.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add a k-cell to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_vertices</strong> – List of vertex identifiers that form the cell</p></li>
+<li><p><strong>dim</strong> – Dimension of the cell. If None, inferred as <cite>len(cell_vertices) - 1</cite></p></li>
+<li><p><strong>check</strong> – Whether to validate the cell embedding. If None, uses self.validate_embedding</p></li>
+<li><p><strong>embedding_tol</strong> – Tolerance for geometric validation. If None, uses <code class="xref py py-attr docutils literal notranslate"><span class="pre">embedding_tol</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">enable_embedding_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.enable_embedding_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Enable automatic embedding validation for all subsequent cell additions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tol</strong> – Tolerance for geometric validation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">disable_embedding_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.disable_embedding_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Disable automatic embedding validation for all subsequent cell additions.</p>
+<p>After calling this method, new cells will not be checked for geometric embedding validity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the embedding validator instance for advanced configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The EmbeddingValidator instance used by this complex</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_validation_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.set_validation_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Set custom validation rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rules</strong> – List of ValidationRule instances</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self for method chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add a 2-cell (face) to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>face</strong> (<em>list</em>) – List of node identifiers forming the face.</p></li>
+<li><p><strong>check</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to validate the embedding of the face. If None, uses the default setting.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Provided for backward compatibility with previous interfaces.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_faces_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_faces_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add multiple 2-cells (faces) to the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>faces</strong> (<em>list</em><em> of </em><em>lists</em>) – Each sublist contains node identifiers forming a face.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the coordinates of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node_id</strong> – Identifier of the node whose coordinates are requested.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Coordinate array for the specified node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the node does not exist in the complex.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.set_coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Set the coordinates of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_id</strong> – Identifier of the node to update.</p></li>
+<li><p><strong>new_coords</strong> – New coordinates to assign to the node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the coordinates are invalid or the node does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.add_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add nodes in a cyclic pattern from a coordinate matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coord_matrix</strong> (<em>np.ndarray</em>) – Matrix of shape (N, D) where each row is the coordinates of a node.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Nodes are named sequentially and connected in a cycle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_center"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Calculate the center of the coordinates of all nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method</strong> (<em>str</em>) – Method to use for center calculation. Options are “mean”, “bounding_box”, or “origin”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The center coordinates as determined by the specified method.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unknown method is specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_bounding_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the minimum and maximum values for each coordinate dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of (min, max) tuples for each dimension.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_bounding_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_bounding_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the radius of the minimal bounding sphere containing all node coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>center_type</strong> (<em>str</em>) – Method to use for center calculation (see get_center).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The radius of the minimal bounding sphere.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_normal_angle_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_normal_angle_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Optimized angle matrix computation using vectorized operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edges_only</strong> – Only compute angles between connected vertices</p></li>
+<li><p><strong>decimals</strong> – Round angles to specified decimal places</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NaN-filled matrix with pair angles
+vertex_labels: Ordered node identifiers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>angle_matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_normal_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.get_normal_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Optimized angle dictionary construction using NumPy grouping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edges_only</strong> – Only include edge-connected pairs</p></li>
+<li><p><strong>decimals</strong> – Round angles to specified decimal places</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping rounded angles to vertex pairs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.transform_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Transform the coordinates by centering and projecting them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center_type</strong> (<em>str</em>) – Method for centering coordinates.</p></li>
+<li><p><strong>projection_type</strong> (<em>str</em>) – Method for projecting coordinates (e.g., “pca”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unknown transform or center type is specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">center_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.center_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">scale_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.scale_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Scale the coordinates so that the largest distance from the origin equals the given radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>radius</strong> (<em>float</em>) – Target radius for scaling.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">project_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.project_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Project the coordinates using the specified projection function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>projection_type</strong> (<em>str</em>) – The type of projection to use (e.g., “pca”).</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an unknown projection type is specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">pca_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.pca_projection"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Reduce the dimensionality of the coordinates using Principal Component Analysis (PCA).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_dim</strong> (<em>int</em>) – Target number of dimensions (default is 2).</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Only reduces dimension if current dimension is greater than target_dim.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">validate_plot_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.validate_plot_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.plot_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Plots the 2-cells (faces) of the complex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axes to plot the graph on. If None, a new figure is created.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the ax.fill function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>matplotlib.axes.Axes</dt><dd><p>The axes object with the plot.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounding_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounding_center_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bounding_box'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_nodes_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gray'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">face_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lightblue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">face_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ect/embed_complex.html#EmbeddedComplex.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Visualize the embedded complex in 2D or 3D</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bounding_circle</strong> (<em>bool</em>) – Whether to draw a bounding circle/sphere</p></li>
+<li><p><strong>bounding_center_type</strong> (<em>str</em>) – Method for center calculation for bounding shape</p></li>
+<li><p><strong>color_nodes_theta</strong> (<em>float</em><em>, </em><em>optional</em>) – Angle in radians to color nodes by projection</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – Axes to plot on. If None, a new figure is created</p></li>
+<li><p><strong>with_labels</strong> (<em>bool</em>) – Whether to display node labels</p></li>
+<li><p><strong>node_size</strong> (<em>int</em>) – Size of nodes in the plot</p></li>
+<li><p><strong>edge_color</strong> (<em>str</em>) – Color of edges in the plot</p></li>
+<li><p><strong>elev</strong> (<em>float</em>) – Elevation angle for 3D plot</p></li>
+<li><p><strong>azim</strong> (<em>float</em>) – Azimuth angle for 3D plot</p></li>
+<li><p><strong>face_color</strong> (<em>str</em>) – Color for faces (2-cells)</p></li>
+<li><p><strong>face_alpha</strong> (<em>float</em>) – Transparency for faces (2-cells)</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for plotting functions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The axes object with the plot.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedGraph</span></span></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">ect.embed_complex.</span></span><span class="sig-name descname"><span class="pre">EmbeddedCW</span></span></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">EmbeddedComplex</span></code></p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="2. Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="validation.html" class="btn btn-neutral float-right" title="2.2. Validation System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MunchLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-XXXXXXX-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
