@@ -95,7 +95,7 @@ Despite the ECT's mathematical power, there has been a notable absence of effici
 Since its popularity in topological data analysis has grown since @Turner2014, a range of software implementations for computing the ECT and its variants has emerged.
 
 The package `demeter` ([github.com/amezqui3/demeter](https://github.com/amezqui3/demeter)) was written specifically for 3D voxel data in order to calculate the ECT for barley seeds [@Amezquita2021].
-One of the first variations of the ECT is the Smooth ECT (SECT), [@Crawford2019;@Meng2022;@Tang2022].  The related papers come with specific code that are not packaged, are no longer maintained, or are application specific rather than a light-weight general ECT library ([github.com/lorinanthony/SECT](https://github.com/lorinanthony/SECT), [github.com/lcrawlab/SINATRA-Pro](https://github.com/lcrawlab/SINATRA-Pro) and [github.com/JinyuWang123/TDA](https://github.com/JinyuWang123/TDA)).  
+One of the first variations of the ECT is the Smooth ECT (SECT), [@Crawford2019;@Meng2022;@Tang2022].  The related papers come with specific code that are not packaged, are no longer maintained, or are application-specific rather than a light-weight general ECT library ([github.com/lorinanthony/SECT](https://github.com/lorinanthony/SECT), [github.com/lcrawlab/SINATRA-Pro](https://github.com/lcrawlab/SINATRA-Pro) and [github.com/JinyuWang123/TDA](https://github.com/JinyuWang123/TDA)).  
 
 The Differentiable ECT (DECT) [@Roell2024] makes the ECT differentiable so it can be used as an end-to-end trainable component in deep learning pipelines.
 The accompanying implementation (`dect`) is written in `PyTorch` and supports GPU acceleration ([github.com/aidos-lab/dect](https://github.com/aidos-lab/dect)).
