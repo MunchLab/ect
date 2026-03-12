@@ -2,7 +2,7 @@ from ect import ECT
 from .embed_complex import EmbeddedComplex
 from .directions import Directions
 from .results import ECTResult
-from typing import Optional, Union
+from typing import Optional
 import numpy as np
 
 

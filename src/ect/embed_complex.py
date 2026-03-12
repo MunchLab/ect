@@ -9,11 +9,6 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from sklearn.decomposition import PCA
 
 from .utils.naming import next_vert_name
-from .utils.face_check import (
-    point_in_polygon,
-    validate_face_embedding,
-    validate_edge_embedding,
-)
 from .validation import EmbeddingValidator, ValidationRule
 
 

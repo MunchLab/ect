@@ -64,8 +64,8 @@ class Directions:
         self.endpoint = endpoint
 
         self._rng = np.random.RandomState(seed)
-        self._thetas = None
-        self._vectors = None
+        self._thetas: Optional[np.ndarray] = None
+        self._vectors: Optional[np.ndarray] = None
         self._initialize_directions()
 
     def _initialize_directions(self):
@@ -146,12 +146,12 @@ class Directions:
         return instance
 
     @classmethod
-    def from_vectors(cls, vectors: Sequence[tuple]) -> "Directions":
+    def from_vectors(cls, vectors: Sequence[Sequence[float]]) -> "Directions":
         """
         Create a Directions instance from custom direction vectors in any dimension.
 
         Args:
-            vectors (Sequence[tuple]): List or array of direction vectors (each must be nonzero).
+            vectors (Sequence[Sequence[float]]): List or array of direction vectors (each must be nonzero).
 
         Returns:
             Directions: Instance with normalized direction vectors and associated angles (if 2D).
@@ -163,12 +163,12 @@ class Directions:
             - Vectors are normalized to unit length.
             - For 2D, angles are computed from the vectors and available via :attr:`thetas`.
         """
-        vectors = np.array(vectors, dtype=float)
-        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        vectors_array = np.array(vectors, dtype=float)
+        norms = np.linalg.norm(vectors_array, axis=1, keepdims=True)
         if np.any(norms == 0):
             raise ValueError("Zero-magnitude vectors are not allowed")
-        normalized = vectors / norms
-        instance = cls(len(vectors), Sampling.CUSTOM, dim=vectors.shape[1])
+        normalized = vectors_array / norms
+        instance = cls(len(vectors_array), Sampling.CUSTOM, dim=vectors_array.shape[1])
         instance._vectors = normalized
         if instance.dim == 2:
             instance._thetas = np.arctan2(normalized[:, 1], normalized[:, 0])
@@ -194,8 +194,8 @@ class Directions:
                 "Angle representation is only available for 2D directions."
             )
         if self._thetas is None:
-            # Compute the angles from the vectors.
             self._thetas = np.arctan2(self.vectors[:, 1], self.vectors[:, 0])
+        assert self._thetas is not None
         return self._thetas
 
     @property
@@ -215,13 +215,15 @@ class Directions:
         """
         if self._vectors is None:
             if self.dim == 2:
+                thetas = self.thetas
                 self._vectors = np.column_stack(
-                    (np.cos(self._thetas), np.sin(self._thetas))
+                    (np.cos(thetas), np.sin(thetas))
                 )
             else:
                 raise ValueError(
                     "Direction vectors for dimensions >2 should be generated during initialization."
                 )
+        assert self._vectors is not None
         return self._vectors
 
     def __len__(self) -> int:
