@@ -1,5 +1,5 @@
 import numpy as np
-from numba import prange, njit
+from numba import prange, njit  # type: ignore[attr-defined]
 from numba.typed import List
 from typing import Optional
 
@@ -16,7 +16,7 @@ class ECT:
     The result is a matrix where entry ``M[i,j]`` is :math:`\chi(K_{a_i})` for the direction :math:`\omega_j`
     where :math:`a_i` is the ith entry in ``self.thresholds``, and :math:`\omega_j` is the jth entry in ``self.directions``.
 
-    
+
 
     Example:
         >>> from ect import ECT, EmbeddedComplex
@@ -106,14 +106,15 @@ class ECT:
     def calculate(
         self,
         graph: EmbeddedComplex,
-        theta: float = None,
-        override_bound_radius: float = None,
+        theta: Optional[float] = None,
+        override_bound_radius: Optional[float] = None,
     ):
         self._ensure_directions(graph.dim, theta)
         self._ensure_thresholds(graph, override_bound_radius)
         directions = (
             self.directions if theta is None else Directions.from_angles([theta])
         )
+        assert self.thresholds is not None
         ect_matrix = self._compute_ect(graph, directions, self.thresholds, self.dtype)
 
         return ECTResult(ect_matrix, directions, self.thresholds)

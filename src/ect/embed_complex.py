@@ -655,9 +655,8 @@ class EmbeddedComplex(nx.Graph):
         pca = PCA(n_components=target_dim)
         self._coord_matrix = pca.fit_transform(self._coord_matrix)
 
-    
+    @staticmethod
     def validate_plot_parameters(func):
-        # decorator to check plotting requirements
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             bounding_center_type = kwargs.get("bounding_center_type", "bounding_box")
@@ -706,7 +705,6 @@ class EmbeddedComplex(nx.Graph):
 
         return ax
 
-
     @validate_plot_parameters
     def plot(
         self,
@@ -722,7 +720,7 @@ class EmbeddedComplex(nx.Graph):
         face_color: str = "lightblue",
         face_alpha: float = 0.3,
         **kwargs,
-        ) -> plt.Axes:
+    ) -> plt.Axes:
         """
         Visualize the embedded complex in 2D or 3D
 
@@ -739,7 +737,7 @@ class EmbeddedComplex(nx.Graph):
             face_color (str): Color for faces (2-cells)
             face_alpha (float): Transparency for faces (2-cells)
             **kwargs: Additional keyword arguments for plotting functions
-        
+
         Returns:
             matplotlib.axes.Axes: The axes object with the plot.
         """
@@ -991,7 +989,7 @@ class EmbeddedComplex(nx.Graph):
 
         cell_vertex_pointers = np.empty(n_cells + 1, dtype=np.int64)
         cell_euler_signs = np.empty(n_cells, dtype=np.int32)
-        cell_vertex_indices_flat = []
+        list_flat: List[int] = []
 
         cell_vertex_pointers[0] = 0
         cell_index = 0
@@ -999,12 +997,12 @@ class EmbeddedComplex(nx.Graph):
             cells_in_dim = cells_by_dimension[dim]
             euler_sign = 1 if (dim % 2 == 0) else -1
             for cell_vertices in cells_in_dim:
-                cell_vertex_indices_flat.extend(cell_vertices)
+                list_flat.extend(cell_vertices)
                 cell_euler_signs[cell_index] = euler_sign
                 cell_index += 1
-                cell_vertex_pointers[cell_index] = len(cell_vertex_indices_flat)
+                cell_vertex_pointers[cell_index] = len(list_flat)
 
-        cell_vertex_indices_flat = np.asarray(cell_vertex_indices_flat, dtype=np.int32)
+        cell_vertex_indices_flat = np.asarray(list_flat, dtype=np.int32)
         return (
             cell_vertex_pointers,
             cell_vertex_indices_flat,

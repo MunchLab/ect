@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from ect.directions import Sampling
 from scipy.spatial.distance import cdist, pdist, squareform
-from typing import Union, List, Callable
+from typing import Union, List, Callable, cast
 
 
 # ---------- CSR <-> Dense helpers (prefix-difference over thresholds) ----------
@@ -352,14 +352,15 @@ class ECTResult(np.ndarray):
             >>> # Batch distances with custom function
             >>> dists = ect1.dist([ect2, ect3, ect4], metric=my_distance)
         """
-        # normalize input to list
         single = isinstance(other, ECTResult)
-        others = [other] if single else other
+        others_list: List["ECTResult"] = cast(
+            List["ECTResult"], [other] if single else other
+        )
 
-        if not others:
+        if not others_list:
             return np.array([])
 
-        for i, ect in enumerate(others):
+        for i, ect in enumerate(others_list):
             if ect.shape != self.shape:
                 raise ValueError(
                     f"Shape mismatch at index {i}: {self.shape} vs {ect.shape}"
@@ -370,13 +371,15 @@ class ECTResult(np.ndarray):
             if single:
                 b = np.asarray(other, dtype=np.float64)
                 return float(np.sqrt(np.sum((a - b) ** 2)))
-            b = np.stack([np.asarray(ect, dtype=np.float64) for ect in others], axis=0)
+            b = np.stack(
+                [np.asarray(ect, dtype=np.float64) for ect in others_list], axis=0
+            )
             diff = b - a
             return np.sqrt(np.sum(diff * diff, axis=(1, 2)))
 
         distances = cdist(
             self.ravel()[np.newaxis, :],
-            np.vstack([ect.ravel() for ect in others]),
+            np.vstack([ect.ravel() for ect in others_list]),
             metric=metric,
             **kwargs,
         )[0]
@@ -399,13 +402,25 @@ class ECTResult(np.ndarray):
                 raise ValueError(f"Shape mismatch at index {i}: {shape0} vs {r.shape}")
 
         if isinstance(metric, str) and metric.lower() in ("frobenius", "fro"):
-            return np.vstack([results[i].dist(results, metric="frobenius") for i in range(len(results))])
+            return np.vstack(
+                [
+                    results[i].dist(results, metric="frobenius")
+                    for i in range(len(results))
+                ]
+            )
 
         if isinstance(metric, str):
-            X = np.stack([np.asarray(r, dtype=np.float64).ravel() for r in results], axis=0)
+            X = np.stack(
+                [np.asarray(r, dtype=np.float64).ravel() for r in results], axis=0
+            )
             try:
                 return squareform(pdist(X, metric=metric, **kwargs))
             except TypeError:
                 return cdist(X, X, metric=metric, **kwargs)
 
-        return np.vstack([results[i].dist(results, metric=metric, **kwargs) for i in range(len(results))])
+        return np.vstack(
+            [
+                results[i].dist(results, metric=metric, **kwargs)
+                for i in range(len(results))
+            ]
+        )
