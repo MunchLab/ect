@@ -4,7 +4,7 @@ from .directions import Directions
 from .results import ECTResult
 from typing import Optional, Union
 import numpy as np
-from numba import njit
+from numba import njit  # type: ignore[attr-defined]
 
 
 class DECT(ECT):
@@ -86,18 +86,19 @@ class DECT(ECT):
     def calculate(
         self,
         graph: Union[EmbeddedGraph, EmbeddedCW],
-        scale: Optional[float] = None,
         theta: Optional[float] = None,
         override_bound_radius: Optional[float] = None,
+        *,
+        scale: Optional[float] = None,
     ) -> ECTResult:
         """
         Calculate the Differentiable Euler Characteristic Transform (DECT) for a given embedded complex.
 
         Args:
             graph (EmbeddedGraph or EmbeddedCW): The embedded complex to analyze.
-            scale (Optional[float]): Slope parameter for the sigmoid function. If None, uses the instance's scale.
             theta (Optional[float]): Specific direction angle to use. If None, uses all directions.
             override_bound_radius (Optional[float]): Override for bounding radius in threshold generation.
+            scale (Optional[float]): Slope parameter for the sigmoid function. If None, uses the instance's scale.
 
         Returns:
             ECTResult: Result object containing the DECT matrix, directions, and thresholds.
