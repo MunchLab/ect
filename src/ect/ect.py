@@ -74,8 +74,8 @@ class ECT:
 
         if theta is not None and graph_dim != 2:
             raise ValueError(
-                "Theta must be provided for 2D graphs. "
-                "Use 'directions' or 'num_dirs' to specify directions."
+                "theta is only supported for 2D graphs. "
+                "Use 'directions' or 'num_dirs' for higher dimensions."
             )
 
         if self.directions.dim != graph_dim:
