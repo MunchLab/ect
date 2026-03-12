@@ -109,7 +109,7 @@ A comparison of the running times for a subset of these packages (CPU-only) can 
 
 The `ect` package is focused on fast computation of the ECT, with additional computation done through `scipy` and `numpy`.
 The embedded polyhedral complex inputs are stored as a class called `EmbeddedComplex` built to encode the combinatorial data for any dimensional complex.
-Additional validation tools are provided when structural or geometric constraints are requried for the input.
+Additional validation tools are provided when structural or geometric constraints are required for the input.
 The `ECT` class computes the ECT and the result is stored in an `ECTResult` class, which has additional metadata and visualization capabilities, as well as distance computation built-in.
 Modifications in choices of directions for the computation of the ECT are available in the `Directions` class.  
 There are also variation classes for the `SECT` and `DECT`.
