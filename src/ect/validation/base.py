@@ -81,7 +81,7 @@ class ValidationRule(ABC):
         all_coords: np.ndarray,
         cell_indices: List[int],
         all_indices: List[int],
-        dim: int = None,
+        dim: Optional[int] = None,
     ) -> ValidationResult:
         """
         Validate a cell against this rule.
