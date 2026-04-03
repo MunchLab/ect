@@ -1,7 +1,7 @@
 ect: Euler Characteristic Transform in Python
 =============================================
 
-The `ect` package is a library of tools for computing the Euler Characteristic Transform of embedded cell complexes with arbitrary dimensional cells. This package is to aid researchers in quickly extracting topological information from their data via the Euler Characteristic Transform. 
+The `ect` package is a library of tools for computing the Euler Characteristic Transform of embedded cell complexes with arbitrary dimensional cells. This package is to aid researchers and practitioners in topological data analysis and related fields (such as computational geometry, network science, and biological shape analysis) who require scalable, Python-native tools for extracting and using topological features from embedded complexes.
 
 Table of Contents
 -----------------
