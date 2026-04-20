@@ -37,7 +37,7 @@ bibliography: paper.bib
 
 The field of Topological Data Analysis (TDA) [@Dey2021;@Wasserman2018;@Ghrist2014;@Munch2017] encodes the shape of data in quantifiable representations of the information, sometimes called "topological signatures" or "topological summaries". The goal is to ensure that these summaries are robust to noise and useful in practice. In many methods, richer representations bring higher computation cost, creating a tension between robustness and speed. The Euler Characteristic Transform (ECT) [@Turner2014;@Munch2025;@Rieck2024] has gained popularity for encoding the information of embedded shapes in $\mathbb{R}^d$--such as graphs, simplicial complexes, and meshes--because it strikes this balance by providing a complete topological summary, yet is typically much faster to compute than its widely used cousin, the Persistent Homology Transform [@Turner2014].
 
-The `ect` Python package offers a fast and well-documented implementation of ECT for inputs in any embedding dimension and with a wide range of complex types. With a few lines of code, users can generate ECT features by sampling directions, computing Euler characteristic curves, and vectorizing them for downstream tasks such as classification or regression. The package includes practical options for direction sampling, normalization, and visualizing various versions of the ECT. These options allow for smooth integration into other scientific packages such as `Numpy`, `Scipy`, and `PyTorch`. By lowering the barrier to computing the ECT on embedded complexes, `ect` makes these topological summaries accessible to a wider range of practitioners and domain scientists.
+The `ect` Python package offers a fast and well-documented implementation of ECT for inputs in any embedding dimension and with a wide range of complex types. With a few lines of code, users can generate ECT features by sampling directions, computing Euler characteristic curves, and vectorizing them for downstream tasks such as classification or regression. The package includes practical options for direction sampling, normalization, and visualizing various versions of the ECT. These options allow for smooth integration into other scientific packages such as `NumPy`, `SciPy`, and `PyTorch`. By lowering the barrier to computing the ECT on embedded complexes, `ect` makes these topological summaries accessible to a wider range of practitioners and domain scientists.
 
 ## The Euler Characteristic Transform
 
@@ -92,7 +92,7 @@ Despite the ECT's mathematical power, there has been a notable absence of effici
 
 # State of the Field
 
-Since its popularity in topological data analysis has grown since @Turner2014, a range of software implementations for computing the ECT and its variants has emerged.
+Since its introduction in @Turner2014, the popularity of the ECT in topological data analysis has grown, and a range of software implementations has emerged.
 
 The package `demeter` ([github.com/amezqui3/demeter](https://github.com/amezqui3/demeter)) was written specifically for 3D voxel data in order to calculate the ECT for barley seeds [@Amezquita2021].
 One of the first variations of the ECT is the Smooth ECT (SECT), [@Crawford2019;@Meng2022;@Tang2022].  The related papers come with specific code that are not packaged, are no longer maintained, or are application-specific rather than a light-weight general ECT library ([github.com/lorinanthony/SECT](https://github.com/lorinanthony/SECT), [github.com/lcrawlab/SINATRA-Pro](https://github.com/lcrawlab/SINATRA-Pro) and [github.com/JinyuWang123/TDA](https://github.com/JinyuWang123/TDA)).  
@@ -107,7 +107,7 @@ A comparison of the running times for a subset of these packages (CPU-only) can 
 
 # Software Design
 
-The `ect` package is focused on fast computation of the ECT, with additional computation done through `scipy` and `numpy`.
+The `ect` package focuses on fast computation of the ECT, with additional functionality provided through `SciPy` and `NumPy`.
 The embedded polyhedral complex inputs are stored as a class called `EmbeddedComplex` built to encode the combinatorial data for any dimensional complex.
 Additional validation tools are provided when structural or geometric constraints are required for the input.
 The `ECT` class computes the ECT and the result is stored in an `ECTResult` class, which has additional metadata and visualization capabilities, as well as distance computation built-in.
@@ -132,7 +132,7 @@ The final manuscript text and scientific claims were written and verified by the
 
 # Acknowledgements
 
-This material is based in part upon work supported in part by the National Science Foundation through grants
+This work is based in part upon work supported by the National Science Foundation through grants
 CCF-1907591,
 CCF-2106578,
 and CCF-2142713.
