@@ -1,4 +1,7 @@
-# `ect`: A python package for computing the Euler Characteristic Transform
+# `ect`: A python package for the Euler Characteristic Transform
+
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.09691/status.svg)](https://doi.org/10.21105/joss.09691)
+
 
 Python computation tools for computing the Euler Characteristic Transform of embedded complexes. 
 
